@@ -1,0 +1,88 @@
+\documentclass[12pt,a4paper,titlepage]{article}
+%%
+%% document's packages
+%%
+\usepackage{graphicx}		% \includegraphics{name}
+\usepackage{url}			% \url{something}
+\usepackage{multirow}		% \multirow{package}{width}{text}
+\usepackage[table]{xcolor}	% \cellcolor
+\usepackage{caption}		% \caption{title}
+%%% Bibliography
+\usepackage[backend=bibtex,style=ieee]{biblatex}
+\addbibresource{Muhamad_Sulhan_23513014.bib}
+\defbibheading{bibliography}{\centerline{\textbf{DAFTAR REFERENSI}}}
+%%% add dot to TOC
+\usepackage{tocloft}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\contentsname}{}
+%%% uncomment this to show overrule in black box
+%\overfullrule=2cm
+%%% define your hyphenation here
+\hyphenation{Wiki-pedia}
+%%
+%% document's functions
+%%
+%%% signature
+\def\mysignature#1{%
+	\vbox{\hsize=5cm
+		\textbf{#1}\\
+		\addvspace{2cm}%
+		\hbox to \hsize{%
+			\strut\hfil%
+			\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots%
+			\hfil%
+		}
+		\hrule\kern1ex
+		\hbox to \hsize{%
+			\strut\hfil%
+			NIP\hspace{1ex}\ldots\ldots\ldots\ldots\ldots\ldots\ldots%
+			\hfil%
+		}
+	}
+}
+%%
+%% document's variables
+%%
+\newcommand{\mytitle}{Deteksi Vandalisme di situs Wikipedia Bahasa Indonesia}
+\newcommand{\myname}{Muhamad Sulhan}
+\newcommand{\mysid}{23513014}
+\newcommand{\myitbcover}{../images/ITB-logo-ganesha}
+%%
+%% document's meta-data
+%%
+\author{\myname}
+\title{\mytitle}
+
+%%
+%% DOCUMENT
+%%
+\begin{document}
+\include{cover}
+\include{pengesahan}
+
+%%
+%% PAGE: Daftar Isi
+%%
+\section*{\centerline{\Large DAFTAR ISI}}\label{sec:daftar-isi}
+\addcontentsline{toc}{section}{DAFTAR ISI}
+\tableofcontents
+\newpage
+
+%%
+%% SECTIONS
+%%
+\input{ringkasan}
+\input{latar-belakang}
+\input{rumusan-masalah}
+\input{tujuan}
+\input{batasan-masalah}
+\input{studi-literatur}
+\input{metodologi}
+\input{implikasi}
+\input{sistematika-penulisan}
+\input{penjadwalan}
+
+\newpage
+\printbibliography
+
+\end{document}
