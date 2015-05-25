@@ -7,11 +7,32 @@ Tabel \ref{tab:jadwal} menampilkan jadwal yang direncanakan dalam pengembangan t
 
 \renewcommand{\arraystretch}{1.5}
 \setlength{\tabcolsep}{3pt}
+% function to fill cell with color
+\newcommand{\tand}{&}
+\newcounter{cnt}
+\newcommand{\fillcell}[1]{%
+	\forloop{cnt}{0}{\value{cnt}<#1}{%
+		{\cellcolor[gray]{0.7}} \tand
+	}%
+}
+% function to create empty cell
+\newcommand{\emptycell}[2]{%
+	\forloop{cnt}{0}{\value{cnt}<#1}{%
+		\tand
+	}%
+	\ifthenelse{#2 = 1}{\\}{\tand}%
+}
 
 \begin{table}[h!]
 	\centering
 	{\footnotesize
-	\begin{tabular}{|c|p{3cm}|c|c|c|c |c|c|c|c |c|c|c|c |c|c|c|c| |c|c|c|c |c|c|c|c|}
+	\begin{tabular}{|c|p{0.2\textwidth}
+	|c|c|c|c
+	|c|c|c|c
+	|c|c|c|c
+	|c|c|c|c
+	|c|c|c|c
+	|c|c|c|c|}
 		\hline
 		\multirow{2}{*}{No.}
 			& \multirow{2}{*}{Kegiatan}
@@ -31,69 +52,28 @@ Tabel \ref{tab:jadwal} menampilkan jadwal yang direncanakan dalam pengembangan t
 			1 & 2 & 3 & 4\\
 		\hline
 		1 & Studi Literatur &
-			{\cellcolor[gray]{0.7}} &
-			{\cellcolor[gray]{0.7}} &
-			{\cellcolor[gray]{0.7}} &
-			{\cellcolor[gray]{0.7}} &
-			& & & &
-			& & & &
-			& & & &
-			& & & &
-			& & & \\
+			\fillcell{4}
+			\emptycell{19}{1}
 		\hline
-		2 & Persiapan Data dan Lingkungan Penelitian &
-			& &
-			{\cellcolor[gray]{0.7}} &
-			{\cellcolor[gray]{0.7}} &
-			{\cellcolor[gray]{0.7}} &
-			{\cellcolor[gray]{0.7}} &
-			& &
-			& & & &
-			& & & &
-			& & & &
-			& & & \\
+		2 & Persiapan\ \  Data dan\ \ Lingkungan Penelitian &
+			\emptycell{1}{0}
+			\fillcell{4}
+			\emptycell{17}{1}
 		\hline
 		3 & Analisis &
-			& & & &
-			{\cellcolor[gray]{0.7}} &
-			{\cellcolor[gray]{0.7}} &
-			{\cellcolor[gray]{0.7}} &
-			{\cellcolor[gray]{0.7}} &
-			{\cellcolor[gray]{0.7}} &
-			{\cellcolor[gray]{0.7}} &
-			& &
-			& & & &
-			& & & &
-			& & & \\
+			\emptycell{4}{0}
+			\fillcell{6}
+			\emptycell{12}{1}
 		\hline
 		4 & Implementasi dan Pengujian &
-			& & & &
-			& & & &
-			{\cellcolor[gray]{0.7}} &
-			{\cellcolor[gray]{0.7}} &
-			{\cellcolor[gray]{0.7}} &
-			{\cellcolor[gray]{0.7}} &
-			{\cellcolor[gray]{0.7}} &
-			{\cellcolor[gray]{0.7}} &
-			{\cellcolor[gray]{0.7}} &
-			{\cellcolor[gray]{0.7}} &
-			{\cellcolor[gray]{0.7}} &
-			{\cellcolor[gray]{0.7}} &
-			{\cellcolor[gray]{0.7}} &
-			{\cellcolor[gray]{0.7}} &
-			{\cellcolor[gray]{0.7}} &
-			{\cellcolor[gray]{0.7}} &
-			{\cellcolor[gray]{0.7}} \\
+			\emptycell{7}{0}
+			\fillcell{14}
+			\emptycell{1}{1}
 		\hline
 		5 & Evaluasi &
-			& & & &
-			& & & &
-			& & & &
-			& & & &
-			& & & &
-			& &
-			{\cellcolor[gray]{0.7}} &
-			{\cellcolor[gray]{0.7}} \\
+			\emptycell{20}{0}
+			\fillcell{2}
+			\emptycell{0}{1}
 		\hline
 	\end{tabular}
 	}
