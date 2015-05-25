@@ -1,3 +1,9 @@
-Proposal/build
-Wikipedia-vandalism
+*-blx.bib
+*.aux
+*.bbl
+*.blg
+*.log
+*.run.xml
+*.synctex.gz
+*.toc
 *.pdf
