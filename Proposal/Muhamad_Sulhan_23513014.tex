@@ -7,10 +7,8 @@
 \usepackage{multirow}		% \multirow{package}{width}{text}
 \usepackage[table]{xcolor}	% \cellcolor
 \usepackage{caption}		% \caption{title}
-%%% Bibliography
 \usepackage[backend=bibtex,style=ieee]{biblatex}
-\addbibresource{Muhamad_Sulhan_23513014.bib}
-\defbibheading{bibliography}{\centerline{\textbf{DAFTAR REFERENSI}}}
+\usepackage{forloop}		% \forloop
 %%% add dot to TOC
 \usepackage{tocloft}
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
@@ -29,13 +27,13 @@
 		\addvspace{2cm}%
 		\hbox to \hsize{%
 			\strut\hfil%
-			\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots%
+			\ldots\ldots\ldots\ldots\ldots\ldots\ldots%
 			\hfil%
 		}
 		\hrule\kern1ex
 		\hbox to \hsize{%
 			\strut\hfil%
-			NIP\hspace{1ex}\ldots\ldots\ldots\ldots\ldots\ldots\ldots%
+			NIP\hspace{1ex}\ldots\ldots\ldots\ldots\ldots\ldots%
 			\hfil%
 		}
 	}
@@ -46,7 +44,14 @@
 \newcommand{\mytitle}{Deteksi Vandalisme di situs Wikipedia Bahasa Indonesia}
 \newcommand{\myname}{Muhamad Sulhan}
 \newcommand{\mysid}{23513014}
-\newcommand{\myitbcover}{../images/ITB-logo-ganesha}
+%%% My images directory
+\graphicspath{{../images/}}
+\newcommand{\myitbcover}{ITB-logo-ganesha}
+%%% My bibligraphy file
+\addbibresource{Muhamad_Sulhan_23513014.bib}
+%%% Alter latex default title
+\captionsetup[table]{name=Tabel}
+\defbibheading{bibliography}{\centerline{\textbf{DAFTAR REFERENSI}}}
 %%
 %% document's meta-data
 %%
@@ -82,7 +87,7 @@
 \input{sistematika-penulisan}
 \input{penjadwalan}
 
-\newpage
+\clearpage
 \printbibliography
 
 \end{document}
