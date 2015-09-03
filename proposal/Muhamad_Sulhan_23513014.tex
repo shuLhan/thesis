@@ -14,13 +14,14 @@
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
 \renewcommand{\contentsname}{}
 %%% uncomment this to show overrule in black box
-%\overfullrule=2cm
+\overfullrule=2cm
 %%% define your hyphenation here
 \hyphenation{
 	da-lam
 	ga-bung-an
 	ke-las
 	ke-tak-se-imbang-an
+	lan-guage
 	me-laku-kan
 	me-mi-lih
 	meng-im-ple-men-ta-si-kan
@@ -35,9 +36,10 @@
 	se-jum-lah
 	sun-ting-an
 	ting-kat
+	wa-lau-pun
 	Wiki-pedia
-	under-sampling
-	over-sampling
+	un-der-sam-pling
+	o-ver-sam-pling
 	SIGKDD
 }
 %%}}}
@@ -192,7 +194,7 @@ Korpus yang umum digunakan untuk mendeteksi vandalism yaitu PAN-WVC-11 dengan ti
 Korpus PAN-WVC-11 untuk artikel Wikipedia bahasa Inggris memiliki jumlah 9985 suntingan dengan 1144, atau 8\%, diantaranya adalah vandalisme.
 
 Menerapkan klasifikasi dengan data set yang bias bisa menyebabkan performansi deteksi yang rendah.
-Hal ini disebabkan oleh:
+Hal ini disebabkan oleh,
 \begin{enumerate}
 	\item Jika sebuah klasifikasi belajar dengan meminimalkan keseluruhan galat, maka instan dari kelas yang minoritas memiliki kontribusi yang rendah terhadap galat.
 Hal ini menyebabkan bias yang condong pada kelas klasifikasi yang mayoritas.
@@ -202,6 +204,24 @@ Sebagai contohnya, biaya untuk mengklasifikasikan kanker sebagai bukan kanker le
 Secara tidak adanya data kanker bisa menyebabkan tidak dilakukannya terapi, misklasifikasi bisa membahayakan nyawa.
 \end{enumerate}
 
+Untuk mengatasi masalah ketimpangan pada korpus, Gotze \cite{gotze2014advanced} mengaplikasikan teknik \textit{random undersampling} bernama SMOTE yang diajukan oleh Chawla \cite{chawla2002smote}, dan kombinasi dari SMOTE dan \textit{random undersampling}.
+Data set latihan yang orisinal dan hasil \textit{resampling} diuji dengan pengklasifikasi satu-kelas dan dua-kelas.  
+Pengklasifikasi satu-kelas yang diterapkan diantaranya Hempstalk dkk. \cite{hempstalk2008one} dan SVM oleh Schölkopf dkk. \cite{scholkopf1999support} yang diimplementasikan oleh Chang dan Lin \cite{chang2011libsvm} pada korpus PAN-WVC.
+Hasil percobaan yang didapat memperlihatkan performansi yang rendah untuk kedua kelas pengklasifikasi. Klasifikasi satu-kelas tidak kompetitif dengan satu pun pengklasifikasi dua-kelas.
+Hal ini bisa disebabkan karena tidak sesuainya kelompok fitur yang digunakan untuk menjelaskan suntingan vandalisme, sebagaimana juga parameter pengaturan yang tidak sesuai pada pendekatan yang digunakan tersebut.
+Pengklasifikasi dua-kelas yang diterapkan diantaranya \textit{Logistic Regression}, \textit{RealAdaBoost}, \textit{Random Forest}, dan \textit{Bayesian Network}.
+Hasil dari pelatihan pada data set orisinal memperlihatkan \textit{Random Forest} lebih unggul dari pengklasifikasi lainnya.
+Hasil dari pelatihan pada data set \textit{resampling} memperlihatkan adanya peningkatkan pada semua pengklasifikasi kecuali pada \textit{Random Forest}.
+
+Kelemahan yang dirasakan pada penerapan \textit{Random Forest} yaitu walaupun sejumlah besar pohon-pohon individu bisa menghasilkan performansi yang tinggi, hal ini juga bisa menambah waktu komputasi yang dibutuhkan untuk klasifikasi terutama untuk pelatihan model klasifikasi.
+Untuk data set yang besar yang terdiri dari 10.000 sampel (seperti pada kasus korpus PAN-WVC) hal ini bisa menyebabkan waktu pelatihan sampai pada dua digit menit.
+Salah satu solusinya mungkin bisa dengan menggunakan kerangka kerja \textit{Cascaded Random Forest} (CRF) yang dikembangkan oleh Baumann dkk. \cite{baumann2013cascaded}.
+Pendekatan CRF menghasilkan pelatihan model yang lebih cepat dan performansi klasifikasi yang meningkat dibandingkan dengan pengklasifikasi \textit{Random Forest}.
+
+Penggunaan \textit{resampling} pada data set latihan menggunakan pendekatan dasar terkadang menyebabkan performansi klasifikasi yang rendah.
+Melakukan teknik pembersihan data set lanjut, seperti yang diajukan oleh Laurikkala \cite{laurikkala2001improving} dan Batista dkk. \cite{batista2004study}, sebagaimana juga teknik \textit{resampling} lanjut, seperti \textit{borderline-SMOTE} yang diajukan oleh Han dkk. \cite{han2005borderline} atau ekstensi SMOTE yang diajukan oleh Maciejewski dan Stefanowski \cite{maciejewski2011local}, mungkin bisa meningkatkan performansi klasifikasi.
+
+Dalam tesis ini akan diperlihatkan penggunaan teknik \textit{resampling} yang diajukan oleh Maciejewski dan Stefanowski, yang kemudian dilakukan pelatihan dengan pengklasifikasi CRF dan dibandingkan dengan \textit{Random Forest} untuk kedua data set, orisinal dan hasil \textit{resampling}.
 
 %%}}}
 
@@ -209,7 +229,9 @@ Secara tidak adanya data kanker bisa menyebabkan tidak dilakukannya terapi, misk
 %%
 \section{Tujuan}\label{sec:tujuan}
 
-Tesis ini mencoba menjawab permasalahan data set yang tidak seimbang dengan mengkaji teknik penyeimbang yang belum pernah digunakan sebelumnya pada korpus Wikipedia dan melihat hasil penyeimbangan dengan menerapkan dua klasifikasi terhadap data set yang telah diseimbangkan dan membandingkan hasil keduanya.
+Tesis ini mencoba menjawab permasalahan data set yang tidak seimbang pada korpus PAN-WVC dengan mengkaji teknik penyeimbang dan klasifikasi yang belum pernah digunakan sebelumnya pada korpus tersebut.
+Teknik penyeimbang \textit{borderline-SMOTE} yang diajukan oleh Han dkk. \cite{han2005borderline} digunakan dan melihat hasil penyeimbangan dengan menerapkan pengklasifikasi \textit{Cascaded Random Forest} (CRF) terhadap data set orisinal dan data set hasil \textit{resampling}.
+Hasil pengklasifikasi dari CRF dibandingkan dengan pengklasifikasi \textit{Random Forest} untuk melihat yang mana yang lebih baik.
 %%}}}
 
 %%{{{ SECTION: Batasan Masalah
@@ -240,7 +262,7 @@ Sejumlah solusi terhadap permasalahan ketimpangan kelas telah diajukan untuk tin
 
 \subsection{Metode \textit{resampling}}\label{subsec:metode-resampling}
 
-Metode yang paling mudah untuk menyeimbangkan kelas yaitu dengan melakukan pengambilan ulang sampel, atau \textit{resampling}, baik dengan \textit{oversampling} pada kelas minoritas atau \textit{undersampling} pada kelas mayoritas, sampai kelas-kelas tersebut mendekati representasi yang sama.
+Metode yang paling mudah untuk menyeimbangkan kelas yaitu dengan melakukan pengambilan ulang sampel, atau \textit{resampling}, baik dengan \linebreak \textit{over-sampling} pada kelas minoritas atau \textit{under-sampling} pada kelas mayoritas, sampai kelas-kelas tersebut mendekati representasi yang sama.
 Kedua strategi tersebut dapat digunakan pada sistem pembelajaran, secara mereka bekerja pada fase pra-proses, membolehkan sistem pembelajaran menggunakan instan data latihan seolah-olah berasal dari data set yang seimbang. 
 Maka, bias apa pun dari sistem terhadap kelas mayoritas disebabkan karena proporsi sampel yang berbeda bisa diharapkan berkurang.
 
@@ -315,6 +337,191 @@ Song dkk. \cite{song2009improved} mengajukan sebuah pendekatan baru mengurangi s
 Algoritma Adaboost memberikan berat yang sama untuk kedua sampel yang misklasifikasi, tapi galat misklasifikasi dari setiap kelas tidak sama.
 Pada umumnya, galat misklasifikasi pada kelas minoritas akan lebih besar dari kelas mayoritas, sehingga algoritma Adaboost akan mengarah pada tingginya bias dan margin yang kecil saat menangani distribusi yang timpang.
 Algoritma BABoost pada setiap kali \textit{boosting} memberikan berat tambahan ke sampel yang misklasifikai, khususnya pada kelas minoritas.
+%%}}}
+
+%%{{{ SECTION: Pekerjaan Terkait
+%%
+\label{sec:pekerjaan-terkait}
+\section{Pekerjaan Terkait}
+
+Bagian ini menjelaskan teknik-teknik yang telah dilakukan dalam menangani permasalahan ketimpangan pada data set berikut juga pekerjaan dari komunitas atau akademik yang telah dilakukan untuk mendeteksi vandalisme pada Wikipedia.
+
+\label{subsec:teknik-resampling-dataset-timpang}
+\subsection{Teknik \textit{resampling} pada Data Set Timpang}
+
+Untuk mengatasi masalah \textit{overfit} pada \textit{oversampling} dataset yang timpang, Chawla \cite{chawla2002smote} mengajukan pendekatan \textit{oversampling} yaitu \textit{Synthetic Minority Over-sampling Technique} (SMOTE) yang mana kelas minoritas ditambah dengan sampel "sintetis" bukan ditambah dengan mengganti sampel yang ada.
+Berdasarkan metode SMOTE, Hui Han dan Wen-Yuang Wang \cite{han2005borderline} memperkenalkan dua metode \textit{oversampling}, \textit{borderline-SMOTE1} dan \textit{borderline-SMOTE2}, yang mana hanya sampel minoritas yang dekat dengan garis batas yang ditambahkan.
+Pendekatan ini menghasilkan laju TP dan \textit{F-value} yang lebih baik daripada SMOTE dan metode \textit{oversampling} acak.
+Estrabrooks dkk. \cite{estabrooks2004multiple} mengajukan sebuah metode \textit{resampling} yang memilih laju \textit{resampling} yang paling sesuai secara adaptif.
+Taeho Jo dkk. \cite{jo2004class} menggunakan metode \textit{over-sampling} berbasis kluster yang menangani ketimpangan antara kelas dan ketimpangan pada kelas secara simultan.
+Hongyu Guo dkk. \cite{guo2004learning} mencari sampel untuk kelas minoritas dan mayoritas saat proses \textit{boosting}, dan menciptakan sampel sintetis baru dari sampel tersebut dan menambahkannya ke data set.
+
+Untuk mengatasi kelemahanan \textit{under-sampling} yang mana informasi yang secara potensial berguna yang terdapat pada sampel yang dihilangkan tersebut menjadi terindahkan, Kubat dan Mattwin \cite{kubat1997addressing} mengajukan teknik \textit{Condensed Nearest Neighbor Rule} dan \textit{One-sided selection} (OSS), yang mencoba secara intelejensi mengurangi kelas mayoritas dengan menghilangkan sampel yang dianggap redundan atau "bising".
+
+Pada tingkat algoritma, Ling dkk. \cite{ling2004decision} mengajukan sebuah metode untuk membangun dan menguji \textit{decision tree} yang meminimalkan jumlah keseluruhan dari misklasifikasi dan biaya uji.
+Algoritma yang digunakan memilih atribut pemisah yang meminimalkan biaya total, total biaya uji dan biaya misklasifikasi bukan memilih atribut yang meminimalkan entropi.
+Liu dkk. \cite{liu2010robust} mengajukan algoritma \textit{decision tree} baru bernama \textit{Class Confidence Proportion Decision Tree} (CCPDT) yang kuat dan peka terhadap jumlah kelas dan mengeluarkan aturan-aturan yang secara statistik signifikan.
+Cieslak dkk. \cite{cieslak2012hellinger} secara analitis dan empiris memperlihatkan kekuatan kepekaan kemiringan dari \textit{Hellinger Distance} dan kelebihannya terhadap matriks terkenal lainnya.
+Mereka berkesimpulan bahwa untuk data yang timpang adalah cukup menggunakan pohon Hellinger dengan \textit{bagging} tanpa ada metode sampling.
+Maheswari dkk. \cite{maheshwari2011new} menggunakan operator yang berbeda-beda dari algoritma Genetik untuk \textit{oversampling} untuk memperbesar rasio dari sampel positif dan kemudian menerapkan klusterisasi terhadap data set latihan yang telah di-\textit{oversampling} sebagai metode pembersihan data untuk kedua kelas, menghilangkan sampel yang duplikasi dan mengganggu.
+Maheswari dkk. menggunakan AUC sebagai matriks evaluasi dan menemukan bahwa algoritma mereka berjalan lebih baik.
+
+Vo dkk. \cite{vo2007classification} mengembangkan algoritma \textit{Regularized Least Square} (RLS) yang memberi nilai dari galat dari sampel-sampel dengan berat yang berbeda dan beberapa aturan untuk menentukan berat tersebut.
+Akurasi dari algoritma pengklasifikasi RLS memperlihatkan sebagai pengganti yang bagus untuk metode klasifikasi \textit{cost sensitive} sebelumnya untuk data set yang timpang.
+Pendekatannya hampir sama dengan \textit{over-sampling} atau \hfill\break
+\textit{under\-sampling} bergantung kepada biaya yang dipilih.
+
+Song dkk. \cite{song2009improved} mengajukan sebuah pendekatan baru mengurangi setiap kelompok galat, yaitu \textit{BABoost} yang merupakan varian dari \textit{AdaBoost}.
+Algoritma Adaboost memberikan berat yang sama untuk kedua sampel yang misklasifikasi, tapi galat misklasifikasi dari setiap kelas tidak sama.
+Pada umumnya, galat misklasifikasi pada kelas minoritas akan lebih besar dari kelas mayoritas, sehingga algoritma Adaboost akan mengarah pada tingginya bias dan margin yang kecil saat menangani distribusi yang timpang.
+Algoritma BABoost pada setiap kali \textit{boosting} memberikan berat tambahan ke sampel yang misklasifikai, khususnya pada kelas minoritas.
+
+\label{subsec:deteksi-vandalisme-di-wikipedia}
+\subsection{Deteksi Vandalisme di Wikipedia}
+
+\label{subsubsec:bot-wikipedia}
+\subsubsection{Bot Wikipedia}
+
+Permasalahan vandalisme di Wikipedia telah terjadi selama adanya Wikipedia itu sendiri.
+Komunitas Wikipedia menangani permasalahan tersebut dengan membuat fungsi pengaman pada artikel secara manual supaya artikel tidak bisa disunting, bila sebuah artikel terlalu sering divandal.
+Sejak tahun 2006, bot pendeteksi vandalisme digunakan, yang secara otomatis memantau suntingan vandalisme dan terkadang mengembalikannya.
+Umumnya bot ini menggunakan aturan heuristik sederhana, daftar hitam kata, dan daftar alamat \textit{IP} pengguna yang diblokir untuk mendeteksi suntingan vandalisme (contohnya, VoABot II \footnote{\url{https://en.wikipedia.org/wiki/User:VoABot_II}} dan ClueBot \footnote{\url{https://en.wikipedia.org/wiki/User:ClueBot}}).
+ClueBot-NG \footnote{\url{https://en.wikipedia.org/wiki/User:ClueBot_NG}} menggantikan ClueBot, menggunakan pendekatan pembelajaran mesin. Bot ini mencoba memperbaiki teknik berbasis heuristik yang susah untuk diurus dan mudah dilewat. Bot ini menggunakan dataset suntingan pra-klasifikasi yang dianotasikan oleh pengguna Wikipedia untuk melatih Jaringan Saraf Tiruan. Pengklasifikasinya bekerja pada beberapa fitur suntingan, seperti probabilitas tingkat-kata vandalisme untuk mengklasifikasi suntingan baru.
+
+\label{subsubsec:pendekatan-pembelajaran-mesin}
+\subsubsection{Pendekatan Pembelajaran Mesin}
+
+Sejak tahun 2008 deteksi vandalisme di Wikipedia berbasis pendekatan pembelajaran mesin telah menjadi topik penelitian yang menarik.
+Tabel \ref{tab:hasil-vandalisme} memperlihatkan pendekatan vandalisme yang telah dilakukan dari literatur, termasuk informasi mengenai korpus dan pengklasifikasi yang digunakan untuk pelatihan, berikut juga performansi deteksi yang didapat.
+
+\renewcommand{\arraystretch}{1.5}
+\setlength{\tabcolsep}{3pt}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\begin{table}[!ht]
+	\centering
+	{\tiny
+	\begin{tabular}{
+		L{0.2\textwidth}
+		L{0.2\textwidth}
+		c
+		L{0.2\textwidth}
+		c c c
+	}
+	\hline
+		Penulis
+	&	Korpus
+	&	Timpang
+	&	Pengklasifikasi
+	&	Presisi &	Recall & PR-AUC
+\\
+\hline
+		Smets dkk. \cite{smets08automaticvandalism}
+	&	6944 label dari komentar artikel yang dikembalikan
+	& tidak
+	& Probabilitas Sequence Modeling
+	& .320 & .920 & -
+\\
+		Smets dkk. \cite{smets08automaticvandalism}
+	&	6944 label dari komentar artikel yang dikembalikan
+	& tidak
+	& Naive Bayes
+	& .410 & .570 & -
+\\
+		Tran and Christen \cite{tran2013cross}
+	&	riwayat artikel
+	&	ya
+	& Gradient Tree Boosting
+	&	.870 & .870 & -
+\\
+\hline
+		Potthast dkk. \cite{potthast2008automatic}
+	&	Webis-WVC-07
+	& tidak
+	&	Logistic Regression
+	& .830 & .770 & -
+\\
+\hline
+		Velasco \cite{mola2012wikipedia}
+	& PAN-WVC-10
+	& tidak
+	& Random Forest
+	& .860 & .570 & .660
+\\
+		Wang dan McKeown \cite{wang2010got}
+	& PAN-WVC-10
+	& ya
+	& LogicBoost
+	& .850 & .570 & .660
+\\
+		Adler dkk. \cite{adler2010detecting}
+	& PAN-WVC-10
+	& tidak
+	& ADTree
+	& .370 & .770 & .490
+\\
+		Adler dkk. \cite{adler2011wikipedia}
+	& PAN-WVC-10
+	& tidak
+	& Random Forest
+	& - & - & .820
+\\
+		West dan Lee \cite{west2011multilingual}
+	& PAN-WVC-10
+	& tidak
+	& ADTree
+	& - & - & .750
+\\
+		Harpalani dkk. \cite{harpalani2011language}
+	& PAN-WVC-10
+	& tidak
+	& LogitBoost
+	& .735 & .477 & -
+\\
+		Gotze \cite{gotze2014advanced}
+	&	PAN-WVC-10
+	& tidak
+	& Random Forest
+	&	.606 & .608 & .671
+\\
+\hline
+		West dan Lee \cite{west2011multilingual}
+	& PAN-WVC-11
+	& tidak
+	& ADTree
+	& - & - & .820
+\\
+		Gotze \cite{gotze2014advanced}
+	&	PAN-WVC-11
+	& tidak
+	& Random Forest
+	& .927 & .399 & .748
+\\
+\hline
+	\end{tabular}
+	}
+	\caption{Hasil klasifikasi deteksi vandalisme dari literatur}
+	\label{tab:hasil-vandalisme}
+\end{table}
+
+
+
+Potthast \cite{potthast2008automatic} berkontribusi untuk pendekatan deteksi vandalisme dengan pembelajaran mesin yang pertama menggunakan fitur tekstual berikut fitur meta data dasar dengan menggunakan pengklasifikasi \textit{logistic regression}.
+Smets \cite{smets08automaticvandalism} menggunakan pengklasifikasi Naive Bayes pada sekumpulan kata yang merepresentasikan suntingan dan yang pertama menggunakan model kompresi untuk mendeteksi vandalisme di Wikipedia.
+Itakura dan Clarke \cite{itakura2009using} menggunakan Kompresi Markov Dinamis untuk mendeteksi suntingan vandalisme di Wikipedia.
+Mola Velasco \cite{mola2012wikipedia} mengembangkan pendekatan yang dilakukan oleh Potthast \cite{potthast2008automatic} dengan menambahkan beberapa fitur tekstual dan berbagai fitur berbasis daftar-kata.
+Velasco memenangi \textit{1st International Competition on Wikipedia Vandalism Detection}.
+West dkk. \cite{west2011multilingual} adalah yang pertama mengajukan sebuah pendekatan deteksi vandalisme hanya berdasarkan meta data spasial dan temporal, tanpa perlu memeriksa teks pada artikel dan revisi.
+Adler dkk. \cite{adler2010detecting} membangung sebuah sistem deteksi vandalism menggunakan sistem reputasi WikiTrust mereka.
+Adler dkk. \cite{adler2011wikipedia} kemudian menggabungkan bahasa alami, spasial, temporal, dan fitur reputasi yang mereka gunakan di karya mereka sebelumnya.
+West dan Lee \cite{west2011multilingual} adalah yang pertama memperkenalkan data \textit{ex post facto} sebagai fitur, yang mana perhitungannya mempertimbangkan revisi selanjutnya.
+Sistem deteksi vandalisme West dan Lee memenangkan \textit{2nd International Competition on Wikipedia Vandalism Detection}.
+Harpalani dkk. \cite{harpalani2011language} menyatakan suntingan vandalisme memiliki properti lingustik yang unik dan sama. Harpalani dkk. membangun sistem deteksi vandalisme mereka berdasarkan analisis \textit{stylometric} dari suntingan vandalisme dengan model probabilitas \textit{context-free grammar}.
+Pendekatan Harpalani dkk. mengalahkan sistem berbasis fitur pada pola dangkal, yang menyamakan struktur sintak dan token teks.
+Mengikuti tren dari klasifikasi vandalisme antar bahasa, Tran dan Christen \cite{tran2013cross} mengevaluasi berbagai pengklasifikasi berbasiskan pada sekumpulan fitur independen bahasa yang dikumpulkan dari jumlah artikel dilihat setiap jam dan riwayat suntingan Wikipedia.
+
+%%
 %%}}}
 
 %%{{{ SECTION: Metodologi
