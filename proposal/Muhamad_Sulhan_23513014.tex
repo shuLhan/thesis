@@ -26,11 +26,13 @@
 	me-mi-lih
 	meng-im-ple-men-ta-si-kan
 	me-ning-kat-kan
+	me-nye-im-bang-kan
 	me-thod
 	pen-de-kat-an
 	pe-ne-li-ti-an
 	po-ten-si-al
 	pro-ba-bi-li-tas
+	pro-ses
 	sam-pel
 	se-im-bang
 	se-jum-lah
@@ -219,9 +221,10 @@ Salah satu solusinya mungkin bisa dengan menggunakan kerangka kerja \textit{Casc
 Pendekatan CRF menghasilkan pelatihan model yang lebih cepat dan performansi klasifikasi yang meningkat dibandingkan dengan pengklasifikasi \textit{Random Forest}.
 
 Penggunaan \textit{resampling} pada data set latihan menggunakan pendekatan dasar terkadang menyebabkan performansi klasifikasi yang rendah.
-Melakukan teknik pembersihan data set lanjut, seperti yang diajukan oleh Laurikkala \cite{laurikkala2001improving} dan Batista dkk. \cite{batista2004study}, sebagaimana juga teknik \textit{resampling} lanjut, seperti \textit{borderline-SMOTE} yang diajukan oleh Han dkk. \cite{han2005borderline} atau ekstensi SMOTE yang diajukan oleh Maciejewski dan Stefanowski \cite{maciejewski2011local}, mungkin bisa meningkatkan performansi klasifikasi.
+Melakukan teknik pembersihan data set lanjut, seperti yang diajukan oleh Laurikkala \cite{laurikkala2001improving} dan Batista dkk. \cite{batista2004study}, sebagaimana juga teknik \textit{resampling} lanjut, seperti \textit{borderline-SMOTE} yang diajukan oleh Han dkk. \cite{han2005borderline} atau ekstensi SMOTE, LN-SMOTE, yang diajukan oleh Maciejewski dan Stefanowski \cite{maciejewski2011local}, mungkin bisa meningkatkan performansi klasifikasi.
 
-Dalam tesis ini akan diperlihatkan penggunaan teknik \textit{resampling} yang diajukan oleh Maciejewski dan Stefanowski, yang kemudian dilakukan pelatihan dengan pengklasifikasi CRF dan dibandingkan dengan \textit{Random Forest} untuk kedua data set, orisinal dan hasil \textit{resampling}.
+Dalam tesis ini akan diperlihatkan penggunaan teknik \textit{resampling} menggunakan ekstensi dari SMOTE yang diajukan oleh Maciejewski dan Stefanowski \cite{maciejewski2011local}.
+Proses pelatihan dataset menggunakan pengklasifikasi CRF dan dibandingkan dengan \textit{Random Forest} untuk kedua data set, orisinal dan hasil \textit{resampling}.
 
 %%}}}
 
@@ -230,8 +233,9 @@ Dalam tesis ini akan diperlihatkan penggunaan teknik \textit{resampling} yang di
 \section{Tujuan}\label{sec:tujuan}
 
 Tesis ini mencoba menjawab permasalahan data set yang tidak seimbang pada korpus PAN-WVC dengan mengkaji teknik penyeimbang dan klasifikasi yang belum pernah digunakan sebelumnya pada korpus tersebut.
-Teknik penyeimbang \textit{borderline-SMOTE} yang diajukan oleh Han dkk. \cite{han2005borderline} digunakan dan melihat hasil penyeimbangan dengan menerapkan pengklasifikasi \textit{Cascaded Random Forest} (CRF) terhadap data set orisinal dan data set hasil \textit{resampling}.
-Hasil pengklasifikasi dari CRF dibandingkan dengan pengklasifikasi \textit{Random Forest} untuk melihat yang mana yang lebih baik.
+Teknik penyeimbang yang diajukan oleh Maciejewski dan Stefanowski \cite{maciejewski2011local} bernama LN-SMOTE, yang merupakan ekstensi dari SMOTE, digunakan untuk menyeimbangkan dataset latihan.
+Hasil penyeimbangan dataset digunakan untuk pembelajaran mesin dengan menerapkan pengklasifikasi \textit{Cascaded Random Forest} (CRF) terhadap data set orisinal dan data set hasil \textit{resampling}.
+Hasil pengklasifikasi dari CRF dibandingkan dengan pengklasifikasi \textit{Random Forest} untuk melihat performansi klasifikasi yang lebih baik.
 %%}}}
 
 %%{{{ SECTION: Batasan Masalah
@@ -528,33 +532,34 @@ Mengikuti tren dari klasifikasi vandalisme antar bahasa, Tran dan Christen \cite
 %%
 \section{Metodologi}\label{sec:metodologi}
 
-Penelitian ini dikembangkan dengan menggunakan metodologi kuantitatif dengan tahapan sebagai berikut,
-\begin{itemize}
-	\item \textbf{Studi Literatur}. Peneliti membaca beberapa penelitian yang sebelumnya telah dilakukan dalam deteksi vandalisme pada Wikipedia.
-Dari hasil penelitian tersebut penulis dapat melihat kelemahan dan potensi ke depan yang dapat dikembangkan, sehingga menjadi rumusan masalah dalam penulisan tesis ini.
-Tahapan selanjutnya dari studi literatur yaitu mengkaji sumber yang berkaitan dengan metode yang digunakan dalam pendeteksian vandalisme dalam makalah ini.
-	\item \textbf{Persiapan Data dan Lingkungan Penelitian}.
-Dalam tahapan ini peneliti mempersiapkan data dan lingkungan pengembangan, seperti persiapan aplikasi basis data, pengaturan bahasa pemrograman, dan lainnya; yang diperlukan nantinya dalam melakukan analisis, implementasi, dan pengujian.
-	\item \textbf{Analisis}.
-Pada tahap ini peneliti melihat data dan menentukan fungsi-fungsi yang akan diterapkan dalam implementasi untuk
-mendapatkan hasil yang ditujukan.
-Tahap ini bisa terjadi berulang kembali setelah implementasi.
-	\item \textbf{Implementasi}.
-Tahap implementasi dalam makalah ini berupa proses pemuatan data, penerapan fungsi dalam bahasa pemrograman, dan
-pembuatan lingkungan pengujian.
-	\item \textbf{Pengujian}.
-Setelah tahap implementasi selesai, fungsi dari pendeteksian vandalisme akan dilakukan secara \textit{offline}.
-Data dibagi dalam dua bagian waktu, sebelum $ t_{b} $ dan sesudah $ t_{s} $, kemudian fungsi deteksi vandalisme dijalankan untuk data $t_{b}$.
-	\item \textbf{Evaluasi}. Tahap ini membandingkan hasil dari pengujian pada data $t_{b}$ dengan data sesudah $t_{s}$.
-\end{itemize}
+\textbf{Persiapan Data dan Lingkungan Penelitian}.
+Dataset yang digunakan untuk \textit{resampling} dan pelatihan pengklasifikasi adalah PAN-WVC-11 yang  dapat diambil di situs Universitas Bauhaus Weimar \footnote{\url{http://www.uni-weimar.de/en/media/chairs/webis/corpora/corpus-pan-wvc-11/}}.
+Untuk pengujian dari model hasil pelatihan, digunakan data dump dari riwayat revisi Wikipedia Bahasa Inggris \footnote{\url{http://dumps.wikimedia.org/enwiki}}.
+Rentang dataset yang akan digunakan untuk pengujian yaitu diambil untuk waktu tiga bulan.
+Perangkat lunak MariaDB diperlukan untuk menyimpan hasil ekstrak dan import dari data dump ini.
+Sistem operasi yang digunakan dalam penelitian ini yaitu GNU/Linux dengan bahasa pemrograman yang digunakan untuk implementasi adalah Go.
+
+\textbf{Implementasi dan Pengujian}
+Dikarenakan tidak adanya implementasi algoritma LN-SMOTE yang dapat digunakan, peneliti menyiapkan implementasinya sendiri untuk dapat digunakan pada proses \textit{resampling}.
+Begitu juga dengan algoritma pengklasifikasi CRF, akan diimplementasikan sendiri sebelum dapat melakukan pelatihan pada dataset latihan.
+
+Setelah implementasi algoritma LN-SMOTE selesai, hasil implementasi tersebut kemudian diaplikasikan pada dataset PAN-WVC-11.
+Hasil dari proses tersebut berupa dataset yang telah seimbang, yang dapat digunakan sebagai pelatihan untuk pengklasifikasi CRF dan Random Forest.
+Hasil dari pelatihan ini akan digunakan pada tahap analisis.
+
+\textbf{Analisis}
+Pada tahap ini hasil dari klasifikasi sudah didapat dan kemudian ditinjau ulang untuk melihat apakah ada kemungkinan kesalahan yang terjadi pada saat \textit{resampling} atau pada saat implementasi dan pengujian.
+Jika masih ada kesalahan, peneliti kembali ke tahap implementasi dan pengujian, sebaliknya jika tidak ada kesalahan maka akan dapat terlihat hasil dari klasifikasi dari Random Forest dan CRF untuk kemudian dapat dilihat perbandingan dari performansi keduanya.
+
 %%}}}
 
 %%{{{ SECTION: Implikasi
 %%
 \section{Implikasi}\label{sec:implikasi}
 
-Implikasi yang didapat dari hasil penelitian ini adalah memberikan sebuah alat yang membantu editor Wikipedia dalam mengambil keputusan dari daftar suntingan yang berpotensi hasil vandal sehingga mempercepat mereka dalam mengembalikan
-artikel ke versi sebelumnya.
+Implikasi yang didapat dari hasil penelitian ini pada khususnya adalah memberikan sebuah informasi yang mungkin dapat membantu pengembang \textit{Bot} pendeteksi vandalisme di Wikipedia untuk menggunakan atau tidak menggunakan teknik CRF pada implementasi mereka di dunia nyata.
+Secara umum, dapat dilihat performansi dari pengklasifikasi CRF dibandingkan dengan Random Forest pada data yang timpang dan seimbang.
+
 %%}}}
 
 %%{{{ SECTION: Sistematika Penulisan
@@ -624,21 +629,16 @@ Tabel \ref{tab:jadwal} menampilkan jadwal yang direncanakan dalam pengembangan t
 			1 & 2 & 3 & 4 &
 			1 & 2 & 3 & 4\\
 		\hline
-		1 & Studi Literatur &
+		1 & Persiapan\ \  Data dan\ \ Lingkungan Penelitian &
 			\fillcell{4}
 			\emptycell{19}{1}
 		\hline
-		2 & Persiapan\ \  Data dan\ \ Lingkungan Penelitian &
-			\emptycell{1}{0}
-			\fillcell{4}
-			\emptycell{17}{1}
+		2 & Implementasi dan Pengujian &
+			\emptycell{2}{0}
+			\fillcell{17}
+			\emptycell{3}{1}
 		\hline
-		3 & Analisis &
-			\emptycell{4}{0}
-			\fillcell{6}
-			\emptycell{12}{1}
-		\hline
-		4 & Implementasi dan Pengujian &
+		4 & Analisis &
 			\emptycell{7}{0}
 			\fillcell{14}
 			\emptycell{1}{1}
