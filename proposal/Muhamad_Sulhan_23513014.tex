@@ -27,6 +27,7 @@
 	me-ning-kat-kan
 	me-thod
 	pen-de-kat-an
+	pe-ne-li-ti-an
 	po-ten-si-al
 	pro-ba-bi-li-tas
 	sam-pel
@@ -163,125 +164,126 @@
 %%
 \section{Ringkasan Proposal}\label{sec:ringkasan}
 
-Tesis ini mengkaji tentang metode dalam mendeteksi vandalisme yang terjadi di
-situs \textit{en.wikipedia.org}, yaitu situs ensiklopedia daring berbahasa
-Inggris, untuk membantu editor menemukan dan memperbaiki vandalisme yang
-terjadi di situs tersebut dengan tujuan untuk menjaga konten dari artikel
-Wikipedia tetap dengan kualitas yang bagus.
+Tesis ini mengkaji tentang metode dalam mendeteksi vandalisme yang terjadi di situs \textit{en.wikipedia.org}, yaitu situs ensiklopedia daring berbahasa Inggris, untuk membantu editor menemukan dan memperbaiki vandalisme yang terjadi di situs tersebut dengan tujuan untuk menjaga konten dari artikel Wikipedia tetap dengan kualitas yang bagus.
 %%}}}
 
 %%{{{ SECTION: Latar Belakang
 %%
 \section{Latar Belakang}\label{sec:latar-belakang}
 
-Wikipedia.org adalah ensiklopedia daring, yang mana artikel di Wikipedia
-merupakan hasil kolaborasi oleh para penyunting dari seluruh dunia. Situs
-Wikipedia.org merupakan situs ensiklopedia terbuka, artinya siapa pun dapat
-menyunting artikel tanpa perlu melakukan registrasi terlebih dahulu.
-Ensiklopedia daring ini memiliki artikel dari berbagai bahasa, dari bahasa umum
-dunia seperti Bahasa Inggris, sampai bahasa daerah seperti Bahasa Jawa. Situs
-untuk artikel Wikipedia Bahasa Inggris berada di en.wikipedia.org.
+Wikipedia.org adalah ensiklopedia daring, yang mana artikel di Wikipedia merupakan hasil kolaborasi oleh para penyunting dari seluruh dunia.
+Situs Wikipedia.org merupakan situs ensiklopedia terbuka, artinya siapa pun dapat menyunting artikel tanpa perlu melakukan registrasi terlebih dahulu.
+Ensiklopedia daring ini memiliki artikel dari berbagai bahasa, dari bahasa umum dunia seperti Bahasa Inggris, sampai bahasa daerah seperti Bahasa Jawa.
+Situs untuk artikel Wikipedia Bahasa Inggris berada di en.wikipedia.org.
 
-Vandalisme menurut Kamus Besar Bahasa Indonesia daring adalah, 1) perbuatan
-merusak dan menghancurkan hasil karya seni dan barang berharga lainnya; 2)
-perusakan dan penghancuran secara kasar dan ganas. Dalam konteks Wikipedia.org,
-vandalisme dapat berbentuk suntingan yang mengubah konten dari artikel sehingga
-memberikan isi yang salah, penghapusan secara menyeluruh, penghapusan sebagian,
-isi yang menghina, iklan, dan/atau teks yang tidak ada maknanya.
+Vandalisme menurut Kamus Besar Bahasa Indonesia daring adalah, 1) perbuatan merusak dan menghancurkan hasil karya seni dan barang berharga lainnya; 2) perusakan dan penghancuran secara kasar dan ganas.
+Dalam konteks Wikipedia.org, vandalisme dapat berbentuk suntingan yang mengubah konten dari artikel sehingga memberikan isi yang salah, penghapusan secara menyeluruh, penghapusan sebagian, isi yang menghina, iklan, dan/atau teks yang tidak ada maknanya.
 
-Jumlah artikel Bahasa Inggris pada situs en.wikipedia.org pada bulan Juli
-2015 yaitu sebanyak  artikel, dengan pengguna aktif, atau disebut juga
-editor, sebanyak 31,369 orang. Berarti, jika diasumsikan semua editor benar
-aktif, maka setiap pengguna aktif harus mengawasi sebanyak 157 artikel.
-Menemukan dan memperbaiki vandalisme tersebut dapat mengganggu editor dari
-menulis artikel dan pekerjaan penting lainnya, dan membuat pembaca bisa
-mendapatkan informasi yang salah atau tidak mendapatkan informasi
-sama sekali.
+Jumlah artikel Bahasa Inggris pada situs en.wikipedia.org pada bulan Juli 2015 yaitu sebanyak  artikel, dengan pengguna aktif, atau disebut juga editor, sebanyak 31,369 orang.
+Berarti, jika diasumsikan semua editor benar aktif, maka setiap pengguna aktif harus mengawasi sebanyak 157 artikel.
+Menemukan dan memperbaiki vandalisme tersebut dapat mengganggu editor dari menulis artikel dan pekerjaan penting lainnya, dan membuat pembaca bisa mendapatkan informasi yang salah atau tidak mendapatkan informasi sama sekali.
 %%}}}
 
 %%{{{ SECTION: Rumusan Masalah
 %%
 \section{Rumusan Masalah}\label{sec:rumusan-masalah}
 
-Korpus yang umum digunakan untuk mendeteksi vandalism yaitu PAN-WVC-11 dengan
-tingkat bias yang tinggi pada data; dengan kata lain memiliki jumlah yang tidak
-seimbang antara suntingan biasa dengan jumlah suntingan vandal. Korpus
-PAN-WVC-11 untuk artikel Wikipedia bahasa Inggris memiliki jumlah 9985 suntingan
-dengan 1144, atau 8\%, diantaranya adalah vandalisme.
+Korpus yang umum digunakan untuk mendeteksi vandalism yaitu PAN-WVC-11 dengan tingkat bias yang tinggi pada data; dengan kata lain memiliki jumlah yang tidak seimbang antara suntingan biasa dengan jumlah suntingan vandal.
+Korpus PAN-WVC-11 untuk artikel Wikipedia bahasa Inggris memiliki jumlah 9985 suntingan dengan 1144, atau 8\%, diantaranya adalah vandalisme.
 
-Menerapakan klasifikasi dengan data set yang bias bisa menyebabkan performansi
-deteksi yang rendah.  Hal ini disebabkan oleh:
+Menerapkan klasifikasi dengan data set yang bias bisa menyebabkan performansi deteksi yang rendah.
+Hal ini disebabkan oleh:
 \begin{enumerate}
-	\item Jika sebuah klasifikasi belajar dengan meminimalkan keseluruhan
-galat, maka instan dari kelas yang minoritas memiliki kontribusi yang rendah
-terhadap galat. Hal ini menyebabkan bias yang condong pada kelas klasifikasi
-yang mayoritas.
-	\item Pada umumnya klasifikasi mengasumsikan distribusi kelas yang
-seimbang antara kelas minoritas dan mayoritas, yang terkadang pada dunia nyata
-kasusnya tidak selalu seperti itu.
-	\item Sering kali klasifikasi secara implisit mengasumsikan biaya yang
-sama untuk mis-klasifikasi pada kedua kelas tersebut, yang mana terkadang tidak
-masuk akal. Sebagai contohnya, biaya untuk mengklasifikasikan kanker sebagai
-bukan kanker lebih tinggi dari pada sebaliknya. Secara tidak adanya data kanker
-bisa menyebabkan tidak dilakukannya terapi, misklasifikasi bisa membahayakan
-nyawa.
+	\item Jika sebuah klasifikasi belajar dengan meminimalkan keseluruhan galat, maka instan dari kelas yang minoritas memiliki kontribusi yang rendah terhadap galat.
+Hal ini menyebabkan bias yang condong pada kelas klasifikasi yang mayoritas.
+	\item Pada umumnya klasifikasi mengasumsikan distribusi kelas yang seimbang antara kelas minoritas dan mayoritas, yang terkadang pada dunia nyata kasusnya tidak selalu seperti itu.
+	\item Sering kali klasifikasi secara implisit mengasumsikan biaya yang sama untuk mis-klasifikasi pada kedua kelas tersebut, yang mana terkadang tidak masuk akal.
+Sebagai contohnya, biaya untuk mengklasifikasikan kanker sebagai bukan kanker lebih tinggi dari pada sebaliknya. 
+Secara tidak adanya data kanker bisa menyebabkan tidak dilakukannya terapi, misklasifikasi bisa membahayakan nyawa.
 \end{enumerate}
+
+
 %%}}}
 
 %%{{{ SECTION: Tujuan
 %%
 \section{Tujuan}\label{sec:tujuan}
 
-Tesis ini mencoba menjawab permasalahan data set yang tidak seimbang
-dengan mengkaji teknik penyeimbang yang belum pernah digunakan sebelumnya pada
-korpus Wikipedia dan melihat hasil penyeimbangan dengan menerapkan dua
-klasifikasi terhadap data set yang telah diseimbangkan dan membandingkan
-hasil keduanya.
+Tesis ini mencoba menjawab permasalahan data set yang tidak seimbang dengan mengkaji teknik penyeimbang yang belum pernah digunakan sebelumnya pada korpus Wikipedia dan melihat hasil penyeimbangan dengan menerapkan dua klasifikasi terhadap data set yang telah diseimbangkan dan membandingkan hasil keduanya.
 %%}}}
 
 %%{{{ SECTION: Batasan Masalah
 %%
 \section{Batasan Masalah}\label{sec:batasan-masalah}
 
-Tesis ini hanya melakukan analisis untuk artikel Wikipedia Bahasa Inggris
-yang terdapat pada situs \textit{en.wikipedia.org}. Data yang digunakan dalam
-melakukan analisis, implementasi, dan pengujian yaitu data \textit{dump} dari
-Wikipedia Bahasa Inggris dari bulan Januari 2015 sampai bulan Juli 2015
-\footnote{\url{http://dumps.wikimedia.org/idwiki/20150409/}}.
+Tesis ini hanya melakukan analisis untuk artikel Wikipedia Bahasa Inggris yang terdapat pada situs \textit{en.wikipedia.org}.
+Data yang digunakan dalam melakukan analisis, implementasi, dan pengujian yaitu data \textit{dump} dari Wikipedia Bahasa Inggris dari bulan Januari 2015 sampai bulan Juli 2015
+\footnote{\url{http://dumps.wikimedia.org/enwiki/20150409/}}.
 %%}}}
 
 %%{{{ SECTION: Studi Literatur
 %%
 \section{Studi Literatur}\label{sec:studi-literatur}
 
-Sebuah data set dikatakan timpang jika berisi lebih banyak sampel untuk satu kelas daripada kelas lainnya. Data set dikatakan tidak seimbang bila paling tidak satu kelas direpresentasikan oleh hanya oleh sejumlah kecil contoh sampel (disebut dengan kelas minoritas) sementara kelas lainnya menjadi mayoritas. Dalam skenario ini, pengklasifikasi akan memiliki akurasi yang bagus pada kelas mayoritas tapi akurasi yang buruk pada kelas minoritas yang disebabkan karena pengaruh yang besar dari kelas mayoritas pada kriteria pelatihan sampel. Dengan data set yang tidak seimbang, algoritma penggalian data menghasilkan model yang cacat yang tidak memperhitungkan kelas minoritas secara kebanyakan algoritma penggalian data mengasumsikan data set yang seimbang.
+Sebuah data set dikatakan timpang jika berisi lebih banyak sampel untuk satu kelas daripada kelas lainnya.
+Data set dikatakan tidak seimbang bila paling tidak satu kelas direpresentasikan oleh hanya oleh sejumlah kecil contoh sampel (disebut dengan kelas minoritas) sementara kelas lainnya menjadi mayoritas.
+Dalam skenario ini, pengklasifikasi akan memiliki akurasi yang bagus pada kelas mayoritas tapi akurasi yang buruk pada kelas minoritas yang disebabkan karena pengaruh yang besar dari kelas mayoritas pada kriteria pelatihan sampel. 
+Dengan data set yang tidak seimbang, algoritma penggalian data menghasilkan model yang cacat yang tidak memperhitungkan kelas minoritas, secara kebanyakan algoritma penggalian data mengasumsikan data set yang seimbang.
 
-Secara umum ada dua pendekatan dalam menghadapi permasalahan ketakseimbangan pada kelas. Pendekatan pertama yaitu beroperasi pada tingkat data yang terdiri dari beberapa teknik \textit{resampling} data. Pendekatan kedua yaitu bekerja pada tingkat algoritma yang mengikutkan penyesuaian terhadap biaya misklasifikasi atau estimasi probabilitas. Kebanyakan algoritma klasifikasi mencoba meminimalkan laju galat: persentase prediksi yang tidak tepat dari label kelas. Algoritma penyeimbang mengindahkan perbedaan antara tipe dari galat misklasifikasi. Khususnya, algoritma tersebut secara implisit mengasumsikan bahwa semua galat misklasifikasi memiliki biaya yang sama. Sejumlah solusi terhadap permasalahan ketimpangan kelas telah diajukan untuk tingkat data dan algoritma \cite{chawla2004editorial}.
+Pada umumnya ada dua pendekatan dalam menghadapi permasalahan ketakseimbangan pada kelas.
+Pendekatan pertama yaitu beroperasi pada tingkat data yang terdiri dari beberapa teknik \textit{resampling} data. 
+Pendekatan kedua yaitu bekerja pada tingkat algoritma yang mengikutkan penyesuaian terhadap biaya misklasifikasi atau estimasi probabilitas.
+Kebanyakan algoritma klasifikasi mencoba meminimalkan laju galat: persentase prediksi yang tidak tepat dari label kelas.
+Algoritma penyeimbang mengindahkan perbedaan antara tipe dari galat misklasifikasi.
+Khususnya, algoritma tersebut secara implisit mengasumsikan bahwa semua galat misklasifikasi memiliki biaya yang sama.
+Sejumlah solusi terhadap permasalahan ketimpangan kelas telah diajukan untuk tingkat data dan algoritma \cite{chawla2004editorial}.
 
 \subsection{Metode \textit{resampling}}\label{subsec:metode-resampling}
 
-Metode yang paling mudah untuk menyeimbangkan kelas yaitu dengan melakukan pengambilan ulang sampel, atau \textit{resampling}, data, baik dengan \textit{oversampling} pada kelas minoritas atau \textit{undersampling} pada kelas mayoritas, sampai kelas-kelas tersebut mendekati representasi yang sama. Kedua strategi tersebut dapat digunakan pada sistem pembelajaran, secara mereka bekerja pada fase pra-proses, membolehkan sistem pembelajaran menggunakan instan data latihan seolah-olah berasal dari data set yang seimbang. Maka, bias apa pun dari sistem terhadap kelas mayoritas disebabkan karena proporsi sampel yang berbeda bisa diharapkan berkurang.
+Metode yang paling mudah untuk menyeimbangkan kelas yaitu dengan melakukan pengambilan ulang sampel, atau \textit{resampling}, baik dengan \textit{oversampling} pada kelas minoritas atau \textit{undersampling} pada kelas mayoritas, sampai kelas-kelas tersebut mendekati representasi yang sama.
+Kedua strategi tersebut dapat digunakan pada sistem pembelajaran, secara mereka bekerja pada fase pra-proses, membolehkan sistem pembelajaran menggunakan instan data latihan seolah-olah berasal dari data set yang seimbang. 
+Maka, bias apa pun dari sistem terhadap kelas mayoritas disebabkan karena proporsi sampel yang berbeda bisa diharapkan berkurang.
 
-Metode \textit{resampling} memiliki kelemahan. \textit{Undersampling} bisa menghilangkan data yang berpotensi berguna, sementara \textit{oversampling} secara artifisial meningkatkan jumlah data set dan akibatnya memperburuk kerja komputasi pada algoritma pembelajaran.
+Metode \textit{resampling} memiliki kelemahan.
+\textit{Undersampling} bisa menghilangkan data yang berpotensi berguna, sementara \textit{oversampling} secara artifisial meningkatkan jumlah data set dan akibatnya memperburuk kerja komputasi pada algoritma pembelajaran.
 
-Dengan kelemahan-kelemahan pada teknik \textit{sampling}, tetap metode \textit{resampling} masih merupakan cara yang paling sering digunakan untuk menangani masalah ketimpangan data daripada menggunakan algoritma pembelajaran \textit{cost-sensitive}. Hal ini karena, pertama, tidak semua implementasi algoritma \textit{cost-sentitive} ada pada bahasa yang digunakan, maka pendekatan menggunakan \textit{sampling} menjadi satu-satunya pilihan. Alasan kedua, kebanyakan data set yang timpang sangatlah besar dan ukuran data set latihan harus dikurangi supaya pembelajaran dapat berjalan. Untuk alasan ini, \textit{under-sampling} menjadi strategi yang masuk akal dan valid. Jika ingin menghilangkan beberapa data latihan akan lebih menguntungkan bila sampel pada kelas mayoritas yang dihilangkan dengan tujuan untuk mengurangi jumlah data latihan, dan kemudian menggunakan algoritma \textit{cost-sensitive} terhadapnya. Alasan terakhir kenapa \textit{sampling} digunakan adalah biaya misklasifikasi terkadang tidak diketahui.
+Dengan kelemahan-kelemahan pada teknik \textit{sampling}, tetap metode \textit{resampling} masih merupakan cara yang paling sering digunakan untuk menangani masalah ketimpangan data daripada menggunakan algoritma pembelajaran \textit{cost-sensitive}.
+Hal ini karena, pertama, tidak semua implementasi algoritma \textit{cost-sentitive} ada pada bahasa pemrograman, maka pendekatan menggunakan \textit{sampling} menjadi satu-satunya pilihan.
+Alasan kedua, kebanyakan data set yang timpang sangatlah besar dan ukuran data set latihan harus dikurangi supaya pembelajaran dapat menghasilkan model.
+Untuk alasan ini, \textit{under-sampling} menjadi strategi yang masuk akal dan valid.
+Jika ingin menghilangkan beberapa data latihan akan lebih menguntungkan bila sampel pada kelas mayoritas yang dihilangkan dengan tujuan untuk mengurangi jumlah data latihan, dan kemudian menggunakan algoritma \textit{cost-sensitive} terhadapnya.
+Alasan terakhir kenapa \textit{sampling} digunakan adalah biaya misklasifikasi terkadang tidak diketahui.
 
 \subsubsection{\textit{Oversampling}}\label{subsubsec:oversampling}
 
-Metode paling sederhana untuk meningkatkan jumlah kelas minoritas bisa menggunakan \textit{oversampling} acak, yaitu metode non-heuristik yang menyeimbangkan distribusi kelas dengan replikasi acak dari sampel positif. Disebabkan karena metode ini mereplikasi sampel yang ada pada kelas minoritas, maka permasalahan \textit{overfit} akan mungkin terjadi, yang mana model akan bagus untuk data latihan tapi buruk bila digunakan pada data yang baru. Kelamahan lain yaitu menambah jumlah waktu pada pelatihan sampel karena jumlah data yang bertambah.
+Metode paling sederhana untuk meningkatkan jumlah kelas minoritas bisa menggunakan \textit{oversampling} acak, yaitu metode non-heuristik yang menyeimbangkan distribusi kelas dengan replikasi acak dari sampel positif.
+Disebabkan karena metode ini mereplikasi sampel yang ada pada kelas minoritas, maka permasalahan \textit{overfit} akan mungkin terjadi, yang mana model akan bagus untuk data latihan tapi buruk bila digunakan pada data yang baru. 
+Kelemahan lain yaitu menambah jumlah waktu pada pelatihan sampel karena jumlah data yang bertambah.
 
-Untuk mengatasi masalah tersebut Chawla \cite{chawla2002smote} mengajukan pendekatan \textit{oversampling} yaitu \textit{Synthetic Minority Over-sampling Technique} (SMOTE) yang mana kelas minoritas ditambah dengan menambah sampel "sintetis" bukan ditambah dengan mengganti sampel yang ada. Kelas minoritas ditambah sampelnya dengan mengambil setiap sampel kelas minoritas dan menambah sampel sintetis di antara segmen baris yang menggabungkan setiap atau semua tetangga kelas minoritas yang berdekatan. Bergantung pada sampel tambahan yang dibutuhkan, tetangga dari kelas terdekat secara acak dipilih. Pendekatan SMOTE tidak menangani data set dengan fitur nominal, ia secara umum digeneralisasi untuk menangani data set campuran dari fitur berkelanjutan dan nominal.
+Untuk mengatasi masalah tersebut Chawla \cite{chawla2002smote} mengajukan pendekatan \textit{oversampling} yaitu \textit{Synthetic Minority Over-sampling Technique} (SMOTE) yang mana kelas minoritas ditambah dengan sampel "sintetis" bukan ditambah dengan mengganti sampel yang ada.
+Kelas minoritas ditambah sampelnya dengan mengambil setiap sampel kelas minoritas dan menambah sampel sintetis di antara segmen baris yang menggabungkan setiap atau semua tetangga kelas minoritas yang berdekatan.
+Bergantung pada jumlah sampel tambahan yang dibutuhkan, tetangga dari kelas terdekat secara acak dipilih.
+Pendekatan SMOTE tidak menangani data set dengan fitur nominal, teknik ini secara umum digeneralisasi untuk menangani data set campuran dari fitur berkelanjutan dan nominal.
 
-Berdasarkan metode SMOTE, Hui Han dan Wen-Yuang Wang \cite{han2005borderline} memperkenalkan dua metode \textit{oversampling}, \textit{borderline-SMOTE1} dan \textit{borderline-SMOTE2}, yang mana hanya sampel minoritas yang dekat dengan garis batas yang ditambahkan. Pendekatan ini menghasilkan laju TP dan F-value yang lebih baik daripada SMOTE dan metode \textit{oversampling} acak.
+Berdasarkan metode SMOTE, Hui Han dan Wen-Yuang Wang \cite{han2005borderline} memperkenalkan dua metode \textit{oversampling}, \textit{borderline-SMOTE1} dan \textit{borderline-SMOTE2}, yang mana hanya sampel minoritas yang dekat dengan garis batas yang ditambahkan.
+Pendekatan ini menghasilkan laju TP dan \textit{F-value} yang lebih baik daripada SMOTE dan metode \textit{oversampling} acak.
 
-Estrabrooks dkk. \cite{estabrooks2004multiple} mengajukan sebuah metode \textit{resampling} yang memilih laju \textit{re-sampling} yang paling sesuai secara adaptif. Taeho Jo dkk. \cite{jo2004class} menggunakan metode \textit{over-sampling} berbasis kluster yang menangani ketimpangan antara kelas dan ketimpangan pada kelas secara simultan. Hongyu Guo dkk. \cite{guo2004learning} mencari sampel untuk kelas minoritas dan mayoritas saat proses \textit{boosting}, dan menciptakan sampel sintetis baru dari sampel tersebut dan menambahkannya ke data set.
+Estrabrooks dkk. \cite{estabrooks2004multiple} mengajukan sebuah metode \textit{resampling} yang memilih laju \textit{resampling} yang paling sesuai secara adaptif.
+Taeho Jo dkk. \cite{jo2004class} menggunakan metode \textit{over-sampling} berbasis kluster yang menangani ketimpangan antara kelas dan ketimpangan pada kelas secara simultan.
+Hongyu Guo dkk. \cite{guo2004learning} mencari sampel untuk kelas minoritas dan mayoritas saat proses \textit{boosting}, dan menciptakan sampel sintetis baru dari sampel tersebut dan menambahkannya ke data set.
 
 
 \subsubsection{\textit{Undersampling}}\label{subsubsec:undersampling}
 
-\textit{Under-sampling} adalah metode yang efisien untuk pembelajaran kelas yang timpang. Metode ini menggunakan subset dari kelas mayoritas untuk melatih pengklasifikasi. Secara banyak sampel dari kelas mayoritas yang dihilangkan, data latihan menjadi lebih seimbang dan proses pelatihan menjadi lebih cepat. Teknik paling umum adalah \textit{random majority under-sampling} (RUS). Pada RUS, instan dari kelas mayoritas secara acak dihilangkan dari data set.
+\textit{Under-sampling} adalah metode yang efisien untuk pembelajaran kelas yang timpang.
+Metode ini menggunakan subset dari kelas mayoritas untuk melatih pengklasifikasi.
+Secara banyak sampel dari kelas mayoritas yang dihilangkan, data latihan menjadi lebih seimbang dan proses pelatihan menjadi lebih cepat.
+Teknik paling umum adalah \textit{random majority under-sampling} (RUS).
+Pada RUS, instan dari kelas mayoritas secara acak dihilangkan dari data set.
 
-Kelemahan utama dari \textit{under-sampling} adalah informasi yang secara potensial berguna yang terdapat pada sampel yang dihilangkan tersebut menjadi terindahkan. Ada banyak cara untuk meningkatkan performansi dari sampel acak, seperti, \textit{Condensed Nearest Neighbor Rule} dan \textit{One-sided selection} (OSS). OSS diajukan oleh Kubat dan Mattwin \cite{kubat1997addressing} mencoba dengan intelejensi mengurangi kelas mayoritas dengan menghilangkan sampel yang dianggap redundan atau "bising".
+Kelemahan utama dari \textit{under-sampling} adalah informasi yang secara potensial berguna yang terdapat pada sampel yang dihilangkan tersebut menjadi terindahkan.
+Ada banyak cara untuk meningkatkan performansi dari sampel acak, seperti, \textit{Condensed Nearest Neighbor Rule} dan \textit{One-sided selection} (OSS).
+OSS diajukan oleh Kubat dan Mattwin \cite{kubat1997addressing} yang mencoba secara intelejensi mengurangi kelas mayoritas dengan menghilangkan sampel yang dianggap redundan atau "bising".
 
 \subsection{Metode Algoritma Pembelajaran \textit{Cost-Sensitive}}
 
@@ -295,7 +297,9 @@ Menggabungkan biaya ke dalam algoritma klasifikasi \textit{decision tree} adalah
 Biaya dapat diikutkan dengan berbagai cara.
 Cara pertama adalah biaya dapat diterapkan untuk menyesuaikan ambang batas keputusan, cara kedua adalah biaya dapat digunakan dalam memisahkan pemilihan atribut saat pembentukan \textit{decision tree}, dan terakhir yaitu skema pemotongan \textit{cost sensitive} dapat diterapkan pada \textit{tree}.
 
-Ling dkk. \cite{ling2004decision} mengajukan sebuah metode untuk membangun dan menguji \textit{decision tree} yang meminimalkan jumlah keseluruhan dari misklasifikasi dan biaya uji. Algoritma yang digunakan memilih atribut pemisah yang meminimalkan biaya total, total biaya uji dan biaya misklasifikasi bukan memilih atribut yang meminimalkan entropi. Liu dkk. \cite{liu2010robust} mengajukan algoritma \textit{decision tree} baru bernama \textit{Class Confidence Proportion Decision Tree} (CCPDT) yang kuat dan peka terhadap jumlah kelas dan mengeluarkan aturan-aturan yang secara statistik signifikan.
+Ling dkk. \cite{ling2004decision} mengajukan sebuah metode untuk membangun dan menguji \textit{decision tree} yang meminimalkan jumlah keseluruhan dari misklasifikasi dan biaya uji.
+Algoritma yang digunakan memilih atribut pemisah yang meminimalkan biaya total, total biaya uji dan biaya misklasifikasi bukan memilih atribut yang meminimalkan entropi.
+Liu dkk. \cite{liu2010robust} mengajukan algoritma \textit{decision tree} baru bernama \textit{Class Confidence Proportion Decision Tree} (CCPDT) yang kuat dan peka terhadap jumlah kelas dan mengeluarkan aturan-aturan yang secara statistik signifikan.
 Cieslak dkk. \cite{cieslak2012hellinger} secara analitis dan empiris memperlihatkan kekuatan kepekaan kemiringan dari \textit{Hellinger Distance} dan kelebihannya terhadap matriks terkenal lainnya.
 Mereka berkesimpulan bahwa untuk data yang timpang adalah cukup menggunakan pohon Hellinger dengan \textit{bagging} tanpa ada metode sampling.
 Maheswari dkk. \cite{maheshwari2011new} menggunakan operator yang berbeda-beda dari algoritma Genetik untuk \textit{oversampling} untuk memperbesar rasio dari sampel positif dan kemudian menerapkan klusterisasi terhadap data set latihan yang telah di-\textit{oversampling} sebagai metode pembersihan data untuk kedua kelas, menghilangkan sampel yang duplikasi dan mengganggu.
@@ -319,30 +323,22 @@ Algoritma BABoost pada setiap kali \textit{boosting} memberikan berat tambahan k
 
 Penelitian ini dikembangkan dengan menggunakan metodologi kuantitatif dengan tahapan sebagai berikut,
 \begin{itemize}
-	\item \textbf{Studi Literatur}. Peneliti membaca beberapa penelitian
-yang sebelumnya telah dilakukan dalam deteksi vandalisme pada Wikipedia. Dari
-hasil penelitian tersebut penulis dapat melihat kelemahan dan potensi ke depan
-yang dapat dikembangkan, sehingga menjadi rumusan masalah dalam penulisan tesis
-ini. Tahapan selanjutnya dari studi literatur yaitu mengkaji sumber yang
-berkaitan dengan metode yang digunakan dalam pendeteksian vandalisme dalam
-makalah ini.
-	\item \textbf{Persiapan Data dan Lingkungan Penelitian}. Dalam tahapan
-ini peneliti mempersiapkan data dan lingkungan pengembangan, seperti persiapan
-aplikasi basis data, pengaturan bahasa pemrograman, dan lainnya; yang
-diperlukan nantinya dalam melakukan analisis, implementasi, dan pengujian.
-	\item \textbf{Analisis}. Pada tahap ini peneliti melihat data dan
-menentukan fungsi-fungsi yang akan diterapkan dalam implementasi untuk
-mendapatkan hasil yang ditujukan. Tahap ini bisa terjadi berulang kembali
-setelah implementasi.
-	\item \textbf{Implementasi}. Tahap implementasi dalam makalah ini
-berupa proses pemuatan data, penerapan fungsi dalam bahasa pemrograman, dan
+	\item \textbf{Studi Literatur}. Peneliti membaca beberapa penelitian yang sebelumnya telah dilakukan dalam deteksi vandalisme pada Wikipedia.
+Dari hasil penelitian tersebut penulis dapat melihat kelemahan dan potensi ke depan yang dapat dikembangkan, sehingga menjadi rumusan masalah dalam penulisan tesis ini.
+Tahapan selanjutnya dari studi literatur yaitu mengkaji sumber yang berkaitan dengan metode yang digunakan dalam pendeteksian vandalisme dalam makalah ini.
+	\item \textbf{Persiapan Data dan Lingkungan Penelitian}.
+Dalam tahapan ini peneliti mempersiapkan data dan lingkungan pengembangan, seperti persiapan aplikasi basis data, pengaturan bahasa pemrograman, dan lainnya; yang diperlukan nantinya dalam melakukan analisis, implementasi, dan pengujian.
+	\item \textbf{Analisis}.
+Pada tahap ini peneliti melihat data dan menentukan fungsi-fungsi yang akan diterapkan dalam implementasi untuk
+mendapatkan hasil yang ditujukan.
+Tahap ini bisa terjadi berulang kembali setelah implementasi.
+	\item \textbf{Implementasi}.
+Tahap implementasi dalam makalah ini berupa proses pemuatan data, penerapan fungsi dalam bahasa pemrograman, dan
 pembuatan lingkungan pengujian.
-	\item \textbf{Pengujian}. Setelah tahap implementasi selesai, fungsi
-dari pendeteksian vandalisme akan dilakukan secara \textit{offline}. Data
-dibagi dalam dua bagian waktu, sebelum $ t_{b} $ dan sesudah $ t_{s} $,
-kemudian fungsi deteksi vandalisme dijalankan untuk data $t_{b}$.
-	\item \textbf{Evaluasi}. Tahap ini membandingkan hasil dari pengujian
-pada data $t_{b}$ dengan data sesudah $t_{s}$.
+	\item \textbf{Pengujian}.
+Setelah tahap implementasi selesai, fungsi dari pendeteksian vandalisme akan dilakukan secara \textit{offline}.
+Data dibagi dalam dua bagian waktu, sebelum $ t_{b} $ dan sesudah $ t_{s} $, kemudian fungsi deteksi vandalisme dijalankan untuk data $t_{b}$.
+	\item \textbf{Evaluasi}. Tahap ini membandingkan hasil dari pengujian pada data $t_{b}$ dengan data sesudah $t_{s}$.
 \end{itemize}
 %%}}}
 
@@ -350,9 +346,7 @@ pada data $t_{b}$ dengan data sesudah $t_{s}$.
 %%
 \section{Implikasi}\label{sec:implikasi}
 
-Implikasi yang didapat dari hasil penelitian ini adalah memberikan sebuah alat
-yang membantu editor Wikipedia dalam mengambil keputusan dari daftar suntingan
-yang berpotensi hasil vandal sehingga mempercepat mereka dalam mengembalikan
+Implikasi yang didapat dari hasil penelitian ini adalah memberikan sebuah alat yang membantu editor Wikipedia dalam mengambil keputusan dari daftar suntingan yang berpotensi hasil vandal sehingga mempercepat mereka dalam mengembalikan
 artikel ke versi sebelumnya.
 %%}}}
 
@@ -362,17 +356,11 @@ artikel ke versi sebelumnya.
 
 Laporan tesis ini dibagi menjadi beberapa bab berikut,
 \begin{enumerate}
-	\item Bab I, Pendahuluan, berisi Latar Belakang, Rumusan Masalah,
-Tujuan, Batasan Masalah, Metodologi, dan Sistematika Penulisan.
-	\item Bab II, Landasan Teori, berisi ilmu dan konsep yang mendukung
-pembahasan tesis ini.
-	\item Bab III, Metodologi Penelitian, berisi deskripsi tentang
-analisis, tahap implementasi, dan tahap pengujian yang dilakukan selama
-penelitian.
-	\item Bab IV, Hasil dan Analisis, berisi penjelasan dari hasil
-penelitian.
-	\item Bab V, Penutup, berisi kesimpulan yang dapat diambil dari
-hasil\linebreak penelitian ini beserta saran untuk pengembangan selanjutnya.
+	\item Bab I, Pendahuluan, berisi Latar Belakang, Rumusan Masalah, Tujuan, Batasan Masalah, Metodologi, dan Sistematika Penulisan.
+	\item Bab II, Landasan Teori, berisi ilmu dan konsep yang mendukung pembahasan tesis ini.
+	\item Bab III, Metodologi Penelitian, berisi deskripsi tentang analisis, tahap implementasi, dan tahap pengujian yang dilakukan selama penelitian.
+	\item Bab IV, Hasil dan Analisis, berisi penjelasan dari hasil penelitian.
+	\item Bab V, Penutup, berisi kesimpulan yang dapat diambil dari hasil penelitian ini beserta saran untuk pengembangan selanjutnya.
 \end{enumerate}
 %%}}}
 
@@ -381,8 +369,7 @@ hasil\linebreak penelitian ini beserta saran untuk pengembangan selanjutnya.
 \clearpage
 \section{Penjadwalan}\label{sec:penjadwalan}
 
-Tabel \ref{tab:jadwal} menampilkan jadwal yang direncanakan dalam pengembangan
-tesis dari bulan ke I, September 2015, sampai dengan bulan ke VI, Januari 2016.
+Tabel \ref{tab:jadwal} menampilkan jadwal yang direncanakan dalam pengembangan tesis dari bulan ke I, September 2015, sampai dengan bulan ke VI, Januari 2016.
 
 \renewcommand{\arraystretch}{1.5}
 \setlength{\tabcolsep}{3pt}
