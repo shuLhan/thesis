@@ -58,19 +58,21 @@
 %%{{{ document's functions
 %%
 %%% signature
-\def\mysignature#1{%
-	\vbox{\hsize=5cm
+\def\mysignature#1#2#3{%
+	\vbox{
 		\textbf{#1}\\
 		\addvspace{2cm}%
 		\hbox to \hsize{%
 			\strut\hfil%
-			\ldots\ldots\ldots\ldots\ldots\ldots\ldots%
+			{#2}%
 			\hfil%
 		}
-		\hrule\kern1ex
+		\makebox[6cm][c]{
+			\hrulefill
+		}
 		\hbox to \hsize{%
 			\strut\hfil%
-			NIP\hspace{1ex}\ldots\ldots\ldots\ldots\ldots\ldots%
+			NIP\hspace{1ex}{#3}%
 			\hfil%
 		}
 	}
@@ -154,12 +156,9 @@
 		Institut Teknologi Bandung \\
 		\vfill
 		Telah disetujui sebagai Proposal Tesis \\
-		di Bandung, pada tanggal ...................\\
+		di Bandung, pada tanggal 7 September 2015\\
 		\vfill
-		\hbox to \hsize{%
-			\mysignature{Pembimbing I,\quad}\hfil
-			\mysignature{Pembimbing II,}
-		}
+		\mysignature{Pembimbing I,\quad}{Dwi Hendratmo Widyantoro}{196812071994021001}\hfil
 	}
 \end{center}
 \newpage
