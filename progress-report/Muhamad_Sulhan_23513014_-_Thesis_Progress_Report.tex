@@ -1,0 +1,279 @@
+\documentclass[12pt,a4paper,titlepage]{article}
+
+%%{{{ document's packages
+%%
+\usepackage{graphicx}		% \includegraphics{name}
+\usepackage{multirow}		% \multirow{package}{width}{text}
+\usepackage{forloop}		% \forloop
+\usepackage{caption}		% \caption{title}
+\usepackage[table]{xcolor}
+\usepackage{url}
+%% fix underfull on footnote with URL.
+\usepackage{ragged2e}
+%%% uncomment this to show overrule in black box
+\overfullrule=2cm
+%%
+\hyphenation{
+	ber-kas
+	data-set
+	pe-nan-da
+	sun-ting-an
+}
+
+%% reconfigure table.
+%%% Alter latex default title
+\captionsetup[table]{name=Tabel}
+\renewcommand{\arraystretch}{1.5}
+\setlength{\tabcolsep}{3pt}
+
+%%}}}
+
+%%{{{ document's variables
+%%
+\newcommand{\mytitle}{Deteksi Vandalisme pada Wikipedia Bahasa Inggris menggunakan klasifikasi Cascaded Random Forest}
+\newcommand{\myname}{Muhamad Sulhan}
+\newcommand{\mysid}{23513014}
+%%}}}
+
+%%{{{ document's meta-data
+%%
+\author{\myname}
+\title{\mytitle}
+%%}}}
+
+%%{{{ document's functions
+%%
+%%% signature
+\def\myadvisorsig#1{%
+	\vbox{\hsize=6cm
+		\textbf{#1}\\
+		\addvspace{2cm}%
+		\hbox to \hsize{%
+			\strut\hfil%
+			Dwi Hendratmo Widyantoro%
+			\hfil%
+		}
+		\hrule\kern1ex
+		\hbox to \hsize{%
+			\strut\hfil%
+			NIP\hspace{1ex}196812071994021001%
+			\hfil%
+		}
+	}
+}
+%%}}}
+
+%%
+%% DOCUMENT
+%%
+\begin{document}
+
+%% {{{ COVER
+\thispagestyle{empty}
+\begin{center}
+	\textbf{%
+		\mytitle
+		\vfill
+		Laporan Progres Tesis, Catatan dan Pekerjaan Selanjutnya
+		\linebreak
+		\linebreak
+		11 September 2015
+		\vfill
+		Oleh \\
+		\myname \\
+		\mysid \\
+		\vfill
+		\uppercase{%
+			Program Studi Magister Informatika \\
+			Sekolah Teknik Elektro dan Informatika \\
+			Institut Teknologi Bandung \\
+			2015
+		}
+	}
+\end{center}
+\newpage
+%% }}}
+
+%%{{{ Laporan Progress
+\section{Laporan Progres}
+
+Bagian ini mencatat progres pekerjaan yang telah dilakukan setiap minggu secara ringkas.
+Rincian dari progres berada pada bagian Catatan.
+
+\subsection{Minggu I}
+
+\begin{itemize}
+	\item \textbf{Data korpus untuk PAN-WVC-11 telah diunduh.}
+Ukuran berkas terkompres yaitu 371 MB, dan tidak terkompres sebesar 1,1 GB.
+Jumlah suntingan yaitu 9985, dengan 8734 diantaranya adalah suntingan regular dan 1251 (sekitar 12\%) adalah vandalisme.
+
+	\item \textbf{Perbaikan proposal tesis.}
+\end{itemize}
+
+\subsection{Minggu II}
+
+\begin{itemize}
+	\item \textbf{Data korpus untuk PAN-WVC-10 telah diunduh.}
+Ukuran berkas terkompres yaitu 439 MB, dan tidak terkompres sebesar 1,3 GB.
+Jumlah dataset yaitu 32439 revisi, dengan 30045 diantaranya adalah suntingan regular dan 2394 (sekitar 7\%) diantaranya adalah vandalisme.
+
+	\item \textbf{Pemasangan \textit{Database Management System} (DBMS).}
+DBMS yang digunakan adalah MariaDB, yang merupakan \textit{fork} dari MySQL.
+DBMS nantinya digunakan untuk menyimpan data ekspor dari hasil \textit{dump} riwayat penyuntingan Wikipedia.
+Wikimedia (perangkat lunak wiki yang digunakan oleh Wikipedia), menggunakan MySQL sebagai DBMS, itulah kenapa MariaDB dipilih dalam pengembangan tesis ini.
+
+	\item \textbf{Data \textit{dump} dari riwayat wikipedia telah diunduh.} \footnote{\RaggedRight\url{http://dumps.wikimedia.org/enwiki/20150805/enwiki-20150805-stub-meta-history1.xml.gz}}
+Berkas hanya satu dari 27 berkas \textit{dump} yang memiliki total 43,5 GB.
+Ukuran data terkompres yaitu 503 MB dan tidak terkompres 3,3 GB.
+Format data berupa xml.
+\end{itemize}
+%%}}}
+
+%%{{{ Catatan
+\newpage
+\section{Catatan}
+
+Bagian ini berisi catatan yang didapat pada setiap minggu selama mengerjakan tesis.
+
+\subsection{Minggu I dan II}
+
+Korpus PAN-WVC-10 terbagi menjadi dua yaitu dataset suntingan dan dataset anotasi yang berisi hasil klasifikasi.
+Kedua dataset memiliki format yang sama yaitu menggunakan \textit{Coma Separated Value} (CSV).
+Dataset suntingan memiliki atribut sebagai berikut,
+\begin{itemize}
+	\item \textbf{editid}, format angka, berisi identifikasi (ID) unik dari setiap suntingan.
+	\item \textbf{editor}, format string, berisi nama penyunting.
+	\item \textbf{oldrevisionid}, format angka, berisi ID untuk suntingan lama.
+	\item \textbf{newrevisionid}, format angka, berisi ID untuk suntingan baru.
+	\item \textbf{diffurl}, format string, berisi URL yang mengacu pada perbedaan suntingan baru dengan lama.
+	\item \textbf{edittime}, format string, berisi tanggal dan pukul sesuai dengan ISO 8601.
+	\item \textbf{editcomment}, format string, berisi komentar yang ditambahkan oleh penyunting saat menyimpan hasil suntingan.
+	\item \textbf{articleid}, format angka, berisi ID unik dari artikel.
+	\item \textbf{articletitle}, format string, berisi judul dari artikel yang disunting.
+\end{itemize}
+
+Dataset anotasi memiliki atribut sebagai berikut,
+\begin{itemize}
+	\item \textbf{editid}, format angka, mengacu pada ID yang sama pada dataset suntingan.
+	\item \textbf{class}, format string, berisi tipe suntingan yang bernilai "regular" yang menyatakan bahwa suntingan tersebut bukan vandalisme, dan "vandalism" yang menyatakan bahwa suntingan tersebut adalah vandalisme.
+	\item \textbf{annotators}, format angka, berisi jumlah orang yang menandai (penanda) bahwa suntingan dengan ID tersebut termasuk ke dalam kelas "regular" atau "vandalism".
+	\item \textbf{totalannotators}, format angka, berisi jumlah total penanda yang memeriksa suntingan.
+\end{itemize}
+
+Korpus PAN-WVC-11 hanya memiliki satu dataset untuk Bahasa Inggris yaitu dataset suntingan, dengan atribut yang menggabungkan dataset suntingan dan dataset anotasi pada PAN-WVC-10.
+
+Rencananya, korpus PAN-WVC-10 dijadikan sebagai dataset untuk \textit{resampling} dan pelatihan klasifikasi karena kuantitasnya lebih banyak daripada PAN-WVC-11.
+Korpus PAN-WVC-11 dijadikan sebagai dataset untuk pengujian model.
+%%}}}
+
+%%{{{ Pekerjaan Selanjutnya
+\section{Pekerjaan Selanjutnya}
+
+Bagian ini berisi pekerjaan yang akan dilakukan oleh penulis pada minggu selanjutnya dari tanggal laporan progres ini.
+Sub-bagian terurut menaik, dengan minggu terbesar atau minggu depan berada pada urutan paling atas dan minggu-minggu yang telah terlewati di bawahnya, untuk mempermudah pembaca.
+
+\subsection{Minggu III}
+
+Mempelajari dan mengimplementasikan algoritma LN-SMOTE pada bahasa pemrograman Go.
+
+%%}}}
+
+%%{{{ SECTION: Penjadwalan
+%%
+\newpage
+\section{Penjadwalan}\label{sec:penjadwalan}
+
+Tabel \ref{tab:jadwal} menampilkan jadwal yang direncanakan dalam pengembangan tesis dari bulan ke I, September 2015, sampai dengan bulan ke VI, Januari 2016.
+Warna merah menandakan minggu dari laporan progres ini, untuk warna abu-abu menandakan waktu pelaksanaan yang akan datang.
+
+% function to fill cell with color
+\newcommand{\tand}{&}
+\newcounter{cnt}
+\newcommand{\fillcell}[1]{%
+	\forloop{cnt}{0}{\value{cnt}<#1}{%
+		{\cellcolor[gray]{0.7}} \tand
+	}%
+}
+% function to create empty cell
+\newcommand{\emptycell}[2]{%
+	\forloop{cnt}{0}{\value{cnt}<#1}{%
+		\tand
+	}%
+	\ifthenelse{#2 = 1}{\\}{\tand}%
+}
+% function to fill week in progress.
+\newcommand{\progresscell}[1]{%
+	\forloop{cnt}{0}{\value{cnt}<#1}{%
+		{\cellcolor{red!80}} \tand
+	}%
+}
+
+\begin{table}[h!]
+	\centering
+	{\footnotesize
+	\begin{tabular}{|c|p{0.2\textwidth}
+	|c|c|c|c
+	|c|c|c|c
+	|c|c|c|c
+	|c|c|c|c
+	|c|c|c|c
+	|c|c|c|c|}
+		\hline
+		\multirow{2}{*}{No.}
+			& \multirow{2}{*}{Kegiatan}
+			& \multicolumn{4}{c|}{Bulan I}
+			& \multicolumn{4}{c|}{Bulan II}
+			& \multicolumn{4}{c|}{Bulan III}
+			& \multicolumn{4}{c|}{Bulan IV}
+			& \multicolumn{4}{c|}{Bulan V}
+			& \multicolumn{4}{c|}{Bulan VI}\\
+		\cline{3-26}
+		& &
+			1 & 2 & 3 & 4 &
+			1 & 2 & 3 & 4 &
+			1 & 2 & 3 & 4 &
+			1 & 2 & 3 & 4 &
+			1 & 2 & 3 & 4 &
+			1 & 2 & 3 & 4\\
+		\hline
+		1 & Persiapan\ \  Data dan\ \ Lingkungan Penelitian &
+			\progresscell{2}
+			\fillcell{2}
+			\emptycell{19}{1}
+		\hline
+		2 & Implementasi dan Pengujian &
+			\emptycell{2}{0}
+			\fillcell{17}
+			\emptycell{3}{1}
+		\hline
+		4 & Analisis &
+			\emptycell{7}{0}
+			\fillcell{14}
+			\emptycell{1}{1}
+		\hline
+		5 & Evaluasi &
+			\emptycell{20}{0}
+			\fillcell{2}
+			\emptycell{0}{1}
+		\hline
+	\end{tabular}
+	}
+	\caption{Jadwal penelitian tesis}
+	\label{tab:jadwal}
+\end{table}
+%%}}}
+
+%%{{{ Advisor's signature
+%%
+\begin{center}
+	Diketahui oleh,
+	\linebreak
+	\linebreak
+	\hbox to \hsize{%
+		\myadvisorsig{Pembimbing I,\quad}\hfil
+	}
+\end{center}
+%%
+%%}}}
+
+\end{document}
