@@ -10,22 +10,32 @@
 \usepackage{url}
 %% fix underfull on footnote with URL.
 \usepackage{ragged2e}
-%%% uncomment this to show overrule in black box
-\overfullrule=2cm
-%%
-\hyphenation{
-	ber-kas
-	data-set
-	pe-nan-da
-	sun-ting-an
+%% source code listing
+\usepackage{listings}
+\lstset{
+	basicstyle=\small\ttfamily,
+	columns=flexible,
+	breaklines=true
 }
-
+%% text emphasis, including strikeout.
+\usepackage[normalem]{ulem}
+%%% comment/uncomment this to show overrule in black box
+\overfullrule=2cm
 %% reconfigure table.
 %%% Alter latex default title
 \captionsetup[table]{name=Tabel}
 \renewcommand{\arraystretch}{1.5}
 \setlength{\tabcolsep}{3pt}
+%%}}}
 
+%%{{{ hyphenation
+\hyphenation{
+	ber-kas
+	data-set
+	pe-nan-da
+	sun-ting-an
+	ba-gai-ma-na
+}
 %%}}}
 
 %%{{{ document's variables
@@ -94,12 +104,12 @@
 \newpage
 %% }}}
 
-%%{{{ Laporan Progress
 \section{Laporan Progres}
 
 Bagian ini mencatat progres pekerjaan yang telah dilakukan setiap minggu secara ringkas.
-Rincian dari progres berada pada bagian Catatan.
+Rincian dari progres berada pada bagian \ref{sec:catatan}.
 
+%%{{{ Laporan Progress: Minggu I
 \subsection{Minggu I}
 
 \begin{itemize}
@@ -109,7 +119,9 @@ Jumlah suntingan yaitu 9985, dengan 8734 diantaranya adalah suntingan regular da
 
 	\item \textbf{Perbaikan proposal tesis.}
 \end{itemize}
+%%}}}
 
+%%{{{ Laporan Progress: Minggu II
 \subsection{Minggu II}
 
 \begin{itemize}
@@ -129,12 +141,18 @@ Format data berupa xml.
 \end{itemize}
 %%}}}
 
-%%{{{ Catatan
+%%{{{ Laporan Progress: Minggu III
+\subsection{Minggu III}
+
+Eksplorasi fitur-fitur yang digunakan untuk klasifikasi yang telah digunakan oleh makalah-makalah sebelumnya dan memperkirakan fitur yang akan digunakan pada tesis ini.
+%%}}}
+
 \newpage
-\section{Catatan}
+\section{Catatan} \label{sec:catatan}
 
 Bagian ini berisi catatan yang didapat pada setiap minggu selama mengerjakan tesis.
 
+%%{{{ Catatan: Minggu I dan II
 \subsection{Minggu I dan II}
 
 Korpus PAN-WVC-10 terbagi menjadi dua yaitu dataset suntingan dan dataset anotasi yang berisi hasil klasifikasi.
@@ -166,15 +184,39 @@ Rencananya, korpus PAN-WVC-10 dijadikan sebagai dataset untuk \textit{resampling
 Korpus PAN-WVC-11 dijadikan sebagai dataset untuk pengujian model.
 %%}}}
 
+%%{{{ Catatan: Minggu III
+\subsection{Minggu III}
+
+Penulis menemukan sumber kode yang digunakan oleh referensi utama
+\footnote{
+	\url{https://github.com/webis-de/wikipedia-vandalism-detection}
+}.
+Setelah mengunduh sumber kode dan mempersiapkan ketergantungan yang dibutuhkan untuk menjalankan aplikasi tersebut (seperti bahasa pemrograman dan semua ketergantungan pustaka yang dibutuhkan), penulis tidak dapat menjalankan sumber kode karena ada ketergantungan atau konfigurasi yang mungkin terlewat atau tidak tertulis sehingga tidak dapat menjalankan program.
+
+Penulis masih mencoba memperbaiki kesalahan tersebut untuk tiga hari mendatang.
+Seandainya masih tidak bisa, setidaknya ada gambaran bagaimana penerapan teknik \textit{resampling} dan penggunaan klasifikasi dilakukan.
+%%}}}
+
 %%{{{ Pekerjaan Selanjutnya
 \section{Pekerjaan Selanjutnya}
 
 Bagian ini berisi pekerjaan yang akan dilakukan oleh penulis pada minggu selanjutnya dari tanggal laporan progres ini.
-Sub-bagian terurut menaik, dengan minggu terbesar atau minggu depan berada pada urutan paling atas dan minggu-minggu yang telah terlewati di bawahnya, untuk mempermudah pembaca.
+
+\subsection{Minggu IV}
+
+Mempelajari bagaimana mengaplikasikan fitur-fitur pada klasifikasi.
 
 \subsection{Minggu III}
 
+\sout{
 Mempelajari dan mengimplementasikan algoritma LN-SMOTE pada bahasa pemrograman Go.
+}
+
+Mempelajari fitur-fitur untuk klasifikasi.
+
+\subsection{Minggu I dan II}
+
+Perbaikan proposal tesis.
 
 %%}}}
 
@@ -237,8 +279,7 @@ Warna merah menandakan minggu dari laporan progres ini, untuk warna abu-abu mena
 			1 & 2 & 3 & 4\\
 		\hline
 		1 & Persiapan\ \  Data dan\ \ Lingkungan Penelitian &
-			\progresscell{2}
-			\fillcell{2}
+			\progresscell{4}
 			\emptycell{19}{1}
 		\hline
 		2 & Implementasi dan Pengujian &
@@ -265,6 +306,7 @@ Warna merah menandakan minggu dari laporan progres ini, untuk warna abu-abu mena
 
 %%{{{ Advisor's signature
 %%
+\vfill
 \begin{center}
 	Diketahui oleh,
 	\linebreak
@@ -274,6 +316,52 @@ Warna merah menandakan minggu dari laporan progres ini, untuk warna abu-abu mena
 	}
 \end{center}
 %%
+%%}}}
+
+\newpage
+\appendix
+%%{{{ Appendix : Corpora
+\section{Contoh data korpus}
+
+\subsection{Contoh Isi Korpus PAN-WVC-10}
+
+Berikut dataset untuk riwayat suntingan pada PAN-WVC-10.
+
+\begin{lstlisting}
+"editid","editor","oldrevisionid","newrevisionid","diffurl","edittime","editcomment","articleid","articletitle"
+1,"TheHeartbreakKid15",328391343,328391582,"http://en.wikipedia.org/w/index.php?diff=328391582&oldid=328391343","2009-11-28T15:21:18Z","/* Episodes */",24477266,"Top Gear (series 14)"
+2,"Stepopen",327585467,327607921,"http://en.wikipedia.org/w/index.php?diff=327607921&oldid=327585467","2009-11-24T04:43:37Z","removed factually wrong information",476288,"List of United Nations resolutions concerning Israel"
+3,"93.6.135.185",328227083,328242890,"http://en.wikipedia.org/w/index.php?diff=328242890&oldid=328227083","2009-11-27T18:22:12Z","/* History */",174853,"W.A.S.P."
+4,"Plasticspork",314955274,327191082,"http://en.wikipedia.org/w/index.php?diff=327191082&oldid=314955274","2009-11-21T23:12:24Z","Clean infobox + general fixes using [[Project:AutoWikiBrowser|AWB]]",1418363,"Psusennes II"
+...
+\end{lstlisting}
+
+Berikut dataset anotasi untuk klasifikasi dari korpus PAN-WVC-10 pada berkas yang berbeda,
+
+\begin{lstlisting}
+"editid","class","annotators","totalannotators"
+...
+35,"regular",4,4
+36,"regular",4,4
+37,"vandalism",6,7
+38,"regular",4,4
+...
+\end{lstlisting}
+
+\newpage
+\subsection{Contoh Isi Korpus PAN-WVC-11}
+
+Tidak seperti pada PAN-WVC-10, PAN-WVC-11 menggabungkan riwayat suntingan dan hasil anotasi pada berkas yang sama.
+Berikut dataset untuk riwayat suntingan pada PAN-WVC-11.
+
+\begin{lstlisting}
+"editid","editor","oldrevisionid","newrevisionid","diffurl","class","annotators","totalannotators","edittime","editcomment","articleid","articletitle"
+416341,"YUL89YYZ",308672260,326825757,"http://en.wikipedia.org/w/index.php?diff=326825757&oldid=308672260","regular",8,9,"2009-11-19T23:25:19Z","Disambiguate [[CMG]] to [[Companion of the Order of St Michael and St George]] using [[:en:Wikipedia:Tools/Navigation_popups|popups]]",22605565,"Elwin Palmer"
+416342,"Abyssal",326560892,326560971,"http://en.wikipedia.org/w/index.php?diff=326560971&oldid=326560892","regular",3,3,"2009-11-18T16:48:35Z","/* Thyreophorans */",25122995,"List of stratigraphic units with dinosaur tracks"
+416343,"24.199.196.3",326540780,326785787,"http://en.wikipedia.org/w/index.php?diff=326785787&oldid=326540780","vandalism",20,21,"2009-11-19T19:46:03Z","/* Air Jordan XI */",1394509,"Air Jordan"
+416345,"Brillbananaman",326886207,326886384,"http://en.wikipedia.org/w/index.php?diff=326886384&oldid=326886207","regular",3,3,"2009-11-20T06:53:06Z","/* Photographic career */",20307120,"Peter Dazeley"
+...
+\end{lstlisting}
 %%}}}
 
 \end{document}
