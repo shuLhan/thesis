@@ -1,0 +1,140 @@
+\subsubsection{Eksplorasi Fitur Vandalisme pada Wikipedia}
+
+Beberapa makalah sebelumnya mengelompokan fitur-fitur ke dalam kelompok \textit{metadata}, teks, dan bahasa.
+Sebagai tahap awal digunakan empat 4 metadata, 11 fitur teks, dan 5 fitur bahasa yang diambil dari hasil analisis makalah Mola-Velasco \cite{mola2012wikipedia}.
+
+\paragraph{Fitur Kelompok Metadata}
+
+Kelompok metadata mengacu pada properti dari sebuah revisi yang secara langsung dapat diambil, seperti identitas penyunting, atau waktu suntingan.
+
+Berikut daftar fitur-fitur yang dapat digunakan pada klasifikasi vandalisme berbasiskan metadata,
+
+\begin{itemize}
+
+\item \textbf{Anonim}.
+Melihat apakah penyunting memiliki akun atau anonim (hanya tercatat alamat \textit{IP}-nya).
+Vandal lebih condong berlaku anonim karena jika menggunakan akun asli akan membuat akun mereka mudah diblokir.
+
+\item \textbf{Panjang komentar}.
+Melihat dari jumlah karakter yang digunakan di kolom "rangkuman suntingan" saat menyimpan hasil suntingan.
+Komentar yang panjang mungkin mengindikasikan suntingan biasa dan yang pendek atau kosong mungkin menyarankan suatu vandalisme.
+Namun, fitur ini sedikit lemah karena banyak suntingan biasa meninggalkan komentar yang kosong.
+
+\item \textbf{Peningkatan ukuran}.
+Peningkatan absolut dari ukuran konten artikel, dihitung dengan
+\[
+|ukuran\ suntingan\ baru| - |ukuran\ suntingan\ lama|
+\]
+Misalnya, berkurangnya ukuran dalam jumlah besar bisa mengindikasikan pengosongan artikel.
+
+\item \textbf{Rasio ukuran}.
+Ukuran revisi baru relatif terhadap revisi lama, yaitu
+\[
+\frac{1 + |baru|}{1 + |lama|}
+\]
+
+\end{itemize}
+
+\paragraph{Fitur Kelompok Teks}
+
+Berikut daftar fitur-fitur yang dapat digunakan pada klasifikasi vandalisme berbasiskan teks,
+
+\begin{itemize}
+
+\item \textbf{Rasio huruf besar dan kecil}.
+Pelaku vandal biasanya tidak mengikuti aturan huruf kapital, menulis semuanya dengan huruf kecil atau huruf besar.
+Rasio ini dihitung dengan menggunakan rumus
+\[
+\frac{1 + |perubahan\ baru|}{1 + |perubahan\ lama|}
+\]
+
+\item \textbf{Rasio huruf besar terhadap semua huruf}
+Rasio ini dihitung dengan menggunakan rumus
+\[
+\frac{1 + |huruf\ besar|}{1 + |huruf\ besar| + |huruf\ kecil|}
+\]
+
+\item \textbf{Rasio angka}.
+Rasio semua karakter terhadap angka, yaitu
+\[
+\frac{1 + |angka|}{1 + |semua|}
+\]
+Fitur ini membantu menemukan suntingan kecil yang hanya mengubah angka.
+Contoh kasusnya perubahan sebuah tanggal atau perhitungan untuk menyebabkan kesalahan informasi.
+
+\item \textbf{Rasio non-alfanumerik}.
+Rasio semua karakter terhadap karakter selain huruf dan angka, yaitu
+\[
+\frac{1 + |non\ alfanumerik|}{1 + |semua\ karakter|}
+\]
+Kelebihan penggunaan karakter selain angka-huruf bisa mengindikasikan penggunaan \textit{emoticon}, tanda baca, atau kata tak bermakna.
+
+\item \textbf{Diversitas karakter}.
+Menghitung karakter berbeda dibandingkan dengan panjang teks yang dimasukan, yaitu
+\[
+length \frac{1}{karakter\ berbeda}
+\]
+Fitur ini membantu menemukan penggunaan karakter secara acak dan kata tak bermakna.
+
+\item \textbf{Distribusi karakter}.
+Menggunakan Divergensi Kullback-Leibler dari distribusi karakter yang dimasukan terhadap ekspektasi.
+Fitur ini berguna untuk mendeteksi kata tak bermakna.
+
+\item \textbf{Kompresabilitas}.
+Melihat tingkat kompres dari teks menggunakan algoritma LZW.
+Fitur ini berguna untuk mendeteksi kata tak bermakna, pengulangan kata atau karakter, dll.
+Vandalisme biasanya memiliki ukuran kompresi yang rendah.
+
+\item \textbf{Token umum}.
+Token yang biasanya jarang digunakan oleh vandal adalah sintaks wiki, seperti \textit{\_\_TOC\_\_}.
+
+\item \textbf{Frekuensi rerata kata}.
+Frekuensi relatif rerata dari kata yang dimasukan pada revisi baru.
+Pada artikel yang panjang, semakin banyak kata yang dimasukan yang tidak ada pada artikel mengindikasikan bahwa suntingan tersebut bisa tak bermakna atau tidak berhubungan dengan isinya.
+
+\item \textbf{Kata terpanjang}.
+Panjang dari kata yang dimasukan.
+Nilainya akan 0 jika tidak ada kata yang dimasukan.
+Fitur ini berguna untuk mendeteksi suntingan tak-bermakna.
+
+\item \textbf{Urutan karakter terpanjang}.
+Urutan terpanjang dari karakter yang sama pada teks yang dimasukan sering digunakan pada vandalisme, contohnya \textit{aaarrrrggghhh! sooo huge}.
+
+\end{itemize}
+
+\paragraph{Fitur Kelompok Bahasa}
+
+Fitur kelompok bahasa berdasarkan jumlah kata yang ditambahkan pada suntingan baru.
+Dua fitur berikut dihitung relatif terhadap konten yang baru: frekuensi dan dampak.
+Frekuensi adalah menghitung frekuensi dari kata tersebut dari total seluruh kata pada suntingan yang baru.
+Dampak adalah menghitung persentase penambahan jumlah kata tersebut pada suntingan.
+Berikut daftar fitur-fitur yang dapat digunakan pada klasifikasi vandalisme berbasiskan bahasa,
+
+\begin{itemize}
+\item \textbf{Vulgarisme}.
+Menghitung kata-kata vulgar dan menghina, misalnya \textit{fuck}, \textit{suck}, \textit{stupid}.
+
+\item \textbf{Subjek}.
+Menghitung kata-kata subjek pertama atau kedua, termasuk pengejaan tidak baku, misalnya \textit{I}, \textit{you}, \textit{ya}.
+
+\item \textbf{Bias}.
+Menghitung penggunaan kata sehari-hari yang mengandung bias, misalnya \textit{coolest}, \textit{huge}.
+
+\item \textbf{Seks}.
+Menghitung penggunaan kata berhubungan dengan seks, misalnya \textit{sex}, \textit{penis}, \textit{nipple}.
+
+\item \textbf{Kata buruk}.
+Gabungan kategori untuk kata sehari-hari dan beberapa penulisan yang buruk (misalnya, \textit{wanna}, \textit{gotcha}).
+
+\end{itemize}
+
+\subsubsection{Eksplorasi Sumber Kode Referensi}
+
+Penulis menemukan sumber kode yang digunakan oleh referensi utama
+\footnote{
+	\url{https://github.com/webis-de/wikipedia-vandalism-detection}
+}.
+Setelah mengunduh sumber kode dan mempersiapkan ketergantungan yang dibutuhkan untuk menjalankan aplikasi tersebut (seperti bahasa pemrograman dan semua ketergantungan pustaka yang dibutuhkan), penulis tidak dapat menjalankan sumber kode karena ada ketergantungan atau konfigurasi yang mungkin terlewat atau tidak tertulis sehingga tidak dapat menjalankan program.
+
+Penulis masih mencoba memperbaiki kesalahan tersebut untuk tiga hari mendatang.
+Seandainya masih tidak bisa, setidaknya ada gambaran bagaimana penerapan teknik \textit{resampling} dan penggunaan klasifikasi dilakukan.

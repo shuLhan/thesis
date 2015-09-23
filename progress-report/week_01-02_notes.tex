@@ -1,0 +1,27 @@
+Korpus PAN-WVC-10 terbagi menjadi dua yaitu dataset suntingan dan dataset anotasi yang berisi hasil klasifikasi.
+Kedua dataset memiliki format yang sama yaitu menggunakan \textit{Coma Separated Value} (CSV).
+Dataset suntingan memiliki atribut sebagai berikut,
+\begin{itemize}
+	\item \textbf{editid}, format angka, berisi identifikasi (ID) unik dari setiap suntingan.
+	\item \textbf{editor}, format string, berisi nama penyunting.
+	\item \textbf{oldrevisionid}, format angka, berisi ID untuk suntingan lama.
+	\item \textbf{newrevisionid}, format angka, berisi ID untuk suntingan baru.
+	\item \textbf{diffurl}, format string, berisi URL yang mengacu pada perbedaan suntingan baru dengan lama.
+	\item \textbf{edittime}, format string, berisi tanggal dan pukul sesuai dengan ISO 8601.
+	\item \textbf{editcomment}, format string, berisi komentar yang ditambahkan oleh penyunting saat menyimpan hasil suntingan.
+	\item \textbf{articleid}, format angka, berisi ID unik dari artikel.
+	\item \textbf{articletitle}, format string, berisi judul dari artikel yang disunting.
+\end{itemize}
+
+Dataset anotasi memiliki atribut sebagai berikut,
+\begin{itemize}
+	\item \textbf{editid}, format angka, mengacu pada ID yang sama pada dataset suntingan.
+	\item \textbf{class}, format string, berisi tipe suntingan yang bernilai "regular" yang menyatakan bahwa suntingan tersebut bukan vandalisme, dan "vandalism" yang menyatakan bahwa suntingan tersebut adalah vandalisme.
+	\item \textbf{annotators}, format angka, berisi jumlah orang yang menandai (penanda) bahwa suntingan dengan ID tersebut termasuk ke dalam kelas "regular" atau "vandalism".
+	\item \textbf{totalannotators}, format angka, berisi jumlah total penanda yang memeriksa suntingan.
+\end{itemize}
+
+Korpus PAN-WVC-11 hanya memiliki satu dataset untuk Bahasa Inggris yaitu dataset suntingan, dengan atribut yang menggabungkan dataset suntingan dan dataset anotasi pada PAN-WVC-10.
+
+Rencananya, korpus PAN-WVC-10 dijadikan sebagai dataset untuk \textit{resampling} dan pelatihan klasifikasi karena kuantitasnya lebih banyak daripada PAN-WVC-11.
+Korpus PAN-WVC-11 dijadikan sebagai dataset untuk pengujian model.
