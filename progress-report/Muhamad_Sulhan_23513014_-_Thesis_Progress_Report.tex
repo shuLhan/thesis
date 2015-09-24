@@ -68,21 +68,24 @@ Format data berupa xml.
 
 \subsection{Minggu III}
 
-Eksplorasi fitur-fitur yang digunakan untuk klasifikasi yang telah digunakan oleh makalah-makalah sebelumnya dan memperkirakan fitur yang akan digunakan pada tesis ini.
-
+\begin{itemize}
+	\item Menambah lampiran yang menampilkan contoh data dari PAN-WVC-10 dan PAN-WVC-11.
+	\item Eksplorasi fitur-fitur yang digunakan untuk klasifikasi yang telah digunakan oleh makalah-makalah sebelumnya dan memperkirakan fitur yang akan digunakan pada tesis ini.
 Mengembangkan sebuah fitur membutuhkan waktu, sebagai tahap awal hanya akan menggunakan 20 fitur yaitu 4 fitur metadata, 11 fitur teks, dan 5 fitur bahasa yang diambil dari hasil analisis makalah Mola-Velasco \cite{mola2012wikipedia}. Pada saat implementasi sudah berjalan dengan benar, baru nanti secara iteratif ditambahkan fitur-fitur dari makalah lainnya satu persatu.
+\end{itemize}
 
 \subsection{Minggu IV}
 
-Telah membaca makalah tentang SMOTE \cite{chawla2002smote}.
+Telah membaca makalah tentang SMOTE \cite{chawla2002smote} dan LN-SMOTE \cite{maciejewski2011local} dan membuat rangkuman tentang perbedaan dari kedua metode tersebut berdasarkan kekurangan dan solusi yang diajukan dalam makalah.
 
 %%
 %%}}}
 
+%%{{{ Notes
 \newpage
 \section{Catatan} \label{sec:catatan}
 
-Bagian ini berisi catatan yang didapat pada setiap minggu selama mengerjakan tesis.
+Bagian ini berisi pengetahuan yang didapat pada setiap minggu selama mengerjakan tesis.
 
 \subsection{Minggu I dan II}
 \input{week_01-02_notes}
@@ -90,13 +93,23 @@ Bagian ini berisi catatan yang didapat pada setiap minggu selama mengerjakan tes
 \subsection{Minggu III}
 \input{week_03_notes}
 
+\subsection{Minggu IV}
+\input{week_04_notes}
+
+%%}}}
+
 %%{{{ Pekerjaan Selanjutnya
 %%
+\newpage
 \section{Pekerjaan Selanjutnya}
 
 Bagian ini berisi pekerjaan yang akan dilakukan oleh penulis pada minggu selanjutnya dari tanggal laporan progres ini.
 
-\subsection{Minggu I dan II}
+\subsection{Minggu I}
+
+Perbaikan proposal tesis.
+
+\subsection{Minggu II}
 
 Perbaikan proposal tesis.
 
@@ -111,6 +124,9 @@ Mempelajari fitur-fitur untuk klasifikasi.
 \subsection{Minggu IV}
 
 Mempelajari makalah SMOTE dan LN-SMOTE.
+
+\subsection{Minggu V}
+Mempelajari dan mengimplementasikan algoritma SMOTE.
 
 %%}}}
 
@@ -207,7 +223,7 @@ Warna merah menandakan minggu yang telah lewat sampai minggu dari laporan progre
 	\linebreak
 	\linebreak
 	\hbox to \hsize{%
-		\myadvisorsig{Pembimbing I,\quad}\hfil
+		\myadvisorsig{Pembimbing,\quad}\hfil
 	}
 \end{center}
 %%
@@ -242,6 +258,8 @@ Berikut dataset anotasi untuk klasifikasi dari korpus PAN-WVC-10 pada berkas yan
 38,"regular",4,4
 ...
 \end{lstlisting}
+
+Kolom "editid" pada dataset anotasi mengacu pada kolom "editid" pada dataset suntingan.
 
 \newpage
 \subsection{Contoh Isi Korpus PAN-WVC-11}
