@@ -31,6 +31,8 @@
 \newpage
 %% }}}
 
+\tableofcontents
+
 %%{{{ Progress summary.
 %%
 \section{Laporan Progres}
@@ -243,58 +245,16 @@ Warna merah menandakan minggu yang telah lewat sampai minggu dari laporan progre
 %%
 %%}}}
 
+%%{{{ Appendix : Corpora
 \newpage
 \appendix
-%%{{{ Appendix : Corpora
-\section{Contoh data korpus}
-
-\subsection{Contoh Isi Korpus PAN-WVC-10}
-
-Berikut dataset untuk riwayat suntingan pada PAN-WVC-10.
-
-\begin{lstlisting}
-"editid","editor","oldrevisionid","newrevisionid","diffurl","edittime","editcomment","articleid","articletitle"
-1,"TheHeartbreakKid15",328391343,328391582,"http://en.wikipedia.org/w/index.php?diff=328391582&oldid=328391343","2009-11-28T15:21:18Z","/* Episodes */",24477266,"Top Gear (series 14)"
-2,"Stepopen",327585467,327607921,"http://en.wikipedia.org/w/index.php?diff=327607921&oldid=327585467","2009-11-24T04:43:37Z","removed factually wrong information",476288,"List of United Nations resolutions concerning Israel"
-3,"93.6.135.185",328227083,328242890,"http://en.wikipedia.org/w/index.php?diff=328242890&oldid=328227083","2009-11-27T18:22:12Z","/* History */",174853,"W.A.S.P."
-4,"Plasticspork",314955274,327191082,"http://en.wikipedia.org/w/index.php?diff=327191082&oldid=314955274","2009-11-21T23:12:24Z","Clean infobox + general fixes using [[Project:AutoWikiBrowser|AWB]]",1418363,"Psusennes II"
-...
-\end{lstlisting}
-
-Berikut dataset anotasi untuk klasifikasi dari korpus PAN-WVC-10 pada berkas yang berbeda,
-
-\begin{lstlisting}
-"editid","class","annotators","totalannotators"
-...
-35,"regular",4,4
-36,"regular",4,4
-37,"vandalism",6,7
-38,"regular",4,4
-...
-\end{lstlisting}
-
-Kolom "editid" pada dataset anotasi mengacu pada kolom "editid" pada dataset suntingan.
-
-\newpage
-\subsection{Contoh Isi Korpus PAN-WVC-11}
-
-Tidak seperti pada PAN-WVC-10, PAN-WVC-11 menggabungkan riwayat suntingan dan hasil anotasi pada berkas yang sama.
-Berikut dataset untuk riwayat suntingan pada PAN-WVC-11.
-
-\begin{lstlisting}
-"editid","editor","oldrevisionid","newrevisionid","diffurl","class","annotators","totalannotators","edittime","editcomment","articleid","articletitle"
-416341,"YUL89YYZ",308672260,326825757,"http://en.wikipedia.org/w/index.php?diff=326825757&oldid=308672260","regular",8,9,"2009-11-19T23:25:19Z","Disambiguate [[CMG]] to [[Companion of the Order of St Michael and St George]] using [[:en:Wikipedia:Tools/Navigation_popups|popups]]",22605565,"Elwin Palmer"
-416342,"Abyssal",326560892,326560971,"http://en.wikipedia.org/w/index.php?diff=326560971&oldid=326560892","regular",3,3,"2009-11-18T16:48:35Z","/* Thyreophorans */",25122995,"List of stratigraphic units with dinosaur tracks"
-416343,"24.199.196.3",326540780,326785787,"http://en.wikipedia.org/w/index.php?diff=326785787&oldid=326540780","vandalism",20,21,"2009-11-19T19:46:03Z","/* Air Jordan XI */",1394509,"Air Jordan"
-416345,"Brillbananaman",326886207,326886384,"http://en.wikipedia.org/w/index.php?diff=326886384&oldid=326886207","regular",3,3,"2009-11-20T06:53:06Z","/* Photographic career */",20307120,"Peter Dazeley"
-...
-\end{lstlisting}
-%%}}}
-
+\input{appendix_korpus}
 \input{appendix_sumber_kode_dsv-knn-smote}
 \input{appendix_smote_raw}
+%%}}}
 
 \clearpage
+\addcontentsline{toc}{section}{Daftar Referensi}
 \printbibliography
 
 \end{document}
