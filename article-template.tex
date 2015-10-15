@@ -44,6 +44,7 @@
 	da-lam
 	data-set
 	de-ngan
+	fung-si
 	ga-bung-an
 	ke-las
 	ke-tak-se-imbang-an
@@ -56,6 +57,7 @@
 	meng-in-di-ka-si-kan
 	me-ning-kat-kan
 	me-nye-im-bang-kan
+	me-sin
 	me-thod
 	mi-sal-nya
 	pem-ban-ding
@@ -85,12 +87,21 @@
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
 \renewcommand{\contentsname}{}
 
-%% wrap source code listing.
 \lstset{
-	basicstyle=\small\ttfamily,
-	columns=flexible,
-	breaklines=true
+	basicstyle=\footnotesize\ttfamily
+,	columns=
+,	breaklines=true
+,	stringstyle=\ttfamily
+,	numbers=left
+,	numberstyle=\tiny\ttfamily
+,	numbersep=5pt
+,	tabsize=4
+,	frame=single
 }
+
+\makeatletter
+\def\lst@lettertrue{\let\lst@ifletter\iffalse}
+\makeatother
 
 %% Alter latex default title on table.
 \captionsetup[table]{name=Tabel}
@@ -131,7 +142,7 @@
 \title{\mytitle}
 %%}}}
 
-%%{{{ document's functions
+%%{{{ document's macros
 %%
 %%% two column signature.
 \def\myadvisorsig#1{%
@@ -173,4 +184,33 @@
 	}
 }
 
+%%% source code listing
+\lstdefinelanguage{go}
+{
+	morekeywords={package,import,const,func,for,type,var,struct}
+,	sensitive=true
+,	morecomment=[l]{//}
+,	morecomment=[s]{/*}{*/}
+}
+\lstdefinestyle{go}{%
+	language=go
+,	keywordstyle=\color{black}\bfseries
+,	commentstyle=\color{gray}
+,	breakatwhitespace=true
+}
+\newcommand{\includecodego}[2][c]{
+	\lstinputlisting[caption=#2,escapechar=,style=go]
+		{/home/ms/go/work/src/github.com/shuLhan/#2}
+}
+
+%%% data listing
+\lstdefinestyle{data}{%
+	breakatwhitespace=false
+,	breakautoindent=false
+,	literate={\,}{}{0\discretionary{,}{}{,}},
+}
+\newcommand{\includedata}[2][c]{
+	\lstinputlisting[caption=#2,style=data,linerange={1-10}]
+		{/home/ms/go/work/src/github.com/shuLhan/#2}
+}
 %%}}}
