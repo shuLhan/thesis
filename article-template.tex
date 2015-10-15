@@ -88,10 +88,10 @@
 \renewcommand{\contentsname}{}
 
 \lstset{
-	basicstyle=\footnotesize\ttfamily
+	basicstyle=\scriptsize\ttfamily
 ,	columns=
 ,	breaklines=true
-,	stringstyle=\ttfamily
+,	stringstyle=\scriptsize\ttfamily
 ,	numbers=left
 ,	numberstyle=\tiny\ttfamily
 ,	numbersep=5pt
@@ -197,6 +197,7 @@
 ,	keywordstyle=\color{black}\bfseries
 ,	commentstyle=\color{gray}
 ,	breakatwhitespace=true
+,	lineskip={-2.5pt}
 }
 \newcommand{\includecodego}[2][c]{
 	\lstinputlisting[caption=#2,escapechar=,style=go]
