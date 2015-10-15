@@ -1,0 +1,27 @@
+Penulis tidak menggunakan program seperti Weka untuk pemrosesan karena, pertama, penulis ingin belajar mengenai semua algoritma pembelajaran mesin yang digunakan dalam makalah ini lebih dalam. Kedua, penulis sekaligus ingin belajar menggunakan bahasa pemrograman Go.
+
+Standar pustaka dari bahasa Go hanya menyediakan paket untuk membaca data teks dalam format CSV (\textit{Comma Separated Value}), yang memiliki kelemahan. Pertama, hanya terbatas pada data teks yang terpisah dengan koma, tidak bisa membaca kolom yang terpisah dengan karakter lain, misalnya karakter kosong, tab, dll. Kedua, konversi data tidak tersedia, hasil pembacaan semuanya dalam tipe string, sementara data yang diproses dapat berisi string dan bilangan real. Masalah kedua bisa diatasi dengan mengkonversi data setelah semua teks dibaca, tapi hal tersebut membuat kerja program bekerja lebih lama.
+
+Untuk mengatasi permasalahan tersebut, sebelum mengimplementasikan algoritma SMOTE, penulis membuat librari untuk membaca data dalam teks yang terpisah oleh karakter (\textit{Delimited Separated Value}, DSV) yang dapat mengkonversi tipe data langsung ke format \textit{native}-nya sehingga tidak perlu pemrosesan ulang.
+Librari ini nantinya berguna pada saat pembacaan dataset dan penulisan hasil yang didapat dari pemrosesan. Sumber kode dari librari dapat dilihat di lampiran
+\ref{appendix:sumber_kode_dsv}
+dan di internet
+\footnote{\url{https://github.com/shuLhan/dsv}}. 
+
+Penulis juga mengimplementasikan algoritma penghitungan jarak dari \textit{K-nearest-neighbors} (KNN) menggunakan metode \textit{Euclidian}, karena fungsi ini digunakan oleh algoritma SMOTE untuk mendapatkan sampel terdekat. Sumber kode dari hasil implementasi dapat dilihat di lampiran
+\ref{appendix:sumber_kode_knn}
+dan di internet
+\footnote{\url{https://github.com/shuLhan/go-mining/tree/master/knn}}.
+
+Setelah semua selesai dan diuji, implementasi SMOTE dilakukan dengan mengacu pada makalah Chawla \cite{chawla2002smote}. Hasil implementasi dapat dilihat di bagian lampiran
+\ref{appendix:sumber_kode_smote}
+dan di internet
+\footnote{\url{https://github.com/shuLhan/go-mining/tree/master/resampling/smote}}.
+
+Hasil implementasi SMOTE diuji pada dataset phoneme, dengan total sampel 5404 dengan jumlah kelas minoritas 1586.
+Setelah menjalankan SMOTE, dengan nilai \textit{K} yaitu 5 dan persentase \textit{oversampling} sebesar 200, didapat data sintetis sejumlah 3172.
+Input data dan hasilnya bisa dilihat pada lampiran
+\ref{appendix:smote_raw}.
+
+Tadinya penulis ingin memperlihatkan hasil implementasi SMOTE dengan mencoba menerapkannya pada salah satu dataset yang digunakan oleh Chawla, dkk.\cite{chawla2002smote}, yaitu dataset \texttt{phoneme} seperti yang diperlihatkan pada halaman 335.
+Namun karena kesulitan dalam mengimplementasikan algoritma C4.5, penulis tidak bisa membandingkan hasil dari makalah Chawla, dkk. tersebut dengan hasil implementasi sendiri.
