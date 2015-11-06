@@ -1,0 +1,79 @@
+\section{Catatan}
+
+\textit{Random Forest} secara sederhananya adalah klasifikasi dengan hasil dari mayoritas \textit{voting} dari beberapa pohon keputusan.
+Untuk dapat mengimplementasikannya, dibutuhkan algoritma yang dapat membuat pohon keputusan.
+Ada tiga pohon keputusan yang umum dikenal yaitu ID3, CART, dan C4.5.
+Algoritma yang dipilih untuk pohon keputusan yang digunakan nantinya pada \textit{Random Forest} yaitu CART karena,
+\begin{itemize}
+\item algoritma ID3 yang asli tidak mendukung atribut dengan nilai kontinu,
+\item penjelasan dari algoritma C4.5 dalam bentuk pseudo kode yang mudah dipahami sulit ditemukan
+\item algoritma CART mudah dipahami, mendukung nilai kontinu dan diskrit
+\item penulis dari makalah \textit{Random Forest} adalah salah satu penulis dari makalah algoritma CART
+\cite{breiman1984classification}
+itu sendiri, walaupun secara eksplisit tidak disebutkan harus menggunakan algoritma CART dalam makalah \textit{Random Forest}.
+\end{itemize}
+%%}}}
+
+Implementasi dari algoritma CART mengacu pada buku Jiawei Han, dkk.\cite{han2011data}, bab 8; karena makalah asli dari CART tidak bisa ditemukan.
+Hasil implementasi telah dapat membuat pohon keputusan untuk nilai kontinu dan diskrit, tapi belum ada \textit{pruning} dan penanganan nilai yang hilang.
+Hasilnya dapat dilihat di lampiran 
+\ref{appendix:sumber_kode_cart}
+atau di internet
+\footnote{\url{https://github.com/shuLhan/go-mining/tree/master/classifiers/cart}}.
+
+Implementasi CART kemudian dicoba pada dataset \textit{iris} (contoh data bisa dilihat pada lampiran \ref{appendix:dataset_iris}), dengan 150 \textit{record} dan lima atribut. Empat atribut bertipe kontinu, dan satu atribut target bertipe diskrit. Hasilnya adalah sebagai berikut,
+
+\begin{lstlisting}
+CART Tree:
+ {false  true 2 2.45}
+        {false  true 3 1.55}
+                {false  true 0 5.95}
+                        {true Iris-virginica false 0 <nil>}
+                        {true Iris-versicolor false 0 <nil>}
+                {false  true 0 5.95}
+                        {false  true 1 3.25}
+                                {true Iris-virginica false 0 <nil>}
+                                {false  true 1 3.05}
+                                        {false  true 0 6.550000000000001}
+                                                {true Iris-versicolor false 0 <nil>}
+                                                {true Iris-virginica false 0 <nil>}
+                                        {true Iris-versicolor false 0 <nil>}
+                        {true Iris-versicolor false 0 <nil>}
+        {true Iris-setosa false 0 <nil>}
+\end{lstlisting}
+
+Baris kedua adalah \textit{root} dari pohon, dengan nilai atribut pada node $ { false true 2 2.45 } $ yaitu $false$ menyatakan \textit{node} bukan \textit{leaf}, $true$ menyatakan node dipisahkan oleh nilai kontinu, $2$ menyatakan indeks dari atribut pemisah, dan $2.45$ menyatakan nilai pemisah. Misalkan, jika diberikan sampel dengan nilai atribut dari indeks ke 2 adalah 1 (kecil dari 2.45) maka kelas dari sampel tersebut adalah \textit{Iris-setosa}.
+
+Implementasi pendukung lainnya yaitu penghitungan nilai Gini index dan Gini gain, yang digunakan untuk menentukan partisi mana yang akan digunakan sebagai pemisah dari atribut.
+Formula untuk menghitung \textit{Gini index} dari sebuah partisi yang terdiri dari dua bagian yaitu,
+
+\begin{equation*}
+Gini_{A}(D) = \frac{|D_{1}|}{|D|} Gini(D_{1}) + \frac{|D_{2}|}{|D|} Gini(D_{2})
+\end{equation*}%
+%
+dengan \textit{Gini gain} dihitung menggunakan,
+
+\begin{equation*}
+	\Delta Gini(A) = Gini(D) - Gini_{A}(D)
+\end{equation*}%
+%
+Hasil implementasi penghitungan \textit{Gini index} dan \textit{gain} dapat dilihat pada lampiran \ref{appendix:sumber_kode_gini} atau di internet \footnote{\url{https://github.com/shuLhan/go-mining/tree/master/gain/gini}}.
+
+\subsection{Hubungan dengan Bilangan Stirling dan Partisi Set}
+
+Pada saat membentuk pohon keputusan, atribut dari dataset latihan bisa bernilai diskrit, seperti $ \{A,B,B,C,A,A\} $ dengan nilai nominal (atau nilai yang mungkin muncul) yaitu $ \{A,B,C\} $. Untuk menentukan atribut yang paling bagus dalam memisahkan data, maka harus dibentuk semua kemungkinan partisi dari set $ \{A,B,C\} $ dan kemudian dihitung \textit{Gini gain} dari setiap partisi.
+Misalkan partisi-dua dari set tersebut adalah $ \{\{A,B\},\{C\}\} $, $ \{\{A,C\},\{B\}\}\} $, dan $\{\{A\}\{B,C\}\}$, dengan total partisi yaitu tiga. Untuk dapat mengetahui jumlah partisi yang dapat dibuat tanpa harus memproses, dapat dihitung dengan menggunakan \textit{Stirling number of the second kind}, yang rumusnya adalah sebagai berikut,%
+%
+\begin{equation*}
+	\begin{Bmatrix}
+		n \\
+		k
+	\end{Bmatrix} = \frac{1}{k!} \sum_{j=0}^{k} (-1)^{k-j} \binom{k}{j} j^{n}
+\end{equation*}%
+%
+yang mana $n$ adalah jumlah objek di dalam set dan $k$ adalah jumlah partisi.
+
+Hasil implementasi penghitungan Stirling ini dapat dilihat pada lampiran \ref{appendix:sumber_kode_math} atau di internet \footnote{\url{https://github.com/shuLhan/go-mining/tree/master/math}}
+
+Untuk membentuk partisi dari sebuah set itu sendiri menggunakan algoritma fungsi rekursif dengan mengambil objek yang pertama dari $n$ kemudian mengulangi pemanggilan fungsi partisi sampai $n$ sama dengan $k$ atau $k$ sama dengan 1. Hasil implementasinya dapat dilihat pada lampiran \ref{appendix:sumber_kode_setstring} atau di internet
+\footnote{\url{https://github.com/shuLhan/go-mining/tree/master/set}}.

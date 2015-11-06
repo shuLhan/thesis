@@ -1,0 +1,51 @@
+\input{../article-template}
+\input{macro/reportcover}
+\input{macro/advisorsignature}
+\input{macro/schedule}
+
+%%
+%% DOCUMENT
+%%
+\begin{document}
+\reportcover{IV}{7 dan 8}{6 November 2015}
+
+%%{{{ Pendahuluan
+\section{Pendahuluan}
+
+Berbeda dengan laporan sebelumnya yang menggabungkan progres tesis dari minggu pertama sampai minggu terakhir laporan, untuk laporan ini dan laporan selanjutnya akan dibuat dalam satu dokumen, karena jumlah halaman yang digunakan sudah terlalu banyak sehingga tidak mudah bagi orang lain untuk membacanya.
+
+Pada laporan sebelumnya, rencana pada dua minggu lewat ini adalah implementasi algoritma \textit{Random Forest}. Pada akhir minggu ke-8, implementasi tersebut belum tercapai, hanya baru sampai pada implementasi \textit{decision tree} (pohon keputusan) CART.
+
+\section{Laporan Singkat Progres}
+
+Selama dua minggu terakhir saya telah,
+\begin{itemize}
+\item membaca makalah dari \textit{Random Forest} \cite{breiman2001random},
+\item mempelajari dan mengimplementasikan algoritma \textit{decisition tree} \textit{Classification and Regression Tree} (CART), yang kemudian mengarah ke
+	\begin{itemize}
+	\item mempelajari tentang Gini Index, yaitu ukuran untuk menghitung ketidakseimbangan diantara nilai dari frekuensi distribusi, yang digunakan untuk menghitung \textit{Gini's gain} pada atribut dari dataset yang digunakan untuk menentukan nilai pemisah.
+	\item mengetahui tentang \textit{Stirling Numbers of Second Kind}, yaitu jumlah sebuah set dapat dipartisi menjadi $ k $ objek tanpa adanya subset yang kosong.
+	\item mengetahui dan membuat algoritma partisi untuk sebuah set dengan metode rekursif.
+	\end{itemize}
+\end{itemize}
+%%}}}
+
+\input{notes/report_4}
+
+\section{Pekerjaan Selanjutnya}
+
+Implementasi algoritma \textit{Random Forest}.
+
+\schedule{4}{6}{0}{0}
+
+\advisorsignature
+
+\clearpage
+\addcontentsline{toc}{section}{Daftar Referensi}
+\printbibliography
+
+\newpage
+\appendix
+\input{appendix/report_4}
+
+\end{document}
