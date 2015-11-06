@@ -1,0 +1,34 @@
+%%
+%% Create cover with parameters
+%% 1: report number
+%% 2: report weeks, in string
+%% 3: report date, string
+%%
+\newcommand{\reportcover}[3]{
+	\thispagestyle{empty}
+	\begin{center}\textbf{%
+		\mytitle
+		\vfill
+		Laporan Progres Tesis, Catatan, dan Pekerjaan Selanjutnya
+		\linebreak
+		Laporan ke-#1
+		\linebreak
+		Minggu #2
+		\linebreak
+		\linebreak
+		#3
+		\vfill
+		Oleh \\
+		\myname \\
+		\mysid \\
+		\vfill
+		\uppercase{%
+			Program Studi Magister Informatika \\
+			Sekolah Teknik Elektro dan Informatika \\
+			Institut Teknologi Bandung \\
+			2015
+		}
+	}
+	\end{center}
+	\newpage
+}

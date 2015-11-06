@@ -1,0 +1,116 @@
+%%
+%% Macro for create schedule using parameter
+%% 1: number of weeks has passed on task 1
+%% 2: number of weeks has passed on task 2
+%% 3: number of weeks has passed on task 3
+%% 4: number of weeks has passed on task 4
+%% 5: should we begin in newpage?
+%%
+
+% function to fill cell with color
+\newcommand{\tand}{&}
+\newcounter{cnt}
+\newcommand{\fillcell}[1]{%
+	\forloop{cnt}{0}{\value{cnt}<#1}{%
+		{\cellcolor[gray]{0.7}} \tand
+	}%
+}
+% function to create empty cell
+\newcommand{\emptycell}[2]{%
+	\forloop{cnt}{0}{\value{cnt}<#1}{%
+		\tand
+	}%
+	\ifthenelse{#2 = 1}{\\}{\tand}%
+}
+% function to fill week in progress.
+\newcommand{\progresscell}[1]{%
+	\forloop{cnt}{0}{\value{cnt}<#1}{%
+		{\cellcolor{red!80}} \tand
+	}%
+}
+
+\newcommand{\schedule}[4]{
+	\section{Penjadwalan}\label{sec:penjadwalan}
+
+Tabel di bawah menampilkan jadwal yang direncanakan dalam pengembangan tesis dari bulan ke I, September 2015, sampai dengan bulan ke VI, Januari 2016.
+
+Warna merah menandakan minggu yang telah lewat sampai minggu dari laporan progres ini, untuk warna abu-abu menandakan waktu pelaksanaan yang akan datang.
+
+\newcounter{planone}
+\newcounter{plantwo}
+\newcounter{planthree}
+\newcounter{planfour}
+
+\newcounter{progressone}
+\newcounter{progresstwo}
+\newcounter{progressthree}
+\newcounter{progressfour}
+
+\setcounter{progressone}{#1}
+\setcounter{progresstwo}{#2}
+\setcounter{progressthree}{#3}
+\setcounter{progressfour}{#4}
+
+\setcounter{planone}{4 - \theprogressone}
+\setcounter{plantwo}{17 - \theprogresstwo}
+\setcounter{planthree}{14 - \theprogressthree}
+\setcounter{planfour}{2 - \theprogressfour}
+
+\begin{table}[h!]
+	\centering
+	{\footnotesize
+	\begin{tabular}{|c|p{0.2\textwidth}
+	|c|c|c|c
+	|c|c|c|c
+	|c|c|c|c
+	|c|c|c|c
+	|c|c|c|c
+	|c|c|c|c|}
+		\hline
+		\multirow{2}{*}{No.}
+			& \multirow{2}{*}{Kegiatan}
+			& \multicolumn{4}{c|}{Bulan I}
+			& \multicolumn{4}{c|}{Bulan II}
+			& \multicolumn{4}{c|}{Bulan III}
+			& \multicolumn{4}{c|}{Bulan IV}
+			& \multicolumn{4}{c|}{Bulan V}
+			& \multicolumn{4}{c|}{Bulan VI}\\
+		\cline{3-26}
+		& &
+			1 & 2 & 3 & 4 &
+			1 & 2 & 3 & 4 &
+			1 & 2 & 3 & 4 &
+			1 & 2 & 3 & 4 &
+			1 & 2 & 3 & 4 &
+			1 & 2 & 3 & 4\\
+		\hline
+		1 & Persiapan\ \  Data dan\ \ Lingkungan Penelitian &
+			\progresscell{\theprogressone}
+			\fillcell{\theplanone}
+			\emptycell{19}{1}
+		\hline
+		2 & Implementasi dan Pengujian &
+			\emptycell{2}{0}
+			\progresscell{\theprogresstwo}
+			\fillcell{\theplantwo}
+			\emptycell{3}{1}
+		\hline
+		4 & Analisis &
+			\emptycell{7}{0}
+			\progresscell{\theprogressthree}
+			\fillcell{\theplanthree}
+			\emptycell{1}{1}
+		\hline
+		5 & Evaluasi &
+			\emptycell{20}{0}
+			\progresscell{\theprogressfour}
+			\fillcell{\theplanfour}
+			\emptycell{0}{1}
+		\hline
+	\end{tabular}
+	}
+	\caption{Jadwal penelitian tesis}
+\end{table}
+}
+
+
