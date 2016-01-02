@@ -1,0 +1,46 @@
+\input{../article-template}
+\input{macro/reportcover}
+\input{macro/advisorsignature}
+\input{macro/schedule}
+
+%%
+%% DOCUMENT
+%%
+\begin{document}
+\reportcover{V}{15 dan 16}{Desember 2015}
+
+\section{Pendahuluan}
+
+\input{review/report_05}
+
+\section{Laporan Singkat Progres}
+
+Pekerjaan yang telah dilakukan,
+\begin{itemize}
+\item perbaikan algoritma CART
+\item implementasi algoritma \textit{Random Forest}
+\end{itemize}
+%%}}}
+
+\section{Catatan}
+
+\input{notes/report_05}
+
+\section{Pekerjaan Selanjutnya}
+
+Mempelajari dan mengimplementasikan algoritma \textit{Cascaded Random Forest}.
+
+\clearpage
+\schedule{4}{13}{0}{0}
+
+\advisorsignature
+
+\clearpage
+\addcontentsline{toc}{section}{Daftar Referensi}
+\printbibliography
+
+\newpage
+\appendix
+\input{appendix/report_05}
+
+\end{document}
