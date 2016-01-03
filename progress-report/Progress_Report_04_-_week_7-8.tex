@@ -1,0 +1,51 @@
+\input{../article-template}
+\input{macro/reportcover}
+\input{macro/advisorsignature}
+\input{macro/schedule}
+
+\begin{document}
+\reportcover{IV}{7 dan 8}{6 November 2015}
+
+\section{Pendahuluan}
+
+\input{review/report_04}
+
+\section{Laporan Singkat Progres}
+
+Selama dua minggu terakhir saya telah,
+\begin{itemize}
+\item membaca makalah dari \textit{Random Forest} \cite{breiman2001random},
+\item mempelajari dan mengimplementasikan algoritma \textit{decisition tree}
+\textit{Classification and Regression Tree} (CART), yang kemudian mengarah ke
+	\begin{itemize}
+	\item mempelajari tentang Gini Index, yaitu ukuran untuk menghitung
+	ketidakseimbangan diantara nilai dari frekuensi distribusi, yang
+	digunakan untuk menghitung \textit{Gini's gain} pada atribut dari
+	dataset yang digunakan untuk menentukan nilai pemisah.
+	\item mengetahui tentang \textit{Stirling Numbers of Second Kind},
+	yaitu jumlah sebuah set dapat dipartisi menjadi $ k $ objek tanpa
+	adanya subset yang kosong.
+	\item mengetahui dan membuat algoritma partisi untuk sebuah set dengan
+	metode rekursif.
+	\end{itemize}
+\end{itemize}
+
+\input{notes/report_04}
+
+\section{Pekerjaan Selanjutnya}
+
+Implementasi algoritma \textit{Random Forest}.
+
+\schedule{4}{6}{0}{0}
+
+\advisorsignature
+
+\clearpage
+\addcontentsline{toc}{section}{Daftar Referensi}
+\printbibliography
+
+\newpage
+\appendix
+\input{appendix/report_04}
+
+\end{document}
