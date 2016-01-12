@@ -4,7 +4,7 @@
 \input{macro/schedule}
 
 \begin{document}
-\reportcover{V}{17}{11 Januari 2016}
+\reportcover{V}{17}{12 Januari 2016}
 
 \section{Pendahuluan}
 
@@ -15,12 +15,34 @@
 
 Selama seminggu ini saya telah,
 \begin{itemize}
-\item mempelajari tentang kurva ROC dan UAC.
+\item mempelajari tentang kurva ROC dan UAC,
+\item mempelajari makalah \textit{Cascaded Random Forest}
+\cite{baumann2013cascaded},
+\item mengimplementasikan sebagian algoritma \textit{Cascaded Random Forest}.
 \end{itemize}
 
 \section{Catatan}
 
-\input{notes/report_06}
+\input{notes/report_06_roc}
+\input{notes/report_06_cascadedrf}
+
+\clearpage
+\section{Pekerjaan Selanjutnya}
+
+Berikut garis besar tahap yang akan dikerjakan untuk pekerjaan selanjutnya,
+
+\begin{itemize}
+\item perbaikan implementasi \textit{Cascaded Random Forest}.
+\item Implementasi algoritma LN-SMOTE.
+\item Implementasi fitur vandalisme di Wikipedia.
+\item Menerapkan algoritma SMOTE dan LN-SMOTE pada hasil penghitungan fitur.
+\item Menerapkan \textit{Random Forest} pada hasil \textit{resampling} SMOTE
+dan LN-SMOTE.
+\item Menerapkan algoritma \textit{Cascade Random Forest} dari hasil SMOTE dan
+LN-SMOTE.
+\item Analisis hasil dari klasifikasi \textit{Random Forest} dan
+\textit{Cascaded Random Forest}.
+\end{itemize}
 
 \clearpage
 \schedule{4}{14}{0}{0}
@@ -33,5 +55,6 @@ Selama seminggu ini saya telah,
 
 \newpage
 \appendix
+\input{appendix/report_06}
 
 \end{document}

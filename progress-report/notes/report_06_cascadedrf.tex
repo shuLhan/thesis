@@ -1,0 +1,67 @@
+\subsection{Cascaded Random Forests}
+
+Berikut rangkuman dari makalah Baumann dkk. \cite{baumann2013cascaded},
+
+\begin{itemize}
+\item Sebuah cascade terdiri dari beberapa \textit{stage} dengan kompleksitas
+yang meningkat.
+\item Setiap \textit{stage} paling kurang memiliki satu pohon.
+\item Pohon ditambahkan ke stage sampai \textit{true positive rate} dan
+\textit{true negative rate} dicapai.
+\item Label dari sampel ditentukan oleh probabilitas kelas dari \textit{tree}
+yang berbeda di stage $S$.
+\item Untuk mengurangi pengaruh \textit{stage} yang performansinya rendah maka
+ditambahkan faktor bobot $\alpha$ untuk setiap \textit{stage}, yaitu,
+\[
+	\alpha_{s} = exp(fmeasure)
+\]
+yang mana $fmeasure$ didapat dari,
+\[
+	fmeasure = 2 \cdot \frac{precision \cdot recall}{precision + recall}
+\]
+\item $\alpha_{s}$ secara linear dinormalkan menjadi rentang antara 0 dan 1.
+\item Bobot dari \textit{stage} yang memiliki performansi rendah dikurangi
+supaya pengaruh mereka pada mayoritas voting berkurang.
+\end{itemize}
+
+\begin{algorithm}[t!]
+\caption{Algoritma Cascaded Random Forest}
+\label{alg:cascadedrf}
+\begin{algorithmic}
+	\Require \\
+	S: jumlah stage \\
+	T: maksimum jumlah tree di setiap stage \\
+	mintp: ambang batas untuk nilai minimum true positive \\
+	mintn: ambang batas untuk nilai minimum true negative \\
+	\Function{CascadedRandomForest}{$S, T, mintp, mintn$}
+		\For{$ s = 1 \to S $}
+			\For{$ t = 1 \to T $}
+				\State buat \textit{tree}
+				\If{$TP_{s,t} > mintp $ AND $ TN_{s,t} > mintn $}
+					\State stage selesai.
+				\EndIf
+			\EndFor
+			\State Hitung bobot $ \alpha = exp(fmeasure) $
+			\State Hapus \textit{true-negative}
+			\State Isi ulang dengan \textit{false-positive}
+		\EndFor
+	\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+Dari algoritma Cascaded Random Forest \ref{alg:cascadedrf}, ada beberapa
+pertanyaan untuk makalah tersebut,
+\begin{itemize}
+\item Untuk jenis dataset multi-kelas bukankah nilai TN sama dengan TP? Yang
+mana TN = 1 - FP Rate.
+\item Apa yang harus dilakukan jika maksimum jumlah tree tercapai tapi nilai
+$TP_{s,t}$ dan $TN_{s,t}$ tidak mencapai $mintp$ dan $mintn$?
+\item Apa yang dimaksud dengan "Hapus \textit{true negative}"? Apakah dihapus
+stagenya? Treenya? Samplenya? Makalah tidak secara eksplisit menjelaskan
+bagian ini
+\item Apa yang dimaksud dengan "Isi ulang dengan \textit{false-positive}"?
+\end{itemize}
+
+Karena masih ada yang belum dipahami pada algoritmanya, implementasi
+\textit{Cascaded Random Forest} untuk pengklasifikasi dataset multi-kelas belum
+selesai.
