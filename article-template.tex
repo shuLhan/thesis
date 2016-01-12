@@ -3,6 +3,8 @@
 %%{{{ packages
 %% font encoding.
 \usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{couriers}
 %% bibliography.
 \usepackage[backend=bibtex,style=ieee]{biblatex}
 %% \includegraphics{name}
@@ -32,6 +34,9 @@
 \usepackage{mathtools}
 %% arithmetic
 \usepackage{calc}
+%% algorithm
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 %%}}}
 
 %%{{{ hyphenation: sorted in ascending.
@@ -102,7 +107,6 @@
 
 \lstset{
 	basicstyle=\scriptsize\ttfamily
-,	columns=
 ,	breaklines=true
 ,	stringstyle=\scriptsize\ttfamily
 ,	numbers=left
