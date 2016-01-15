@@ -1,0 +1,56 @@
+\input{../article-template}
+\input{macro/reportcover}
+\input{macro/advisorsignature}
+\input{macro/schedule}
+
+\begin{document}
+\reportcover{VI}{18}{Januari 2016}
+
+\section{Pendahuluan}
+
+\section{Laporan Singkat Progres}
+
+Selama seminggu ini saya telah,
+\begin{itemize}
+\item mempelajari tentang \textit{Local Neighbourhood SMOTE} (LN-SMOTE).
+\end{itemize}
+
+\section{Catatan}
+
+\input{notes/report_07}
+
+\clearpage
+\section{Pekerjaan Selanjutnya}
+
+Berikut garis besar tahap yang akan dikerjakan untuk pekerjaan selanjutnya,
+
+\begin{itemize}
+\item perbaikan implementasi \textit{Cascaded Random Forest}.
+\item Implementasi algoritma LN-SMOTE.
+\item Implementasi fitur vandalisme di Wikipedia.
+\item Menerapkan algoritma SMOTE dan LN-SMOTE pada hasil penghitungan fitur.
+\item Menerapkan \textit{Random Forest} pada hasil \textit{resampling} SMOTE,
+dan
+\item menerapkan \textit{Random Forest} pada hasil \textit{resampling} LN-SMOTE.
+\item Menerapkan \textit{Cascade Random Forest} dari hasil \textit{resampling}
+SMOTE, dan
+\item menerapkan \textit{Cascade Random Forest} dari hasil \textit{resampling}
+LN-SMOTE.
+\item Analisis hasil dari klasifikasi \textit{Random Forest} dan
+\textit{Cascaded Random Forest}.
+\end{itemize}
+
+\clearpage
+\schedule{4}{15}{0}{0}
+
+\advisorsignature
+
+\clearpage
+\addcontentsline{toc}{section}{Daftar Referensi}
+\printbibliography
+
+\newpage
+\appendix
+\input{appendix/report_07}
+
+\end{document}
