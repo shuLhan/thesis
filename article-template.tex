@@ -37,6 +37,10 @@
 %% algorithm
 \usepackage{algorithm}
 \usepackage{algpseudocode}
+%% multiple columns
+\usepackage{multicol}
+%% Change the margin
+\usepackage[a4paper]{geometry}
 %%}}}
 
 %%{{{ hyphenation: sorted in ascending.
@@ -66,6 +70,7 @@
 	mem-vi-sua-li-sa-si
 	me-ne-rap-kan
 	meng-gu-na-kan
+	meng-hu-bung-kan
 	meng-i-kuti
 	meng-im-ple-men-ta-si-kan
 	meng-in-di-ka-si-kan
@@ -135,6 +140,13 @@
 %%% uncomment this to show overrule in black box
 \overfullrule=2cm
 
+%% Algorithmicx
+\makeatletter
+\renewcommand{\ALG@beginalgorithmic}{\footnotesize}
+\makeatother
+
+%% multicolumn setting
+\setlength{\columnsep}{1cm}
 %%}}}
 
 %%{{{ variables
