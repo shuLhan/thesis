@@ -146,7 +146,8 @@ Hal ini supaya bisa mengontrol tingkat ekspansi dari kelas minoritas dengan
 cara dinamis, memperhitungkan distribusi lokal dari sampel.
 \end{itemize}
 
-Algoritma LN-SMOTE dapat dilihat pada Algoritma \ref{alg:lnsmote}.
+Algoritma LN-SMOTE dapat dilihat pada Algoritma \ref{alg:lnsmote} dan hasil
+implementasinya bisa dilihat di lampiran \ref{appendix:sumber_kode_lnsmote}.
 
 \newpage
 \newgeometry{left=2cm,right=2cm}
@@ -161,65 +162,66 @@ S: dataset sampel keseluruhan \\
 P: sample minoritas dari $ S $ \\
 o: rasio \textit{over-sampling}, jumlah sampel sintetis yang akan dibuat \\
 
-\Function{LNSMOTE}{}
+\Function{LNSMOTE}{$ S, P, o $}
 	\State $ SEEDS \gets P $
 	\State $ OUT \gets S $
 	\For{\textbf{each} $ p $ \textbf{in} $ SEEDS $}
-		\State $ NN \gets k $ nearest neighbourhood dari $ p $
+		\State $ NN \gets \Call{KNearestNeighbor}{S, p} $
 		\For{$ i \gets 1 \dots o $}
-			\Repeat
-				\State $ s \gets \Call{CreateSynthetic}{p, NN,
-				\newline
-				OUT} $
-			\Until{$s \not= nil$}
+			\State $ s \gets \Call{CreateSynthetic}{p, NN, S} $
+
+			\If{$ s \not= nil $}
+				\State tambahkan $ s $ ke $OUT$
+			\EndIf
 		\EndFor
 	\EndFor
 	\State \Return{OUT}
 \EndFunction
 \\
-\Function{CreateSynthetic}{p, NN, OUT}
+\Function{CreateSynthetic}{$ p, NN, S $}
 	\State $ n \gets $ pilih \textit{nearest neighbourhood} secara acak
 	pada $ NN $
-	\If{not \Call{CanCreate}{p, n}}
+	\If{\textbf{not} \Call{CanCreate}{$ S, p, n $}}
 		\State \Return nil
 	\EndIf
 
 	\State $ x_{new} \gets \Call{Clone}{p} $
 	\For{\textbf{each} $ a $ \textbf{in} \Call{Attributes}{S}}a
 		\If{\Call{IsQuantitative}{$ a $}}
-			\State $ \delta \gets \Call{RandomGap}{p, n} $
+			\State $ \delta \gets \Call{RandomGap}{S, p, n} $
 			\State $ diff \gets n(a) - p(a) $
-			\State $ x_{new} \gets p(a) + \delta \cdot diff $
+			\State $ x_{new}(a) \gets p(a) + \delta \cdot diff $
 		\Else
 			\State $ x_{new} \gets \Call{MostFrequent}{p \cup NN, a} $
 		\EndIf
 	\EndFor
-	\State tambahkan $x_{new}$ ke set $OUT$
+
+	\State \Return $ x_{new} $
 \EndFunction
 \columnbreak
-\Function{CanCreate}{p, n}
-	\State $ slp \gets \Call{SafeLevel}{p} $
-	\State $ sln \gets \Call{SafeLevel2}{n, p} $
+\Function{CanCreate}{$ S, p, n $}
+	\State $ slp \gets \Call{SafeLevel}{S, p} $
+	\State $ sln \gets \Call{SafeLevel2}{S, p, n} $
 	\State \Return{$ slp \not= 0 $ \textbf{or} $ sln \not= 0 $}
 \EndFunction
 \\
-\Function{SafeLevel}{p}
-	\State $ pneighbor \gets \Call{KNearestNeighbor}{p} $
+\Function{SafeLevel}{$ S, p $}
+	\State $ pneighbor \gets \Call{KNearestNeighbor}{S, p} $
 	\State \Return{$ pneighbor $ yang kelasnya minoritas}
 \EndFunction
 \\
-\Function{SafeLevel2}{n, p}
-	\State $ nneighbor \gets \Call{KNearestNeighbor}{n} $
+\Function{SafeLevel2}{$ S, p, n $}
+	\State $ nneighbor \gets \Call{KNearestNeighbor}{ S, n } $
 	\If{$\Call{Class}{n} \not= P $ \textbf{and} $ p \in nneighbor $}
 		\State Ganti $ p $ di $ nneighbor $ dengan tetanggga $ k + 1 $
 		dari $ n $
 	\EndIf
-	\State \Return{$ pneighbor $ yang kelasnya minoritas}
+	\State \Return{$ nneighbor $ yang kelasnya minoritas}
 \EndFunction
 \\
-\Function{RandomGap}{p, n}
-	\State $ slp \gets \Call{SafeLevel}{p} $
-	\State $ sln \gets \Call{SafeLevel}{n, p} $
+\Function{RandomGap}{$ S, p, n $}
+	\State $ slp \gets \Call{SafeLevel}{S, p} $
+	\State $ sln \gets \Call{SafeLevel}{S, p, n} $
 	\State $ \delta \gets 0 $
 
 	\If{$ sln = 0 $ \textbf{and} $ slp > 0 $}
