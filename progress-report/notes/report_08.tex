@@ -1,0 +1,163 @@
+\subsection{Fitur Vandalisme}
+
+Beberapa makalah sebelumnya mengelompokan fitur-fitur ke dalam kelompok
+\textit{metadata}, teks, dan bahasa.
+Dalam tesis ini digunakan 4 fitur metadata, 11 fitur teks, dan 5 fitur
+bahasa yang diambil dari hasil analisis makalah Mola-Velasco
+\cite{mola2012wikipedia}.
+
+\subsubsection{Fitur Kelompok Metadata}
+
+Kelompok metadata mengacu pada properti dari sebuah revisi yang secara langsung
+dapat diambil, seperti identitas penyunting atau komentar.
+
+Berikut daftar fitur metadata yang digunakan,
+
+\begin{itemize}
+
+\item \textbf{Anonim}.
+Melihat apakah penyunting memiliki akun atau anonim (hanya tercatat alamat
+\textit{IP}-nya), jika benar maka ditandai dengan nilai 1, atau 0 sebaliknya.
+Vandal lebih condong berlaku anonim karena jika menggunakan akun asli akan
+membuat akun mereka mudah diblokir.
+
+\item \textbf{Panjang komentar}.
+Melihat dari jumlah karakter yang diinputkan di kolom rangkuman suntingan saat
+menyimpan hasil suntingan, tanpa mengikutkan bagian \textit{header} yaitu
+penanda di awal komentar yang menunjuk ke bagian yang di sunting, biasanya
+dalam format "\texttt{/* Nama header */}".
+Komentar yang panjang mungkin mengindikasikan suntingan normal dan yang pendek
+atau kosong mungkin menyarankan suatu vandalisme.
+
+\item \textbf{Peningkatan ukuran}.
+Peningkatan absolut dari ukuran konten artikel, dihitung dengan
+\[
+|\text{ukuran\_suntingan\_baru} - \text{ukuran\_suntingan\_lama}|
+\]
+Misalnya, berkurangnya ukuran dalam jumlah besar bisa mengindikasikan
+pengosongan artikel.
+
+\item \textbf{Rasio ukuran}.
+Ukuran revisi baru relatif terhadap revisi lama, yaitu
+\[
+\frac{1 + |baru|}{1 + |lama|}
+\]
+
+\end{itemize}
+
+
+\subsubsection{Fitur Kelompok Teks}
+
+Berikut daftar fitur berbasiskan teks yang digunakan,
+
+\begin{itemize}
+
+\item \textbf{Rasio huruf besar dan kecil}.
+Pelaku vandal biasanya tidak mengikuti aturan huruf kapital, menulis semuanya
+dengan huruf kecil atau huruf besar.
+Rasio ini dihitung pada teks yang ditambahkan di revisi baru dengan menggunakan
+rumus
+\[
+\frac{1 + |huruf\ besar|}{1 + |huruf\ kecil|}
+\]
+
+\item \textbf{Rasio huruf besar terhadap semua karakter}
+Rasio ini dihitung dengan menggunakan rumus
+\[
+\frac{1 + |huruf\ besar|}{1 + |huruf\ besar| + |huruf\ kecil|}
+\]
+
+\item \textbf{Rasio angka}.
+Rasio semua karakter terhadap angka, yaitu
+\[
+\frac{1 + |angka|}{1 + |semua karakter|}
+\]
+Fitur ini membantu menemukan perubahan kecil yang hanya mengubah angka.
+Contoh kasusnya perubahan sebuah tanggal atau perhitungan untuk menyebabkan
+kesalahan informasi.
+
+\item \textbf{Rasio non-alfanumerik}.
+Rasio semua karakter terhadap karakter selain huruf dan angka, yaitu
+\[
+\frac{1 + |non\ alfanumerik|}{1 + |semua\ karakter|}
+\]
+Penggunaan karakter selain angka-huruf yang berlebihan bisa mengindikasikan
+penggunaan \textit{emoticon}, tanda baca, atau kata tak bermakna.
+
+\item \textbf{Diversitas karakter}.
+Menghitung jumlah karakter berbeda yang digunakan pada penambahan, dibandingkan dengan panjang teks yang dimasukan,
+dihitung dengan rumus,
+\[
+length \frac{1}{karakter\ berbeda}
+\]
+Fitur ini membantu menemukan penggunaan karakter secara acak dan kata tak
+bermakna.
+
+\item \textbf{Distribusi karakter}.
+Menggunakan Divergensi Kullback-Leibler dari distribusi karakter yang dimasukan
+terhadap ekspektasi.
+Fitur ini berguna untuk mendeteksi kata tak bermakna.
+
+\item \textbf{Laju kompresi}.
+Melihat tingkat kompres dari penambahan teks menggunakan algoritma kompresi
+LZW.
+Fitur ini berguna untuk mendeteksi kata tak bermakna, pengulangan kata atau
+karakter, dll.
+Vandalisme biasanya memiliki ukuran kompresi yang rendah.
+
+\item \textbf{Token umum}.
+Menghitung token yang biasanya jarang digunakan oleh vandal yaitu sintaks
+wiki, seperti \textit{\_\_TOC\_\_}.
+
+\item \textbf{Frekuensi rerata kata}.
+Frekuensi relatif rerata dari kata yang dimasukan pada revisi baru.
+Pada artikel yang panjang, semakin banyak kata yang dimasukan yang tidak ada
+pada artikel mengindikasikan bahwa suntingan tersebut bisa tak bermakna atau
+tidak berhubungan dengan isinya.
+
+\item \textbf{Kata terpanjang}.
+Panjang dari kata yang dimasukan.
+Nilainya akan 0 jika tidak ada kata yang dimasukan.
+Fitur ini berguna untuk mendeteksi suntingan tak-bermakna.
+
+\item \textbf{Urutan karakter terpanjang}.
+Urutan terpanjang dari karakter yang sama pada teks yang dimasukan sering
+digunakan pada vandalisme, contohnya \textit{aaarrrrggghhh! sooo huge}.
+
+\end{itemize}
+
+\subsubsection{Fitur Kelompok Bahasa}
+
+Fitur kelompok bahasa berdasarkan jumlah kata tertentu yang ditambahkan pada
+suntingan baru.
+Fitur ini dihitung relatif terhadap konten yang baru: frekuensi
+dan dampak.
+Frekuensi adalah menghitung frekuensi dari kata tersebut dari
+total seluruh kata pada suntingan yang baru.
+Dampak adalah menghitung persentase penambahan jumlah kata tersebut pada
+suntingan.
+Berikut daftar fitur yang digunakan pada klasifikasi vandalisme berbasiskan
+bahasa,
+
+\begin{itemize}
+\item \textbf{Vulgarisme}.
+Menghitung kata-kata vulgar, kasar dan menghina.
+
+\item \textbf{Subjek}.
+Menghitung kata subjek pertama atau kedua, termasuk pengejaan tidak baku,
+misalnya \textit{I}, \textit{you}, \textit{ya}.
+
+\item \textbf{Bias}.
+Menghitung penggunaan kata sehari-hari yang mengandung bias, misalnya
+\textit{coolest}, \textit{huge}.
+
+\item \textbf{Seks}.
+Menghitung penggunaan kata berhubungan dengan seks.
+
+\item \textbf{Kata buruk}.
+Gabungan kategori untuk kata sehari-hari dan beberapa penulisan yang buruk
+(misalnya, \textit{wanna}, \textit{gotcha}).
+
+\end{itemize}
+
+
