@@ -1,6 +1,6 @@
 \subsection{Fitur Vandalisme}
 
-Beberapa makalah sebelumnya mengelompokan fitur-fitur ke dalam kelompok
+Beberapa makalah sebelumnya mengelompokan fitur ke dalam tiga kelompok yaitu
 \textit{metadata}, teks, dan bahasa.
 Dalam tesis ini digunakan 4 fitur metadata, 11 fitur teks, dan 5 fitur
 bahasa yang diambil dari hasil analisis makalah Mola-Velasco
@@ -9,17 +9,20 @@ bahasa yang diambil dari hasil analisis makalah Mola-Velasco
 \subsubsection{Fitur Kelompok Metadata}
 
 Kelompok metadata mengacu pada properti dari sebuah revisi yang secara langsung
-dapat diambil, seperti identitas penyunting atau komentar.
+dapat diambil, seperti identitas penyunting, komentar, atau ukuran perubahan.
 
 Berikut daftar fitur metadata yang digunakan,
 
 \begin{itemize}
 
 \item \textbf{Anonim}.
-Melihat apakah penyunting memiliki akun atau anonim (hanya tercatat alamat
-\textit{IP}-nya), jika benar maka ditandai dengan nilai 1, atau 0 sebaliknya.
+Penyunting anonim yaitu yang tidak menggunakan akun Wikipedia saat melakukan
+penyuntingan, sehingga yang tercatat hanya alamat IP bukan nama pengguna.
+Fitur ini melihat apakah suntingan anonim atau bukan, jika benar maka ditandai
+dengan nilai 1, atau 0 sebaliknya.
 Vandal lebih condong berlaku anonim karena jika menggunakan akun asli akan
-membuat akun mereka mudah diblokir.
+membuat akun mereka mudah diblokir dan membuat akun baru membutuhkan waktu dan
+identitas berupa alamat surel.
 
 \item \textbf{Panjang komentar}.
 Melihat dari jumlah karakter yang diinputkan di kolom rangkuman suntingan saat
@@ -107,7 +110,8 @@ Vandalisme biasanya memiliki ukuran kompresi yang rendah.
 
 \item \textbf{Token umum}.
 Menghitung token yang biasanya jarang digunakan oleh vandal yaitu sintaks
-wiki, seperti \textit{\_\_TOC\_\_}.
+wiki, seperti \textit{\_\_TOC\_\_}. Daftar token dapat dilihat pada lampiran
+\ref{appendix:words_wiki_token}.
 
 \item \textbf{Frekuensi rerata kata}.
 Frekuensi relatif rerata dari kata yang dimasukan pada revisi baru.
@@ -128,36 +132,57 @@ digunakan pada vandalisme, contohnya \textit{aaarrrrggghhh! sooo huge}.
 
 \subsubsection{Fitur Kelompok Bahasa}
 
-Fitur kelompok bahasa berdasarkan jumlah kata tertentu yang ditambahkan pada
-suntingan baru.
-Fitur ini dihitung relatif terhadap konten yang baru: frekuensi
-dan dampak.
-Frekuensi adalah menghitung frekuensi dari kata tersebut dari
-total seluruh kata pada suntingan yang baru.
-Dampak adalah menghitung persentase penambahan jumlah kata tersebut pada
-suntingan.
-Berikut daftar fitur yang digunakan pada klasifikasi vandalisme berbasiskan
-bahasa,
+Fitur kelompok bahasa didasarkan pada jumlah kata tertentu yang ditambahkan
+pada suntingan atau revisi yang baru.
+Untuk setiap kategori kata dihitung dua jenis fiturnya: frekuensi dan impak.
+
+Fitur frekuensi yaitu menghitung frekuensi dari kategori kata terhadap
+total seluruh kata pada suntingan yang baru, yaitu
+\[
+	\frac{jumlah\ kategori\ kata}
+		{jumlah\ seluruh\ kata}
+\]
+
+Fitur impak yaitu menghitung persentase peningkatan kategori kata di revisi
+yang baru, dihitung dengan,
+\[
+	\frac{jumlah\ kategori\ kata\ di\ revisi\ lama}
+		{jumlah\ kategori\ kata\ di\ revisi\ lama +
+		jumlah\ kategori\ kata\ di\ revisi\ baru}
+\]
+
+Berikut daftar kategori kata yang digunakan,
 
 \begin{itemize}
 \item \textbf{Vulgarisme}.
 Menghitung kata-kata vulgar, kasar dan menghina.
+Daftar kategori kata ini dapat dilihat pada lampiran
+\ref{appendix:words_vulgar}.
 
 \item \textbf{Subjek}.
 Menghitung kata subjek pertama atau kedua, termasuk pengejaan tidak baku,
 misalnya \textit{I}, \textit{you}, \textit{ya}.
+Daftar kategori kata ini dapat dilihat pada lampiran
+\ref{appendix:words_pronoun}.
 
 \item \textbf{Bias}.
 Menghitung penggunaan kata sehari-hari yang mengandung bias, misalnya
 \textit{coolest}, \textit{huge}.
+Daftar kategori kata ini dapat dilihat pada lampiran
+\ref{appendix:words_bias}.
 
 \item \textbf{Seks}.
 Menghitung penggunaan kata berhubungan dengan seks.
+Daftar kategori kata ini dapat dilihat pada lampiran
+\ref{appendix:words_sex}.
 
 \item \textbf{Kata buruk}.
-Gabungan kategori untuk kata sehari-hari dan beberapa penulisan yang buruk
+Menghitung penggunaan kata sehari-hari dan beberapa penulisan yang buruk
 (misalnya, \textit{wanna}, \textit{gotcha}).
+Daftar kategori kata ini dapat dilihat pada lampiran
+\ref{appendix:words_bad}.
+
+\item \textbf{Seluruh kategori kata}.
+Gabungan dari kategori kata vulgarisme, subjek, bias, seks, dan kata buruk.
 
 \end{itemize}
-
-
