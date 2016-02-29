@@ -1,0 +1,74 @@
+\subsection{Persiapan data}
+
+Data set PAN-WVC-10 terbagi menjadi dua yaitu dataset suntingan dan dataset
+anotasi yang berisi hasil klasifikasi.
+Kedua dataset memiliki format yang sama yaitu menggunakan \textit{Coma
+Separated Value} (CSV).
+Dataset suntingan memiliki atribut sebagai berikut,
+
+\begin{itemize}
+	\item \textbf{editid}, format angka, berisi identifikasi (ID) unik dari setiap suntingan.
+	\item \textbf{editor}, format string, berisi nama penyunting.
+	\item \textbf{oldrevisionid}, format angka, berisi ID untuk suntingan lama.
+	\item \textbf{newrevisionid}, format angka, berisi ID untuk suntingan baru.
+	\item \textbf{diffurl}, format string, berisi URL yang mengacu pada perbedaan suntingan baru dengan lama.
+	\item \textbf{edittime}, format string, berisi tanggal dan pukul sesuai dengan ISO 8601.
+	\item \textbf{editcomment}, format string, berisi komentar yang ditambahkan oleh penyunting saat menyimpan hasil suntingan.
+	\item \textbf{articleid}, format angka, berisi ID unik dari artikel.
+	\item \textbf{articletitle}, format string, berisi judul dari artikel yang disunting.
+\end{itemize}
+
+Dataset anotasi memiliki atribut sebagai berikut,
+\begin{itemize}
+	\item \textbf{editid}, format angka, mengacu pada ID yang sama pada
+	dataset suntingan.
+	\item \textbf{class}, format string, berisi tipe suntingan yang
+	bernilai "regular" yang menyatakan bahwa suntingan tersebut bukan
+	vandalisme, dan "vandalism" yang menyatakan bahwa suntingan tersebut
+	adalah vandalisme.
+	\item \textbf{annotators}, format angka, berisi jumlah orang yang
+	menandai (penanda) bahwa suntingan dengan ID tersebut termasuk ke dalam
+	kelas "regular" atau "vandalism".
+	\item \textbf{totalannotators}, format angka, berisi jumlah total penanda yang memeriksa suntingan.
+\end{itemize}
+
+Kedua dataset kemudian digabung untuk menghasilkan atribut \textit{editid},
+\textit{class}, \textit{oldrevisionid}, \textit{newrevisionid},
+\textit{edittime}, \textit{editor}, \textit{articletitle}, \textit{deletions},
+dan \textit{additions}.
+Atribut \textit{additions} berisi teks yang dihapus dalam revisi yang lama
+Atribut \textit{deletions} berisi teks yang ditambahkan dalam revisi yang baru.
+
+Pemrosesan selanjutnya yaitu membuat berkas revisi yang bersih dari sintaks
+wiki.
+Setiap berkas revisi dibaca kemudian dilakukan pembersihan berikut,
+
+\begin{itemize}
+\item penghapusan URI atau \textit{links} yang berawalan dengan
+\textit{http://}, \textit{https://}, \textit{ftp://}, dan \textit{ftps}.
+\item menghapus \textit{mark-up} wiki yaitu baris yang berisi awalan dan
+akhiran berikut,
+	\begin{itemize}
+	\item \texttt{[[Category:} dan \texttt{]]}
+	\item \texttt{[[:Category:} dan \texttt{]]}
+	\item \texttt{[[File:} dan \texttt{]]}
+	\item \texttt{[[Help:} dan \texttt{]]}
+	\item \texttt{[[Image:} dan \texttt{]]}
+	\item \texttt{[[Special:} dan \texttt{]]}
+	\item \texttt{[[Wikipedia:} dan \texttt{]]}
+	\item \texttt{\{\{DEFAULTSORT:} dan \texttt{\}\}}
+	\item \texttt{\{\{Template:} dan \texttt{\}\}}
+	\item \texttt{<ref} dan \texttt{/>}
+	\end{itemize}
+\item mengganti karakter dan token berikut dengan karakter kosong (spasi):
+\texttt{[}, \texttt{]}, \texttt{\{}, \texttt{\}}, \texttt{|}, \texttt{=},
+\texttt{\#}, \texttt{'s}, \texttt{'}, \texttt{<ref>}, \texttt{</ref>},
+\texttt{<br />}, \texttt{<br/>}, \texttt{<br>}, \texttt{<nowiki>},
+\texttt{</nowiki>}, \texttt{\&nbsp;}.
+\item menghapus karakter kosong yang berlebihan.
+\end{itemize}
+
+Hasil pembersihan disimpan dalam direktori yang berbeda tapi dengan nama yang
+sama.
+Hasil ini nanti berguna pada saat melakukan komputasi penghitungan fitur
+bahasa.

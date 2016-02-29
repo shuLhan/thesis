@@ -4,18 +4,46 @@
 \input{macro/schedule}
 
 \begin{document}
-\reportcover{VIII}{22}{Februari 2016}
+\reportcover{VIII}{24}{Maret 2016}
 
 \section{Pendahuluan}
 
 \section{Laporan Singkat Progres}
 
-Pekerjaan yang dilakukan dari beberapa minggu ini yaitu implementasi fitur
-vandalisme.
+Pekerjaan yang dilakukan dari beberapa minggu ini yaitu,
+\begin{itemize}
+\item pra-proses data set yaitu penggabungan data set dan pembersihan data untuk
+mempercepat komputasi fitur, dan
+\item implementasi fitur vandalisme.
+\end{itemize}
 
 \section{Catatan}
 
-\input{notes/report_08}
+\input{notes/report_08_praprocess}
+\input{notes/report_08_features}
+
+\clearpage
+\section{Pekerjaan Selanjutnya}
+
+Berikut garis besar tahap yang akan dikerjakan untuk pekerjaan selanjutnya,
+
+\begin{itemize}
+\item perbaikan implementasi CRF.
+\item Menerapkan \textit{Random Forest} (RF) \textit{Cascaded Random Forest}
+(CRF) pada hasil penghitungan fitur tanpa \textit{resampling}.
+\item Menerapkan algoritma SMOTE dan LN-SMOTE pada hasil penghitungan fitur.
+\item Menerapkan RF pada hasil \textit{resampling} SMOTE.
+\item Menerapkan RF pada hasil \textit{resampling} LN-SMOTE.
+\item Menerapkan CRF dari hasil \textit{resampling} SMOTE.
+\item Menerapkan CRF dari hasil \textit{resampling} LN-SMOTE.
+\item Analisis hasil dari klasifikasi RF dan CRF berdasarkan dari hasil
+\textit{resampling} SMOTE, LN-SMOTE, dan yang tanpa resampling.
+\end{itemize}
+
+\clearpage
+\schedule{4}{17}{4}{0}
+
+\advisorsignature
 
 \clearpage
 \addcontentsline{toc}{section}{Daftar Referensi}
