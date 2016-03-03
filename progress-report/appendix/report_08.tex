@@ -235,3 +235,195 @@ Berikut daftar kata buruk yang digunakan,
 "bloody", "fart", "pot", "prick", "stink", "smells", "smelly", "alot",
 "dunno", "gotcha"
 \end{lstlisting}
+
+\newpage
+\section{Komputasi Fitur}
+\label{appendix:features_computation}
+
+Berikut waktu untuk memproses setiap fitur untuk PAN-WVC-2010,
+
+\begin{lstlisting}[style=data,basicstyle=\tiny\ttfamily]
+START: >>> Processing wvc2010_features.dsv
+START: >>> computing feature editid
+  END: >>> computing feature editid with elapsed time  15.519µs
+START: >>> computing feature anonim
+  END: >>> computing feature anonim with elapsed time  7.464869ms
+START: >>> computing feature comment_length
+  END: >>> computing feature comment_length with elapsed time  13.266174ms
+START: >>> computing feature size_increment
+  END: >>> computing feature size_increment with elapsed time  95.56471ms
+START: >>> computing feature size_ratio
+  END: >>> computing feature size_ratio with elapsed time  70.492939ms
+START: >>> computing feature upper_lower_ratio
+  END: >>> computing feature upper_lower_ratio with elapsed time  118.802916ms
+START: >>> computing feature upper_to_all_ratio
+  END: >>> computing feature upper_to_all_ratio with elapsed time  118.477617ms
+START: >>> computing feature digit_ratio
+  END: >>> computing feature digit_ratio with elapsed time  88.693076ms
+START: >>> computing feature non_alnum_ratio
+  END: >>> computing feature non_alnum_ratio with elapsed time  126.709114ms
+START: >>> computing feature char_diversity
+  END: >>> computing feature char_diversity with elapsed time  284.166549ms
+START: >>> computing feature char_distribution_insert
+  END: >>> computing feature char_distribution_insert with elapsed time  17.347205605s
+START: >>> computing feature compress_rate
+  END: >>> computing feature compress_rate with elapsed time  1.764469802s
+START: >>> computing feature good_token
+  END: >>> computing feature good_token with elapsed time  1.575062043s
+START: >>> computing feature term_frequency
+  END: >>> computing feature term_frequency with elapsed time  2m15.932709135s
+START: >>> computing feature longest_word
+  END: >>> computing feature longest_word with elapsed time  13.053657527s
+START: >>> computing feature longest_char_sequence
+  END: >>> computing feature longest_char_sequence with elapsed time  83.124965ms
+START: >>> computing feature words_vulgar_frequency
+  END: >>> computing feature words_vulgar_frequency with elapsed time  12.934470992s
+START: >>> computing feature words_vulgar_impact
+  END: >>> computing feature words_vulgar_impact with elapsed time  15m50.830848788s
+START: >>> computing feature words_pronoun_frequency
+  END: >>> computing feature words_pronoun_frequency with elapsed time  2.247310342s
+START: >>> computing feature words_pronoun_impact
+  END: >>> computing feature words_pronoun_impact with elapsed time  50.063957864s
+START: >>> computing feature words_bias_frequency
+  END: >>> computing feature words_bias_frequency with elapsed time  3.13547134s
+START: >>> computing feature words_bias_impact
+  END: >>> computing feature words_bias_impact with elapsed time  2m0.705289927s
+START: >>> computing feature words_sex_frequency
+  END: >>> computing feature words_sex_frequency with elapsed time  3.588834424s
+START: >>> computing feature words_sex_impact
+  END: >>> computing feature words_sex_impact with elapsed time  31.04416942s
+START: >>> computing feature words_bad_frequency
+  END: >>> computing feature words_bad_frequency with elapsed time  4.663418495s
+START: >>> computing feature words_bad_impact
+  END: >>> computing feature words_bad_impact with elapsed time  44.374210362s
+START: >>> computing feature words_all_frequency
+  END: >>> computing feature words_all_frequency with elapsed time  1m31.848984078s
+START: >>> computing feature words_all_impact
+  END: >>> computing feature words_all_impact with elapsed time  18m37.799360609s
+START: >>> computing feature class
+  END: >>> computing feature class with elapsed time  5.481222ms
+  END: >>> Processing wvc2010_features.dsv with elapsed time  43m25.152696315s
+\end{lstlisting}
+
+Berikut waktu untuk memproses setiap fitur untuk PAN-WVC-2011,
+
+\begin{lstlisting}[style=data,basicstyle=\tiny\ttfamily]
+START: >>> Processing wvc2011_features.dsv
+START: >>> computing feature editid
+  END: >>> computing feature editid with elapsed time 4.543µs
+START: >>> computing feature anonim
+  END: >>> computing feature anonim with elapsed time 2.271631ms
+START: >>> computing feature comment_length
+  END: >>> computing feature comment_length with elapsed time 4.171233ms
+START: >>> computing feature size_increment
+  END: >>> computing feature size_increment with elapsed time 30.441989ms
+START: >>> computing feature size_ratio
+  END: >>> computing feature size_ratio with elapsed time 18.036474ms
+START: >>> computing feature upper_lower_ratio
+  END: >>> computing feature upper_lower_ratio with elapsed time 42.944358ms
+START: >>> computing feature upper_to_all_ratio
+  END: >>> computing feature upper_to_all_ratio with elapsed time 43.234267ms
+START: >>> computing feature digit_ratio
+  END: >>> computing feature digit_ratio with elapsed time 31.60915ms
+START: >>> computing feature non_alnum_ratio
+  END: >>> computing feature non_alnum_ratio with elapsed time 45.174954ms
+START: >>> computing feature char_diversity
+  END: >>> computing feature char_diversity with elapsed time 92.021249ms
+START: >>> computing feature char_distribution_insert
+  END: >>> computing feature char_distribution_insert with elapsed time 5.502987921s
+START: >>> computing feature compress_rate
+  END: >>> computing feature compress_rate with elapsed time 564.220673ms
+START: >>> computing feature good_token
+  END: >>> computing feature good_token with elapsed time 575.461033ms
+START: >>> computing feature term_frequency
+  END: >>> computing feature term_frequency with elapsed time 45.141977282s
+START: >>> computing feature longest_word
+  END: >>> computing feature longest_word with elapsed time 5.996222991s
+START: >>> computing feature longest_char_sequence
+  END: >>> computing feature longest_char_sequence with elapsed time 28.812846ms
+START: >>> computing feature words_vulgar_frequency
+  END: >>> computing feature words_vulgar_frequency with elapsed time 4.85183455s
+START: >>> computing feature words_vulgar_impact
+  END: >>> computing feature words_vulgar_impact with elapsed time 4m52.828472197s
+START: >>> computing feature words_pronoun_frequency
+  END: >>> computing feature words_pronoun_frequency with elapsed time 781.924011ms
+START: >>> computing feature words_pronoun_impact
+  END: >>> computing feature words_pronoun_impact with elapsed time 15.542015155s
+START: >>> computing feature words_bias_frequency
+  END: >>> computing feature words_bias_frequency with elapsed time 1.10078255s
+START: >>> computing feature words_bias_impact
+  END: >>> computing feature words_bias_impact with elapsed time 37.901901819s
+START: >>> computing feature words_sex_frequency
+  END: >>> computing feature words_sex_frequency with elapsed time 1.256789321s
+START: >>> computing feature words_sex_impact
+  END: >>> computing feature words_sex_impact with elapsed time 9.768862039s
+START: >>> computing feature words_bad_frequency
+  END: >>> computing feature words_bad_frequency with elapsed time 1.676019251s
+START: >>> computing feature words_bad_impact
+  END: >>> computing feature words_bad_impact with elapsed time 13.750873501s
+START: >>> computing feature words_all_frequency
+  END: >>> computing feature words_all_frequency with elapsed time 37.23696033s
+START: >>> computing feature words_all_impact
+  END: >>> computing feature words_all_impact with elapsed time 5m43.951392681s
+START: >>> computing feature class
+  END: >>> computing feature class with elapsed time 1.764815ms
+  END: >>> Processing wvc2011_features.dsv with elapsed time 13m39.166374654s
+\end{lstlisting}
+
+\newpage
+\section{Contoh Hasil Komputasi Fitur}
+\label{appendix:features_output_example}
+
+Berikut contoh 10 baris awal dan akhir dari hasil komputasi fitur pada dataset
+PAN-WVC-2010,
+
+\begin{lstlisting}[style=data,basicstyle=\tiny\ttfamily]
+1,0,0,4,0.99964,1,1,0.5,1,1,0,3,0,0,0,0,0,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0
+2,0,35,978,0.96855,0,0,0,0,0,0,0,0,0,0,0,0,0.52173,0,0.50563,0,0.50156,0,0.5,0,0.5283,0,0.50534,0
+3,1,0,1,0.99995,0.5,0.5,0.5,0,1,7.29251,3,0,0,1,0,0,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0
+4,0,67,94,1.00678,0.29761,0.23148,0.05956,0.25471,1.10837,1.18222,0.6415,12,0.02692,10,2,0,0.65,0.3,0.72838,0,0.60606,0,0.5,0,0.77906,0,0.72837,0
+5,0,130,1,0.99986,0.27777,0.22727,0.03846,0.04,1.25849,2.16454,1,0,0.04682,8,0,0,0.5,0.5,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0
+6,0,163,0,1,0.33333,0.33333,0.33333,0,1.25992,3.68516,2,0,0,2,0,0,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0
+8,1,4,45,1.00572,0.1,0.1,0.0204,0.20833,1.23994,3.14083,0.89583,3,0.00119,39,2,0,0.5,1,0.49947,0,0.5,0,0.5,0,0.5,0,0.49954,0
+10,0,0,25,1.0019,0.46666,0.33333,0.03846,0.12,1.17461,2.11853,1.2,0,0.02034,9,0,0,0.5,1,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0
+11,1,0,51,1.0054,0.28,0.2258,0.03571,0.2,1.18172,1.18513,0.98181,7,0.10029,7,2,0,0.5,0.22222,0.49803,0,0.5,0,0.5,0,0.48979,0,0.49683,0
+12,0,179,1,0.9999,0.5,0.5,0.5,0,1,5.617,3,0,0.00517,1,0,0,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0
+...
+45957,1,0,10,1.0003,0.14285,0.14285,0.07142,0.46153,1.37798,4.21517,1,2,0,0,0,0,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0
+45958,0,4,75,1.01827,0.13725,0.1228,0.07594,0.11538,1.13255,0.82191,1.07692,4,0.01506,10,2,0,0.5,0.71428,0.4946,0,0.5,0,0.5,0,0.5,0,0.49514,0
+45959,0,102,19,0.99839,0,0,0,0,0,0,0,0,0,0,0,0,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0
+45960,0,4,574,0.83917,1,1,0.64705,0,1.5874,6.96749,0.875,0,0.00854,4,2,0,0.57142,0,0.52857,0,0.5,0,0.5,0,0.54545,0,0.52996,0
+45961,1,0,59,1.02145,0.24137,0.2,0.09523,0.17741,1.13765,0.56718,1.08064,8,0.38073,8,2,0,0.5,0.36363,0.49523,0,0.5,0,0.5,0,0.5,0,0.49557,0
+45962,0,0,35,1.00036,0.5,0.34615,0.05555,0.11428,1.15967,2.19877,1.08571,1,0.06435,11,2,0,0.5,0.83333,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0
+45963,0,0,59,1.00239,0.11904,0.10869,0.01666,0.08474,1.16979,0.96304,1.03389,3,0.08203,10,2,0,0.5,0.75,0.49878,0,0.5,0,0.5,0,0.5,0,0.49891,0
+45964,0,0,144,1.00293,0.08888,0.08247,0.10958,0.10344,1.11425,0.96351,1.01379,3,0,0,2,0,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0
+45965,1,0,1,0.99964,0,0,0,0,0,0,0,0,0,0,0,0,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0
+45966,0,17,385,1.045,0.10943,0.09897,0.03341,0.04639,1.11671,0.33307,0.76288,4,0.0851,11,2,0.01562,0.5,0.54687,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0
+\end{lstlisting}
+
+Berikut contoh 10 baris awal dan akhir dari hasil komputasi fitur pada dataset
+PAN-WVC-2011,
+
+\begin{lstlisting}[style=data,basicstyle=\tiny\ttfamily]
+416341,0,133,51,1.03148,0.19444,0.16666,0.01923,0.0196,1.18643,0.72515,1.05882,0,0.21505,8,0,0,0.5,0.18181,0.4923,0,0.5,0,0.5,0,0.5,0,0.49275,0
+416342,0,0,101,1.00663,0.08196,0.07692,0.03669,0.18518,1.14764,0.55365,0.9537,3,0.12137,11,2,0.05882,0.5,0.47058,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0
+416343,1,0,1744,0.95762,17,1,0.03846,0,1.33994,7.50425,1.08,0,0.09672,5,0,0,0.50299,0,0.51133,0.5,0.49777,0,0.5,0,0.51029,0.5,0.51047,1
+416345,0,0,41,1.00776,0.09677,0.0909,0.0238,0.14634,1.20403,1.0729,1.09756,2,0.04375,13,2,0.2,0.5,0.4,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0
+416346,0,31,50,0.99857,0.03643,0.03517,0.03539,0.09296,1.10003,0.0772,0.66356,49,0.43945,13,2,0.00357,0.5,0.41785,0.50261,0.01071,0.52631,0,0.5,0,0.5,0.00714,0.50279,0
+416347,0,76,345,0.96257,0,0,0,0,0,0,0,0,0,0,0,0,0.52727,0,0.51091,0,0.5,0,0.5,0,0.50251,0,0.51003,0
+416348,0,159,1750,1.17096,0.08076,0.07478,0.01595,0.12656,1.10472,0.20471,0.72462,80,0.41733,15,3,0.02272,0.45283,0.38636,0.46553,0.02727,0.45161,0,0.5,0,0.46428,0.02272,0.46443,0
+416349,0,0,35,1.01273,0.22727,0.1923,0.13513,0.08333,1.1769,1.75398,0.97222,0,0.0694,11,2,0,0.5,0.4,0.49615,0,0.5,0,0.5,0,0.5,0,0.49659,0
+416401,0,79,1730,1.07115,0.02462,0.02405,0.00455,0.04273,1.14003,0.17678,0.62108,26,0.45984,14,2,0.00696,0.48648,0.31358,0.48472,0.0209,0.44444,0,0.5,0,0.49,0.00696,0.48459,0
+416402,0,0,2135,7.88709,0.12562,0.11167,0.02924,0.10712,1.11268,0.19876,0.61598,108,0.94901,20,5,0.02788,0.125,0.68127,0.12562,0.00398,0.5,0,0.5,0,0.07142,0,0.12556,0
+...
+480088,0,11,2,0.99971,0.04411,0.04285,0.01086,0.12087,1.18945,0.90176,0.87912,6,0.029,13,2,0,0.5,1.2,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0
+480090,0,124,382,0.9421,0,0,0,0,0,0,0,0,0,0,0,0,0.58333,0,0.52144,0,0.6,0,1,0,0.5625,0,0.52949,0
+480152,1,0,104,1.0038,0.0119,0.0119,0.00943,0.01904,1.21399,0.63586,0.89523,0,0.03875,8,2,0.04761,0.49748,0.47619,0.49835,0.04761,0.49315,0,0.5,0.04761,0.49729,0.14285,0.49813,1
+480153,0,74,16,0.9886,0.35849,0.2676,0.01075,0.09782,1.13383,0.69282,1.04347,7,0.05555,17,2,0,0.5,0.66666,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0
+480154,1,0,4,0.99968,0,0,0,0,0,0,0,0,0,0,0,0,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0
+480155,1,123,1,1.00028,0.16666,0.16666,0.16666,0,1.49534,4.13689,1.4,0,0,5,2,0,0.5,1,0.49886,0,0.5,0,0.5,0,0.5,0,0.49896,0
+480156,0,152,6,0.99299,0.1,0.1,0.07692,0.25,1.23007,2.24007,1.25,1,0,10,2,0,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0,0.5,0
+480158,1,0,768,1.03608,0.04703,0.045,0.00129,0.0286,1.16302,0.26067,0.71521,0,0.34586,12,2,0.02083,0.46938,0.41666,0.4744,0.01388,0.47058,0,0.5,0,0.46902,0.04861,0.47368,1
+480159,1,48,52381,0.00024,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0.5,0,1,0,1,1
+480160,0,14,1109,1.10722,0.08823,0.08119,0.05327,0.15122,1.10911,0.18691,0.64685,71,0.29261,32,3,0.03539,0.48437,0.50442,0.47991,0,0.5,0,0.5,0,0.48965,0,0.48135,0
+\end{lstlisting}

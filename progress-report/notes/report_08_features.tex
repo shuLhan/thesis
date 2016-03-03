@@ -2,7 +2,7 @@
 
 Beberapa makalah sebelumnya mengelompokan fitur ke dalam tiga kelompok yaitu
 \textit{metadata}, teks, dan bahasa.
-Dalam tesis ini digunakan 4 fitur metadata, 11 fitur teks, dan 5 fitur
+Dalam tesis ini digunakan 4 fitur metadata, 11 fitur teks, dan 10 fitur
 bahasa yang diambil dari hasil analisis makalah Mola-Velasco
 \cite{mola2012wikipedia}.
 
@@ -187,18 +187,34 @@ Gabungan dari kategori kata vulgarisme, subjek, bias, seks, dan kata buruk.
 
 \end{itemize}
 
-\subsection{Performansi Komputasi Fitur}
+\subsection{Komputasi Fitur}
 
-Setelah semua implementasi fitur diuji satu persatu, kemudian digabung dan dijalankan untuk
-menghasilkan satu berkas data set yang berisi semua fitur.
+Setelah semua implementasi fitur diuji satu persatu, kemudian digabung dan
+semua fitur dijalankan untuk menghasilkan satu berkas data set yang berisi
+nilai fitur yang nantinya bisa digunakan untuk pemodelan.
+
 Program komputasi fitur dijalankan pada mesin dengan,
 
 \begin{itemize}
 \item sistem operasi GNU/Linux 4.4.2-1
 \item Intel(R) Core(TM) i7-4750HQ CPU @ 2.00GHz,
 \item Cakram SSD,
-\item \textit{RAM} 7 GB + 512 MB.
+\item \textit{RAM} dengan kapasitas 7908 MB.
 \end{itemize}
 
 Performansi dihitung dengan menjalan program komputasi fitur lewat program
-\textit{time} dengan total waktu 40 menit 33 detik.
+\textit{time}.
+
+Total waktu yang dibutuhkan untuk melakukan komputasi fitur pada dataset
+PAN-WVC-2010 yaitu rerata sekitar 43 menit.
+Waktu komputasi per fitur dapat dilihat pada lampiran
+\ref{appendix:features_computation},
+dan contoh hasil komputasi fitur dapat dilihat pada lampiran
+\ref{appendix:features_output_example}.
+
+Total waktu yang dibutuhkan untuk melakukan komputasi fitur pada dataset
+PAN-WVC-2011 yaitu rerata sekitar 14 menit.
+Waktu komputasi per fitur dapat dilihat pada lampiran
+\ref{appendix:features_computation},
+dan contoh hasil komputasi fitur dapat dilihat pada lampiran
+\ref{appendix:features_output_example}.
