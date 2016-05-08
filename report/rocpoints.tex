@@ -1,0 +1,122 @@
+\label{fig:rocpoints}
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+	\pgfplotsset{
+		width=12cm,
+		xtick distance=0.1,
+		ytick distance=0.1,
+	}
+	\begin{axis}[
+		title=Titik-titik Pengklasifikasi pada ROC,
+		xlabel=$FPR$,
+		ylabel=$TPR$,
+		legend columns=3,
+		legend entries={
+			RF,
+			RF-SMOTE,
+			RF-LNSMOTE,
+			CRF-200-1,
+			CRF-200-1-SMOTE,
+			CRF-200-1-LNSMOTE,
+			CRF-100-2,
+			CRF-100-2-SMOTE,
+			CRF-100-2-LNSMOTE,
+			CRF-50-4,
+			CRF-50-4-SMOTE,
+			CRF-50-4-LNSMOTE,
+		},
+		legend to name=class_legend
+	]
+		\addplot[
+			scatter,
+			only marks,
+			point meta=explicit symbolic,
+			every mark/.append style={
+				/tikz/mark size=3pt
+			},
+			scatter/classes={
+				rf-noresampling={
+					mark=text,
+					text mark=$\Box$
+				},
+				rf-smote={
+					mark=text,
+					text mark=$\boxplus$
+				},
+				rf-lnsmote={
+					mark=text,
+					text mark=$\boxtimes$
+				},
+				crf-200-1={
+					mark=text,
+					text mark=$\triangle$
+				},
+				crf-200-1-smote={
+					mark=text,
+					text mark=$\triangleleft$
+				},
+				crf-200-1-lnsmote={
+					mark=text,
+					text mark=$\triangleright$
+				},
+				crf-100-2={
+					mark=text,
+					text mark=$\medcircle$
+				},
+				crf-100-2-smote={
+					mark=text,
+					text mark=$\oplus$
+				},
+				crf-100-2-lnsmote={
+					mark=text,
+					text mark=$\otimes$
+				},
+				crf-50-4={
+					mark=text,
+					text mark=$\Diamond$
+				},
+				crf-50-4-smote={
+					mark=text,
+					text mark=$\diamondplus$
+				},
+				crf-50-4-lnsmote={
+					mark=text,
+					text mark=$\diamondtimes$
+				}
+			},
+		]
+		table[
+			x={FPR},
+			y={TPR},
+			meta=klasifikasi,
+		]
+		{../result/cm.csv};
+
+		\addplot[
+			gray
+		]
+		coordinates{
+			(0,0)
+			(1,1)
+		};
+		\addplot[
+			gray
+		]
+		coordinates{
+			(0,1)
+			(1,0)
+		};
+	\end{axis}
+\end{tikzpicture}
+\newline
+\ref{class_legend}
+\newline
+\caption{
+Titik ROC untuk semua pengklasifikasi dan dataset.
+Untuk informasi tambahan terhadap legenda, CRF-200-1 yaitu klasifikasi CRF
+dengan 200 tingkat dan 1 pohon, CRF-100-2 yaitu klasifikasi CRF dengan 100
+tingkat dan 2 pohon, dan CRF-50-4 yaitu klasifikasi CRF dengan 50 tingkat dan 4
+pohon.
+}
+\end{figure}

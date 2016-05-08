@@ -1,5 +1,6 @@
 progress-report/Muhamad_Sulhan_23513014_-_Thesis_Progress_Report.pdf
 proposal/Muhamad_Sulhan_23513014.pdf
+report/Muhamad_Sulhan_23513014_-_Tesis.pdf
 *-blx.bib
 *.aux
 *.bbl
@@ -8,3 +9,10 @@ proposal/Muhamad_Sulhan_23513014.pdf
 *.run.xml
 *.synctex.gz
 *.toc
+result/data/
+result/01/
+result/02/
+result/crf_100_2/
+result/crf_200_1_smote_01/
+result/crf_50_4/
+result/*.pdf

@@ -1,10 +1,13 @@
-\documentclass[12pt,a4paper,titlepage]{article}
+\documentclass[12pt,a4paper,titlepage,oneside]{report}
 
 %%{{{ packages
 %% font encoding.
+\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{couriers}
+%% Customize chapters.
+\usepackage{titlesec}
 %% bibliography.
 \usepackage[backend=bibtex,style=ieee]{biblatex}
 %% \includegraphics{name}
@@ -41,6 +44,33 @@
 \usepackage{multicol}
 %% Change the margin
 \usepackage[a4paper]{geometry}
+\geometry{
+	a4paper,
+	top=3cm,
+	right=3cm,
+	bottom=3cm,
+	left=4cm
+}
+%%
+\usepackage{parskip}
+%% Package for reading CSV to database.
+\usepackage{datatool}
+%% Package for scatter and line plot.
+\usepackage{dataplot}
+%% Long table
+\usepackage{longtable}
+%% Tikz
+\usepackage{pgfplots}
+
+%% Add box to figure.
+%%
+\usepackage{float}
+
+\floatstyle{boxed}
+\restylefloat{figure}
+
+%% MnSymbol
+\usepackage{MnSymbol}
 %%}}}
 
 %%{{{ hyphenation: sorted in ascending.
@@ -60,6 +90,7 @@
 	da-lam
 	data-set
 	de-ngan
+	di-ha-sil-kan
 	di-sing-kat
 	di-tam-bah-kan
 	dis-krit
@@ -75,6 +106,7 @@
 	me-mi-lih
 	me-ne-rap-kan
 	me-ning-kat-kan
+	me-nye-dia-kan
 	me-nye-im-bang-kan
 	me-sin
 	me-thod
@@ -88,6 +120,7 @@
 	mi-sal-nya
 	mung-kin
 	o-ver-sam-pling
+	pa-ra-lel
 	pe-mi-sah
 	pe-nan-da
 	pe-ne-li-ti-an
@@ -113,6 +146,9 @@
 %%{{{ override default latex setting.
 %%
 
+%% Space between paragraphs.
+\setlength{\parskip}{1.5em}
+
 %% Add dot to TOC.
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
 \renewcommand{\contentsname}{}
@@ -131,6 +167,24 @@
 \makeatletter
 \def\lst@lettertrue{\let\lst@ifletter\iffalse}
 \makeatother
+
+%% Format chapter and section.
+%%
+%%% Set chapter name to Bab.
+\titleformat{\chapter}[hang]
+{\bfseries\large\centering}
+{Bab \thechapter}
+{1em}
+{}
+
+\titleformat{\section}[hang]
+{\bfseries\large}
+{\thesection}
+{1em}{}
+
+%% Set spacing for sections.
+\titlespacing{\chapter}{0ex}{0ex}{1.5em}
+\titlespacing{\section}{0ex}{0ex}{0em}
 
 %% Alter latex default title on table.
 \captionsetup[table]{name=Tabel}
@@ -154,6 +208,21 @@
 
 %% multicolumn setting
 \setlength{\columnsep}{1cm}
+
+%% pgfplots setting.
+\pgfplotsset{
+	/pgf/number format/read comma as period,
+	/pgf/text mark as node=false,
+	table/col sep=semicolon,
+	xmax=1,
+	xmin=0,
+	ymax=1,
+	ymin=0,
+	xtick distance=0.2,
+	ytick distance=0.2,
+	grid=major,
+	cycle list name=linestyles,
+}
 %%}}}
 
 %%{{{ variables
@@ -163,10 +232,12 @@
 \newcommand{\mysid}{23513014}
 \newcommand{\myadvisorname}{Dwi Hendratmo Widyantoro}
 \newcommand{\myadvisorid}{196812071994021001}
+\newcommand{\mydept}{Program Studi Magister Informatika}
+\newcommand{\itb}{Institut Teknologi Bandung}
 
 %%% My images directory
 \graphicspath{{../images/}}
-\newcommand{\myitbcover}{ITB-logo-ganesha}
+\newcommand{\myitbcover}{ITB-logo-hitam}
 
 %%% My bibligraphy file
 \addbibresource{bibliography.bib}

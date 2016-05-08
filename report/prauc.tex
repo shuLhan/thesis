@@ -1,0 +1,108 @@
+\label{fig:prauc}
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+	\pgfplotsset{
+		small,
+	}
+	\matrix{
+		\begin{axis}[
+			title=(a),
+			ylabel=$Precision$,
+			legend columns=-1,
+			legend entries={Tanpa sampel ulang\ ,SMOTE\ ,LN-SMOTE},
+			legend to name=rf_crf_prauc_legend
+		]
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/rf.csv};
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/rf_smote.csv};
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/rf_lnsmote.csv};
+		\end{axis}
+		&
+		\begin{axis}[
+			title=(b),
+		]
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/crf_200_1.csv};
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/crf_200_1_smote.csv};
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/crf_200_1_lnsmote.csv};
+			title=(b),
+		\end{axis}
+		\\
+		\begin{axis}[
+			title=(c),
+			xlabel=$Recall$,
+			ylabel=$Precision$,
+		]
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/crf_100_2.csv};
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/crf_100_2_smote.csv};
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/crf_100_2_lnsmote.csv};
+		\end{axis}
+		&
+		\begin{axis}[
+			title=(d),
+			xlabel=$Recall$,
+		]
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/crf_50_4.csv};
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/crf_50_4_smote.csv};
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/crf_50_4_lnsmote.csv};
+		\end{axis}
+		\\
+	};
+\end{tikzpicture}
+\ref{rf_crf_prauc_legend}
+\caption{
+Kurva PR-AUC untuk klasifikasi RF dan CRF pada tiga dataset yaitu yang
+tanpa sampel ulang, yang disampel ulang dengan SMOTE dan LN-SMOTE.
+(a) RF dengan 200 pohon
+(b) CRF dengan 200 tingkat 1 pohon
+(c) CRF dengan 100 tingkat 2 pohon
+(d) CRF dengan 50 tingkat 4 pohon
+}
+\end{figure}

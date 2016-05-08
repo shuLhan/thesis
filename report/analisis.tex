@@ -1,0 +1,106 @@
+\chapter{Analisis}
+
+Hasil pelatihan dan pengujian model dianalisis dalam tiga bagian.
+Pertama, analisis dari metode sampel ulang LNSMOTE, kedua, analisis terhadap
+pengklasifikasi CRF, dan yang terakhir yaitu analisis terhadap hasil
+keseluruhan.
+
+\section{Analisis Sampel-ulang}
+
+Pengaruh sampel ulang SMOTE dan LNSMOTE berbeda pada klasifikasi RF dan CRF.
+Pada klasifikasi RF, sampel ulang dengan LNSMOTE lebih baik dari SMOTE dengan
+meningkatnya nilai akurasi $0,4\%$.
+Pada klasifikasi CRF, metode SMOTE secara keseluruhan memberikan performansi
+lebih baik daripada LNSMOTE dengan nilai AUC tertinggi didapat dengan CRF 100
+tingkat 2 pohon.
+Perbedaan  sampel ulang dengan SMOTE dan LNSMOTE yaitu meningkatkan nilai
+\textit{F-Measure} dan akurasi pada RF, sedangkan pada CRF sebaliknya, seperti
+yang terlihat pada kolom \textit{F-Measure} dan akurasi di tabel
+\ref{tab:stats}.
+Kelemahan dari LNSMOTE yaitu meningkatkan nilai FPR dari
+klasifikasi lebih tinggi dari SMOTE, seperti yang terlihat pada kurva ROC pada
+gambar \ref{fig:roc} (c) dan (d).
+
+\input{roc}
+
+\section{Analisis CRF}
+
+Fokus dari pengklasifikasi CRF yaitu pada pembelajaran sampel negatif.
+Pada setiap tingkatan CRF, model diuji ulang dengan semua sampel negatif, yang
+didapat dari proses tingkatan sebelumnya, dan hasil yang negatif dihapus dari
+sampel pelatihan dan dijadikan sebagai dataset uji pada tingkatan selanjutnya.
+Berbeda dengan RF, yang mana tidak ada sampel yang dihapus saat
+pelatihan, CRF membuat dataset yang tadinya condong pada kelas mayoritas
+sedikit demi sedikit pada setiap tingkatan menjadi sama.
+Sehingga, melakukan sampel ulang pada pengklasifikasi dengan CRF tidak membantu
+dalam memperbaiki performansi modelnya, namun membuat akurasi dari model hasil
+pelatihan menurun.
+Hal ini bisa dilihat pada kurva PR-AUC pada gambar \ref{fig:prauc}.
+
+Pada gambar \ref{fig:prauc} (b), yaitu CRF dengan 200 tingkatan dan 1 pohon,
+performansi tanpa sampel ulang lebih baik dari yang lainnya, dengan nilai AUC
+$0,8673$, dan performansi yang buruk dari dataset LNSMOTE.
+Saat jumlah pohon pada setiap tingkatan dinaikan menjadi 2 (dan jumlah
+tingkatan diturunkan menjadi 100 supaya jumlah keseluruhan pohon tetap 200),
+sampel ulang SMOTE menghasilkan nilai AUC yang paling tinggi diantara
+model lainnya yaitu $0,8694$, sementara LNSMOTE masih dengan performansi yang
+paling rendah, seperti yang terlihat pada gambar \ref{fig:prauc} (b).
+Pada pengujian terakhir dengan 50 tingkatan dan 4 pohon, nilai AUC tertinggi
+memang didapat dari SMOTE, tapi rerata performansi keseluruhan dihasilkan dari
+CRF tanpa sampel ulang, dengan nilai \textit{F-Measure} yang paling tinggi
+diantara pengujian lainnya yaitu $0,5353$.
+
+\input{prauc}
+
+\section{Analisis Pengklasifikasi Vandalisme}
+
+\input{rocpoints}
+
+Untuk lebih mudah membandingkan semua pengklasifikasi, digunakan titik
+ROC yang digambarkan pada grafik \ref{fig:rocpoints}.
+Pada bagian kiri bawah adalah klasifikasi RF, berurutan dari bawah ke atas
+yaitu RF tanpa sampel ulang ($\Box$) dengan nilai TPR $0,165$ dan FPR $0,001$,
+RF pada sampel ulang SMOTE ($\boxplus$) dengan nilai TPR $0,207$ dan FPR
+$0,004$, dan yang
+paling atas adalah RF pada sampel ulang LNSMOTE ($\boxtimes$) dengan nilai TPR
+$0,235$ dan FPR $0,005$.
+RF memberikan performansi dengan TPR dan FPR yang paling rendah di antara semua
+pengklasifikasi.
+Sampel ulang SMOTE meningkatkan nilai TPR $0,25$ kali dan FPR 4 kali.
+Sampel ulang LNSMOTE meningkatkan nilai TPR $0,4$ kali dan nilai FPR 5 kali.
+
+Klasifikasi CRF 200 tingkat 1 pohon (CRF-200-1) memiliki nilai TPR paling
+tinggi, dengan titik ROC berada pada bagian paling atas dari semua klasifikasi.
+Berurutan dari kiri ke kanan yaitu CRF-200-1 tanpa sampel ulang ($\triangle$)
+dengan TPR $0,966$ dan FPR $0,467$, CRF-200-1 SMOTE ($\triangleleft$) di tengah
+dengan TPR $0,979$ dan FPR $0,63$, dan CRF-200-1 LNSMOTE ($\triangleright$)
+pada ujung kanan dengan TPR $0,99$ dan FPR $0,855$.
+Pengklasifikasi CRF-200-1 akan mengembalikan kelas sampel positif dengan benar
+tetapi dengan galat yang juga tinggi.
+Bisa dilihat juga pengaruh SMOTE dan LNSMOTE terhadap nilai FPR.
+Sampel ulang SMOTE memberi pengaruh kenaikan TPR $0,1$ dan $0,4$ untuk FPR dari
+dataset awal.
+Sampel ulang LNSMOTE meningkatkan TPR $0,3$ dan FPR $0,8$.
+
+Klasifikasi CRF 100 tingkat dengan 2 pohon (CRF-100-2) berada pada bagian atas
+tengah dari ROC, yang ditandai dengan marka bulat.
+CRF-100-2 tanpa sampel ulang ($\medcircle$) berada paling bawah dan kiri dengan
+nilai TPR $0,812$ dan FPR $0,24$.
+CRF-100-2 SMOTE ($\oplus$) berada di tengah dengan nilai AUC paling tinggi
+dengan TPR $0,903$ dan FRP $0,3603$.
+CRF-100-2 LNSMOTE ($\otimes$) dengan TPR paling tinggi dari keduanya yaitu TPR
+$0,953$ dan FPR $0,585$.
+Sampel ulang SMOTE meningkatkan TPR $0,11$ kali dan FPR $0,5$ kali.
+Sampel ulang LNSMOTE meningkatkan TPR $0,17$ dan FPR $1,4$ kali.
+
+Klasifikasi CRF 50 tingkat dengan 4 pohon (CRF-50-4) berada pada bagian tengah
+kiri atas pada ROC, yang ditandai dengan marka wajik.
+CRF-50-4 tanpa sampel ulang ($\Diamond$) menghasilkan nilai TPR $0,607$ dan FPR
+$0,08$.
+CRF-50-4 dengan sampel ulang ($\diamondplus$) SMOTE meningkatkan nilai TPR
+menjadi $0,783$ dan meningkatkan nilai FPR menjadi $0,223$.
+CRF-50-4 dengan sampel ulang LNSMOTE ($\diamondtimes$) meningkatan nilai TPR
+menjadi $0,895$ dan juga meningkatkan nilai FPR menjadi $0,388$.
+Sampel ulang dengan SMOTE meningkatkan nilai TPR $0,3$ kali dan FPR $1,75$
+kali.
+Sampel ulang dengan LNSMOTE meningkatkan nilai TPR $0,48$ kali dan FPR $3,75$.

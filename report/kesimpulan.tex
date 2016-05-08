@@ -1,0 +1,54 @@
+\chapter{Kesimpulan}
+
+Rata-rata SMOTE menaikan nilai TPR $0,19$ kali dan nilai FPR $1,6$ kali.
+Sementara pada sampel ulang dengan LNSMOTE, rata-rata menaikan nilai TPR $0,33$
+dan juga menaikan nilai FPR $2,75$ kali.
+Kedua sampel ulang tersebut cukup bagus dalam meningkatkan performansi laju
+positif dengan konsekuensi juga meningkatnya laju \textit{false-positive},
+pengaruh ini lebih terasa pada sampel ulang LNSMOTE.
+Secara keseluruhan performansi dari sampel ulang SMOTE lebih baik dari
+LNSMOTE untuk pengklasifikasi CRF.
+Hal ini disebabkan karena sifat algoritma dari CRF yang berfokus pembelajaran
+sampel yang negatif, bukan pada sampel yang positif, sehingga menambahkan
+sampel sintetis menyebabkan pembelajar menjadi \textit{over-fitting} pada
+sampel positif.
+Pengaruh menarik lainnya yaitu pada pengklasifikasi CRF, dengan menggunakan
+jumlah pohon lebih sedikit pada setiap tingkatan menghasilkan performansi yang
+hampir sama dengan melakukan sampel ulang pada dataset asli, seperti yang
+terlihat pada performansi CRF-100-2 tanpa sampel ulang hampir sama dengan CRF
+50 tingkat 4 pohon dengan sampel ulang SMOTE.
+
+Untuk model klasifikasi vandalisme yang terbaik tanpa sampel ulang dihasilkan
+dari pengklasifikasi CRF dengan 200 tingkat dan 1 pohon, untuk model terbaik
+pada dataset yang telah disampel ulang dengan SMOTE yaitu CRF dengan 100
+tingkat dan 1 pohon, dan untuk model terbaik dari sampel ulang LNSMOTE yaitu
+CRF dengan 200 tingkat 1 pohon. Secara keseluruhan model terbaik yaitu dari CRF
+100 tingkat dan 2 pohon yang telah disampel ulang dengan SMOTE.
+Selain performansi yang lebih baik, pengklasifikasi CRF juga lebih cepat $1,6$
+kali dalam pembentukan model daripada RF pada dataset yang telah disampel
+ulang.
+
+\section{Kontribusi}
+
+Kontribusi dari karya tulis ini selain membantu menemukan pengklasifikasi yang
+lebih baik dalam mendeteksi vandalisme juga memberikan kerangka kerja untuk
+menciptakan dan mengembangkan fitur vandalisme dari dataset mentah tanpa harus
+mulai dari awal untuk dapat digunakan dalam penelitian selanjutnya atau
+digunakan langsung pada kasus asli. Selain itu juga menyediakan pustaka untuk
+pengolahan data dan fungsi pembelajaran mesin terutama pengklasifikasi
+\textit{Cascaded Random Forest} yang belum ada implementasi secara terbuka pada
+program terkenal seperti \textit{Weka}, \textit{Scikit-Learn}, atau \textit{R}.
+
+\section{Pekerjaan Selanjutnya}
+
+Semua pelatihan model dalam karya tulis ini masih menggunakan algoritma
+pengklasifikasi RF dan CRF dalam bentuk serial, yang mana satu pohon dibangun
+satu per satu bergantian atau pada saat klasifikasi setiap sampel dimasukan ke
+dalam pohon secara bergantian untuk mendapatkan kelasnya.
+Penggunaan algoritma paralel, seperti dalam pembentukan dua atau empat pohon
+bersamaan dan klasifikasi sampel (pengumpulan \textit{vote} di setiap pohon)
+bersamaan, bisa membantu mempercepat pelatihan, pengujian dan hasil
+klasifikasi.
+Pada domain pembelajaran mesin, hal menarik yaitu adanya algoritma
+\textit{eXtreme Gradient Boostring} (XGBoost) yang mungkin bisa diuji dan
+diterapkan untuk meningkatkan deteksi vandalisme.
