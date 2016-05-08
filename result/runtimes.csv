@@ -1,0 +1,13 @@
+Klasifikasi;Dataset;Waktu (detik);Waktu (menit);
+RF \\ 200 pohon;Tanpa sampel ulang;3154;52,57;
+;SMOTE;13063;217,72;
+;LN-SMOTE;11975;199,58;
+CRF \\ 200 tingkat 1 pohon;Tanpa sampel ulang;215;3,58;14,6697674419
+;SMOTE;4466;74,43;2,9249888043
+;LN-SMOTE;3717;61,95;3,2216841539
+CRF \\ 100 tingkat 2 pohon;Tanpa sampel ulang;216;3,6;14,6018518519
+;SMOTE;4478;74,63;2,9171505136
+;LN-SMOTE;4075;67,92;2,9386503067
+CRF \\ 50 tingkat 4 pohon;Tanpa sampel ulang;256;4,27;12,3203125
+;SMOTE;4952;82,53;2,6379240711
+;LN-SMOTE;4600;76,67;2,6032608696
