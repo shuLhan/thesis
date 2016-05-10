@@ -9,7 +9,11 @@
 %% Customize chapters.
 \usepackage{titlesec}
 %% bibliography.
-\usepackage[backend=bibtex,style=ieee]{biblatex}
+\usepackage[
+	backend=bibtex
+,	style=ieee
+,	sorting=nyt
+]{biblatex}
 %% \includegraphics{name}
 \usepackage{graphicx}
 %% \url{something}
@@ -60,14 +64,10 @@
 %% Long table
 \usepackage{longtable}
 %% Tikz
+\usepackage{tikz}
+\usetikzlibrary{backgrounds}
+
 \usepackage{pgfplots}
-
-%% Add box to figure.
-%%
-\usepackage{float}
-
-\floatstyle{boxed}
-\restylefloat{figure}
 
 %% MnSymbol
 \usepackage{MnSymbol}
@@ -186,6 +186,9 @@
 \titlespacing{\chapter}{0ex}{0ex}{1.5em}
 \titlespacing{\section}{0ex}{0ex}{0em}
 
+%% Set roman on chapter number.
+\def\thechapter{\Roman{chapter}}
+
 %% Alter latex default title on table.
 \captionsetup[table]{name=Tabel}
 \captionsetup[figure]{name=Gambar}
@@ -195,7 +198,7 @@
 
 %% Change bibliography title.
 \defbibheading{bibliography}{\centerline{
-	\textbf{DAFTAR REFERENSI}}
+	\textbf{DAFTAR PUSTAKA}}
 }
 
 %%% uncomment this to show overrule in black box

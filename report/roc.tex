@@ -1,7 +1,7 @@
 \label{fig:roc}
 \begin{figure}[htbp]
 \centering
-\begin{tikzpicture}
+\begin{tikzpicture}[framed]
 	\pgfplotsset{
 		small,
 	}
@@ -10,7 +10,7 @@
 			title=(a),
 			ylabel=$TPR$,
 			legend columns=-1,
-			legend entries={Tanpa sampel ulang\ ,SMOTE\ ,LN-SMOTE},
+			legend entries={Tanpa sampel ulang\ ,SMOTE\ ,LNSMOTE},
 			legend to name=roc_legend
 		]
 			\addplot table[
@@ -99,7 +99,7 @@
 \ref{roc_legend}
 \caption{
 Kurva ROC untuk klasifikasi RF dan CRF pada tiga dataset yaitu yang
-tanpa sampel ulang, yang disampel ulang dengan SMOTE dan LN-SMOTE.
+tanpa sampel ulang, yang disampel ulang dengan SMOTE dan LNSMOTE.
 (a) RF dengan 200 pohon
 (b) CRF dengan 200 tingkat 1 pohon
 (c) CRF dengan 100 tingkat 2 pohon

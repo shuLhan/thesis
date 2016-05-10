@@ -1,14 +1,14 @@
 \label{fig:rocpoints}
 \begin{figure}[htbp]
 \centering
-\begin{tikzpicture}
+\begin{tikzpicture}[framed]
 	\pgfplotsset{
 		width=12cm,
 		xtick distance=0.1,
 		ytick distance=0.1,
 	}
 	\begin{axis}[
-		title=Titik-titik Pengklasifikasi pada ROC,
+		title=Performansi pengklasifikasi pada ruang ROC,
 		xlabel=$FPR$,
 		ylabel=$TPR$,
 		legend columns=3,
