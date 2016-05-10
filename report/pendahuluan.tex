@@ -1,0 +1,238 @@
+\chapter{Pendahuluan}
+
+\section{Latar Belakang}
+\label{sec:latar-belakang}
+
+Wikipedia.org adalah ensiklopedia daring dan terbuka, yang mana artikel di
+Wikipedia merupakan hasil kolaborasi para penyunting dari seluruh dunia.
+Terbuka artinya siapa pun dapat menyunting artikel tanpa perlu melakukan
+registrasi terlebih dahulu.
+Ensiklopedia daring ini memiliki artikel dari berbagai bahasa, dari bahasa umum
+dunia seperti Bahasa Inggris, sampai bahasa daerah seperti Bahasa Jawa.
+
+Vandalisme menurut Kamus Besar Bahasa Indonesia daring adalah,
+1) perbuatan merusak dan menghancurkan hasil karya seni dan barang berharga
+lainnya;
+2) perusakan dan penghancuran secara kasar dan ganas.
+Dalam konteks Wikipedia.org, vandalisme dapat berbentuk suntingan yang mengubah
+konten dari artikel sehingga memberikan isi yang salah, penghapusan secara
+menyeluruh, penghapusan sebagian, isi yang menghina, iklan, dan/atau teks yang
+tidak ada maknanya.
+
+Jumlah artikel Bahasa Inggris pada situs en.wikipedia.org pada bulan Juli 2015
+yaitu sebanyak 4,932,627 artikel, dengan pengguna aktif, atau disebut juga
+penyunting, sebanyak 31,369 orang.
+Berarti, jika diasumsikan semua penyunting benar aktif, maka setiap pengguna
+aktif harus mengawasi kurang lebih 157 artikel.
+Menemukan dan memperbaiki vandalisme tersebut dapat mengganggu penyunting dari
+menulis artikel dan pekerjaan penting lainnya, dan membuat pembaca bisa
+mendapatkan informasi yang salah atau tidak mendapatkan informasi sama sekali.
+
+
+\section{Rumusan Masalah}
+\label{sec:rumusan-masalah}
+
+Korpus yang umum digunakan untuk pembelajaran vandalisme pada Wikipedia yaitu
+\textit{PAN Wikipedia Vandalism Corpus} 2010 (PAN-WVC-10)
+\cite{potthast:2010b}
+atau
+\textit{PAN Wikipedia Vandalism Corpus} 2011 (PAN-WVC-11)
+\cite{potthast:2010b}
+dengan tingkat bias yang tinggi pada data.
+Kedua korpus tersebut memiliki jumlah yang tidak seimbang antara suntingan
+biasa dengan jumlah suntingan vandal.
+PAN-WVC-10 untuk artikel Wikipedia bahasa Inggris memiliki 32.439 sampel dengan
+2394, atau 7\%, diantaranya adalah vandal, sedangkan korpus PAN-WVC-11 untuk
+artikel Wikipedia bahasa Inggris memiliki jumlah 9985 suntingan dengan 1144,
+atau 8\%, diantaranya adalah vandal.
+
+\newpage
+Menerapkan klasifikasi dengan dataset yang bias bisa menyebabkan performansi
+deteksi yang rendah.
+Hal ini bisa disebabkan oleh,
+\begin{enumerate}
+	\item Jika sebuah klasifikasi belajar dengan meminimalkan keseluruhan
+	galat, maka instan dari kelas yang minoritas memiliki kontribusi yang
+	rendah terhadap galat.
+	Hal ini menyebabkan bias yang condong pada kelas klasifikasi yang
+	mayoritas.
+	\item Pada umumnya klasifikasi mengasumsikan distribusi kelas yang
+	seimbang antara kelas minoritas dan mayoritas, yang terkadang pada
+	dunia nyata kasusnya tidak selalu seperti itu.
+	\item Sering kali klasifikasi secara implisit mengasumsikan biaya yang
+	sama untuk mis-klasifikasi pada kedua kelas tersebut, yang mana
+	terkadang tidak masuk akal.
+	Sebagai contohnya, biaya untuk mengklasifikasikan kanker sebagai bukan
+	kanker lebih tinggi dari pada sebaliknya.
+	Secara tidak adanya data kanker bisa menyebabkan tidak dilakukannya
+	terapi, misklasifikasi bisa membahayakan nyawa.
+\end{enumerate}
+
+Untuk mengatasi masalah ketimpangan pada korpus, Gotze
+\cite{gotze2014advanced}
+mengaplikasikan teknik
+\textit{random undersampling}
+bernama
+\textit{Synthetic Minority Over-sampling TEchnique} (SMOTE)
+yang diajukan oleh Chawla
+\cite{chawla2002smote},
+dan kombinasi dari SMOTE dan
+\textit{random undersampling}.
+Dataset latihan yang orisinal dan hasil sampel ulang diuji dengan
+pengklasifikasi satu-kelas dan dua-kelas.
+Pengklasifikasi satu-kelas yang diterapkan diantaranya Hempstalk dkk.
+\cite{hempstalk2008one}
+dan SVM oleh Schölkopf dkk.
+\cite{scholkopf1999support}
+yang diimplementasikan oleh Chang dan Lin
+\cite{chang2011libsvm}
+pada korpus PAN-WVC.
+Pengklasifikasi dua-kelas yang diterapkan diantaranya
+\textit{Logistic Regression},
+\textit{RealAdaBoost},
+\textit{Random Forest} (RF), dan
+\textit{Bayesian Network}.
+Hasil percobaan yang didapat memperlihatkan performansi pengklasifikasi
+satu-kelas tidak kompetitif dengan satu pun pengklasifikasi dua-kelas.
+Hal ini bisa disebabkan karena tidak sesuainya kelompok fitur yang digunakan
+untuk menjelaskan suntingan vandalisme, sebagaimana juga parameter pengaturan
+yang tidak sesuai pada pendekatan yang digunakan.
+Hasil dari pelatihan pada dataset orisinal memperlihatkan RF
+lebih unggul dari pengklasifikasi lainnya.
+Hasil dari pelatihan pada dataset hasil sampel ulang memperlihatkan adanya
+peningkatkan pada semua pengklasifikasi kecuali pada RF.
+
+Kelemahan RF yaitu walaupun sejumlah besar pohon-pohon individu
+bisa menghasilkan performansi yang tinggi, hal ini juga bisa menambah waktu
+komputasi yang dibutuhkan untuk klasifikasi terutama untuk pelatihan model
+klasifikasi.
+Untuk dataset yang besar yang terdiri dari 10.000 sampel (seperti pada kasus
+korpus PAN-WVC-10) hal ini bisa menyebabkan waktu pelatihan sampai pada dua
+digit menit.
+Salah satu solusinya mungkin bisa dengan menggunakan kerangka kerja
+\textit{Cascaded Random Forest} (CRF)
+yang dikembangkan oleh Baumann dkk.
+\cite{baumann2013cascaded}.
+Pendekatan CRF menghasilkan pelatihan model yang lebih cepat dan performansi
+klasifikasi yang meningkat dibandingkan dengan pengklasifikasi \textit{Random
+Forest}.
+
+Penggunaan sampel ulang pada dataset latihan menggunakan pendekatan dasar
+terkadang menyebabkan performansi klasifikasi yang rendah.
+Kelemahan teknik SMOTE yaitu bisa terlalu menggeneralisasi wilayah kelas
+minoritas karena tidak mempertimbangkan distribusi tetangga lainnya dari
+kelas-kelas mayoritas
+\cite{maciejewski2011local}.
+Melakukan teknik pembersihan dataset lanjut, seperti yang diajukan oleh
+Laurikkala
+\cite{laurikkala2001improving}
+dan Batista dkk.
+\cite{batista2004study},
+sebagaimana juga teknik sampel ulang lanjut, seperti
+\textit{borderline-SMOTE}
+yang diajukan oleh Han dkk.
+\cite{han2005borderline}
+atau ekstensi SMOTE, LN-SMOTE, yang diajukan oleh Maciejewski dan Stefanowski 
+\cite{maciejewski2011local},
+mungkin bisa meningkatkan performansi klasifikasi.
+
+Tesis ini mencoba menjawab permasalahan dataset yang tidak seimbang pada
+PAN-WVC dengan mengkaji teknik sampel ulang dan klasifikasi yang belum pernah
+digunakan sebelumnya pada korpus tersebut.
+Teknik sampel ulang yang digunakan yaitu
+\textit{Local Neighborhood SMOTE} (LNSMOTE),
+yang diajukan oleh Maciejewski dan
+Stefanowski 
+\cite{maciejewski2011local}.
+Hasil sampel ulang dataset digunakan untuk pembelajaran mesin dengan menerapkan
+pengklasifikasi CRF dan dibandingkan dengan pengklasifikasi RF untuk melihat
+performansi klasifikasi yang lebih baik.
+
+
+\section{Tujuan}
+\label{sec:tujuan}
+
+Tesis ini bertujuan mengidentifikasi performansi dari teknik sampel ulang
+LNSMOTE dan teknik klasifikasi
+\textit{Cascaded Random Forest}.
+Untuk teknik LNSMOTE dibandingkan dengan SMOTE pada sampel ulang dataset
+PAN-WVC-11.
+Sedangkan untuk klasifikasi
+\textit{Cascaded Random Forest}
+dibandingkan dengan klasifikasi
+\textit{Random Forest}
+untuk dilihat performansi pada akurasi dan kecepatan pemrosesan.
+
+%%{{{ SECTION: Batasan Masalah
+%%
+\section{Batasan Masalah}
+\label{sec:batasan-masalah}
+
+Tesis ini hanya melakukan analisis untuk artikel Wikipedia Bahasa Inggris yang
+terdapat pada korpus PAN-WVC-10 dan PAN-WVC-11.
+Dataset yang digunakan untuk sampel ulang dan pelatihan model yaitu PAN-WVC-10.
+Dataset yang digunakan dalam melakukan pengujian yaitu PAN-WVC-11.
+Teknik sampel ulang yang dilakukan yaitu LNSMOTE yang dibandingkan dengan
+SMOTE.
+Teknik pengklasifikasi yang dijadikan dalam pelatihan yaitu CRF yang
+dibandingkan dengan pengklasifikasi RF.
+
+%%}}}
+
+%%{{{ SECTION: Metodologi
+%%
+\section{Metodologi}
+\label{sec:metodologi}
+
+\textbf{Persiapan Data dan Lingkungan Penelitian}.
+Dataset PAN-WVC-10 dan PAN-WVC-11 dapat diambil di situs Universitas Bauhaus
+Weimar
+\footnote{%
+	\RaggedRight\url{%
+	http://www.uni-weimar.de/en/media/chairs/webis/corpora/%
+}}.
+Sebelum dapat digunakan dalam pelatihan dan pengujian, kedua dataset diproses
+ke dalam fitur terlebih dahulu.
+Hasil fitur pada PAN-WVC-10 kemudian di sampel ulang dengan SMOTE dan LNSMOTE.
+Hasil fitur pada PAN-WVC-11 tidak disampel ulang, hanya digunakan untuk
+pengujian model.
+Sistem operasi yang digunakan dalam penelitian ini yaitu GNU/Linux dengan
+bahasa pemrograman yang digunakan untuk implementasi adalah Go
+\footnote{\RaggedRight\url{https://golang.org}}.
+
+
+\textbf{Implementasi dan Pengujian}.
+Dataset tanpa sampel ulang dan yang telah disampel ulang dijadikan
+pelatihan untuk pengklasifikasi CRF dan RF satu per satu, kemudian hasil
+pemodelan diuji langsung dengan diberikan input dari fitur dataset PAN-WVC-11.
+Hasil dari pengujian ini digunakan pada tahap analisis.
+Implementasi fitur, sampel ulang SMOTE dan LNSMOTE, pengklasifikasi CRF dan RF
+dibuat dari awal.
+
+\textbf{Analisis}.
+Hasil dari setiap pengklasifikasi pada dataset yang tidak disampel ulang dan
+yang disampel ulang dibandingkan untuk dilihat performansinya dengan memetakan
+laju \textit{false-positive} dan laju \textit{true-positive} pada ruang
+\textit{Receiver Operating Characteristic} (ROC).
+Untuk performansi pengklasifikasi selain dilihat dari akurasinya juga dilihat
+dari kecepatan dalam pemodelannya.
+
+%%}}}
+
+
+
+\section{Sistematika Penulisan}
+\label{sec:sistematika-penulisan}
+
+Laporan tesis ini dibagi menjadi beberapa bab berikut,
+\begin{enumerate}
+	\item Bab I Pendahuluan, berisi Latar Belakang, Rumusan Masalah,
+	Tujuan, Batasan Masalah, Metodologi, dan Sistematika Penulisan.
+	\item Bab II Landasan Teori, berisi ilmu dan konsep yang mendukung
+	pembahasan tesis ini.
+	\item Bab III Metodologi Penelitian, berisi deskripsi tentang analisis, tahap implementasi, dan tahap pengujian yang dilakukan selama penelitian.
+	\item Bab IV Hasil dan Analisis, berisi penjelasan dari hasil penelitian.
+	\item Bab V Penutup, berisi kesimpulan yang dapat diambil dari hasil penelitian ini beserta saran untuk pengembangan selanjutnya.
+\end{enumerate}
+%%}}}
+

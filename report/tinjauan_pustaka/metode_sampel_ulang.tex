@@ -1,0 +1,127 @@
+Sebuah dataset dikatakan timpang jika berisi lebih banyak sampel untuk satu
+kelas daripada kelas lainnya.
+Dataset dikatakan tidak seimbang bila paling tidak satu kelas direpresentasikan
+hanya oleh sejumlah kecil contoh sampel (disebut dengan kelas minoritas)
+sementara kelas lainnya menjadi mayoritas.
+Dalam skenario ini, pengklasifikasi akan memiliki akurasi yang bagus pada kelas
+mayoritas tapi akurasi yang buruk pada kelas minoritas yang disebabkan karena
+pengaruh yang besar dari kelas mayoritas pada kriteria pelatihan sampel.
+Dengan dataset yang tidak seimbang, algoritma penggalian data menghasilkan
+model yang cacat yang tidak memperhitungkan kelas minoritas, secara kebanyakan
+algoritma penggalian data mengasumsikan dataset yang seimbang.
+
+Pada umumnya ada dua pendekatan dalam menghadapi permasalahan ketakseimbangan
+pada kelas.
+Pendekatan pertama beroperasi pada tingkat data yang terdiri dari
+beberapa teknik sampel ulang data.
+Pendekatan kedua bekerja pada tingkat algoritma yang mengikutkan penyesuaian
+terhadap biaya misklasifikasi atau estimasi probabilitas.
+Kebanyakan algoritma klasifikasi mencoba meminimalkan laju galat: persentase
+prediksi yang tidak tepat dari label kelas.
+Algoritma penyeimbang mengindahkan perbedaan antara tipe dari galat
+misklasifikasi.
+Khususnya, algoritma tersebut secara implisit mengasumsikan bahwa semua galat
+misklasifikasi memiliki biaya yang sama.
+Sejumlah solusi terhadap permasalahan ketimpangan kelas telah diajukan untuk
+tingkat data dan algoritma \cite{chawla2004editorial}.
+
+%%{{{ subsec:metode-resampling
+%%
+\label{subsec:metode-resampling}
+\subsection{Metode sampel ulang}
+
+Metode yang paling mudah untuk menyeimbangkan kelas yaitu dengan melakukan
+pengambilan ulang sampel, atau \textit{resampling}, baik dengan
+\textit{over-sampling} pada kelas minoritas atau \textit{under-sampling} pada
+kelas mayoritas, sampai kelas-kelas tersebut mendekati representasi yang sama.
+Kedua strategi tersebut dapat digunakan pada sistem pembelajaran, secara mereka
+bekerja pada fase pra-proses, membolehkan sistem pembelajaran menggunakan
+instan data latihan seolah-olah berasal dari dataset yang seimbang.
+Maka, bias apa pun dari sistem terhadap kelas mayoritas disebabkan karena
+proporsi sampel yang berbeda bisa diharapkan berkurang.
+
+Metode sampel ulang memiliki kelemahan.
+\textit{Undersampling} bisa menghilangkan data yang berpotensi berguna,
+sementara \textit{over-sampling} secara artifisial meningkatkan jumlah dataset
+dan akibatnya memperburuk kerja komputasi pada algoritma pembelajaran.
+
+Dengan kelemahan-kelemahan pada teknik penyeimbangan sampel, tetap metode
+sampel ulang masih merupakan cara yang paling sering digunakan untuk menangani
+masalah ketimpangan data daripada menggunakan algoritma pembelajaran
+\textit{cost-sensitive}.
+Hal ini karena, pertama, tidak semua implementasi algoritma
+\textit{cost-sentitive} ada pada bahasa pemrograman, maka pendekatan
+menggunakan sampel ulang menjadi satu-satunya pilihan.
+Alasan kedua, kebanyakan dataset yang timpang sangatlah besar dan ukuran
+dataset latihan harus dikurangi supaya pembelajaran dapat menghasilkan model.
+Untuk alasan ini, \textit{under-sampling} menjadi strategi yang masuk akal dan
+valid.
+Jika ingin menghilangkan beberapa data latihan akan lebih menguntungkan bila
+sampel pada kelas mayoritas yang dihilangkan dengan tujuan untuk mengurangi
+jumlah data latihan, dan kemudian menggunakan algoritma \textit{cost-sensitive}
+terhadapnya.
+Alasan terakhir kenapa sampel ulang digunakan adalah biaya misklasifikasi
+terkadang tidak diketahui.
+%%}}}
+
+%%{{{ subsubsec:oversampling
+\subsubsection{\textit{Oversampling}}\label{subsubsec:oversampling}
+
+Metode paling sederhana untuk meningkatkan jumlah kelas minoritas bisa
+menggunakan \textit{oversampling} acak, yaitu metode non-heuristik yang
+menyeimbangkan distribusi kelas dengan replikasi acak dari sampel positif.
+Disebabkan karena metode ini mereplikasi sampel yang ada pada kelas minoritas,
+maka permasalahan \textit{overfit} akan mungkin terjadi, yang mana model akan
+bagus untuk data latihan tapi buruk bila digunakan pada data yang baru.
+Kelemahan lain yaitu menambah jumlah waktu pada pelatihan sampel karena jumlah
+data yang bertambah.
+%%}}}
+
+%%{{{undersampling
+%%
+\label{subsubsec:undersampling}
+\subsubsection{\textit{Undersampling}}
+
+\textit{Under-sampling} adalah metode yang efisien untuk pembelajaran kelas
+yang timpang.
+Metode ini menggunakan subset dari kelas mayoritas untuk melatih
+pengklasifikasi.  Secara banyak sampel dari kelas mayoritas yang dihilangkan,
+data latihan menjadi lebih seimbang dan proses pelatihan menjadi lebih cepat.
+Teknik paling umum adalah \textit{random majority under-sampling} (RUS).  Pada
+RUS, instan dari kelas mayoritas secara acak dihilangkan dari dataset.
+
+Kelemahan utama dari \textit{under-sampling} adalah informasi yang secara
+potensial berguna yang terdapat pada sampel yang dihilangkan tersebut menjadi
+terindahkan.
+
+%%{{{
+\label{subsec:algcostsensitive}
+\subsection{Metode Algoritma Pembelajaran \textit{Cost-Sensitive}}
+
+Pada tingkat algoritma, beberapa solusinya adalah menyesuaikan biaya pada
+beberapa kelas untuk menangani ketimpangan kelas, mengatur estimasi
+probabilitas pada \textit{tree leaf} (bila menggunakan \textit{decision tree}),
+mengatur ambang batas keputusan, dan menggunakan teknik pembelajaran berbasis
+rekognisi (yaitu, pembelajaran dengan satu kelas) daripada berbasis
+diskriminasi (dua kelas).
+
+Pembelajaran \textit{Cost-Sensitive} adalah sebuah tipe dari pembelajaran dalam
+penggalian data yang menggunakan biaya misklasifikasi (dan bisa juga tipe biaya
+yang lain) menjadi pertimbangan.
+Ada banyak cara untuk mengimplementasikan pembelajaran \textit{cost sensitive},
+yang bisa dikategorikan menjadi tiga kelas \cite{he2009learning}.
+Kelas pertama menggunakan biaya misklasifikasi terhadap dataset sebagai sebuah
+bentuk berat ruang data, kelas kedua menerapkan teknik minimalisasi biaya
+terhadap skema kombinasi dari metode \textit{ensemble}, dan kelas terakhir
+menggabungkan fitur \textit{cost sensitive} langsung ke paradigma klasifikasi
+untuk secara esensial menyesuaikan kerangka kerja \textit{cost sensitive} ke
+dalam pengklasifikasi.
+
+Menggabungkan biaya ke dalam algoritma klasifikasi \textit{decision tree}
+adalah yang paling banyak digunakan dan pengklasifikasi yang paling sederhana.
+Biaya dapat diikutkan dengan berbagai cara.  Cara pertama adalah biaya dapat
+diterapkan untuk menyesuaikan ambang batas keputusan, cara kedua adalah biaya
+dapat digunakan dalam memisahkan pemilihan atribut saat pembentukan
+\textit{decision tree}, dan terakhir yaitu skema pemotongan \textit{cost
+sensitive} dapat diterapkan pada \textit{tree}.
+%%}}}
