@@ -3,7 +3,8 @@
 	ABSTRAK \\
 	\bigskip
 	\MakeUppercase{\mytitle{}} \\
-	\textnormal{\center Oleh} \\
+	\bigskip
+	\textnormal{Oleh} \\
 	\myname{} \\
 	NIM: \mysid{} \\
 	(\mydept{}) \\
@@ -26,18 +27,18 @@ yang dilatih pada dataset
 yang
 disampel ulang dengan
 \textit{Local Neighbourhood Synthetic Minority Over-sampling Technique}
-(LN-SMOTE).
+(LNSMOTE).
 Kedua metode tersebut dibandingkan dengan klasifikasi
 \textit{Random Forest} (RF)
 dan teknik sampel ulang SMOTE.
 Hasil sampel ulang dan pemodelan diuji dengan dataset
 \textit{Wikipedia Vandalism Corpus 2011} (WVC2011)
-menunjukan hasil sampel ulang dengan LN-SMOTE meningkatkan laju
+menunjukan hasil sampel ulang dengan LNSMOTE meningkatkan laju
 \textit{true-positive} daripada SMOTE pada pengklasifikasi RF dan CRF, namun
-pada CRF, LN-SMOTE meningkatkan laju \textit{false-positive} lebih tinggi
+pada CRF, LNSMOTE meningkatkan laju \textit{false-positive} lebih tinggi
 daripada SMOTE.
 Sementara pada pengklasifikasi RF laju \textit{false-positive} dari hasil
-sampel ulang LN-SMOTE tidak begitu signifikan dengan SMOTE.
+sampel ulang LNSMOTE tidak begitu signifikan dengan SMOTE.
 Dari segi performansi, CRF dengan sampel ulang SMOTE dengan 100 tingkat dan 2
 pohon memberikan hasil yang paling baik dengan nilai AUC yaitu $0,8694$.
 Dari segi kecepatan pemodelan pengklasifikasi CRF lebih cepat 1,6 kali daripada

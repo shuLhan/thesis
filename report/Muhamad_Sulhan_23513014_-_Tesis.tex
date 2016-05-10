@@ -8,13 +8,12 @@
 \pagenumbering{roman}
 \input{abstrak}
 
-\chapter{Pendahuluan}
+\newpage
 \pagenumbering{arabic}
+\input{pendahuluan}
 
 \chapter{Tinjauan Pustaka}
 \section{Wikipedia Vandalisme}
-
-\chapter{Studi Literatur}
 \section{SMOTE}
 \section{Local Neighbourhood SMOTE}
 \section{Random Forest}
@@ -27,5 +26,9 @@
 \input{pengujian}
 \input{analisis}
 \input{kesimpulan}
+
+\clearpage
+\addcontentsline{toc}{section}{DAFTAR PUSTAKA}
+\printbibliography
 
 \end{document}
