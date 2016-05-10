@@ -1,11 +1,11 @@
-\chapter{Analisis}
+\section{Analisis}
 
 Hasil pelatihan dan pengujian model dianalisis dalam tiga bagian.
 Pertama, analisis dari metode sampel ulang LNSMOTE, kedua, analisis terhadap
 pengklasifikasi CRF, dan yang terakhir yaitu analisis terhadap hasil
 keseluruhan.
 
-\section{Analisis Sampel-ulang}
+\subsection{Analisis Sampel-ulang}
 
 Pengaruh sampel ulang SMOTE dan LNSMOTE berbeda pada klasifikasi RF dan CRF.
 Pada klasifikasi RF, sampel ulang dengan LNSMOTE lebih baik dari SMOTE dengan
@@ -23,7 +23,7 @@ gambar \ref{fig:roc} (c) dan (d).
 
 \input{roc}
 
-\section{Analisis CRF}
+\subsection{Analisis CRF}
 
 Fokus dari pengklasifikasi CRF yaitu pada pembelajaran sampel negatif.
 Pada setiap tingkatan CRF, model diuji ulang dengan semua sampel negatif, yang
@@ -52,7 +52,7 @@ diantara pengujian lainnya yaitu $0,5353$.
 
 \input{prauc}
 
-\section{Analisis Pengklasifikasi Vandalisme}
+\subsection{Analisis Pengklasifikasi Vandalisme}
 
 \input{rocpoints}
 
