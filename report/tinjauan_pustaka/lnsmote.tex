@@ -1,0 +1,156 @@
+Meskipun hasil SMOTE dibuktikan bagus dalam makalah Chawla dkk.
+\cite{chawla2002smote}, metode ini masih memiliki beberapa kelemahan.
+Pertama, cara menentukan sampel minoritas sebagai calon untuk
+\textit{over-sampling} bisa bermasalah.
+Pada SMOTE, semua sampel dari kelas minoritas digunakan.
+Namun, bukan berarti semua sampel tersebut sama bergunanya bagi pembelajaran
+klasifikasi.
+Pada khususnya, sampel yang ada pada batas \textit{decision}, atau berada
+dibatas kelas minoritas dengan kelas mayoritas, lebih sering salah
+diklasifikasi dibandingkan dengan sampel yang berada jauh dari batas kelas,
+oleh karena itu mereka lebih penting untuk klasifikasi.
+Sampel yang jauh dari batas kelas, berada di tengah kelas minoritas mungkin
+berkontribusi sedikit pada klasifikasi.
+Salah satu metode untuk menangani permasalahan ini yaitu dengan hanya
+mengambil sampel pada batas kelas minoritas yang dijadikan untuk
+\textit{oversampling}, seperti yang diajukan oleh Han dkk.
+\cite{han2005borderline} dengan menggunakan metode bernama \textit{Borderline
+SMOTE}.
+
+\begin{figure}[htbp]
+	\centering
+	\begin{subfigure}[b]{0.4\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{SMOTE-problem-outliers}
+		\caption{}
+		\label{fig:smote-outliers}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.5\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{SMOTE-problem-overlapping}
+		\caption{}
+		\label{fig:smote-overlapping}
+	\end{subfigure}
+	\caption{
+Kelemahan metode SMOTE:
+(a) \textit{Outliers} pada kelas minoritas tidak diperhitungkan pada metode
+SMOTE.
+(b) Pembuatan sampel sintetis yang baru berada di wilayah kelas mayoritas
+yang tumpang-tindih dengan sampel kelas mayoritas.
+	}
+	\label{fig:smote-problems}
+\end{figure}
+
+Kelemahan lain dari SMOTE yaitu permasalahan \textit{overgeneralization} yang
+begitu saja menggeneralisasi wilayah dari kelas minoritas.
+SMOTE tidak mempertimbangkan distribusi dari sampel pada kelas mayoritas, atau
+adanya \textit{outliers}.
+
+Untuk mengatasi permasalahan di atas, Maciejewski dkk. memperkenalkan ekstensi
+dari metode SMOTE bernama \textit{Local-neighbourhood SMOTE} atau disingkat
+LNSMOTE \cite{maciejewski2011local} yang menggunakan modifikasi dari
+pendekatan \textit{Safe-Level SMOTE} \cite{bunkhumpornpat2009safe}.
+Pada metode \textit{Safe-level SMOTE} keberadaan sampel mayoritas
+diperhitungkan sebelum membuat sampel sintetis dengan menghitung sebuah
+koefisien khusus yang disebut \textit{safe level}.
+Untuk setiap sampel dari kelas minoritas, dihitung jumlah sampel kelas
+minoritas di antara \textit{k-nearest-neighbors} (KNN).
+Jika nilainya sama atau mendekati $ 0 $, sampel tersebut dianggap sebagai
+\textit{noise}.
+Jika nilainya mendekati $ k $, maka sampel tersebut bisa dikatakan berada
+di wilayah aman dari kelas minoritas.
+Gagasan utamanya adalah membuat sampel sintetis yang dekat dengan wilayah aman.
+
+Lebih rincinya, misalkan $ p $ adalah sampel dari kelas minoritas yang akan
+menjadi calon untuk \textit{over-sampling}, maka $ k $ sampel terdekat dengan
+$ p $ yang termasuk pada kelas minoritas $ P $ ditentukan.
+Seperti pada SMOTE, setidaknya satu dari tetangga tersebut dipilih, sebutlah
+dengan $ n $.
+Untuk kedua sampel, $ p $ dan $ n $, $ k $ sampel terdekatnya untuk keseluruhan
+data pelatihan $ S $ dihitung \textit{safe level}-nya dengan notasi $ sl(p) $
+dan $ sl(n) $.
+Dari pengetahuan tersebut, koefisien rasio \textit{safe-level} ditentukan
+dengan $ \textit{sl-ratio} = sl(p) / sl(n) $.
+Langkah selanjutnya ditentukan berdasarkan 5 kasus berikut:
+\begin{enumerate}
+	\item \label{case:safe-1} Jika $ sl(p) = 0 $ dan $ sl(n) = 0 $, sampel
+	$ p $ dan $ n $ dianggap sebagai \textit{noise outliers}, dan tidak ada
+	sampel sintetis yang dibuat.
+	\item Jika $ sl(p) > 0 $ dan $ sl(n) = 0 $, maka $ n $
+	adalah \textit{noise}.
+	Sampel sintetis akan dibuat jauh dari $ n $ dengan menduplikasi $ p $.
+	\item Jika $ sl-ratio = 1 $, maka $ p $ dan $ n $ memiliki tetangga
+	yang sama dan sampel sintetis yang baru akan dibuat diantara garis yang
+	menghubungkan mereka dengan cara yang sama seperti pada SMOTE.
+	\item Jika $ sl-ratio > 1 $, maka $ p $ berada di wilayah
+	aman minoritas daripada $ n $ dan sampel sintetis yang baru akan
+	dibuat dekat dengan $ p $, dengan parameter acak pada SMOTE akan
+	memiliki rentang $ [0, 1 / \textit{sl-ratio}] $.
+	\item Jika \textit{sl-ratio < 1}, maka \textit{n} berada di wilayah
+	aman minoritas daripada $ p $ dan sampel sintetis yang baru akan
+	dibuat dekat dengan $ n $, yaitu parameter acak pada SMOTE akan
+	memiliki rentang $ [1 - \textit{sl-ratio}, 1] $.
+\end{enumerate}
+
+Strategi \textit{safe-level SMOTE} bermasalah khususnya pada distribusi kelas
+yang bias yang mana kelas minoritas menyebar sehingga terdiri dari beberapa
+sub-wilayah dengan kardinalitas yang kecil.
+Situasi ini mengacu pada permasalahan yang disebut \textit{small disjuncts}
+yang diakui sebagai sumber kesulitan yang paling penting bagi pembelajaran
+klasifikasi untuk data timpang \cite{jo2004class}.
+Pada kasus seperti ini pembuatan sampel sintetis dengan \textit{Safe-level
+SMOTE} bisa menyebabkan terjadinya tumpang-tindih antara kelas.
+
+Sebagai contohnya, misalkan dua kelompok dari kelas minoritas terpisah
+dikelilingi oleh sampel dari kelas mayoritas.
+Katakanlah, jarak antara kedua kelompok minoritas tersebut cukup jauh, satu
+kelompok berada di bawah dan kelompok lainnya di atas.
+Misalkan calon dari sebuah sampel berada di kelompok yang dibawah.
+Jika parameter $ k $ dari fungsi pencarian KNN lebih besar dari jumlah sampel
+kelas minoritas di dalam kelompok tersebut, maka tetangga dari kelas minoritas
+selanjutnya akan menjadi sampel dari kelompok yang lain.
+Jika rasio \textit{safe-level} dari sampel kedua kelompok sama, sampel sintetis
+yang baru bisa dibuat diantara garis yang menggabungkan sampel-sampel dari
+kedua kelompok tersebut.
+Dengan kata lain, sampel sintetis yang baru bisa berada di wilayah yang dihuni
+oleh kelas mayoritas.
+Makanya, strategi ini masih memungkinkan terjadinya tumpang-tindih antara
+kelas.
+
+Situasi tidak diinginkan seperti di atas disebabkan karena teknik SMOTE mencari
+KNN yang dimiliki oleh kelas minoritas saja.
+Jika calon sampel tidak berada di wilayah yang padat dengan kelas minoritas,
+maka beberapa tetangganya bisa saja cukup jauh dan juga sampel dari kelas
+mayoritas mengelilingi calon sampel tersebut.
+
+LNSMOTE mengatasi masalah tumpang tindih ini dengan lebih mempertimbangkan
+tetangga sekitar
+(\textit{local neighbourhood})
+dari calon sampel minoritas yang mungkin bisa memberikan perkiraan dari
+keberadaan sampel kelas mayoritas.
+Jadi, pencarian sampel yang terlalu jauh sebaiknya dihindarkan.
+
+Modifikasi teknik LNSMOTE terhadap \textit{Safe-Level} SMOTE yaitu,
+\begin{itemize}
+\item jika calon sampel $ p $ diidentifikasi berada di tetangga terdekat $ k
+$ dari $ n $, sampel tersebut tidak langsung dihitung dengan $ sl(n) $ tapi
+dicari tetangga dari $ k + 1 $ selanjutnya.
+\item Membatasi rentang interval di mana sampel baru secara acak ditempatkan.
+Jadi, pada beberapa kasus dari \textit{safe-level}, LNSMOTE tidak menentukan
+batas kanan dari interval dengan 1 tapi sebagai ambang batas $\tau < 1$.
+Ambang batas tersebut tidak baku tapi ditentukan secara dinamis bergantung
+kepada \textit{safe-level} dari sampel mayoritas.
+\item Jika $ sl(n) $ relatif rendah, artinya $ n $ dikelilingi oleh banyak
+sampel dari kelas mayoritas, sampel baru seharusnya ditempatkan lebih dekat ke
+$ p $.
+\item Jika $ n $ dikelilingi oleh sejumlah sampel minoritas yang seimbang,
+sehingga nilai $ sl(n) $ tinggi, sampel yang baru bisa berada di dekat $ n $.
+Hal ini supaya bisa mengontrol tingkat ekspansi dari kelas minoritas dengan
+cara dinamis, memperhitungkan distribusi lokal dari sampel.
+\end{itemize}
+
+Algoritma LNSMOTE yang digunakan pada implementasi tesis berdasarkan pada
+makalah Maciejewski dkk.
+\cite{maciejewski2011local}
+yang dapat dilihat pada lampiran
+\ref{lampiran:alg_lnsmote}.
