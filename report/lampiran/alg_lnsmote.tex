@@ -1,13 +1,7 @@
-\label{lampiran:alg_lnsmote}
-\chapter{Algoritma LN-SMOTE}
-
-\newgeometry{left=2cm,right=2cm}
-
-\begin{algorithm}[htbp]
-\caption{Local Neighbourhood SMOTE}
-\label{alg:lnsmote}
-\begin{multicols}{2}
-\begin{algorithmic}[1]
+\begin{algorithm}[h]
+	\caption{Local Neighbourhood SMOTE}
+	\label{alg:lnsmote}
+	\begin{algorithmic}[1]
 \Require \\
 S: dataset sampel keseluruhan \\
 P: sample minoritas dari $ S $ \\
@@ -49,7 +43,15 @@ o: rasio \textit{over-sampling}, jumlah sampel sintetis yang akan dibuat \\
 
 	\State \Return $ x_{new} $
 \EndFunction
-\columnbreak
+	\algstore{lnsmote_break}
+	\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[h]
+	\caption{Local Neighbourhood SMOTE bagian 2}
+	\begin{algorithmic}[1]
+	\algrestore{lnsmote_break}
+
 \Function{CanCreate}{$ S, p, n $}
 	\State $ slp \gets \Call{SafeLevel}{S, p} $
 	\State $ sln \gets \Call{SafeLevel2}{S, p, n} $
@@ -94,8 +96,5 @@ o: rasio \textit{over-sampling}, jumlah sampel sintetis yang akan dibuat \\
 	\\
 	\State \Return{$ \delta $}
 \EndFunction
-\end{algorithmic}
-\end{multicols}
+	\end{algorithmic}
 \end{algorithm}
-\restoregeometry
-
