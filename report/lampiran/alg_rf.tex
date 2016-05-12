@@ -1,0 +1,76 @@
+\begin{algorithm}[h]
+\caption{Random Forest}
+\label{alg:rf}
+	\begin{algorithmic}[1]
+\Require \\
+$ S $: dataset pelatihan \\
+$ ntree $: jumlah pohon untuk \textit{forest} \\
+$ percentboot $: persentase sampel yang dipilih secara acak tanpa diganti dari $S$ \\
+$ m $: jumlah fitur acak \\
+
+\Function{RandomForest}{$ S, ntree, nboot, m $}
+	\State $ n \gets $ jumlah sampel pada dataset $ S $
+	\State $ nboot \gets n * (percentboot / 100) $
+	\For{$ t \gets 1,ntree $}
+		\State \Call{GrowTree}{forest, S, nboot, m}
+	\EndFor
+	
+	\State \Return $forest$
+\EndFunction
+\\
+\Function{GrowTree}{$ forest, S, nboot, m $}
+	\label{bagging}
+	\State $ bag, oob, bagIdx, oobIdx \gets \Call{RandomPickSample}{S} $
+
+	\State $ tree \gets \Call{BuildTree}{bag, m} $
+
+	\State $ forest.add(tree, bagIdx) $
+	\Comment Simpan pohon dan indeks dari \textit{bagging} untuk
+	klasifikasi OOB.
+
+	\State $ cm \gets \Call{Classify}{forest, oob, oobIdx} $
+	\State $ stat \gets \Call{ComputeStat}{cm} $
+	\Comment Hitung laju galat OOB dari \textit{confusion matrix}
+	$cm$.
+\EndFunction
+\\
+\Function{Classify}{$ forest, set, setIdx $}
+	\State $ predictions \gets nil $
+	\For{\textbf{each} $ sample, idx $ \textbf{in} $ set $}
+		\State $ votes \gets \Call{ForestVotes}{forest, sample, idx} $
+		\State $ class \gets $ ambil mayoritas suara kelas pada $votes$
+		\State $ predictions.push(class) $
+	\EndFor
+
+	\State \Return $predictions$
+\EndFunction
+	\algstore{rf_break}
+	\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[h]
+	\caption{Random Forest bagian 2}
+	\begin{algorithmic}[1]
+	\algrestore{rf_break}
+
+
+\Function{ForestVotes}{$ forest, sample, idx $}
+	\State $ votes \gets nil $
+	\For{\textbf{each} $ tree $ \textbf{in} $forest$ }
+		\State $ exist \gets \Call{IsSampleInTheBag}{idx} $
+		\Comment Periksa apakah sampel indeks digunakan pada pohon ini.
+
+		\If{exist}
+			\State continue
+			\Comment Jika digunakan, lanjutkan ke pohon berikutnya.
+		\EndIf
+
+		\State $ class \gets \Call{tree.Classify}{sample} $
+
+		\State $ \Call{votes.push}{class} $
+	\EndFor
+
+	\State \Return $ votes $
+\EndFunction
+	\end{algorithmic}
+\end{algorithm}

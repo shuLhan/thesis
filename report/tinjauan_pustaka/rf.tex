@@ -1,0 +1,53 @@
+\textit{Random Forest} (RF) \cite{breiman2001random}
+adalah sebuah kombinasi dari beberapa pohon keputusan yang mana setiap pohon
+bergantung kepada nilai dari vektor acak yang disampel secara independen dan
+dengan distribusi yang sama.
+
+Pohon keputusan yang digunakan dalam RF dapat menggunakan ID3
+(\textit{Iterative Dichotomiser}), C4.5 (pengganti dari ID3), atau CART
+(\textit{Classification and Regression Trees}).
+Dalam tesis ini, dan umumnya pada implementasi RF, menggunakan CART sebagai
+pohon keputusan.
+Implementasi dari algoritma CART dalam tesis ini mengacu pada buku Jiawei Han,
+dkk. bab 8 \cite{han2011data}.
+
+Ada tiga parameter utama dalam pembentukan RF.
+Parameter pertama yaitu jumlah pohon yang akan dibangun dalam \textit{forest}
+(katakanlah $n$),
+parameter kedua yaitu persentase dari sampel pelatihan yang digunakan untuk
+membangun pohon (katakanlah $b$),
+dan parameter ketiga yaitu jumlah fitur acak yang juga digunakan untuk
+membangun pohon (katakanlah $m$).
+Ketiga parameter diatur sebelum memulai pembangunan RF dan nilainya sama untuk
+semua pohon.
+
+Persentase dari sampel pelatihan yang diambil secara acak umumnya dua per tiga
+dari sampel keseluruhan, sehingga meninggalkan sepertiganya sebagai
+\textit{out-of-bag} (OOB).
+Untuk nilai acak fitur $m$, nilai yang biasa digunakan yaitu akar dari jumlah
+fitur atau $log$ dari jumlah fitur \cite{breiman2001random}.
+
+Proses pembangunan RF sebagai berikut.
+Diasumsikan diberikan sebuah dataset latihan $S$.
+Setelah parameter ditentukan, pada saat pembuatan pohon, ambil sampel dari $S$
+secara acak tanpa diganti (sampel yang telah diambil bisa terpilih kembali pada
+pengambilan acak berikutnya) sejumlah $b$.
+Proses ini dikenal juga dengan \textit{bootstraping}.
+Sampel yang tidak terpilih disebut dengan \textit{out-of-bag} (OOB), yang
+bisa digunakan untuk penghitungan laju galat mis-klasifikasi.
+Dari sampel yang terpilih tersebut ambil $m$ buah fitur secara acak, kemudian
+bangun pohon dari $m$ fitur dan $b$ sampel acak tersebut tanpa dibersihkan
+(\textit{pruning}).
+Ulangi proses tersebut sampai pohon ke-$n$.
+
+Proses klasifikasi pada RF berjalan seperti berikut.
+Diberikan dataset $T$ yaitu dataset yang berisi fitur yang sama dengan dataset
+pelatihan $S$.
+Untuk setiap sampel yang akan diklasifikasi pada dataset $T$, masukan sampel
+tersebut ke setiap pohon.
+Kumpulkan hasil klasifikasi dari setiap pohon, kemudian ambil mayoritas kelas
+dari semua hasil klasifikasi tersebut.
+Algoritma selengkapnya dari RF dapat dilihat pada lampiran
+\ref{lampiran:alg_rf}.
+
+
