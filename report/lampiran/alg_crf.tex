@@ -1,0 +1,40 @@
+\begin{algorithm}[h]
+\caption{Cascaded Random Forest}
+\label{alg:crf}
+	\begin{algorithmic}[1]
+\Require \\
+$ TSET $: dataset pelatihan \\
+$ S $: jumlah tingkatan \\
+$ T $: jumlah pohon untuk setiap tingkatan \\
+$ B $: persentase sampel yang dipilih secara acak tanpa diganti dari $TSET$ \\
+$ m $: jumlah fitur acak \\
+$ maxtp $: ambang batas untuk nilai \textit{true-positive} \\
+$ maxtn $: ambang batas untuk nilai \textit{true-negative}
+\\
+\Function{CascadedRandomForest}{$ TSET, S, T, B, m, maxtp, maxtn $}
+	\State $ n \gets $ jumlah sampel pada dataset $ TSET $
+	\State $ b \gets n * (B / 100) $
+	\State $ forest \gets nil $
+	\State $ TNSET \gets nil $
+	\For{$ s \gets 1,S $}
+		\For{$ t \gets 1,T $}
+			\State $ tp_{s,t}, tn_{s,t} \gets \Call{GrowTree}{forest, S, b, m} $
+			\If{$ tp_{s,t} > maxtp $ \textbf{and} $ tn_{s,t} > maxtn $}
+				\State Tingkatan selesai
+			\EndIf
+		\EndFor
+		\State $\alpha_{s} \gets exp(fmeasure) $
+		\If{$ s = 1 $}
+			\State Pindahkan sampel \textit{true-negative} dari
+			$TSET$ ke $TNSET$
+		\Else
+			\State Uji tingkatan sebelumnya dengan $TNSET$
+			\State Hapus sampel \textit{true-negative} dari TNSET
+			\State Isi ulang $TSET$ dengan sampel
+			\textit{false-positive} dari hasil uji $TNSET$
+		\EndIf
+	\EndFor
+\EndFunction
+
+	\end{algorithmic}
+\end{algorithm}
