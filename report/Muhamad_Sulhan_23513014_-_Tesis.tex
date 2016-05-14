@@ -10,9 +10,25 @@
 
 \newpage
 \pagenumbering{arabic}
+
 \input{pendahuluan}
 
-\input{tinjauan_pustaka}
+\chapter{Tinjauan Pustaka}
+
+\section{Wikipedia Vandalisme}
+\input{tinjauan_pustaka/wikipedia_vandalisme}
+
+\section{SMOTE}
+\input{tinjauan_pustaka/smote}
+
+\section{LNSMOTE}
+\input{tinjauan_pustaka/lnsmote}
+
+\section{\textit{Random Forest}}
+\input{tinjauan_pustaka/rf}
+
+\section{Cascaded Random Forest}
+\input{tinjauan_pustaka/crf}
 
 \input{metodologi_penelitian}
 
@@ -24,21 +40,23 @@
 \addcontentsline{toc}{section}{DAFTAR PUSTAKA}
 \printbibliography
 
-\appendix
 \titleformat{\chapter}[hang]
 {\bfseries\large\centering}
 {Lampiran \thechapter}
 {1em}
 {}
 
-\label{lampiran:alg_lnsmote}
+\appendix
 \chapter{Algoritma LN-SMOTE}
-
+\label{lampiran:alg_lnsmote}
 \input{lampiran/alg_lnsmote}
 
-\label{lampiran:alg_rf}
 \chapter{Algoritma Random Forest}
-
+\label{lampiran:alg_rf}
 \input{lampiran/alg_rf}
+
+\chapter{Algoritma Cascaded Random Forest}
+\label{lampiran:alg_crf}
+\input{lampiran/alg_crf}
 
 \end{document}
