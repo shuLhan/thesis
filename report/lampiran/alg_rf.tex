@@ -3,24 +3,26 @@
 \label{alg:rf}
 	\begin{algorithmic}[1]
 \Require \\
-$ S $: dataset pelatihan \\
-$ ntree $: jumlah pohon untuk \textit{forest} \\
-$ percentboot $: persentase sampel yang dipilih secara acak tanpa diganti dari $S$ \\
+$ TSET $: dataset pelatihan \\
+$ T $: jumlah pohon untuk \textit{forest} \\
+$ B $: persentase sampel yang dipilih secara acak tanpa diganti dari $TSET$ \\
 $ m $: jumlah fitur acak \\
 
-\Function{RandomForest}{$ S, ntree, nboot, m $}
-	\State $ n \gets $ jumlah sampel pada dataset $ S $
-	\State $ nboot \gets n * (percentboot / 100) $
-	\For{$ t \gets 1,ntree $}
-		\State \Call{GrowTree}{forest, S, nboot, m}
+\Function{RandomForest}{$ TSET, T, B, m $}
+	\State $ n \gets $ jumlah sampel pada dataset $ TSET $
+	\State $ b \gets n * (B / 100) $
+	\State $ forest \gets nil $
+	\For{$ t \gets 1,T $}
+		\State \Call{GrowTree}{forest, TSET, b, m}
 	\EndFor
 	
 	\State \Return $forest$
 \EndFunction
 \\
-\Function{GrowTree}{$ forest, S, nboot, m $}
+\Function{GrowTree}{$ forest, TSET, b, m $}
 	\label{bagging}
-	\State $ bag, oob, bagIdx, oobIdx \gets \Call{RandomPickSample}{S} $
+	\State $ bag, oob, bagIdx, oobIdx \gets \Call{RandomPickSample}{$ TSET,
+	b $} $
 
 	\State $ tree \gets \Call{BuildTree}{bag, m} $
 
@@ -38,7 +40,8 @@ $ m $: jumlah fitur acak \\
 	\State $ predictions \gets nil $
 	\For{\textbf{each} $ sample, idx $ \textbf{in} $ set $}
 		\State $ votes \gets \Call{ForestVotes}{forest, sample, idx} $
-		\State $ class \gets $ ambil mayoritas suara kelas pada $votes$
+		\State $ class \gets \Call{Majority}{votes} $
+		\Comment ambil mayoritas suara kelas pada $votes$
 		\State $ predictions.push(class) $
 	\EndFor
 
