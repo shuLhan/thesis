@@ -1,0 +1,28 @@
+Dataset yang digunakan untuk pengujian yaitu PAN-WVC-11
+\cite{potthast:2010b}.
+Korpus PAN-WVC-11 terdiri dari tiga bahasa yaitu Inggris, Jerman, dan
+Spanyol, yang digunakan untuk pelatihan hanya yang bahasa Inggris.
+Dataset asli memiliki atribut yang sama dengan PAN-WVC-10, yaitu
+\textit{editid},
+\textit{editor},
+\textit{oldrevisionid},
+\textit{newrevisionid},
+\textit{diffurl},
+\textit{class},
+\textit{annotators},
+\textit{totalannotators},
+\textit{edittime},
+\textit{editcomment},
+\textit{articleid}, dan
+\textit{articletitle}.
+
+Atribut \textit{annotators} dan \textit{totalannotators} dihilangkan dan
+ditambah dengan dua atribut baru yaitu \textit{deletions} yang berisi teks yang
+dihapus pada revisi lama, dan \textit{additions} yang berisi teks yang
+ditambahkan pada revisi yang baru.
+Nilai dari atribut \textit{class} diganti dari string menjadi integer, yaitu
+dari "vandalism" menjadi bilangan \texttt{1}
+dan "regular" menjadi bilangan \texttt{0}.
+
+Untuk proses pembersihan data dilakukan prosedur yang sama seperti pada
+PAN-WVC-10.
