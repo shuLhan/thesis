@@ -1,18 +1,39 @@
 \input{../article-template}
 
+\renewcommand{\listfigurename}{}
+\renewcommand{\listtablename}{}
+
 \begin{document}
 
 \input{sampul}
 
 \newpage
 \pagenumbering{roman}
+\chapter*{ABSTRAK}\label{chapter:abstrak}
+\addcontentsline{toc}{chapter}{ABSTRAK}
 \input{abstrak}
+
+\newpage
+\chapter*{DAFTAR ISI}\label{chapter:daftar_isi}
+\addcontentsline{toc}{chapter}{DAFTAR ISI}
+\tableofcontents
+
+\newpage
+\chapter*{DAFTAR GAMBAR DAN ILUSTRASI}
+\addcontentsline{toc}{chapter}{DAFTAR GAMBAR DAN ILUSTRASI}
+\listoffigures
+
+\newpage
+\chapter*{DAFTAR TABEL}
+\addcontentsline{toc}{chapter}{DAFTAR TABEL}
+\listoftables
 
 \newpage
 \pagenumbering{arabic}
 
 \input{pendahuluan}
 
+%%{{{ Tinjauan Pustaka
 \chapter{Tinjauan Pustaka}
 
 \section{Wikipedia Vandalisme}
@@ -27,17 +48,47 @@
 \section{\textit{Random Forest}}
 \input{tinjauan_pustaka/rf}
 
-\section{Cascaded Random Forest}
+\section{\textit{Cascaded Random Forest}}
 \input{tinjauan_pustaka/crf}
+%%}}}
 
+%%{{{ Metodologi Penelitian
+\chapter{Metodologi Penelitian}
 \input{metodologi_penelitian}
 
+\section{Persiapan Data}
+\label{persiapan_data}
+\input{metodologi_penelitian/persiapan_data}
+
+\subsection{Persiapan dataset pelatihan}
+\input{metodologi_penelitian/persiapan_data_pelatihan}
+
+\subsection{Persiapan dataset pengujian}
+\input{metodologi_penelitian/persiapan_data_pengujian}
+
+\section{Fitur Vandalisme}
+\input{metodologi_penelitian/fitur_vandalisme}
+
+\section{Pembuatan Fitur}
+\input{metodologi_penelitian/pembuatan_fitur}
+
+\newpage
+\section{Pembuatan Sampel-ulang}
+\input{metodologi_penelitian/pembuatan_sampel_ulang}
+
+\section{Implementasi Pengklasifikasi}
+\input{metodologi_penelitian/implementasi_pengklasifikasi}
+%%}}}
+
+%%{{{ Hasil dan Analisis
+\chapter{Hasil dan Analisis}
 \input{pengujian}
+%%}}}
 
 \input{kesimpulan}
 
 \clearpage
-\addcontentsline{toc}{section}{DAFTAR PUSTAKA}
+\addcontentsline{toc}{chapter}{DAFTAR PUSTAKA}
 \printbibliography
 
 \titleformat{\chapter}[hang]
@@ -46,8 +97,12 @@
 {1em}
 {}
 
+%%{{{ Lampiran
 \appendix
-\chapter{Algoritma LN-SMOTE}
+\chapter*{LAMPIRAN}
+\addcontentsline{toc}{chapter}{LAMPIRAN}
+
+\chapter{Algoritma LNSMOTE}
 \label{lampiran:alg_lnsmote}
 \input{lampiran/alg_lnsmote}
 
@@ -58,5 +113,11 @@
 \chapter{Algoritma Cascaded Random Forest}
 \label{lampiran:alg_crf}
 \input{lampiran/alg_crf}
+
+\chapter{Daftar Kategori Kata dan Token}
+\label{lampiran:daftar_token_dan_kata}
+\input{lampiran/daftar_token_dan_kata}
+
+%%}}}
 
 \end{document}
