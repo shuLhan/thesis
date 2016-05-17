@@ -1,0 +1,1143 @@
+\documentclass[conference,compsoc,a4paper,twocolumn,final]{IEEEtran}
+
+%%{{{ Packages
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{couriers}
+
+\ifCLASSOPTIONcompsoc
+  % IEEE Computer Society needs nocompress option
+  % requires cite.sty v4.0 or later (November 2003)
+  \usepackage[nocompress]{cite}
+\else
+  % normal IEEE
+  \usepackage{cite}
+\fi
+
+\ifCLASSINFOpdf
+  \usepackage[pdftex]{graphicx}
+  % declare the path(s) where your graphic files are
+  \graphicspath{../images/}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  \DeclareGraphicsExtensions{.jpg,.png}
+\else
+  % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
+  % will default to the driver specified in the system graphics.cfg if no
+  % driver is specified.
+  % \usepackage[dvips]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../eps/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  % \DeclareGraphicsExtensions{.eps}
+\fi
+
+%% Package for non-breaking URL.
+\usepackage{url}
+
+%% \multirow{package}{width}{text}
+\usepackage{multirow}
+
+%% Package for reading CSV to database.
+\usepackage{datatool}
+
+%% Tikz
+\usepackage{tikz}
+\usetikzlibrary{backgrounds}
+
+%% Pgfplots
+\usepackage{pgfplots}
+
+\pgfplotsset{
+	/pgf/number format/read comma as period,
+	/pgf/text mark as node=false,
+	table/col sep=semicolon,
+	xmax=1,
+	xmin=0,
+	ymax=1,
+	ymin=0,
+	xtick distance=0.2,
+	ytick distance=0.2,
+	grid=major,
+	cycle list name=linestyles,
+	compat=1.13
+}
+
+%% MnSymbol
+\usepackage{MnSymbol}
+
+%%% uncomment this to show overrule in black box
+\overfullrule=2cm
+
+%%}}}
+
+%%{{{ Hyphenations
+
+\hyphenation{}
+
+%%}}}
+
+\begin{document}
+
+%%{{{ Title and author
+
+\title{Detecting Vandalism on English Wikipedia using Cascaded Random Forest}
+
+\author{%
+	\IEEEauthorblockN{Muhamad Sulhan}
+	\IEEEauthorblockA{%
+		Sekolah Teknik Elektro dan Informatika\\
+		Institut Teknologi Bandung\\
+		Jl. Ganesha No 10, Bandung, Indonesia 40132\\
+		Email: ms@students.itb.ac.id
+	}
+}
+
+\maketitle
+
+%%}}}
+
+%%{{{ Abstract
+
+\begin{abstract}
+Wikipedia.org is an online encyclopedia which can edited by anyone.
+Those feature has benefit, which make the article in Wikipedia rapidly
+increased in size and can be fixed subsequently, and their drawbacks was prone
+to vandalism in the forms of invalid information, deletion, ads, or meaningless
+content.
+This paper propose a framework for detecting vandalism on English Wikipedia
+using machine learning technique by training Cascaded Random Forest (CRF)
+classifier on English Wikipedia dataset (PAN-WVC-10) that has been resampled
+using Local Neighbourhood SMOTE (LNSMOTE).
+Those two methods then compared with Random Forest (RF) for classifier and
+SMOTE for resampling.
+The result of classifiers that has been tested on PAN-WVC-11 English dataset
+showed that dataset resampled using LNSMOTE increase the true-positive rate
+better than SMOTE in both classifiers, RF and CRF.
+On the performance of classifiers, CRF using SMOTE with 100 stages and 2 trees
+gave the better result among others with AUC value 0.86.
+From training computation time, CRF 1.6 times faster than RF in resampled
+dataset.
+\end{abstract}
+
+%%}}}
+
+%%{{{ Introduction
+
+\section{Introduction}
+\label{section:introduction}
+
+Vandalism, according to Merriam-Webster's dictionary is willful or malicious
+destruction or defacement of public or private property.
+In the context of Wikipedia, vandalism can be in the form of malicious edit
+which intention to give wrong information, or hiding information by deleting
+the content, abusive content, ads, and/or meaningless text.
+
+The number of articles in Wikipedia English site \texttt{en.wikipedia.org} at
+July 2015 almost reached 5 million articles, with the only active user only
+31,369 editors.
+This means that, assuming all the editor actually active, then each of them
+should monitor about 157 articles.
+Finding and fixing the article that has been vandalized can disrupt the editor
+from writing or expanding new article or others important tasks, and can make
+the reader get the wrong information or could be no information at all, due to
+deletion.
+
+Corpus that commonly used for learning vandalism on Wikipedia is PAN Wikipedia
+Vandalism Corpus 2010 (PAN-WVC-10)
+\cite{potthast:2010b}
+or PAN Wikipedia Vandalism Corpus 2011 (PAN-WVC-11)
+\cite{potthast:2010b}
+with the high bias on the data.
+Both of the corpus have class imbalance problem.
+PAN-WVC-10 for an English articles have 32,439 sample with only $2,394$, or 7\%,
+of them is vandalism, whereas PAN-WVC-11 for an English articles have $9,985$
+sampel with only $1,144$, or 8\%, of them are vandalism.
+
+Applying a classifier on imbalance dataset could lead to low performance.
+This can be caused either by the minority class has low contribution to error
+rate, which make the classifier bias to majority class, or some classifier
+assume that class distribution is balanced, while in real world cases this
+rarely happened.
+
+To overcome this imbalance problem, Gotze
+\cite{gotze2014advanced}
+use the random oversampling technique called
+\textit{Synthetic Minority Over-sampling TEchnique} (SMOTE)
+proposed by Chawla
+\cite{chawla2002smote},
+and combination of SMOTE and random undersampling.
+Original and resampled dataset of PAN-WVC-10 then tested with two-class
+classifier:
+\textit{Logistic Regression},
+\textit{RealAdaBoost},
+\textit{Random Forest} (RF), dan
+\textit{Bayesian Network}.
+His evaluation on original dataset showed that RF give better result than
+others classifiers.
+The result from resampling dataset showed increasing in performance on all
+classifiers except RF.
+
+The weakness of RF are while some number of individual trees could lead to high
+performance, it also increase the computation time especially when training the
+classification model.
+For a large dataset with more than 10,000 samples (like the PAN-WVC-10 cases)
+this could lead to hours of training time.
+One of the solution is by using Cascaded Random Forest (CRF) framework proposed
+by Bauman et al.
+\cite{baumann2013cascaded}.
+Their paper state that CRF give a fast training model time and increased
+performance compared to RF.
+
+This paper try to overcome the dataset imbalance problem on PAN-WVC-10 by
+applying resampling and classifier technique that has never been used before on
+the dataset.
+The PAN-WVC-10 dataset is resampled using Local Neighborhood SMOTE (LNSMOTE)
+technique,
+which proposed by Maciejewski and Stefanowski
+\cite{maciejewski2011local}.
+The result from resampling then trained using CRF classifier and compared to RF
+classifier to see their performance.
+
+This paper is organized as follow.
+Section \ref{section:literature_study} briefly review the past works that has
+been done on vandalism detection on Wikipedia, SMOTE, LNSMOTE, RF and CRF.
+Section \ref{section:research_methodology} describe how the feature generated
+from raw dataset and resampled before it was trained and tested on classifier.
+Section \ref{section:result_and_analysis} show the result from each classifier
+on each dataset and the analysis of it.
+Finally, on section \ref{section:conclusion} we conclude our experiment and
+give some possible future works that can be extended from this paper.
+
+%%}}}
+
+%%{{{ Literature Study
+
+\section{Literature Study}
+\label{section:literature_study}
+
+The problem with vandalism in Wikipedia has occured since they were
+established.
+The community handle this problem by creating lock feature in the article to
+make them uneditable, once the article is become too frequently vandalized.
+Since 2006, bot to detect vandalism is used, which monitor vandalism edit and
+sometimes automatically reverting it back.
+The bot use a simple heuristic system, i.e. list of vandal words and list of
+IP addresses of previous vandal (for example, VoABot II
+\footnote{\url{https://en.wikipedia.org/wiki/User:VoABot_II}}
+and ClueBot
+\footnote{\url{https://en.wikipedia.org/wiki/User:ClueBot}}).
+ClueBot-NG\footnote{\url{https://en.wikipedia.org/wiki/User:ClueBot_NG}},
+a successor to ClueBot, use the machine learning approach.
+They try to fix the heuristic method which hard to maintain and easy to by
+passed.
+ClueBot-NG use previous edit dataset that has been annotated by Wikipedia's
+users and train it with artificial neural network.
+Their classifier works in edit features, like probabilities of vandal
+words-level to classifying new edit.
+
+Since 2008, vandalism detection in Wikipedia based on machine learning approach
+became an interesting research topic.
+Potthast \cite{potthast2008automatic} contribution is the first vandalism
+detection approach using machine learning with textual and basic
+metadata feature on Logistic Regression classifier.
+Smets \cite{smets08automaticvandalism} use Naive Bayes classifier on selected
+words that representing vandalism edit and the first who use compression model
+to detect vandalism in Wikipedia.
+Itakura and Clarke \cite{itakura2009using} use Dynamic Markov Compression to
+detect vandalism edit in Wikipedia.
+Mola Velasco \cite{mola2012wikipedia} extend the Potthast research by adding
+more textual features and words-list features.
+Velasco win the \textit{1st International Competition on Wikipedia Vandalism
+Detection}.
+West et al. \cite{west2011multilingual} use spatial and temporal metadata
+without required to check the text in article and revision.
+Adler et al. \cite{adler2011wikipedia} build a vandalism detection system using
+reputation called WikiTrust.
+Adler et al. \cite{adler2011wikipedia} then combine their previous work with
+natural language, spatial and temporal features.
+West and Lee \cite{west2011multilingual} is the first who introduce
+\textit{ex post facto} data as feature, where their prediction take the next
+revision into consideration.
+Vandalism detection system from West and Lee win the \textit{2nd International
+Competition on Wikipedia Vandalism Detection}.
+Harpalani et al. \cite{harpalani2011language} propose that vandalism has
+a uniq and equal lingustic property.
+Harpalani et al. then build a system for detecting vandalism based on
+\textit{stylometric} analysis from vandalism edit with \textit{context-free
+grammar} probabilistic model.
+Their approach overcome feature based system with short pattern, which equalize
+syntactic structure with token of text.
+Following the trend of classifying on cross-language vandalism, Tran and
+Christen \cite{tran2013cross} evaluated several classifier based on
+language feature collected from number of article viewed every hours and the
+history of their edit in Wikipedia.
+
+Gotze \cite{gotze2014advanced} combine feature from
+Adler et al. \cite{adler2011wikipedia},
+Javanmardi et al. \cite{javanmardi2011vandalism},
+Mola Velasco \cite{mola2012wikipedia},
+Potthast et al. \cite{potthast2008automatic},
+Wang and McKeown \cite{wang2010got}, and
+West and Lee \cite{west2011multilingual}
+with four additional and modified features.
+Gotze applying SMOTE to resampling PAN-WVC-10 and PAN-WVC-11 dataset.
+To evaluate resampling result, Gotze focused on implementing
+\textit{Logistic Regression} and \textit{Random Forest} techniques;
+and as addition also including RealAdaBoost and Bayesian Network classifiers.
+
+From the previous research,seven of them use PAN-WVC-10
+\cite{adler2010detecting}
+\cite{adler2011wikipedia}
+\cite{gotze2014advanced}
+\cite{harpalani2011language}
+\cite{mola2012wikipedia}
+\cite{wang2010got}
+\cite{west2011multilingual},
+with the best precision value is $0.86$, recall value $0.57$, and PR-AUC
+$0.66$, obtained by Velasco using Random Forest without resampling the dataset.
+Only two research that use PAN-WVC-11
+\cite{gotze2014advanced}
+\cite{west2011multilingual}
+with the best result obtained by Gotze research with $0.92$ on precision, $0.39$
+on recall, and $0.74$ on PR-AUC.
+
+%%}}}
+
+%%{{{ Research Methodology
+
+\section{Research Methodology}
+\label{section:research_methodology}
+
+This section describe the process to generate the feature dataset and
+implementation of resampling and classifiers, started from data preparation,
+generating features, resampling features dataset, and implementation so it can
+be used on training, testing, and analysis.
+
+\subsection{Data Preparation}
+\label{subsection:data_preparation}
+
+The original dataset can not be used for training and testing, they need to
+combined, cleaned by removing unneeded attributes, and cleaned on their content
+to generate features.
+
+Dataset that used for training is PAN-WVC-10 \cite{potthast2008automatic}.
+The PAN-WVC-10 dataset contain two separate set, the edit set and
+annotation set.
+The edit set contain edit ID, editor (in the form of user name or IP address),
+ID of old revision, ID of new revision, the URL to view the difference between
+old and new revision, edit time, comment, article ID, and title of article.
+The annotation set contain edit ID, class (vandalism or regular edit), number
+of class annotator, and total number of annotator.
+
+The two set then combined to get only their edit ID, class, old revision ID,
+new revision ID, edit time, editor, article title, edit comment, deletions
+(text that has been deleted in previous revision), and additions (text that
+has been added in new revision).
+
+The next step is to create revision text that is clean from wiki syntax, with
+an aim to help in generating feature.
+Every revision files cleaned up by removing URI, wiki markups, and wiki tokens.
+
+Dataset for testing is PAN-WVC-11 \cite{potthast:2010b}.
+PAN-WVC-11 contains three language set which are English, German, and Spanish.
+This paper only use the English language set for testing.
+The original attribute from the set is similar with PAN-WVC-10 except they were
+already combined into single set, not using separate annotations.
+The annotator and total annotator attributes deleted, replaced with
+additions text and deletions text.
+Also, the class attribute value is replaced with numeric, where
+"vandalism" is become "1" and "regular" become "0".
+The process for cleaning revision files is similar with PAN-WVC-10.
+
+\subsection{Vandalism Features}
+
+Previous papers group the features into three categories which are metadata,
+text, and language.
+This paper use four metadata features, 11 text features, and 10
+language features which has been used and analyzed in Mola-Velasco paper
+\cite{mola2012wikipedia}.
+
+\subsubsection{Metadata Features}
+
+Metadata feature references to the properties of revision which can be directly
+taken, for example, identity of editor, comment, or the size of changes.
+Below is list of metadata features,
+\begin{itemize}
+\item \textbf{Anonymous}. If the editor of revision is registered user then in
+the edit set it contain their username. Registered user have the
+value $1$, other than that will have zero value.
+\item \textbf{Comment length}. Counting number of character that left by editor
+in comment field without including the article's section name (usually enclosed
+by \texttt{/*} and \texttt{*/}.
+\item \textbf{Size increment}. An absolute size of new revision. Higher size
+value can indicated as deletion on whole article.
+\item \textbf{Size ratio}. The size of new revision divided by the size of old
+revision.
+\end{itemize}
+
+\subsubsection{Text Features}
+
+Below is the list of text features that are used.
+
+\begin{itemize}
+\item \textbf{Ratio of lowercase and uppercase character}. The ratio is
+computed on new revision by dividing number of uppercase characters with
+lowercase characters.
+\item \textbf{Ratio of uppercase to all characters}. Computed by dividing
+number of uppercase characters with number of all characters in new revision.
+\item \textbf{Digit ratio}. Computed by dividing number of digit with number of
+all character in new revision.
+\item \textbf{Ratio of non-alphanumeric characters}. Computed by dividing
+number of all non-alphanumeric characters with number of all characters on new
+revision.
+\item \textbf{Character diversity}. Computed by counting number of unique
+character divided by length of text in new revision.
+\item \textbf{Character distribution}. Compute using Kullback-Leibler
+divergence on old revision compared with text addition in new revision.
+\item \textbf{Compression rate}. Computed by applying LZW compression algorithm
+on text addition divided by number of characters in additions to get their
+ratio.
+\item \textbf{Good token}. Computed by counting number of token that vandal
+rarely used on text, for example wiki token or wiki syntax.
+\item \textbf{Term frequencies}. Computed by counting number of unique words
+added divided by number of unique words in new revision.
+\item \textbf{Longest word}. Computed by counting number of character on the
+longest word inserted.
+\item \textbf{Length of similar character}. Computed by counting number of
+similar characters used in sequence in single word, for example
+\textit{aaarrrgghhhh}, \textit{sooo huge}.
+\end{itemize}
+
+\subsubsection{Language Features}
+
+Language features based on number of particular words that are inserted in new
+revision.
+For each word categories, there are two feature to be computed: frequency and
+impact.
+Frequency feature computed by counting number of word in category divided by
+total number of words in new revision.
+Impact feature computed by counting percentage of word usage in new revision
+divided by total words in old and new revision.
+Below is list of language features that are used.
+
+\begin{itemize}
+\item \textbf{Vulgarism}. Counting number of vulgar, harsh, and offensive
+words.
+\item \textbf{Subject}. Counting number of first or second person
+words used in inserted text, including colloquial words, for example
+\textit{I}, \textit{you}.
+\item \textbf{Bias}. Counting number of bias words, for example "coolest",
+"huge".
+\item \textbf{Sex}. Counting number of sex related words inserted in new
+revision.
+\item \textbf{Bad words}. Counting number of bad, non-vulgar, words, usually
+indicated by bad writing. For example "wanna", "gotcha".
+\item \textbf{All word categories}. Computed by combining all word categories
+and counting each of them
+\end{itemize}
+
+\subsection{Generating Feature Dataset}
+
+All previous feature then implemented in a program.
+The program than executed using PAN-WVC-10 and PAN-WVC-11 set that has been
+prepared in section \ref{subsection:data_preparation}, which output dataset
+feature contain continous values.
+The implementation for combining, cleaning, and generating the features is
+published as open source software as \texttt{wvcgen}
+\footnote{\url{https://github.com/shuLhan/wvcgen}}.
+
+%%{{{ TABLE PERFORMANCE
+\DTLsetseparator{;}
+\DTLloaddb{stats}{./stats.csv}
+\DTLmaxforcolumn{stats}{TPR}{\maxtpr}
+\DTLminforcolumn{stats}{FPR}{\minfpr}
+\DTLmaxforcolumn{stats}{TNR}{\maxtnr}
+\DTLmaxforcolumn{stats}{Presisi}{\maxprec}
+\DTLmaxforcolumn{stats}{F-Measure}{\maxfm}
+\DTLmaxforcolumn{stats}{Akurasi}{\maxacc}
+\DTLmaxforcolumn{stats}{AUC}{\maxauc}
+
+\begin{table*}[htp]
+\caption{Performance of Random Forest and Cascaded Random Forest}
+\centering
+\begin{tabular}{llrrrrrrr}
+\hline
+\textbf{Classifier} &
+\textbf{Dataset} &
+\textbf{TPR} &
+\textbf{FPR} &
+\textbf{TNR} &
+\textbf{Prec.} &
+\textbf{F-Mea.} &
+\textbf{Acc.} &
+\textbf{AUC}
+\DTLforeach*{stats}{%
+	\cl=Klasifikasi,%
+	\ds=Dataset,%
+	\tpr=TPR,%
+	\fpr=FPR,%
+	\tnr=TNR,%
+	\prec=Presisi,%
+	\fm=F-Measure,%
+	\acc=Akurasi,%
+	\auc=AUC%
+}{%
+	\DTLifnullorempty{\cl}
+		{\\ \cline{2-9}}
+		{\\ \hline \hline}
+	\DTLifnullorempty{\cl}
+		{}
+		{
+			\multirow{3}{2cm}{\cl}
+		}
+	& \ds
+	& \DTLifnumeq{\tpr}{\maxtpr}{\textbf{\tpr}}{\tpr}
+	& \DTLifnumeq{\fpr}{\minfpr}{\textbf{\fpr}}{\fpr}
+	& \DTLifnumeq{\tnr}{\maxtnr}{\textbf{\tnr}}{\tnr}
+	& \DTLifnumeq{\prec}{\maxprec}{\textbf{\prec}}{\prec}
+	& \DTLifnumeq{\fm}{\maxfm}{\textbf{\fm}}{\fm}
+	& \DTLifnumeq{\acc}{\maxacc}{\textbf{\acc}}{\acc}
+	& \DTLifnumeq{\auc}{\maxauc}{\textbf{\auc}}{\auc}
+}
+\\
+\hline
+\end{tabular}
+\label{tab:stats}
+\end{table*}
+%%}}}
+
+\subsection{Resampling Dataset}
+
+PAN-WVC-10 without resample contain 2,394 positive or vandalism samples and
+30,045 negative or regular samples.
+To get a balanced class, the dataset then resampled using SMOTE and LNSMOTE for
+positive class.
+For SMOTE, the parameter user for resampling is 1,100\% and parameter for
+K-Nearest-Neighbour (KNN) is 5, which output 28,728 synthetic samples, total of
+positive sample combined with original sample result in 31,122 positive
+samples.
+Parameter for resampling using LNSMOTE is similar with SMOTE, which generate
+28,588 positive synthetic samples, in total of 30,892 positive samples.
+The implementation for SMOTE and LNSMOTE published as open source software
+\footnote{\url{https://github.com/shuLhan/go-mining/tree/master/resampling}}.
+
+\subsection{Implementation of Classifiers}
+
+Implementation of classifiers carried out gradually.
+Started by implementing CART which is used in Random Forest, which in turn is
+used in Cascaded Random Forest.
+The implementation of CART based on Jiawei Han et al. book, chapter 8
+\cite{han2011data}.
+The implementation of Random Forest is based on original paper of Breiman
+\cite{breiman2001random}, plus additional resource from internet.
+The implementation of Cascaded Random Forest is based on original paper of
+Baumann et al.
+\cite{baumann2013cascaded}.
+The result of all implementation is published as open source software to help
+others in future research or for real-world usage.
+\footnote{\url{https://github.com/shuLhan/go-mining/tree/master/classifiers}}.
+
+\subsection{Training and Testing}
+
+There are three common parameter between RF and CRF which are 200 for number of
+tree, 5 for number of random features, and 64\% for percentage of
+bootstrapping.
+For consistency, their value are constant between training.
+For CRF classifier, three separated testing will be conducted using different
+parameter for number of stage and number of tree which are 200 stages with 1
+tree, 100 stages with 2 trees, and 50 stages with 4 trees; all of them have
+equal total number of trees.
+This is an experiment to see the effect of number of trees to stage and their
+performance.
+Another parameter for training with CRF are thresholds for true-positive rate
+(TPR) and true-negative rate (TNR), which set to constant value 0.95 and 0.95
+for all training.
+
+The dataset used for training is PAN-WVC-10 which consist of three different
+set, dataset without resampled, dataset resampled with SMOTE, and dataset
+resampled with LNSMOTE.
+The dataset used for testing is PAN-WVC-11 which contain 1,143 positive
+samples and 8,842 negative samples, in total of 9985 samples.
+
+Training is conducted by running each classifier program, RF and CRF, on
+those three different PAN-WVC-10 feature dataset.
+Testing is conducted after the model has been built by giving the model the
+PAN-WVC-11 feature dataset as an input.
+
+The environment used for training and testing is Intel\textregistered
+Core\texttrademark i7-4750HQ CPU 2,00 GHz, with total 8 GB of RAM.
+Each training is done separatedly to avoid cache miss which affect the speed
+and computation time.
+
+%%}}}
+
+%%{{{ Result and Analysis
+
+\section{Result and Analysis}
+\label{section:result_and_analysis}
+
+%%{{{ TABLE RUNTIMES
+\DTLloaddb{runtimes}{runtimes.csv}
+\begin{table}[bp]
+\caption{Training computation time}
+\centering
+\begin{tabular}{l l r}
+\hline
+\textbf{Classifier} &
+\textbf{Dataset} &
+\textbf{Time \newline (minutes)}
+\DTLforeach*{runtimes}{%
+		\cl=Klasifikasi,
+		\ds=Dataset,
+		\time=Waktu (menit)%
+}{%
+	\DTLifnullorempty{\cl}
+		{\\ \cline{2-3}}
+		{\\ \hline \hline}
+	\DTLifnullorempty{\cl}
+		{}
+		{
+			\multirow{3}{2cm}{\cl}
+		}
+	& \ds
+	& \time
+}
+\\
+\hline
+\end{tabular}
+\label{tab:runtimes}
+\end{table}
+%%}}}
+
+Result of testing are given in terms of performance of each classifier on table
+\ref{tab:stats} and training computation time on table \ref{tab:runtimes}.
+
+%%{{{ FIGURE:ROC
+\begin{figure*}[htp]
+\centering
+\begin{tikzpicture}
+	\pgfplotsset{
+		width=4.5cm
+	}
+	\matrix{
+		\begin{axis}[
+			title=(a),
+			ylabel=$TPR$,
+			xlabel=$FPR$,
+			legend columns=-1,
+			legend entries={Without resampling\ ,SMOTE\ ,LNSMOTE},
+			legend to name=roc_legend
+		]
+			\addplot table[
+				x={FPR},
+				y={TPR},
+			]
+			{../result/rf.csv};
+			\addplot table[
+				x={FPR},
+				y={TPR},
+			]
+			{../result/rf_smote.csv};
+			\addplot table[
+				x={FPR},
+				y={TPR},
+			]
+			{../result/rf_lnsmote.csv};
+		\end{axis}
+		&
+		\begin{axis}[
+			title=(b),
+			xlabel=$FPR$,
+		]
+			\addplot table[
+				x={FPR},
+				y={TPR},
+			]
+			{../result/crf_200_1.csv};
+			\addplot table[
+				x={FPR},
+				y={TPR},
+			]
+			{../result/crf_200_1_smote.csv};
+			\addplot table[
+				x={FPR},
+				y={TPR},
+			]
+			{../result/crf_200_1_lnsmote.csv};
+			title=(b),
+		\end{axis}
+		&
+		\begin{axis}[
+			title=(c),
+			xlabel=$FPR$,
+		]
+			\addplot table[
+				x={FPR},
+				y={TPR},
+			]
+			{../result/crf_100_2.csv};
+			\addplot table[
+				x={FPR},
+				y={TPR},
+			]
+			{../result/crf_100_2_smote.csv};
+			\addplot table[
+				x={FPR},
+				y={TPR},
+			]
+			{../result/crf_100_2_lnsmote.csv};
+		\end{axis}
+		&
+		\begin{axis}[
+			title=(d),
+			xlabel=$FPR$,
+		]
+			\addplot table[
+				x={FPR},
+				y={TPR},
+			]
+			{../result/crf_50_4.csv};
+			\addplot table[
+				x={FPR},
+				y={TPR},
+			]
+			{../result/crf_50_4_smote.csv};
+			\addplot table[
+				x={FPR},
+				y={TPR},
+			]
+			{../result/crf_50_4_lnsmote.csv};
+		\end{axis}
+		\\
+	};
+\end{tikzpicture}
+\ref{roc_legend}
+\caption{
+ROC curve for RF and CRF classifiers on three dataset.
+(a) RF with 200 trees
+(b) CRF with 200 stages 1 tree
+(c) CRF with 100 stages 2 trees
+(d) CRF with 50 stages 4 trees
+}
+\label{fig:roc}
+\end{figure*}
+%%}}}
+
+%%{{{ FIGURE:PRAUC
+\begin{figure*}[htp]
+\centering
+\begin{tikzpicture}
+	\pgfplotsset{
+		width=4.5cm,
+	}
+	\matrix{
+		\begin{axis}[
+			title=(a),
+			xlabel=$Recall$,
+			ylabel=$Precision$,
+			legend columns=-1,
+			legend entries={Without resampling\ ,SMOTE\ ,LNSMOTE},
+			legend to name=rf_crf_prauc_legend
+		]
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/rf.csv};
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/rf_smote.csv};
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/rf_lnsmote.csv};
+		\end{axis}
+		&
+		\begin{axis}[
+			title=(b),
+			xlabel=$Recall$,
+		]
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/crf_200_1.csv};
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/crf_200_1_smote.csv};
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/crf_200_1_lnsmote.csv};
+			title=(b),
+		\end{axis}
+		&
+		\begin{axis}[
+			title=(c),
+			xlabel=$Recall$,
+		]
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/crf_100_2.csv};
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/crf_100_2_smote.csv};
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/crf_100_2_lnsmote.csv};
+		\end{axis}
+		&
+		\begin{axis}[
+			title=(d),
+			xlabel=$Recall$,
+		]
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/crf_50_4.csv};
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/crf_50_4_smote.csv};
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/crf_50_4_lnsmote.csv};
+		\end{axis}
+		\\
+	};
+\end{tikzpicture}
+\ref{rf_crf_prauc_legend}
+\caption{
+PR-AUC curve for RF and CRF classifier on three dataset.
+(a) RF with 200 trees
+(b) CRF with 200 stages 1 tree
+(c) CRF with 100 stages 2 trees
+(d) CRF with 50 stages 4 trees
+}
+\label{fig:prauc}
+\end{figure*}
+%%}}}
+
+Result from CRF classifer on LNSMOTE with 200 stages and 1 tree have the
+highest TPR value $0.9904$ but with the lowest FPR $0.8558$ and TNR $0.1442$
+among others models.
+Otherwise, RF classifier without resampling gave the highest TNR $0.9988$ and
+the lowest FPR $0.0012$.
+For precision, RF without resampling return a highest value $0.945$ and the
+lowest precision is CRF LNSMOTE with 200 stages and 1 tree.
+For F-Measure, the highest score returned by CRF without resampling with 50
+stages and 4 trees which is $0.5353$, with the lowest score given by CRF
+LNSMOTE 200 stages 1 tree.
+For Accuracy ,the highest score returned by RF with LNSMOTE and the lowest is
+CRF on LNSMOTE with 200 stages 1 tree.
+Classifier with highest AUC value is CRF on SMOTE with 100 stages 2 trees and
+the lowest on is CRF without resampling with 100 stages and 2 trees.
+
+From the computation time, CRF classifier is faster than RF on all training.
+Using RF and CRF with 50 stages and 4 trees as comparison, CRF without
+resampling is 11 times faster than RF, and for dataset that has been resampled
+with SMOTE and LNSMOTE, CRF is 1.6 times faster than RF.
+
+
+\subsection{Analysis of Resampling}
+
+The effect of resampling SMOTE and LNSMOTE is different between RF and CRF.
+On RF, LNSMOTE give a better accuracy than SMOTE, with average increased value
+is 0.4\%.
+On CRF, SMOTE overall give better performance than LNSMOTE with the highest AUC
+value is returned by CRF on SMOTE with 100 stages and 2 trees.
+SMOTE and LNSMOTE increase F-Measure and accuracy on RF, but on CRF is vice
+versa.
+The drawback of using LNSMOTE is increased value of FPR is higher than using
+SMOTE, as illustrated at ROC curve in figure \ref{fig:roc} (c) and (d).
+
+
+\subsection{Analysis of CRF}
+
+The primary focus of CRF classifier is on learning the negative samples.
+In each stage iteration, model is retested with all negative samples, which was
+the output from the previous stage.
+Negative samples deleted from training set and become a test set for the next
+stage.
+In RF no samples were deleted when building the model.
+CRF made training sample that was bias to negative class (majority), gradually
+become less becoming equal.
+So that, resampling dataset on CRF classifier will not help the classifier
+performance, instead it will decrease the accuracy model after training.
+This effect can be seen on PR-AUC curve on figure \ref{fig:prauc}.
+
+In figure \ref{fig:prauc} (b), which is CRF with 200 stages and 1 tree, the
+performance without resampling is better than other dataset, with AUC
+value $0.8673$, and the lowest performance came from LNSMOTE.
+When number of tree in each stage increased by 2 and number stage decreased to
+100 (to make the total number of tree is 200), SMOTE returned the highest AUC
+among all models which is $0.8694$, while LNSMOTE still with low performance,
+as illustrated in figure \ref{fig:prauc} (b).
+In the last test with 50 stages and 4 tress, the highest AUC returned by SMOTE,
+but overall average performance returned by CRF without resampling, with
+highest F-Measure $0.5353$.
+
+\subsection{Analysis of Vandalism Classifiers}
+
+%%{{{ FIGURE:ROCPOINTS
+\begin{figure*}[htp]
+\centering
+\begin{tikzpicture}
+	\pgfplotsset{
+		xtick distance=0.1,
+		ytick distance=0.1,
+	}
+	\begin{axis}[
+		xlabel=$FPR$,
+		ylabel=$TPR$,
+		legend columns=3,
+		legend entries={
+			RF,
+			RF-SMOTE,
+			RF-LNSMOTE,
+			CRF-200-1,
+			CRF-200-1-SMOTE,
+			CRF-200-1-LNSMOTE,
+			CRF-100-2,
+			CRF-100-2-SMOTE,
+			CRF-100-2-LNSMOTE,
+			CRF-50-4,
+			CRF-50-4-SMOTE,
+			CRF-50-4-LNSMOTE,
+		},
+		legend to name=class_legend
+	]
+		\addplot[
+			scatter,
+			only marks,
+			point meta=explicit symbolic,
+			every mark/.append style={
+				/tikz/mark size=3pt
+			},
+			scatter/classes={
+				rf-noresampling={
+					mark=text,
+					text mark=$\Box$
+				},
+				rf-smote={
+					mark=text,
+					text mark=$\boxplus$
+				},
+				rf-lnsmote={
+					mark=text,
+					text mark=$\boxtimes$
+				},
+				crf-200-1={
+					mark=text,
+					text mark=$\triangle$
+				},
+				crf-200-1-smote={
+					mark=text,
+					text mark=$\triangleleft$
+				},
+				crf-200-1-lnsmote={
+					mark=text,
+					text mark=$\triangleright$
+				},
+				crf-100-2={
+					mark=text,
+					text mark=$\medcircle$
+				},
+				crf-100-2-smote={
+					mark=text,
+					text mark=$\oplus$
+				},
+				crf-100-2-lnsmote={
+					mark=text,
+					text mark=$\otimes$
+				},
+				crf-50-4={
+					mark=text,
+					text mark=$\Diamond$
+				},
+				crf-50-4-smote={
+					mark=text,
+					text mark=$\diamondplus$
+				},
+				crf-50-4-lnsmote={
+					mark=text,
+					text mark=$\diamondtimes$
+				}
+			},
+		]
+		table[
+			x={FPR},
+			y={TPR},
+			meta=klasifikasi,
+		]
+		{../result/cm.csv};
+
+		\addplot[
+			gray
+		]
+		coordinates{
+			(0,0)
+			(1,1)
+		};
+		\addplot[
+			gray
+		]
+		coordinates{
+			(0,1)
+			(1,0)
+		};
+	\end{axis}
+\end{tikzpicture}
+\ref{class_legend}
+\caption{
+ROC points for all classifiers and dataset.
+CRF-200-1 is CRF with 200 stages and 1 tree,
+CRF-100-2 is CRF with 100 stages and 2 trees, and
+CRF-50-4 is CRF with 50 stages and 4 trees.
+}
+\label{fig:rocpoints}
+\end{figure*}
+%%}}}
+
+To easily compare all classifiers, all of their performance is mapped as point
+in ROC space as illustrated in figure \ref{fig:rocpoints}.
+On the bottom left in RF classifier, in order from bottom to top are RF without
+resampling ($\Box$) with TPR $0.165$ and FPR $0.001$, RF on SMOTE ($\boxplus$)
+with TPR $0.207$ and FPR $0.004$, and at the top is RF on LNSMOTE ($\boxtimes$)
+with TPR $0.235$ and FPR $0.005$.
+RF return with lowest TPR and FPR among all other classifiers.
+Resampling with SMOTE on average increase the TPR by $0.25$ and FPR by 4 times
+for RF.
+Resampling with LNSMOTE on average increase the TPR by $0.4$ and FPR 5 times
+for RF.
+
+CRF classifier with 200 stages 1 tree (CRF-200-1) give the highest TPR, with
+ROC point is on top of all classifiers.
+In order from left to bottom, CRF-200-1 without resampling ($\triangle$) with
+TPR $0.966$ and FPR $0.467$, CRF-200-1 on SMOTE ($\triangleleft$) in the middle
+with TPR $0.979$ and FPR $0.63$, and CRF-200-1 on LNSMOTE ($\triangleright$) on
+the right side with TPR $0.99$ and FPR 0.85.
+CRF-200-1 will return positive sample with highest probabilites but also with
+highest false-positive.
+Also, the effect of SMOTE and LNSMOTE can be viewed on FPR values.
+Resampling with SMOTE on average increase the TPR by $0.1$ times and $0.4$
+times for FPR.
+Resampling with LNSMOTE on average increase the TPR by $0.3$ times and FPR
+$0.8$ times.
+
+CRF with 100 stages and 2 tress (CRF-100-2) mapped in the top-middle of ROC
+space, with marked as bullet points.
+CRF-100-2 without resampling ($\medcircle$) reside at the bottom left with TPR
+$0.812$ and FPR $0.24$.
+CRF-100-2 on SMOTE ($\oplus$) reside in the middle, with highest AUC, and TPR
+$0.903$ and FPR $0.36$.
+CRF-100-2 on LNSMOTE ($\otimes$) with TPR $0.95$ and FPR $0.585$.
+Resampling with SMOTE on average increase the TPR by $0.11$ times and FPR by
+$0.5$ times for CRF-100-2.
+Resampling with LNSMOTE on average increase the TPR by $0.17$ times and FPR by
+$1.4$ times for CRF-100-2.
+
+CRF classifiers with 50 stages and 4 trees (CRF-50-4) mapped on the middle left
+of ROC space, which is marked by diamond.
+CRF-50-4 without resampling ($\Diamond$) return TPR $0.607$ and FPR $0.08$.
+CRF-50-4 on SMOTE ($\diamondplus$) return TPR $0.783$ and FPR $0.223$.
+CRF-50-4 on LNSMOTE ($\diamondtimes$) return TPR $0.895$ and FPR $0.388$.
+Resampling with SMOTE on average increase TPR by $0.3$ times and also increase
+FPR by $1.75$ times for CRF-50-4.
+Resampling with LNSMOTE on average increase TPR by $0.48$ times and also
+increase FPR by $3.75$ times for CRF-50-4.
+
+%%}}}
+
+%%{{{ Conclusion
+
+\section{Conclusion}
+\label{section:conclusion}
+
+On average SMOTE increase TPR value by $0.19$ times and FPR value by $1.6$
+times.
+While LNSMOTE, on average increase TPR value $0.33$ times and also increase FPR
+value $2.7$ times.
+Both of resampling technique increase the true positive rate with consequence
+it also increase the false positive rate.
+This effect is more noticeably on resampling with LNSMOTE.
+Overall, performance of dataset without resampling return a better result than
+resampling with SMOTE or LNSMOTE on CRF.
+This is because the CRF algorithm focus on learning negative sample, not on
+positive samples, so that adding more synthetic positive samples caused the
+learner over-fitting to positive samples.
+Another interisting effect on CRF classifier, when using less tree on each
+stage return the similar performance when using CRF with resampling, for
+example performance of CRF-100-2 without resampling is quite similar with
+CRF-50-4 on SMOTE.
+
+The best classifier model for vandalism without resampling returned by CRF with
+200 stages and 1 tree.
+The best classifier model for dataset that has been resampled with SMOTE is CRF
+with 100 stage and 2 trees,
+The best classifier model for dataset that has been resampled with LNSMOTE is
+CRF with 200 stages and 1 trees.
+Overall, the best model is CRF with 100 stages and 2 trees on dataset resampled
+with SMOTE.
+Beside good performance, CRF on average faster $1.6$ times on training than RF
+on resampled dataset.
+
+\section{Contribution}
+
+This paper apart from contributing on finding the best classifier on detecting
+vandalism on Wikipedia also create a framework to create and develop vandalism
+features from raw dataset without having to create from scratch again to be
+used in the next research or in real-world application.
+Beside that, this paper also contribute on providing a library for data
+processing and machine learning, especially on CRF classifier which has no
+open implementation on renowed program like Weka, Scikit-Learn, or R.
+
+\section{Future Works}
+
+The number of Indonesian articles in Wikipedian is increased each months, this
+could also be affected by increasing number of internet users in Indonesia.
+The more users then the more prone they will be to vandalism.
+Before an editor can catch up with number of users, it would be better if
+Wikipedia Indonesia have a better system to detect vandalism.
+Collecting the annotated vandalism article on Wikipedia Indonesia could be
+great start before learning or creating the system to counter it.
+
+All of training model on this paper still using RF and CRF algorithm in serial,
+in which each tree is build one by one sequentially or when processing sample,
+sample was given as input to each tree sequentially to get their class.
+Using parallel algorithm, when building trees or for getting their class for
+voting, can speeding up training, testing and returning classifier result.
+On domain of machine learning, another interesting and new algorithm that can
+be used for detecting vandalism is eXtreme Gradient Boostring (XGBoost)
+\cite{chen2016xgboost}.
+
+%%}}}
+
+%%{{{ Bibliography
+
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv,bibliography}
+
+%%}}}
+
+\end{document}
