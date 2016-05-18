@@ -135,29 +135,22 @@ destruction or defacement of public or private property.
 In the context of Wikipedia, vandalism can be in the form of malicious edit
 which intention to give wrong information, or hiding information by deleting
 the content, abusive content, ads, and/or meaningless text.
-
-The number of articles in Wikipedia English site \texttt{en.wikipedia.org} at
-July 2015 almost reached 5 million articles, with the only active user only
-31,369 editors.
-This means that, assuming all the editor actually active, then each of them
-should monitor about 157 articles.
 Finding and fixing the article that has been vandalized can disrupt the editor
-from writing or expanding new article or others important tasks, and can make
-the reader get the wrong information or could be no information at all, due to
+from writing or expanding new article or others important tasks, and for the
+reader they will get the wrong information or no information at all, due to
 deletion.
 
 Corpus that commonly used for learning vandalism on Wikipedia is PAN Wikipedia
 Vandalism Corpus 2010 (PAN-WVC-10)
 \cite{potthast:2010b}
 or PAN Wikipedia Vandalism Corpus 2011 (PAN-WVC-11)
-\cite{potthast:2010b}
-with the high bias on the data.
+\cite{potthast:2010b}.
 Both of the corpus have class imbalance problem.
-PAN-WVC-10 for an English articles have 32,439 sample with only $2,394$, or 7\%,
+PAN-WVC-10 for an English articles have 32,439 sample with only $2,394$ (7\%)
 of them is vandalism, whereas PAN-WVC-11 for an English articles have $9,985$
-sampel with only $1,144$, or 8\%, of them are vandalism.
+sampel with only $1,144$ (8\%) of them are vandalism.
 
-Applying a classifier on imbalance dataset could lead to low performance.
+Training a classifier on imbalance dataset could lead to low performance.
 This can be caused either by the minority class has low contribution to error
 rate, which make the classifier bias to majority class, or some classifier
 assume that class distribution is balanced, while in real world cases this
@@ -168,8 +161,7 @@ To overcome this imbalance problem, Gotze
 use the random oversampling technique called
 \textit{Synthetic Minority Over-sampling TEchnique} (SMOTE)
 proposed by Chawla
-\cite{chawla2002smote},
-and combination of SMOTE and random undersampling.
+\cite{chawla2002smote}.
 Original and resampled dataset of PAN-WVC-10 then tested with two-class
 classifier:
 \textit{Logistic Regression},
@@ -181,9 +173,8 @@ others classifiers.
 The result from resampling dataset showed increasing in performance on all
 classifiers except RF.
 
-The weakness of RF are while some number of individual trees could lead to high
-performance, it also increase the computation time especially when training the
-classification model.
+The weakness of RF is in their the computation time especially when training
+the classification model.
 For a large dataset with more than 10,000 samples (like the PAN-WVC-10 cases)
 this could lead to hours of training time.
 One of the solution is by using Cascaded Random Forest (CRF) framework proposed
@@ -193,23 +184,23 @@ Their paper state that CRF give a fast training model time and increased
 performance compared to RF.
 
 This paper try to overcome the dataset imbalance problem on PAN-WVC-10 by
-applying resampling and classifier technique that has never been used before on
+applying resample and classifier technique that has never been used before on
 the dataset.
 The PAN-WVC-10 dataset is resampled using Local Neighborhood SMOTE (LNSMOTE)
 technique,
 which proposed by Maciejewski and Stefanowski
 \cite{maciejewski2011local}.
-The result from resampling then trained using CRF classifier and compared to RF
-classifier to see their performance.
+The result from resampling then trained using CRF classifier and compared with
+RF classifier to see their performance.
 
 This paper is organized as follow.
 Section \ref{section:literature_study} briefly review the past works that has
 been done on vandalism detection on Wikipedia, SMOTE, LNSMOTE, RF and CRF.
 Section \ref{section:research_methodology} describe how the feature generated
-from raw dataset and resampled before it was trained and tested on classifier.
+from raw dataset and resampled before it was trained and tested on classifiers.
 Section \ref{section:result_and_analysis} show the result from each classifier
-on each dataset and the analysis of it.
-Finally, on section \ref{section:conclusion} we conclude our experiment and
+on each dataset and their analysis.
+Section \ref{section:conclusion} conclude the experiment and
 give some possible future works that can be extended from this paper.
 
 %%}}}
@@ -219,38 +210,24 @@ give some possible future works that can be extended from this paper.
 \section{Literature Study}
 \label{section:literature_study}
 
-The problem with vandalism in Wikipedia has occured since they were
-established.
-The community handle this problem by creating lock feature in the article to
-make them uneditable, once the article is become too frequently vandalized.
-Since 2006, bot to detect vandalism is used, which monitor vandalism edit and
-sometimes automatically reverting it back.
-The bot use a simple heuristic system, i.e. list of vandal words and list of
-IP addresses of previous vandal (for example, VoABot II
-\footnote{\url{https://en.wikipedia.org/wiki/User:VoABot_II}}
-and ClueBot
-\footnote{\url{https://en.wikipedia.org/wiki/User:ClueBot}}).
-ClueBot-NG\footnote{\url{https://en.wikipedia.org/wiki/User:ClueBot_NG}},
-a successor to ClueBot, use the machine learning approach.
-They try to fix the heuristic method which hard to maintain and easy to by
-passed.
-ClueBot-NG use previous edit dataset that has been annotated by Wikipedia's
-users and train it with artificial neural network.
-Their classifier works in edit features, like probabilities of vandal
-words-level to classifying new edit.
+This section review the previous work and techniques used for implementation in
+this paper.
+
+%%{{{ SUBSECTION: VANDALISM
+\subsection{Vandalism Detection on Wikipedia}
 
 Since 2008, vandalism detection in Wikipedia based on machine learning approach
 became an interesting research topic.
 Potthast \cite{potthast2008automatic} contribution is the first vandalism
 detection approach using machine learning with textual and basic
-metadata feature on Logistic Regression classifier.
+metadata features using Logistic Regression classifier.
 Smets \cite{smets08automaticvandalism} use Naive Bayes classifier on selected
 words that representing vandalism edit and the first who use compression model
 to detect vandalism in Wikipedia.
 Itakura and Clarke \cite{itakura2009using} use Dynamic Markov Compression to
 detect vandalism edit in Wikipedia.
 Mola Velasco \cite{mola2012wikipedia} extend the Potthast research by adding
-more textual features and words-list features.
+more textual features and word-list features.
 Velasco win the \textit{1st International Competition on Wikipedia Vandalism
 Detection}.
 West et al. \cite{west2011multilingual} use spatial and temporal metadata
@@ -265,10 +242,9 @@ revision into consideration.
 Vandalism detection system from West and Lee win the \textit{2nd International
 Competition on Wikipedia Vandalism Detection}.
 Harpalani et al. \cite{harpalani2011language} propose that vandalism has
-a uniq and equal lingustic property.
-Harpalani et al. then build a system for detecting vandalism based on
-\textit{stylometric} analysis from vandalism edit with \textit{context-free
-grammar} probabilistic model.
+a uniq and equal lingustic property, they then build a system for detecting
+vandalism based on \textit{stylometric} analysis from vandalism edit with
+\textit{context-free grammar} probabilistic model.
 Their approach overcome feature based system with short pattern, which equalize
 syntactic structure with token of text.
 Following the trend of classifying on cross-language vandalism, Tran and
@@ -284,12 +260,13 @@ Potthast et al. \cite{potthast2008automatic},
 Wang and McKeown \cite{wang2010got}, and
 West and Lee \cite{west2011multilingual}
 with four additional and modified features.
-Gotze applying SMOTE to resampling PAN-WVC-10 and PAN-WVC-11 dataset.
-To evaluate resampling result, Gotze focused on implementing
+Gotze then applied SMOTE technique to resampling PAN-WVC-10 and PAN-WVC-11
+dataset.
+To evaluate result of resampling, Gotze focused on implementing
 \textit{Logistic Regression} and \textit{Random Forest} techniques;
 and as addition also including RealAdaBoost and Bayesian Network classifiers.
 
-From the previous research,seven of them use PAN-WVC-10
+From the previous research, seven of them use PAN-WVC-10
 \cite{adler2010detecting}
 \cite{adler2011wikipedia}
 \cite{gotze2014advanced}
@@ -298,12 +275,14 @@ From the previous research,seven of them use PAN-WVC-10
 \cite{wang2010got}
 \cite{west2011multilingual},
 with the best precision value is $0.86$, recall value $0.57$, and PR-AUC
-$0.66$, obtained by Velasco using Random Forest without resampling the dataset.
+$0.66$, which obtained by Velasco using Random Forest without resampling on
+dataset.
 Only two research that use PAN-WVC-11
 \cite{gotze2014advanced}
 \cite{west2011multilingual}
-with the best result obtained by Gotze research with $0.92$ on precision, $0.39$
+with the best result obtained by Gotze, $0.92$ on precision, $0.39$
 on recall, and $0.74$ on PR-AUC.
+%%}}}
 
 %%}}}
 
@@ -1076,20 +1055,21 @@ increase FPR by $3.75$ times for CRF-50-4.
 
 On average SMOTE increase TPR value by $0.19$ times and FPR value by $1.6$
 times.
-While LNSMOTE, on average increase TPR value $0.33$ times and also increase FPR
-value $2.7$ times.
+While LNSMOTE, on average increase TPR value $0.33$ times and FPR
+value by $2.7$ times.
 Both of resampling technique increase the true positive rate with consequence
 it also increase the false positive rate.
-This effect is more noticeably on resampling with LNSMOTE.
-Overall, performance of dataset without resampling return a better result than
-resampling with SMOTE or LNSMOTE on CRF.
+This effect is more noticeable when resampling with LNSMOTE.
+Overall, CRF performance on dataset without resampling return a better result
+than resampling with SMOTE or LNSMOTE.
 This is because the CRF algorithm focus on learning negative sample, not on
-positive samples, so that adding more synthetic positive samples caused the
+positive samples, so by adding more synthetic positive samples will cause the
 learner over-fitting to positive samples.
-Another interisting effect on CRF classifier, when using less tree on each
-stage return the similar performance when using CRF with resampling, for
-example performance of CRF-100-2 without resampling is quite similar with
-CRF-50-4 on SMOTE.
+Another interisting effect of CRF classifier, when using less number of tree on
+each stage on dataset without resampling, their performance almost similar with
+CRF on resampling with more number of tree, for example performance of CRF with
+100 stages and 2 tress on dataset without resampling is adjacent with CRF with
+50 stages and 4 tress on dataset resampled with SMOTE.
 
 The best classifier model for vandalism without resampling returned by CRF with
 200 stages and 1 tree.
@@ -1099,37 +1079,42 @@ The best classifier model for dataset that has been resampled with LNSMOTE is
 CRF with 200 stages and 1 trees.
 Overall, the best model is CRF with 100 stages and 2 trees on dataset resampled
 with SMOTE.
-Beside good performance, CRF on average faster $1.6$ times on training than RF
-on resampled dataset.
+Beside their good performance result, CRF on average is faster $1.6$ times at
+training than RF on resampled dataset.
 
 \section{Contribution}
 
-This paper apart from contributing on finding the best classifier on detecting
-vandalism on Wikipedia also create a framework to create and develop vandalism
-features from raw dataset without having to create from scratch again to be
-used in the next research or in real-world application.
-Beside that, this paper also contribute on providing a library for data
-processing and machine learning, especially on CRF classifier which has no
+This paper contribute on finding the best classifier on detecting vandalism on
+Wikipedia and evaluating the effect of LNSMOTE resampling on imbalance dataset
+and performance of CRF agains RF.
+Apart from that, this paper also provide a framework to create and develop
+vandalism features from raw PAN WVC dataset without having to build it again
+from scratch.
+Another contribution is a library for data processing and machine learning,
+especially on resampling using LNSMOTE and CRF classifier which has no
 open implementation on renowed program like Weka, Scikit-Learn, or R.
+This framework can be used in the next research or in real-world application.
 
 \section{Future Works}
 
-The number of Indonesian articles in Wikipedian is increased each months, this
-could also be affected by increasing number of internet users in Indonesia.
-The more users then the more prone they will be to vandalism.
+The number of internet users and Indonesian articles in Wikipedia is keep
+growing each years.
+The more users then the more prone the wiki to vandalism.
 Before an editor can catch up with number of users, it would be better if
-Wikipedia Indonesia have a better system to detect vandalism.
-Collecting the annotated vandalism article on Wikipedia Indonesia could be
-great start before learning or creating the system to counter it.
+Indonesian Wikipedia have a better system to detect vandalism.
+Collecting an annotated vandalism articles on Wikipedia Indonesia could be
+good start before learning or creating the system to counter it.
 
 All of training model on this paper still using RF and CRF algorithm in serial,
-in which each tree is build one by one sequentially or when processing sample,
-sample was given as input to each tree sequentially to get their class.
-Using parallel algorithm, when building trees or for getting their class for
-voting, can speeding up training, testing and returning classifier result.
-On domain of machine learning, another interesting and new algorithm that can
-be used for detecting vandalism is eXtreme Gradient Boostring (XGBoost)
+in which each tree is build one by one sequentially or when classifying sample,
+each of them was given as input to each tree sequentially to get their class.
+Using parallel algorithm, for trees building or classifying samples, can
+speeding up training, testing and getting classifier result.
+On domain of machine learning, an interesting new algorithm is eXtreme
+Gradient Boostring (XGBoost)
 \cite{chen2016xgboost}.
+Using XGBoost on Wikipedia vandalism dataset maybe can increase the accuracy
+of detection.
 
 %%}}}
 
