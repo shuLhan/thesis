@@ -82,7 +82,7 @@
 
 \begin{document}
 
-%%{{{ Title and author
+%%{{{ TITLE AND AUTHOR
 
 \title{Detecting Vandalism on English Wikipedia using Cascaded Random Forest}
 
@@ -100,7 +100,7 @@
 
 %%}}}
 
-%%{{{ Abstract
+%%{{{ ABSTRACT
 
 \begin{abstract}
 Wikipedia.org is an online encyclopedia which can edited by anyone.
@@ -125,7 +125,7 @@ dataset.
 
 %%}}}
 
-%%{{{ Introduction
+%%{{{ INTRODUCTION
 
 \section{Introduction}
 \label{section:introduction}
@@ -205,15 +205,13 @@ give some possible future works that can be extended from this paper.
 
 %%}}}
 
-%%{{{ Literature Study
-
 \section{Literature Study}
 \label{section:literature_study}
 
 This section review the previous work and techniques used for implementation in
 this paper.
 
-%%{{{ SUBSECTION: VANDALISM
+%%{{{ VANDALISM ON WIKIPEDIA
 \subsection{Vandalism Detection on Wikipedia}
 
 Since 2008, vandalism detection in Wikipedia based on machine learning approach
@@ -284,9 +282,208 @@ with the best result obtained by Gotze, $0.92$ on precision, $0.39$
 on recall, and $0.74$ on PR-AUC.
 %%}}}
 
+%%{{{ SMOTE
+\subsection{SMOTE}
+\label{subsection:smote}
+
+SMOTE (Synthetic Minority Over-sampling Technique) method, proposed by Chawla
+\cite{chawla2002smote},
+use oversampling approach in which the minority class are resampled by creating
+their synthetic samples not by replacing majority sample with minority class.
+Synthetic sample created by application, operated on feature space.
+
+Synthetic sample created with the following procedure,
+\begin{itemize}
+\item Pick $k$ nearest neigbour of minority sample randomly.
+\item Calculate the difference between feature vector sample with their
+neighbours.
+\item Multiply the differece with random real number, ranged between 0 to 1.
+\item Add their result to new feature vector.
+\end{itemize}
+
+The synthetic sample will be created in random line segment between two
+selected features.
+This approach effectively stimulate the learning region from minority class
+become larger without causing over-fitting.
 %%}}}
 
-%%{{{ Research Methodology
+%%{{{ LNSMOTE
+\subsection{LNSMOTE}
+\label{subsection:lnsmote}
+
+SMOTE method has several weakness.
+First, all sample for minority class is used, this could be a problem because
+not all the samples have equal benefit for learning.
+Minority sample in the boundary region between minority and majority class
+usually result in misclassified rather than sample located in the center of
+region.
+Sample that located in the center may give a little contribution to classifier.
+One of the method to overcome this problem is by using sample in boundary of
+minority class instead in the center which proposed by Han et al.
+\cite{han2005borderline}, called Borderline SMOTE.
+
+Another weakness of SMOTE method is overgeneralization, where their method does
+not take into consideration the distribution of minority sample in majority
+class, or the outliers.
+Maciejewski et al. introduced an extension of SMOTE called Local Neighbourhood
+SMOTE (LNSMOTE) \cite{maciejewski2011local}
+using modified version of Safe-Level SMOTE (SLSMOTE)
+\cite{bunkhumpornpat2009safe}.
+In SLSMOTE majority samples is take into consideration before creating
+synthetic sample by calculating a coefficient called safe-level.
+For each minority sample, count the number of their K-nearest-neighbours (KNN).
+If KNN value is close to 0, then the sample will be considered as noise.
+If KNN value is close ot $k$, then the sample can be said in safe region in
+minority class.
+The main idea was to create synthetic sample that close to safe region.
+
+The SLSMOTE strategy has a problem especially when class distribution is bias
+in which the minority class spread into small sub-region with low number
+cardinality.
+In this situation, creating synthetic sample with SLMOTE will cause an overlap
+between class.
+This problem is due to SLSMOTE find only KNN for minority class.
+If the sample candidate does not located in region with densed minority class,
+then some of their neighbours could be far from sample candidate or surrounded
+by majority class samples.
+LNSMOTE overcome this overlap problem by taking into consideration the local
+neighbourhood of minority sample candidate that can provide the number of of
+majority class around each of them.
+%%}}}
+
+%%{{{ RANDOM FOREST
+\subsection{Random Forest}
+\label{subsection:rf}
+
+\textit{Random Forest} (RF)
+is a combination of several decision tree such that each tree depends on the
+value of random vector sampled independently and with equal distribution for
+all trees in the forest
+\cite{breiman2001random}.
+
+There are three common paremeter in building RF.
+The first parameter is the number of tree in forest ($n$),
+the other two parameters are percentage of samples ($b$) and number of random
+features ($m$) for building the tree.
+All of the parameters are set before building each tree and their value is
+constant.
+
+Percentage of sample for training that was selected randomly usually two third
+from overall samples, which left one third of them as out of bag (OOB) samples.
+For number of random feature $m$, the common value is the root or log of all
+features \cite{breiman2001random}.
+
+Procedure to build RF is as follows.
+Let $S$ be a training set.
+After their parameter has been set, when building each tree, take $b$ samples
+randomly from $S$ without replacement (sample that get selected can be picked
+again in the next iteration).
+This process also know as bootstrapping.
+Samples that does not included in $b$ is called out-of-bag (OOB), which can be
+used to calculate the misclassification rate.
+From $b$ samples, take $m$ random features, and then build the tree using $b$
+samples with $m$ number of features without pruning.
+Repeat the process until the $n$-tree has been built.
+
+Classification process on RF proceed as follows.
+Given test set $T$, with the same number of features with $S$.
+For each sample $t$ in $T$, insert the sample $t$ into each tree and collect
+their classification result.
+After $n$ tree or $n$ number of class, compute the majority class from all
+tree classification.
+%%}}}
+
+%%{{{ CASCADED RANDOM FOREST
+\subsection{Cascaded Random Forest}
+\label{subsection:crf}
+
+A common problem in data mining or in ensemble learning algorithm is their
+incapability on handling imbalance training data.
+Inequality between positive and negative class usually result in low
+detection accuracy.
+A simulation run by Strobel et al. \cite{strobl2007bias} showed that RF skewed
+in favor of majority class.
+When using RF for detection, a vast amount of negative samples is required to
+get a robust classifier with low false-positive rate, but this also cause an
+inequality between positive and negative samples, which in turn make the RF
+classifier focus only on majority.
+Another drawback of RF is after learning several trees, RF gradually reach its
+peak, such that the classifier can not increase their detection sensitivity or
+decrease their false-positive rate.
+
+In 2011, Viola nad Jones proposed a detection algorithm based on AdaBoost with
+cascade structure \cite{viola2004robust}.
+Cascade structure motivated by assumption that it is more easy to reject a
+negative sample than finding a positive one.
+Viola and Jones combines several strong classifiers in several independent
+stages with condition that each stage can reject a sample, so to classify a
+sample as positive then all stages must be passed.
+Due to rejection on early stages, computation time will be decreased.
+In addition, to get better training result, Viola and Jones propose a bootstrap
+strategy by deleting samples classified as true negative.
+The reduced training set then refilled with sample that mis-classified, or
+false-positive samples
+\cite{viola2004robust}.
+
+A cascade classifier consist of several number of stages with increasing
+complexity.
+Each stage have minimum one independent classifier.
+Classifier added into stages until the value of true-positive and true-negative
+threshold is reached.
+The advantage of cascade structure is a vast number of samples can be
+distributed between stages, decreasing false-positive value and shortening
+computation time when training and classifying.
+
+Baumann use this method with RF and propose Cascaded Random Forest (CRF) which
+is a combination of RF classifier with cascade structure, where in each stage
+several decision tree is build with bootstrap strategy, this leads increased
+learning on positive sample and the drawback of imbalanced dataset can be
+avoided.
+\cite{baumann2013cascaded}
+
+CRF has six parameters, three of them shared with RF which are number of tree
+($T$), percetage of bootstrap ($b$), and number of random features ($m$).
+Another three parameters are number of stages ($S$), threshold
+for true-positive ($maxtp$) and threshold for true-negative ($maxtn$).
+
+The bootstrap strategy proceeds as follows: after training in each stage, the
+negative test set which contains only negative samples than tested on all
+previous stages in order to delete the true-negative samples from
+negative test set.
+Samples that classified as false-positive then moved to negative test set to be
+learned later in the next stage.
+
+Some of stage have low accuracy value than other stages.
+To decrease the influence of stage with low performance, calculate the weith
+factor $\alpha$ for each stage by exploiting the harmonic means of $precision$
+and $recall$ on training set or also known as $F_1$ (F-Measure).a
+The $\alpha$ value for each stage linearly denormalized in range of 0 to 1, so
+that the weight of low performance stage reduced to make their contribution to
+majority voting also decreased.
+
+The formula to get the classification result from CRF given in picture
+\ref{form:crf}.
+
+\begin{figure}[h]
+\[
+	y(x) = argmax \left(
+			\frac{1}{T \cdot \sum^{S}_{s=1} \alpha_{s} }
+			\sum\limits_{s=1}^{S} \alpha_{s}
+			\sum\limits^{T}_{t=1} I_{h_{t} (x) = c}
+		\right)
+\]
+\caption{CRF classifier with weight.}
+\label{form:crf}
+\end{figure}
+
+$x$ is sampel to classified,
+$S$ is a number of stage in cascade structure,
+$\alpha_{s}$ is the weight value for each stage,
+$T$ is number of tree in each stage, and
+$h_{t}$ is classification function from the tree which give class value $c$
+from an indicator $I$ (e.g. a value 1 for positive or 0 for negative).
+
+%%}}}
 
 \section{Research Methodology}
 \label{section:research_methodology}
@@ -296,6 +493,7 @@ implementation of resampling and classifiers, started from data preparation,
 generating features, resampling features dataset, and implementation so it can
 be used on training, testing, and analysis.
 
+%%{{{ DATA PREPARATION
 \subsection{Data Preparation}
 \label{subsection:data_preparation}
 
@@ -332,6 +530,9 @@ Also, the class attribute value is replaced with numeric, where
 "vandalism" is become "1" and "regular" become "0".
 The process for cleaning revision files is similar with PAN-WVC-10.
 
+%%}}}
+
+%%{{{ VANDALISM FEATURES
 \subsection{Vandalism Features}
 
 Previous papers group the features into three categories which are metadata,
@@ -419,6 +620,9 @@ indicated by bad writing. For example "wanna", "gotcha".
 and counting each of them
 \end{itemize}
 
+%%}}}
+
+%%{{{ GENERATING FEATURES
 \subsection{Generating Feature Dataset}
 
 All previous feature then implemented in a program.
@@ -429,7 +633,85 @@ The implementation for combining, cleaning, and generating the features is
 published as open source software as \texttt{wvcgen}
 \footnote{\url{https://github.com/shuLhan/wvcgen}}.
 
-%%{{{ TABLE PERFORMANCE
+%%}}}
+
+%%{{{ RESAMPLING
+\subsection{Resampling Dataset}
+
+PAN-WVC-10 without resample contain 2,394 positive or vandalism samples and
+30,045 negative or regular samples.
+To get a balanced class, the dataset then resampled using SMOTE and LNSMOTE for
+positive class.
+For SMOTE, the parameter user for resampling is 1,100\% and parameter for
+K-Nearest-Neighbour (KNN) is 5, which output 28,728 synthetic samples, total of
+positive sample combined with original sample result in 31,122 positive
+samples.
+Parameter for resampling using LNSMOTE is similar with SMOTE, which generate
+28,588 positive synthetic samples, in total of 30,892 positive samples.
+The implementation for SMOTE and LNSMOTE published as open source software
+\footnote{\url{https://github.com/shuLhan/go-mining/tree/master/resampling}}.
+
+%%}}}
+
+%%{{{ CLASSIFIER IMPLEMENTATIONS
+
+\subsection{Classifier Implementations}
+
+Implementation of classifiers carried out gradually.
+Started by implementing CART which is used in Random Forest, which in turn is
+used in Cascaded Random Forest.
+The implementation of CART based on Jiawei Han et al. book, chapter 8
+\cite{han2011data}.
+The implementation of Random Forest is based on original paper of Breiman
+\cite{breiman2001random}, plus additional resource from internet.
+The implementation of Cascaded Random Forest is based on original paper of
+Baumann et al.
+\cite{baumann2013cascaded}.
+The result of all implementation is published as open source software to help
+others in future research or for real-world usage.
+\footnote{\url{https://github.com/shuLhan/go-mining/tree/master/classifiers}}.
+
+%%}}}
+
+%%{{{ TRAINING AND TESTING
+\subsection{Training and Testing}
+
+There are three common parameter between RF and CRF which are 200 for number of
+tree, 5 for number of random features, and 64\% for percentage of
+bootstrapping.
+For consistency, their value are constant between training.
+For CRF classifier, three separated testing will be conducted using different
+parameter for number of stage and number of tree which are 200 stages with 1
+tree, 100 stages with 2 trees, and 50 stages with 4 trees; all of them have
+equal total number of trees.
+This is an experiment to see the effect of number of trees to stage and their
+performance.
+Another parameter for training with CRF are thresholds for true-positive rate
+(TPR) and true-negative rate (TNR), which set to constant value 0.95 and 0.95
+for all training.
+
+The dataset used for training is PAN-WVC-10 which consist of three different
+set, dataset without resampled, dataset resampled with SMOTE, and dataset
+resampled with LNSMOTE.
+The dataset used for testing is PAN-WVC-11 which contain 1,143 positive
+samples and 8,842 negative samples, in total of 9985 samples.
+
+Training is conducted by running each classifier program, RF and CRF, on
+those three different PAN-WVC-10 feature dataset.
+Testing is conducted after the model has been built by giving the model the
+PAN-WVC-11 feature dataset as an input.
+
+The environment used for training and testing is Intel\textregistered
+Core\texttrademark i7-4750HQ CPU 2,00 GHz, with total 8 GB of RAM.
+Each training is done separatedly to avoid cache miss which affect the speed
+and computation time.
+
+%%}}}
+
+\section{Result and Analysis}
+\label{section:result_and_analysis}
+
+%%{{{ TABLE:PERFORMANCE
 \DTLsetseparator{;}
 \DTLloaddb{stats}{./stats.csv}
 \DTLmaxforcolumn{stats}{TPR}{\maxtpr}
@@ -489,77 +771,7 @@ published as open source software as \texttt{wvcgen}
 \end{table*}
 %%}}}
 
-\subsection{Resampling Dataset}
-
-PAN-WVC-10 without resample contain 2,394 positive or vandalism samples and
-30,045 negative or regular samples.
-To get a balanced class, the dataset then resampled using SMOTE and LNSMOTE for
-positive class.
-For SMOTE, the parameter user for resampling is 1,100\% and parameter for
-K-Nearest-Neighbour (KNN) is 5, which output 28,728 synthetic samples, total of
-positive sample combined with original sample result in 31,122 positive
-samples.
-Parameter for resampling using LNSMOTE is similar with SMOTE, which generate
-28,588 positive synthetic samples, in total of 30,892 positive samples.
-The implementation for SMOTE and LNSMOTE published as open source software
-\footnote{\url{https://github.com/shuLhan/go-mining/tree/master/resampling}}.
-
-\subsection{Implementation of Classifiers}
-
-Implementation of classifiers carried out gradually.
-Started by implementing CART which is used in Random Forest, which in turn is
-used in Cascaded Random Forest.
-The implementation of CART based on Jiawei Han et al. book, chapter 8
-\cite{han2011data}.
-The implementation of Random Forest is based on original paper of Breiman
-\cite{breiman2001random}, plus additional resource from internet.
-The implementation of Cascaded Random Forest is based on original paper of
-Baumann et al.
-\cite{baumann2013cascaded}.
-The result of all implementation is published as open source software to help
-others in future research or for real-world usage.
-\footnote{\url{https://github.com/shuLhan/go-mining/tree/master/classifiers}}.
-
-\subsection{Training and Testing}
-
-There are three common parameter between RF and CRF which are 200 for number of
-tree, 5 for number of random features, and 64\% for percentage of
-bootstrapping.
-For consistency, their value are constant between training.
-For CRF classifier, three separated testing will be conducted using different
-parameter for number of stage and number of tree which are 200 stages with 1
-tree, 100 stages with 2 trees, and 50 stages with 4 trees; all of them have
-equal total number of trees.
-This is an experiment to see the effect of number of trees to stage and their
-performance.
-Another parameter for training with CRF are thresholds for true-positive rate
-(TPR) and true-negative rate (TNR), which set to constant value 0.95 and 0.95
-for all training.
-
-The dataset used for training is PAN-WVC-10 which consist of three different
-set, dataset without resampled, dataset resampled with SMOTE, and dataset
-resampled with LNSMOTE.
-The dataset used for testing is PAN-WVC-11 which contain 1,143 positive
-samples and 8,842 negative samples, in total of 9985 samples.
-
-Training is conducted by running each classifier program, RF and CRF, on
-those three different PAN-WVC-10 feature dataset.
-Testing is conducted after the model has been built by giving the model the
-PAN-WVC-11 feature dataset as an input.
-
-The environment used for training and testing is Intel\textregistered
-Core\texttrademark i7-4750HQ CPU 2,00 GHz, with total 8 GB of RAM.
-Each training is done separatedly to avoid cache miss which affect the speed
-and computation time.
-
-%%}}}
-
-%%{{{ Result and Analysis
-
-\section{Result and Analysis}
-\label{section:result_and_analysis}
-
-%%{{{ TABLE RUNTIMES
+%%{{{ TABLE:RUNTIMES
 \DTLloaddb{runtimes}{runtimes.csv}
 \begin{table}[bp]
 \caption{Training computation time}
@@ -594,6 +806,29 @@ and computation time.
 
 Result of testing are given in terms of performance of each classifier on table
 \ref{tab:stats} and training computation time on table \ref{tab:runtimes}.
+
+Result from CRF classifer on LNSMOTE with 200 stages and 1 tree have the
+highest TPR value $0.9904$ but with the lowest FPR $0.8558$ and TNR $0.1442$
+among others models.
+Otherwise, RF classifier without resampling gave the highest TNR $0.9988$ and
+the lowest FPR $0.0012$.
+For precision, RF without resampling return a highest value $0.945$ and the
+lowest precision is CRF LNSMOTE with 200 stages and 1 tree.
+For F-Measure, the highest score returned by CRF without resampling with 50
+stages and 4 trees which is $0.5353$, with the lowest score given by CRF
+LNSMOTE 200 stages 1 tree.
+For Accuracy ,the highest score returned by RF with LNSMOTE and the lowest is
+CRF on LNSMOTE with 200 stages 1 tree.
+Classifier with highest AUC value is CRF on SMOTE with 100 stages 2 trees and
+the lowest on is CRF without resampling with 100 stages and 2 trees.
+
+From the computation time, CRF classifier is faster than RF on all training.
+Using RF and CRF with 50 stages and 4 trees as comparison, CRF without
+resampling is 11 times faster than RF, and for dataset that has been resampled
+with SMOTE and LNSMOTE, CRF is 1.6 times faster than RF.
+
+
+\subsection{Analysis of Resampling}
 
 %%{{{ FIGURE:ROC
 \begin{figure*}[htp]
@@ -706,6 +941,18 @@ ROC curve for RF and CRF classifiers on three dataset.
 \end{figure*}
 %%}}}
 
+The effect of resampling SMOTE and LNSMOTE is different between RF and CRF.
+On RF, LNSMOTE give a better accuracy than SMOTE, with average increased value
+is 0.4\%.
+On CRF, SMOTE overall give better performance than LNSMOTE with the highest AUC
+value is returned by CRF on SMOTE with 100 stages and 2 trees.
+SMOTE and LNSMOTE increase F-Measure and accuracy on RF, but on CRF is vice
+versa.
+The drawback of using LNSMOTE is increased value of FPR is higher than using
+SMOTE, as illustrated at ROC curve in figure \ref{fig:roc} (c) and (d).
+
+\subsection{Analysis of CRF}
+
 %%{{{ FIGURE:PRAUC
 \begin{figure*}[htp]
 \centering
@@ -817,51 +1064,15 @@ PR-AUC curve for RF and CRF classifier on three dataset.
 \end{figure*}
 %%}}}
 
-Result from CRF classifer on LNSMOTE with 200 stages and 1 tree have the
-highest TPR value $0.9904$ but with the lowest FPR $0.8558$ and TNR $0.1442$
-among others models.
-Otherwise, RF classifier without resampling gave the highest TNR $0.9988$ and
-the lowest FPR $0.0012$.
-For precision, RF without resampling return a highest value $0.945$ and the
-lowest precision is CRF LNSMOTE with 200 stages and 1 tree.
-For F-Measure, the highest score returned by CRF without resampling with 50
-stages and 4 trees which is $0.5353$, with the lowest score given by CRF
-LNSMOTE 200 stages 1 tree.
-For Accuracy ,the highest score returned by RF with LNSMOTE and the lowest is
-CRF on LNSMOTE with 200 stages 1 tree.
-Classifier with highest AUC value is CRF on SMOTE with 100 stages 2 trees and
-the lowest on is CRF without resampling with 100 stages and 2 trees.
-
-From the computation time, CRF classifier is faster than RF on all training.
-Using RF and CRF with 50 stages and 4 trees as comparison, CRF without
-resampling is 11 times faster than RF, and for dataset that has been resampled
-with SMOTE and LNSMOTE, CRF is 1.6 times faster than RF.
-
-
-\subsection{Analysis of Resampling}
-
-The effect of resampling SMOTE and LNSMOTE is different between RF and CRF.
-On RF, LNSMOTE give a better accuracy than SMOTE, with average increased value
-is 0.4\%.
-On CRF, SMOTE overall give better performance than LNSMOTE with the highest AUC
-value is returned by CRF on SMOTE with 100 stages and 2 trees.
-SMOTE and LNSMOTE increase F-Measure and accuracy on RF, but on CRF is vice
-versa.
-The drawback of using LNSMOTE is increased value of FPR is higher than using
-SMOTE, as illustrated at ROC curve in figure \ref{fig:roc} (c) and (d).
-
-
-\subsection{Analysis of CRF}
-
 The primary focus of CRF classifier is on learning the negative samples.
-In each stage iteration, model is retested with all negative samples, which was
+In each iteration stage, model is tested with negative samples set, which was
 the output from the previous stage.
-Negative samples deleted from training set and become a test set for the next
-stage.
+Negative samples where deleted from training set and become a test set for the
+next stage.
 In RF no samples were deleted when building the model.
-CRF made training sample that was bias to negative class (majority), gradually
-become less becoming equal.
-So that, resampling dataset on CRF classifier will not help the classifier
+CRF made training set that was formerly bias to negative class (majority),
+gradually in each stage become equal
+So that, using resampling on CRF classifier will not help the classifier
 performance, instead it will decrease the accuracy model after training.
 This effect can be seen on PR-AUC curve on figure \ref{fig:prauc}.
 
@@ -1000,7 +1211,7 @@ CRF-50-4 is CRF with 50 stages and 4 trees.
 
 To easily compare all classifiers, all of their performance is mapped as point
 in ROC space as illustrated in figure \ref{fig:rocpoints}.
-On the bottom left in RF classifier, in order from bottom to top are RF without
+On the bottom left is RF classifier, from bottom to top, RF without
 resampling ($\Box$) with TPR $0.165$ and FPR $0.001$, RF on SMOTE ($\boxplus$)
 with TPR $0.207$ and FPR $0.004$, and at the top is RF on LNSMOTE ($\boxtimes$)
 with TPR $0.235$ and FPR $0.005$.
@@ -1045,8 +1256,6 @@ Resampling with SMOTE on average increase TPR by $0.3$ times and also increase
 FPR by $1.75$ times for CRF-50-4.
 Resampling with LNSMOTE on average increase TPR by $0.48$ times and also
 increase FPR by $3.75$ times for CRF-50-4.
-
-%%}}}
 
 %%{{{ Conclusion
 
@@ -1118,11 +1327,8 @@ of detection.
 
 %%}}}
 
-%%{{{ Bibliography
-
+\IEEEtriggeratref{16}
 \bibliographystyle{IEEEtran}
 \bibliography{IEEEabrv,bibliography}
-
-%%}}}
 
 \end{document}
