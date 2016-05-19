@@ -1,7 +1,25 @@
 \input{../article-template}
 
-\renewcommand{\listfigurename}{}
-\renewcommand{\listtablename}{}
+\newcommand{\daftarisi}{DAFTAR ISI}
+\renewcommand{\contentsname}{
+	\chapter*{\daftarisi}\label{chapter:daftarisi}
+	\vspace{-1.5em}
+	\addcontentsline{toc}{chapter}{\daftarisi}
+}
+
+\newcommand{\daftargambar}{DAFTAR GAMBAR DAN ILUSTRASI}
+\renewcommand{\listfigurename}{
+	\chapter*{\daftargambar}
+	\vspace{-1.5em}
+	\addcontentsline{toc}{chapter}{\daftargambar}
+}
+
+\newcommand{\daftartabel}{DAFTAR TABEL}
+\renewcommand{\listtablename}{
+	\chapter*{\daftartabel}
+	\vspace{-1.5em}
+	\addcontentsline{toc}{chapter}{\daftartabel}
+}
 
 \begin{document}
 
@@ -14,22 +32,10 @@
 \addcontentsline{toc}{chapter}{\abstrak}
 \input{abstrak}
 
-\newpage
-\newcommand{\daftarisi}{DAFTAR ISI}
-\chapter*{\daftarisi}\label{chapter:daftarisi}
-\addcontentsline{toc}{chapter}{\daftarisi}
 \tableofcontents
 
-\newpage
-\newcommand{\daftargambar}{DAFTAR GAMBAR DAN ILUSTRASI}
-\chapter*{\daftargambar}
-\addcontentsline{toc}{chapter}{\daftargambar}
 \listoffigures
 
-\newpage
-\newcommand{\daftartabel}{DAFTAR TABEL}
-\chapter*{\daftartabel}
-\addcontentsline{toc}{chapter}{\daftartabel}
 \listoftables
 
 \newpage
