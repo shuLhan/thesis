@@ -1,8 +1,8 @@
 \chapter{Kesimpulan}
 
-Rata-rata SMOTE menaikan nilai TPR $0,19$ kali dan nilai FPR $1,6$ kali.
-Sementara pada sampel ulang dengan LNSMOTE, rata-rata menaikan nilai TPR $0,33$
-dan juga menaikan nilai FPR $2,75$ kali.
+Rata-rata SMOTE meningkatkan nilai TPR $0,19$ kali dan nilai FPR $1,6$ kali.
+Sementara pada sampel ulang dengan LNSMOTE, rata-rata meningkatkan nilai TPR
+$0,33$ dan juga nilai FPR $2,75$ kali.
 Kedua sampel ulang tersebut cukup bagus dalam meningkatkan performansi laju
 positif dengan konsekuensi juga meningkatnya laju \textit{false-positive},
 pengaruh ini lebih terasa pada sampel ulang LNSMOTE.
@@ -35,11 +35,22 @@ lebih baik dalam mendeteksi vandalisme juga memberikan kerangka kerja untuk
 menciptakan dan mengembangkan fitur vandalisme dari dataset mentah tanpa harus
 mulai dari awal untuk dapat digunakan dalam penelitian selanjutnya atau
 digunakan langsung pada kasus asli. Selain itu juga menyediakan pustaka untuk
-pengolahan data dan fungsi pembelajaran mesin terutama pengklasifikasi
+pengolahan data dan fungsi pembelajaran mesin terutama untuk sampel ulang
+LNSMOTE dan pengklasifikasi
 \textit{Cascaded Random Forest} yang belum ada implementasi secara terbuka pada
 program terkenal seperti \textit{Weka}, \textit{Scikit-Learn}, atau \textit{R}.
 
 \section{Pekerjaan Selanjutnya}
+
+Jumlah artikel Bahasa Indonesia di Wikipedia setiap tahun semakin meningkat
+seiring dengan meningkatnya jumlah pengguna internet di Indonesia.
+Semakin banyak pengguna, kemungkinan vandalisme juga semakin meningkat.
+Untuk mengatasi masalah vandalisme tersebut lebih awal, akan lebih baik bila
+dipersiapkan sebuah sistem yang dapat mendeteksi vandalisme pada Wikipedia
+Bahasa Indonesia.
+Langkah awalnya mungkin dengan mengumpulkan data artikel yang telah dianotasi
+dengan vandalisme, supaya dapat digunakan untuk pembuatan fitur dan pembuatan
+model deteksi vandalisme untuk Wikipedia Bahasa Indonesia.
 
 Semua pelatihan model dalam karya tulis ini masih menggunakan algoritma
 pengklasifikasi RF dan CRF dalam bentuk serial, yang mana satu pohon dibangun

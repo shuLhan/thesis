@@ -71,13 +71,14 @@ Beberapa tingkatan memiliki akurasi deteksi yang lebih rendah daripada
 yang lainnya.
 Untuk mengurangi pengaruh tingkatan yang memiliki performansi yang rendah
 tersebut, maka dihitung faktor bobot $\alpha$ dari setiap tingkatan dengan
-mengeksploitasi rerata harmonik dari \textit{precision} dan \textit{recall}
-pada dataset pelatihan atau dikenal juga dengan nilai $F_1$
-(\textit{fmeasure}).
+mengeksploitasi rerata harmonik dari \textit{precision} dan \textit{recall},
+atau dikenal juga dengan nilai $F_1$ (\textit{fmeasure}),
+pada dataset pelatihan.
+
 Nilai $\alpha$ pada setiap tingkatan secara linear dinormalisasi pada rentang 0
 dan 1, sehingga bobot dari tingkat yang memiliki performansi yang rendah
 berkurang supaya pengaruhnya terhadap mayoritas \textit{voting} juga berkurang.
-Formula untuk mendapatkan hasil dari pengklasifikasi CRF diberikan pada gambar
+Proses untuk mendapatkan hasil dari pengklasifikasi CRF diberikan pada gambar
 \ref{form:crf}.
 
 \begin{figure}[h]
@@ -91,13 +92,15 @@ Formula untuk mendapatkan hasil dari pengklasifikasi CRF diberikan pada gambar
 \caption{
 Formula untuk mendapatkan kelas (\textit{voting}) pada pengklasifikasi CRF
 dengan bobot.
-$x$ adalah sampel yang akan diklasifikasi,
+}
+\label{form:crf}
+\end{figure}
+
+Pada gambar \ref{form:crf}, $x$ adalah sampel yang akan diklasifikasi,
 $S$ adalah jumlah tingkatan pada struktur kaskade,
 $\alpha_{s}$ adalah nilai bobot dari tingkatan,
 $T$ adalah jumlah pohon pada tingkatan, dan
 $h_{t}$ yaitu fungsi klasifikasi dari sebuah pohon yang memberikan sebuah nilai
 kelas $c$ yang bisa memiliki nilai indikator dari $I$
 (misalkan nilai 1 untuk positif atau 0 untuk negatif).
-}
-\label{form:crf}
-\end{figure}
+

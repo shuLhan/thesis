@@ -121,7 +121,7 @@ Penggunaan sampel ulang pada dataset latihan menggunakan pendekatan dasar
 terkadang menyebabkan performansi klasifikasi yang rendah.
 Kelemahan teknik SMOTE yaitu bisa terlalu menggeneralisasi wilayah kelas
 minoritas karena tidak mempertimbangkan distribusi tetangga lainnya dari
-kelas-kelas mayoritas
+kelas mayoritas
 \cite{maciejewski2011local}.
 Melakukan teknik pembersihan dataset lanjut, seperti yang diajukan oleh
 Laurikkala
@@ -129,10 +129,11 @@ Laurikkala
 dan Batista dkk.
 \cite{batista2004study},
 sebagaimana juga teknik sampel ulang lanjut, seperti
-\textit{borderline-SMOTE}
+\textit{Borderline-SMOTE}
 yang diajukan oleh Han dkk.
 \cite{han2005borderline}
-atau ekstensi SMOTE, LN-SMOTE, yang diajukan oleh Maciejewski dan Stefanowski 
+atau ekstensi SMOTE yaitu \textit{Local-Neighbourhoods SMOTE}, yang diajukan
+oleh Maciejewski dan Stefanowski
 \cite{maciejewski2011local},
 mungkin bisa meningkatkan performansi klasifikasi.
 
@@ -142,7 +143,7 @@ digunakan sebelumnya pada korpus tersebut.
 Teknik sampel ulang yang digunakan yaitu
 \textit{Local Neighborhood SMOTE} (LNSMOTE),
 yang diajukan oleh Maciejewski dan
-Stefanowski 
+Stefanowski
 \cite{maciejewski2011local}.
 Hasil sampel ulang dataset digunakan untuk pembelajaran mesin dengan menerapkan
 pengklasifikasi CRF dan dibandingkan dengan pengklasifikasi RF untuk melihat

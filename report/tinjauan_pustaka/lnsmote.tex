@@ -33,8 +33,7 @@ SMOTE}.
 	\end{subfigure}
 	\caption{
 Kelemahan metode SMOTE:
-(a) \textit{Outliers} pada kelas minoritas tidak diperhitungkan pada metode
-SMOTE.
+(a) \textit{Outliers} pada kelas minoritas tidak diperhitungkan,
 (b) Pembuatan sampel sintetis yang baru berada di wilayah kelas mayoritas
 yang tumpang-tindih dengan sampel kelas mayoritas.
 	}
@@ -70,7 +69,7 @@ Untuk kedua sampel, $ p $ dan $ n $, $ k $ sampel terdekatnya untuk keseluruhan
 data pelatihan $ S $ dihitung \textit{safe level}-nya dengan notasi $ sl(p) $
 dan $ sl(n) $.
 Dari pengetahuan tersebut, koefisien rasio \textit{safe-level} ditentukan
-dengan $ \textit{sl-ratio} = sl(p) / sl(n) $.
+dengan $ slratio = sl(p) / sl(n) $.
 Langkah selanjutnya ditentukan berdasarkan 5 kasus berikut:
 \begin{enumerate}
 	\item \label{case:safe-1} Jika $ sl(p) = 0 $ dan $ sl(n) = 0 $, sampel
@@ -79,17 +78,17 @@ Langkah selanjutnya ditentukan berdasarkan 5 kasus berikut:
 	\item Jika $ sl(p) > 0 $ dan $ sl(n) = 0 $, maka $ n $
 	adalah \textit{noise}.
 	Sampel sintetis akan dibuat jauh dari $ n $ dengan menduplikasi $ p $.
-	\item Jika $ sl-ratio = 1 $, maka $ p $ dan $ n $ memiliki tetangga
+	\item Jika $ slratio = 1 $, maka $ p $ dan $ n $ memiliki tetangga
 	yang sama dan sampel sintetis yang baru akan dibuat diantara garis yang
 	menghubungkan mereka dengan cara yang sama seperti pada SMOTE.
-	\item Jika $ sl-ratio > 1 $, maka $ p $ berada di wilayah
+	\item Jika $ slratio > 1 $, maka $ p $ berada di wilayah
 	aman minoritas daripada $ n $ dan sampel sintetis yang baru akan
 	dibuat dekat dengan $ p $, dengan parameter acak pada SMOTE akan
-	memiliki rentang $ [0, 1 / \textit{sl-ratio}] $.
-	\item Jika \textit{sl-ratio < 1}, maka \textit{n} berada di wilayah
+	memiliki rentang $ [0, 1 / slratio] $.
+	\item Jika \textit{slratio < 1}, maka \textit{n} berada di wilayah
 	aman minoritas daripada $ p $ dan sampel sintetis yang baru akan
 	dibuat dekat dengan $ n $, yaitu parameter acak pada SMOTE akan
-	memiliki rentang $ [1 - \textit{sl-ratio}, 1] $.
+	memiliki rentang $ [1 - slratio, 1] $.
 \end{enumerate}
 
 Strategi \textit{safe-level SMOTE} bermasalah khususnya pada distribusi kelas
