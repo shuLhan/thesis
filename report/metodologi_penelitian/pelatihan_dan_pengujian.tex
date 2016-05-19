@@ -1,0 +1,38 @@
+Dataset yang digunakan untuk pelatihan model yaitu PAN-WVC-10 yang terdiri dari
+tiga jenis yaitu dataset tanpa sampel ulang, dataset yang telah disampel ulang
+dengan SMOTE, dan dataset yang telah disampel ulang dengan LNSMOTE.
+Jumlah sampel pada dataset yang tidak disampel yaitu 2.394 positif dan 30.045
+negatif dengan total 32.439 sampel.
+Jumlah sampel positif pada dataset hasil sampel ulang dengan SMOTE yaitu 28.728
+sampel dengan total 58.773 sampel.
+Jumlah sampel positif pada dataset hasil sampel ulang dengan LNSMOTE yaitu
+28.588 sampel dengan total 58.633 sampel.
+
+Dataset yang digunakan untuk pengujian model yaitu PAN-WVC-11 yang terdiri dari
+1.143 sampel positif dan 8.842 sampel negatif dengan total 9.985 sampel.
+Jumlah fitur pada PAN-WVC-11 sama dengan PAN-WVC-10 yaitu 26 fitur.
+
+Supaya konsisten antara pengklasifikasi, digunakan parameter umum yang sama
+yaitu 200 pohon, 5 (dari $\sqrt{26}$) fitur acak, dan $ 64\% $ untuk
+\textit{bootstrapping}.
+Untuk klasifikasi CRF dilakukan tiga pemodelan dan pengujian dengan parameter
+yang berbeda yaitu 200 tingkat dengan 1 pohon, 100 tingkat dengan 2 pohon, dan
+50 tingkat dengan 4 pohon; dengan jumlah pohon yang tetap sama untuk ketiganya
+yaitu 200.
+Hal ini dilakukan untuk melihat pengaruh dari jumlah pohon terhadap tingkat dan
+hasil klasifikasi.
+Parameter lain pada pemodelan CRF yaitu nilai ambang batas TPR dan TNR diset
+pada nilai $0,95$ dan $0,95$ untuk mendapatkan hasil klasifikasi yang bagus dan
+jumlah pohon yang konsisten.
+
+Pembuatan model klasifikasi dilakukan dengan cara menjalankan program
+klasifikasi RF dan CRF pada masing-masing dataset fitur PAN-WVC-10 yang belum
+disampel ulang, yang telah disampel ulang dengan SMOTE, dan yang telah disampel
+ulang dengan LNSMOTE.
+Setelah modelnya terbangun, model diuji dengan diberikan input dataset fitur
+PAN-WVC-11. Hasil dari pengujian digunakan untuk analisis.
+
+Lingkungan pelatihan dan pengujian dilakukan pada mesin Intel\textregistered\
+ Core\texttrademark \ i7-4750HQ CPU 2,00 GHz, dengan jumlah \textit{RAM} 8
+GB. Setiap pelatihan model dilakukan satu per satu untuk menghindari adanya
+\textit{cache miss} yang berpengaruh pada kecepatan dan waktu pemrosesan.
