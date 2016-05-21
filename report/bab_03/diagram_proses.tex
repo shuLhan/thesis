@@ -1,0 +1,91 @@
+\begin{figure}[htbp]
+\centering
+\resizebox {\columnwidth} {!} {
+\begin{tikzpicture}[
+	framed,
+	nodes = {align = center},
+	data/.style={
+		trapezium,
+		trapezium left angle=70,
+		trapezium right angle=110,
+		draw=black,
+		text centered
+	},
+	proc/.style={
+		rectangle,
+		draw=black,
+		text centered
+	}
+]
+	\node[data] (wvc10_raw) {
+		Dataset pelatihan mentah\\
+		(\textit{PAN-WVC-10})
+	};
+	\node[proc] (wvcgen_10raw) [below=of wvc10_raw] {
+		Pembuatan\\fitur
+	};
+
+	\node[data] (wvc10_fs) [below=of wvcgen_10raw] {
+		Fitur set\\
+		tanpa sampel ulang
+	};
+	\node[proc] (smote)         [below right=of wvc10_fs, xshift=1cm] {
+		Sampel ulang\\SMOTE
+	};
+	\node[proc] (lnsmote)       [right=of smote] {
+		Sampel ulang\\LNSMOTE
+	};
+	\node[data] (wvc10_smote)   [below=of smote] {Fitur set\\SMOTE};
+	\node[data] (wvc10_lnsmote) [below=of lnsmote] {Fitur set\\LNSMOTE};
+
+	\node[proc] (c2)  [below=of wvc10_smote] {Pengklasifikasi};
+	\node[proc] (c3)  [below=of wvc10_lnsmote] {Pengklasifikasi};
+	\node[proc] (c1)  [left=of  c2] {Pengklasifikasi};
+
+	\node[proc] (m1)  [below=of c1] {Model};
+	\node[proc] (m2)  [below=of c2] {Model};
+	\node[proc] (m3)  [below=of c3] {Model};
+
+	\node[data] (o1)  [below=of m1] {Hasil tanpa\\sampel ulang};
+	\node[data] (o2)  [below=of m2] {Hasil\\SMOTE};
+	\node[data] (o3)  [below=of m3] {Hasil\\LNSMOTE};
+
+	\node[data] (testset) [right=of c3,xshift=1cm] {Dataset pengujian};
+	\node[proc] (wvcgen_11raw) [above=of testset] {
+		Pembuatan\\fitur
+	};
+	\node[data] (wvc11_raw) [above=of wvcgen_11raw] {
+		Dataset pengujian mentah\\
+		(\textit{PAN-WVC-11})
+	};
+
+	\draw[->] (wvc10_raw) -- (wvcgen_10raw);
+	\draw[->] (wvcgen_10raw) -- (wvc10_fs);
+	\draw[->] (wvc10_fs) -| (smote);
+	\draw[->] (wvc10_fs) -| (lnsmote);
+	\draw[->] (smote) -- (wvc10_smote);
+	\draw[->] (lnsmote) -- (wvc10_lnsmote);
+	\draw[->] (wvc10_fs) -- (c1);
+	\draw[->] (wvc10_smote) -- (c2);
+	\draw[->] (wvc10_lnsmote) -- (c3);
+	\draw[->] (c1) -- (m1);
+	\draw[->] (c2) -- (m2);
+	\draw[->] (c3) -- (m3);
+
+	\draw[->] (wvc11_raw) -- (wvcgen_11raw);
+	\draw[->] (wvcgen_11raw) -- (testset);
+
+	\draw[dashed,->] (testset) -- (m1);
+	\draw[dashed,->] (testset) -- (m2);
+	\draw[dashed,->] (testset) -- (m3);
+
+	\draw[->] (m1) -- (o1);
+	\draw[->] (m2) -- (o2);
+	\draw[->] (m3) -- (o3);
+\end{tikzpicture}
+}
+\caption{
+	Proses implementasi deteksi vandalisme
+}
+\label{fig:proses}
+\end{figure}
