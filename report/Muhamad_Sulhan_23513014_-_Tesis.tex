@@ -1,25 +1,13 @@
-\input{../article-template}
+\documentclass[12pt,a4paper,titlepage]{report}
 
-\newcommand{\daftarisi}{DAFTAR ISI}
-\renewcommand{\contentsname}{
-	\chapter*{\daftarisi}\label{chapter:daftarisi}
-	\vspace{-1.5em}
-	\addcontentsline{toc}{chapter}{\daftarisi}
-}
+\input{../packages}
+\input{../hyphenation}
+\input{../variables}
+\input{../macros}
+\input{../ITBTesisFormat}
 
-\newcommand{\daftargambar}{DAFTAR GAMBAR DAN ILUSTRASI}
-\renewcommand{\listfigurename}{
-	\chapter*{\daftargambar}
-	\vspace{-1.5em}
-	\addcontentsline{toc}{chapter}{\daftargambar}
-}
-
-\newcommand{\daftartabel}{DAFTAR TABEL}
-\renewcommand{\listtablename}{
-	\chapter*{\daftartabel}
-	\vspace{-1.5em}
-	\addcontentsline{toc}{chapter}{\daftartabel}
-}
+\author{\myname}
+\title{\mytitle}
 
 \begin{document}
 
@@ -27,9 +15,10 @@
 
 \newpage
 \pagenumbering{roman}
-\newcommand{\abstrak}{ABSTRAK}
-\chapter*{\abstrak}\label{chapter:abstrak}
-\addcontentsline{toc}{chapter}{\abstrak}
+\chapter*{\tUpAbstrak}
+\label{chapter:tUpAbstrak}
+\addcontentsline{toc}{chapter}{\tUpAbstrak}
+
 \input{abstrak}
 
 \tableofcontents
@@ -132,22 +121,26 @@
 
 \input{kesimpulan}
 
+%%
+%% DAFTAR PUSTAKA
+%%
 \clearpage
-\addcontentsline{toc}{chapter}{DAFTAR PUSTAKA}
+\addcontentsline{toc}{chapter}{\tDaftarPustaka}
 \printbibliography
 
 %%
 %% LAMPIRAN
 %%
+
 \titleformat{\chapter}[hang]
 {\bfseries\large\centering}
-{Lampiran \thechapter}
+{\tLampiran\ \thechapter}
 {1em}
 {}
 
 \appendix
-\chapter*{LAMPIRAN}
-\addcontentsline{toc}{chapter}{LAMPIRAN}
+\chapter*{\tUpLampiran}
+\addcontentsline{toc}{chapter}{\tUpLampiran}
 
 \chapter{Daftar Kategori Kata dan Token}
 \label{lampiran:daftar_token_dan_kata}

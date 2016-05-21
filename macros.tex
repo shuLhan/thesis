@@ -1,0 +1,65 @@
+%%% two column signature.
+\def\myadvisorsig#1{%
+	\vbox{\hsize=6cm
+		\textbf{#1}\\
+		\addvspace{2cm}%
+		\hbox to \hsize{%
+			\strut\hfil%
+			\myadvisorname%
+			\hfil%
+		}
+		\hrule\kern1ex
+		\hbox to \hsize{%
+			\strut\hfil%
+			NIP\hspace{1ex}\myadvisorid%
+			\hfil%
+		}
+	}
+}
+
+%%% one column signature.
+\def\mysignature#1#2#3{%
+	\vbox{
+		\textbf{#1}\\
+		\addvspace{2cm}%
+		\hbox to \hsize{%
+			\strut\hfil%
+			{#2}%
+			\hfil%
+		}
+		\makebox[6cm][c]{
+			\hrulefill
+		}
+		\hbox to \hsize{%
+			\strut\hfil%
+			NIP\hspace{1ex}{#3}%
+			\hfil%
+		}
+	}
+}
+
+%%% source code listing
+\newcommand{\includecodego}[2][c]{
+	\lstinputlisting[caption=#2,escapechar=,style=go]
+		{/home/ms/go/work/src/github.com/shuLhan/#2}
+}
+
+%%% data listing
+\newcommand{\includedata}[2][c]{
+	\lstinputlisting[caption=#2,style=data,linerange={1-10}]
+		{/home/ms/go/work/src/github.com/shuLhan/#2}
+}
+
+%% Caption for algorithm
+\DeclareCaptionFormat{algor}{%
+	\hrulefill
+	\par
+	\offinterlineskip
+	\vskip1pt
+	\textbf{#1#2}#3
+	\offinterlineskip
+	\hrulefill
+}
+
+\DeclareCaptionStyle{algori}{singlelinecheck=off,format=algor,labelsep=space}
+\captionsetup[algorithm]{style=algori}

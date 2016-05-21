@@ -1,0 +1,138 @@
+%%
+%% This contain formatting for ITB Thesis.
+%%
+
+%%
+%% Set page margin to 4cm left, 3cm on top, right, and bottom.
+%%
+\geometry{
+	a4paper,
+	top=3cm,
+	right=3cm,
+	bottom=3cm,
+	left=4cm
+}
+
+%%
+%% Set space between paragraphs to 1.5.
+%%
+\setlength{\parskip}{1.5em}
+
+%%
+%% Add dot to TOC.
+%%
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\contentsname}{}
+
+%%
+%% Reduce vspace between title in list and boy
+%%
+\renewcommand{\contentsname}{
+	\chapter*{\daftarisi}\label{chapter:daftarisi}
+	\vspace{-1.5em}
+	\addcontentsline{toc}{chapter}{\daftarisi}
+}
+
+\renewcommand{\listfigurename}{
+	\chapter*{\daftargambar}
+	\vspace{-1.5em}
+	\addcontentsline{toc}{chapter}{\daftargambar}
+}
+
+\renewcommand{\listtablename}{
+	\chapter*{\daftartabel}
+	\vspace{-1.5em}
+	\addcontentsline{toc}{chapter}{\daftartabel}
+}
+
+%%
+%% Source code listing style.
+%%
+\lstset{
+	basicstyle=\scriptsize\ttfamily
+,	breaklines=true
+,	stringstyle=\scriptsize\ttfamily
+,	numbers=left
+,	numberstyle=\tiny\ttfamily
+,	numbersep=5pt
+,	tabsize=4
+,	frame=single
+}
+
+\makeatletter
+\def\lst@lettertrue{\let\lst@ifletter\iffalse}
+\makeatother
+
+%%
+%% Format chapter and section.
+%%
+
+%% Set chapter name to Bab.
+\titleformat{\chapter}[hang]
+{\bfseries\large\centering}
+{Bab \thechapter}
+{1em}
+{}
+
+%% Set section font to normal.
+\titleformat{\section}
+{\normalfont\bfseries}
+{\thesection}
+{1em}{}
+
+%% Set subsection font to normal.
+\titleformat{\subsection}
+{\normalfont\bfseries}
+{\thesubsection}
+{1em}{}
+
+%% Set spacing for chapter, section, and subsection.
+\titlespacing{\chapter}{0ex}{0ex}{1.5em}
+\titlespacing{\section}{0ex}{0ex}{0em}
+\titlespacing{\subsection}{0ex}{0ex}{0em}
+
+%% Set roman on chapter number.
+\def\thechapter{\Roman{chapter}}
+
+%% Alter latex default title on table and figure.
+\captionsetup[table]{name=Tabel}
+\captionsetup[figure]{name=Gambar}
+
+%% 
+\renewcommand{\arraystretch}{1.5}
+\setlength{\tabcolsep}{3pt}
+
+%% Change bibliography title.
+\defbibheading{bibliography}{\centerline{
+	\textbf{DAFTAR PUSTAKA}}
+}
+
+%% Algorithmicx
+\makeatletter
+\renewcommand{\ALG@beginalgorithmic}{\footnotesize}
+\makeatother
+
+%% pgfplots setting.
+\pgfplotsset{
+	/pgf/number format/read comma as period,
+	/pgf/text mark as node=false,
+	table/col sep=semicolon,
+	xmax=1,
+	xmin=0,
+	ymax=1,
+	ymin=0,
+	xtick distance=0.2,
+	ytick distance=0.2,
+	grid=major,
+	cycle list name=linestyles,
+	compat=1.13
+}
+
+%% My bibligraphy file
+\addbibresource{bibliography.bib}
+
+%% multicolumn setting
+\setlength{\columnsep}{1cm}
+
+%%% uncomment this to show overrule in black box
+\overfullrule=2cm

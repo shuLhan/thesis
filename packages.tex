@@ -1,0 +1,114 @@
+%% font encoding.
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{couriers}
+
+%% Customize chapters.
+\usepackage{titlesec}
+
+%% bibliography.
+\usepackage[
+	backend=bibtex
+,	style=ieee
+,	sorting=nyt
+]{biblatex}
+
+%% \includegraphics{name}
+\usepackage{graphicx}
+
+%% \url{something}
+\usepackage{url}
+
+%% \multirow{package}{width}{text}
+\usepackage{multirow}
+
+%% \cellcolor
+\usepackage[table]{xcolor}
+
+%% \caption{title}
+\usepackage{caption}
+\usepackage{subcaption}
+
+%% \forloop
+\usepackage{forloop}
+
+%% fix underfull on footnote with URL.
+\usepackage{ragged2e}
+
+%% source code listing
+\usepackage{listings}
+
+\lstdefinelanguage{go}
+{
+	morekeywords={package,import,const,func,for,type,var,struct}
+,	sensitive=true
+,	morecomment=[l]{//}
+,	morecomment=[s]{/*}{*/}
+}
+\lstdefinestyle{go}{%
+	language=go
+,	keywordstyle=\color{black}\bfseries
+,	commentstyle=\color{gray}
+,	breakatwhitespace=true
+,	lineskip={-2.5pt}
+}
+
+\lstdefinestyle{data}{%
+	breakatwhitespace=false
+,	breakautoindent=false
+,	literate={\,}{}{0\discretionary{,}{}{,}},
+}
+
+%% \printindex
+\usepackage{makeidx}
+
+%% table of content
+\usepackage{tocloft}
+
+%% text emphasis, including strikeout.
+\usepackage[normalem]{ulem}
+
+%% mathematics
+\usepackage{mathtools}
+
+%% arithmetic
+\usepackage{calc}
+
+%% algorithm
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\makeatletter
+	\renewcommand{\ALG@name}{Algoritma}
+\makeatother
+
+%% multiple columns
+\usepackage{multicol}
+
+%% Package for changin page margin
+\usepackage[a4paper]{geometry}
+
+%%
+\usepackage{parskip}
+
+%% Package for reading CSV to database.
+\usepackage{datatool}
+
+%% Package for scatter and line plot.
+\usepackage{dataplot}
+
+%% Long table
+\usepackage{longtable}
+
+%% Tikz
+\usepackage{tikz}
+\usetikzlibrary{backgrounds}
+
+\usepackage{pgfplots}
+
+%% Font: MnSymbol
+\usepackage{MnSymbol}
+
+%% Compact list.
+\usepackage{paralist}
