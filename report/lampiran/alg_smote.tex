@@ -1,0 +1,72 @@
+\begin{center}
+	\captionof{algorithm}{SMOTE}
+	\label{alg:smote}
+	\begin{algorithmic}[1]
+\Require \\
+$ P $: sampel minoritas \\
+$ o $: persentase jumlah sampel sintetis yang akan dibuat \\
+$ k $: jumlah tetangga terdekat dari sampel yang akan dibuat
+\\
+\Function{SMOTE}{$ P, o $}
+	\State $ S \gets [] $
+	\Comment Penampung untuk semua sampel sintetis yang akan dibuat.
+
+	\State $ nsyn \gets 0 $
+	\Comment Jumlah sampel sintetis yang akan dibuat.
+
+	\State $ lenP \gets \Call{Length}{P} $
+
+	\If{$o < 100$}
+		\State $ nsyn \gets (o / 100) \times lenP $
+		\State $ P \gets \Call{RandomPickWithoutReplacement}{P, nsyn} $
+		\State $ o \gets 100.0 $
+	\EndIf
+
+	\State $ nsyn \gets o / 100.0 $
+
+	\For{\textbf{each} $sample$ \textbf{in} $P$}
+		\State $ neighbors \gets \Call{FindNeighbours}{P, sample, k} $
+		\Comment Cari k buah tetangga terdekat dari $sample$ di P.
+
+		\State $ s \gets \Call{CreateSynthetic}{sample, neighbors} $
+
+		\State $ \Call{S.Push}{s} $
+	\EndFor
+
+	\State \Return{S}
+\EndFunction
+\\
+\Function{CreateSynthetic}{$ sample, neighbors, nsyn $}
+	\State $ s \gets [] $
+	\Comment Penampung untuk semua sampel sintetis yang akan dibuat.
+
+	\State $ lenAttr \gets \Call{LengthAttribute}{sample} $
+	\Comment Simpan jumlah atribut dari sampel.
+
+	\For{$ x \gets 1,nsyn $}
+		\State $ neighbor \gets \Call{RandomPick}{neighbors} $
+		\State $ newsample \gets [] $
+		\Comment Penampung untuk sampel sintetis yang baru.
+
+		\For{$ y \gets 1,lenAttr $}
+			\If{y \textbf{is} classAttribute}
+				\State continue
+			\EndIf
+
+			\State $ nattr \gets neighbor.\Call{AttributeAt}{y} $
+			\State $ sattr \gets sample.\Call{AttributeAt}{y} $
+			\State $ diff \gets sattr - nattr $
+			\State $ gap \gets \Call{Random}{0,1} $
+			\State $ newAttr \gets nattr + (gap \times diff) $
+
+			\State $ newSample.\Call{PushAttribute}{newAttr} $
+		\EndFor
+
+		\State $ \Call{s.Push}{newSample} $
+	\EndFor
+
+	\State \Return{s}
+\EndFunction
+
+	\end{algorithmic}
+\end{center}
