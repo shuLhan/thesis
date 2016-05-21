@@ -1,0 +1,22 @@
+Permasalahan vandalisme di Wikipedia telah terjadi sejak adanya Wikipedia itu
+sendiri.
+Komunitas Wikipedia menangani permasalahan tersebut dengan membuat fungsi
+pengaman pada artikel secara manual supaya artikel tidak bisa disunting, bila
+sebuah artikel terlalu sering divandal.
+Sejak tahun 2006, bot pendeteksi vandalisme digunakan, yang secara otomatis
+memantau suntingan vandalisme dan terkadang mengembalikannya.
+Umumnya bot ini menggunakan aturan heuristik sederhana, daftar hitam kata, dan
+daftar alamat \textit{Internet Protocol} (IP) pengguna yang
+diblokir yang terdeteksi melakukan vandalisme (contohnya, VoABot II
+\footnote{\url{https://en.wikipedia.org/wiki/User:VoABot_II}}
+dan ClueBot
+\footnote{\url{https://en.wikipedia.org/wiki/User:ClueBot}}).
+ClueBot-NG
+\footnote{\url{https://en.wikipedia.org/wiki/User:ClueBot_NG}}
+menggantikan ClueBot, menggunakan pendekatan pembelajaran mesin.
+Bot ini mencoba memperbaiki teknik berbasis heuristik yang susah untuk dirawat
+dan mudah dilewat.
+Bot ini menggunakan dataset suntingan pra-klasifikasi yang dianotasikan oleh
+pengguna Wikipedia untuk melatih Jaringan Saraf Tiruan.
+Pengklasifikasinya bekerja pada beberapa fitur suntingan, seperti probabilitas
+tingkat-kata vandalisme untuk mengklasifikasi suntingan baru.
