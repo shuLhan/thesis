@@ -4,7 +4,6 @@ Korpus yang umum digunakan untuk pembelajaran vandalisme pada Wikipedia yaitu
 atau
 \textit{PAN Wikipedia Vandalism Corpus} 2011 (PAN-WVC-11)
 \cite{potthast:2010b}
-dengan tingkat bias yang tinggi pada data.
 Kedua korpus tersebut memiliki jumlah yang tidak seimbang antara suntingan
 biasa dengan jumlah suntingan vandal.
 PAN-WVC-10 untuk artikel Wikipedia bahasa Inggris memiliki 32.439 sampel dengan
@@ -12,89 +11,33 @@ PAN-WVC-10 untuk artikel Wikipedia bahasa Inggris memiliki 32.439 sampel dengan
 artikel Wikipedia bahasa Inggris memiliki jumlah 9985 suntingan dengan 1144,
 atau 8\%, diantaranya adalah vandal.
 
-\newpage
-Menerapkan klasifikasi dengan dataset yang bias bisa menyebabkan performansi
+Menerapkan klasifikasi dengan dataset yang timpang bisa menyebabkan performansi
 deteksi yang rendah.
 Hal ini bisa disebabkan oleh,
 \begin{enumerate}
-	\item Jika sebuah klasifikasi belajar dengan meminimalkan keseluruhan
-	galat, maka instan dari kelas yang minoritas memiliki kontribusi yang
-	rendah terhadap galat.
-	Hal ini menyebabkan bias yang condong pada kelas klasifikasi yang
-	mayoritas.
+	\item instan dari kelas yang minoritas memiliki kontribusi yang rendah
+	terhadap galat, sehingga menyebabkan bias yang condong pada kelas
+	klasifikasi yang mayoritas.
 	\item Pada umumnya klasifikasi mengasumsikan distribusi kelas yang
 	seimbang antara kelas minoritas dan mayoritas, yang terkadang pada
 	dunia nyata kasusnya tidak selalu seperti itu.
 	\item Sering kali klasifikasi secara implisit mengasumsikan biaya yang
-	sama untuk mis-klasifikasi pada kedua kelas tersebut, yang mana
-	terkadang tidak masuk akal.
+	sama untuk mis-klasifikasi pada kedua kelas tersebut.
 	Sebagai contohnya, biaya untuk mengklasifikasikan kanker sebagai bukan
 	kanker lebih tinggi dari pada sebaliknya.
 	Secara tidak adanya data kanker bisa menyebabkan tidak dilakukannya
 	terapi, misklasifikasi bisa membahayakan nyawa.
 \end{enumerate}
 
-Untuk mengatasi masalah ketimpangan pada korpus, Gotze
-\cite{gotze2014advanced}
-mengaplikasikan teknik
-\textit{random oversampling}
-bernama
-\textit{Synthetic Minority Over-sampling TEchnique} (SMOTE)
-yang diajukan oleh Chawla
-\cite{chawla2002smote},
-dan kombinasi dari SMOTE dan
-\textit{random undersampling}.
-Dataset latihan yang orisinal dan hasil sampel ulang diuji dengan
-pengklasifikasi satu-kelas dan dua-kelas.
-Pengklasifikasi satu-kelas yang diterapkan diantaranya Hempstalk dkk.
-\cite{hempstalk2008one}
-dan SVM oleh Schölkopf dkk.
-\cite{scholkopf1999support}
-yang diimplementasikan oleh Chang dan Lin
-\cite{chang2011libsvm}
-pada korpus PAN-WVC.
-Pengklasifikasi dua-kelas yang diterapkan diantaranya
-\textit{Logistic Regression},
-\textit{RealAdaBoost},
-\textit{Random Forest} (RF), dan
-\textit{Bayesian Network}.
-Hasil percobaan yang didapat memperlihatkan performansi pengklasifikasi
-satu-kelas tidak kompetitif dengan satu pun pengklasifikasi dua-kelas.
-Hal ini bisa disebabkan karena tidak sesuainya kelompok fitur yang digunakan
-untuk menjelaskan suntingan vandalisme, sebagaimana juga parameter pengaturan
-yang tidak sesuai pada pendekatan yang digunakan.
-Hasil dari pelatihan pada dataset orisinal memperlihatkan RF
-lebih unggul dari pengklasifikasi lainnya.
-Hasil dari pelatihan pada dataset hasil sampel ulang memperlihatkan adanya
-peningkatkan pada semua pengklasifikasi kecuali pada RF.
-
-Kelemahan RF yaitu walaupun sejumlah besar pohon-pohon individu
-bisa menghasilkan performansi yang tinggi, hal ini juga bisa menambah waktu
-komputasi yang dibutuhkan untuk klasifikasi terutama untuk pelatihan model
-klasifikasi.
-Untuk dataset yang besar yang terdiri dari 10.000 sampel (seperti pada kasus
-korpus PAN-WVC-10) hal ini bisa menyebabkan waktu pelatihan sampai pada dua
-digit menit.
-Salah satu solusinya mungkin bisa dengan menggunakan kerangka kerja
-\textit{Cascaded Random Forest} (CRF)
-yang dikembangkan oleh Baumann dkk.
-\cite{baumann2013cascaded}.
-Pendekatan CRF menghasilkan pelatihan model yang lebih cepat dan performansi
-klasifikasi yang meningkat dibandingkan dengan pengklasifikasi \textit{Random
-Forest}.
-
-Penggunaan sampel ulang pada dataset latihan menggunakan pendekatan dasar
-terkadang menyebabkan performansi klasifikasi yang rendah.
-Kelemahan teknik SMOTE yaitu bisa terlalu menggeneralisasi wilayah kelas
+Dataset timpang dapat diatasi dengan melakukan penghapusan untuk sampel yang
+mayoritas (\textit{undersampling}) atau penambahan sampel untuk kelas
+yang minoritas (\textit{oversampling}).
+Salah satu metode \textit{oversampling} yaitu SMOTE.
+Kelemahan teknik SMOTE yaitu menggeneralisasi wilayah kelas
 minoritas karena tidak mempertimbangkan distribusi tetangga lainnya dari
 kelas mayoritas
 \cite{maciejewski2011local}.
-Melakukan teknik pembersihan dataset lanjut, seperti yang diajukan oleh
-Laurikkala
-\cite{laurikkala2001improving}
-dan Batista dkk.
-\cite{batista2004study},
-sebagaimana juga teknik sampel ulang lanjut, seperti
+Melakukan teknik sampel ulang lanjut, seperti
 \textit{Borderline-SMOTE}
 yang diajukan oleh Han dkk.
 \cite{han2005borderline}
@@ -102,6 +45,19 @@ atau ekstensi SMOTE yaitu \textit{Local-Neighbourhoods SMOTE}, yang diajukan
 oleh Maciejewski dan Stefanowski
 \cite{maciejewski2011local},
 mungkin bisa meningkatkan performansi klasifikasi.
+
+Kelemahan \textit{Random Forest} (RF) yaitu walaupun sejumlah besar pohon-pohon
+individu bisa menghasilkan performansi yang tinggi, hal ini juga bisa menambah
+waktu komputasi yang dibutuhkan untuk klasifikasi terutama untuk pelatihan
+model klasifikasi.
+Untuk dataset yang besar (misalkan lebih dari 10.000 sampel, seperti
+PAN-WVC-10) hal ini membuat waktu pelatihan selesai dalam beberapa jam.
+Salah satu solusinya bisa dengan menggunakan kerangka kerja
+\textit{Cascaded Random Forest} (CRF)
+yang dikembangkan oleh Baumann dkk.
+\cite{baumann2013cascaded}.
+Pendekatan CRF menghasilkan pelatihan model yang lebih cepat dan performansi
+klasifikasi yang meningkat dibandingkan dengan pengklasifikasi RF.
 
 Tesis ini mencoba menjawab permasalahan dataset yang tidak seimbang pada
 PAN-WVC dengan mengkaji teknik sampel ulang dan klasifikasi yang belum pernah

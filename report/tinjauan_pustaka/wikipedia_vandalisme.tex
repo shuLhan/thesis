@@ -42,12 +42,41 @@ Gotze \cite{gotze2014advanced} menggabungkan fitur dari Adler dkk.
 Velasco \cite{mola2012wikipedia}, Potthast dkk. \cite{potthast2008automatic},
 Wang dan McKeown \cite{wang2010got}, dan West dan Lee
 \cite{west2011multilingual} dengan empat fitur tambahan dan perubahan.
-Gotze mengaplikasikan SMOTE untuk mensampel ulang dataset PAN-WVC-10 dan
-PAN-WVC-11.
-Untuk mengevaluasi hasil sampel ulang tersebut Gotze berfokus pada
-pengaplikasian teknik \textit{Logistic Regression} dan \textit{Random Forest};
-dan sebagai tambahan mengikutkan juga pengklasifikasi \textit{RealAdaBoost} dan
+Untuk mengatasi masalah ketimpangan pada korpus, Gotze
+\cite{gotze2014advanced}
+mengaplikasikan teknik
+\textit{random oversampling}
+bernama
+\textit{Synthetic Minority Over-sampling TEchnique} (SMOTE)
+yang diajukan oleh Chawla
+\cite{chawla2002smote},
+dan kombinasi dari SMOTE dan
+\textit{random undersampling}.
+Dataset latihan yang orisinal dan hasil sampel ulang diuji dengan
+pengklasifikasi satu-kelas dan dua-kelas.
+Pengklasifikasi satu-kelas yang diterapkan diantaranya Hempstalk dkk.
+\cite{hempstalk2008one}
+dan SVM oleh Schölkopf dkk.
+\cite{scholkopf1999support}
+yang diimplementasikan oleh Chang dan Lin
+\cite{chang2011libsvm}
+pada korpus PAN-WVC.
+Pengklasifikasi dua-kelas yang diterapkan diantaranya
+\textit{Logistic Regression},
+\textit{RealAdaBoost},
+\textit{Random Forest} (RF), dan
 \textit{Bayesian Network}.
+Hasil percobaan yang didapat memperlihatkan performansi pengklasifikasi
+satu-kelas tidak kompetitif dengan satu pun pengklasifikasi dua-kelas.
+Hal ini bisa disebabkan karena tidak sesuainya kelompok fitur yang digunakan
+untuk menjelaskan suntingan vandalisme, sebagaimana juga parameter pengaturan
+yang tidak sesuai pada pendekatan yang digunakan.
+Hasil dari pelatihan pada dataset orisinal memperlihatkan RF
+lebih unggul dari pengklasifikasi lainnya.
+Hasil dari pelatihan pada dataset hasil sampel ulang memperlihatkan adanya
+peningkatkan pada semua pengklasifikasi kecuali pada RF.
+
+
 
 Dari penelitian di atas, tujuh diantaranya menggunakan PAN-WVC-10
 \cite{adler2010detecting}
