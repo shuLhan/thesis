@@ -13,9 +13,9 @@ Sampel yang jauh dari batas kelas, berada di tengah kelas minoritas mungkin
 berkontribusi sedikit pada klasifikasi.
 Salah satu metode untuk menangani permasalahan ini yaitu dengan hanya
 mengambil sampel pada batas kelas minoritas yang dijadikan untuk
-\textit{oversampling}, seperti yang diajukan oleh Han dkk.
-\cite{han2005borderline} dengan menggunakan metode bernama \textit{Borderline
-SMOTE}.
+\textit{oversampling}, seperti yang diajukan oleh
+Han dkk. \cite{han2005borderline} dengan menggunakan metode bernama
+\textit{Borderline SMOTE}.
 
 \begin{figure}[htbp]
 	\centering
@@ -40,10 +40,10 @@ yang tumpang-tindih dengan sampel kelas mayoritas.
 	\label{fig:smote-problems}
 \end{figure}
 
-Kelemahan lain dari SMOTE yaitu permasalahan \textit{overgeneralization} yang
-begitu saja menggeneralisasi wilayah dari kelas minoritas.
-SMOTE tidak mempertimbangkan distribusi dari sampel pada kelas mayoritas, atau
-adanya \textit{outliers}.
+Kelemahan lain dari SMOTE yaitu permasalahan \textit{overgeneralization},
+menggeneralisasi wilayah dari kelas minoritas.
+SMOTE tidak mempertimbangkan distribusi dari sampel minoritas pada kelas
+mayoritas atau adanya \textit{outliers}.
 
 Untuk mengatasi permasalahan di atas, Maciejewski dkk. memperkenalkan ekstensi
 dari metode SMOTE bernama \textit{Local-neighbourhood SMOTE} atau disingkat
@@ -51,9 +51,9 @@ LNSMOTE \cite{maciejewski2011local} yang menggunakan modifikasi dari
 pendekatan \textit{Safe-Level SMOTE} \cite{bunkhumpornpat2009safe}.
 Pada metode \textit{Safe-level SMOTE} keberadaan sampel mayoritas
 diperhitungkan sebelum membuat sampel sintetis dengan menghitung sebuah
-koefisien khusus yang disebut \textit{safe level}.
+koefisien khusus yang disebut \textit{safe-level}.
 Untuk setiap sampel dari kelas minoritas, dihitung jumlah sampel kelas
-minoritas di antara \textit{k-nearest-neighbors} (KNN).
+minoritas disekitarnya (\textit{k-nearest-neighbors} atau KNN).
 Jika nilainya sama atau mendekati $ 0 $, sampel tersebut dianggap sebagai
 \textit{noise}.
 Jika nilainya mendekati $ k $, maka sampel tersebut bisa dikatakan berada
@@ -148,8 +148,10 @@ Hal ini supaya bisa mengontrol tingkat ekspansi dari kelas minoritas dengan
 cara dinamis, memperhitungkan distribusi lokal dari sampel.
 \end{itemize}
 
-Algoritma LNSMOTE yang digunakan pada implementasi tesis berdasarkan pada
+Fungsi LNSMOTE yang digunakan pada implementasi tesis berdasarkan pada
 makalah Maciejewski dkk.
 \cite{maciejewski2011local}
-yang dapat dilihat pada lampiran
-\ref{lampiran:alg_lnsmote}.
+yang dapat dilihat pada algoritma
+\ref{alg:lnsmote}.
+
+\input{lampiran/alg_lnsmote}

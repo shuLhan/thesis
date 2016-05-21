@@ -1,14 +1,15 @@
 Metode \textit{Synthetic Minority Over-sampling Technique} (SMOTE)
 \cite{chawla2002smote} menggunakan pendekatan \textit{over-sampling} yang mana
-kelas minoritas ditambah dengan membuat sampel sintetis bukan dengan
+kelas minoritas ditambah dengan membuat sampel sintetis, bukan dengan
 mengganti sampel dari kelas mayoritas menjadi kelas minoritas.
-Sampel sintetis dibuat lewat aplikasi, dengan beroperasi pada
-ruang fitur bukan pada ruang data.
+Sampel sintetis dibuat lewat aplikasi dengan beroperasi pada
+ruang fitur.
 Kelas minoritas ditambah dengan mengambil setiap sampel-sampel dari kelas
-minoritas dan membuat sampel sintetis diantara segmen garis yang menggabungkan
-setiap/semua \textit{k-nearest-neighbors} dari kelas minoritas.
-Bergantung kepada jumlah \textit{over-sampling} yang dibutuhkan, instan dari
-\textit{k-nearest-neighbors} dipilih secara acak.
+minoritas dan membuat sampel sintetis di antara segmen garis yang menghubungkan
+setiap tetangga terdekat (\textit{k-nearest-neighbors}, KNN) dari kelas
+minoritas.
+Instan dari KNN dipilih secara acak, bergantung dari jumlah
+\textit{over-sampling} yang dibutuhkan.
 
 \begin{figure}[htbp]
 \centering
@@ -16,11 +17,11 @@ Bergantung kepada jumlah \textit{over-sampling} yang dibutuhkan, instan dari
 \fbox{
 	\includegraphics[keepaspectratio=true,scale=0.35]{SMOTE-example}
 }
-	\caption{Ilustrasi pembuatan sampel sintetis pada SMOTE.
-	\textit{p} adalah sampel minoritas, \textit{n} adalah salah satu
-	\textit{k-nearest-neighbors} dari \textit{p}.
-	Sampel sintetis yang baru akan berada digaris antara \textit{p} dan
-	\textit{n}.
+	\caption{
+	Ilustrasi pembuatan sampel sintetis pada SMOTE.
+	$p$ adalah sampel minoritas, $n$ adalah salah satu
+	\textit{k-nearest-neighbors} dari $p$.
+	Sampel sintetis yang baru akan berada digaris antara $p$ dan $n$.
 	}
 	\label{fig:smote}
 \end{figure}
@@ -38,27 +39,6 @@ Cara ini membuat sampel secara acak pada segmen garis antara dua fitur yang
 terpilih, seperti yang terlihat pada gambar \ref{fig:smote}.
 Pendekatan ini secara efektif mendorong wilayah pembelajaran dari kelas
 minoritas menjadi lebih besar tanpa menyebabkan \textit{overfitting}.
+Untuk fungsi selengkapnya dari SMOTE bisa dilihat pada algoritma \ref{alg:smote}.
 
-Ambil contoh sebuah sampel (6,4) dan (4,3) sebagai tetangga terdekatnya.
-(6,4) adalah sampel yang akan dicari \textit{k-nearest-neighbors}-nya.
-(4,3) adalah salah satu dari \textit{k-nearest-neighbors}-nya.
-Misalkan,
-\[
-\begin{matrix}
-f1_1 = 6 & f1_2 = 4 \\
-f2_1 = 4 & f2_2 = 3
-\end{matrix}
-\]
-\[
-\begin{matrix}
-f2_1 - f1_1 = 4 - 6 = -2 \\
-f2_2 - f1_2 = 3 - 4 = -1
-\end{matrix}
-\]
-
-Sampel baru dihasilkan dengan,
-\[
-(f1', f2') = (6,4) + random(0-1) * (-2,-1)
-\]
-
-Fungsi \textit{random(0-1)} menghasilkan bilangan ril acak dari 0 sampai 1.
+\input{lampiran/alg_smote}
