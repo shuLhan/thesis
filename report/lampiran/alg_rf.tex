@@ -1,5 +1,5 @@
-\begin{algorithm}[htbp]
-\caption{Random Forest}
+\begin{center}
+\captionof{algorithm}{Random Forest}
 \label{alg:rf}
 	\begin{algorithmic}[1]
 \Require \\
@@ -47,16 +47,7 @@ $ m $: jumlah fitur acak \\
 
 	\State \Return $predictions$
 \EndFunction
-	\algstore{rf_break}
-	\end{algorithmic}
-\end{algorithm}
-
-\begin{algorithm}[htbp]
-	\caption{Random Forest bagian 2}
-	\begin{algorithmic}[1]
-	\algrestore{rf_break}
-
-
+\\
 \Function{ForestVotes}{$ forest, sample, idx $}
 	\State $ votes \gets nil $
 	\For{\textbf{each} $ tree $ \textbf{in} $forest$ }
@@ -76,4 +67,4 @@ $ m $: jumlah fitur acak \\
 	\State \Return $ votes $
 \EndFunction
 	\end{algorithmic}
-\end{algorithm}
+\end{center}

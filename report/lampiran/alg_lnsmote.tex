@@ -1,5 +1,5 @@
-\begin{algorithm}[htbp]
-	\caption{Local Neighbourhood SMOTE}
+\begin{center}
+	\captionof{algorithm}{Local Neighbourhood SMOTE}
 	\label{alg:lnsmote}
 	\begin{algorithmic}[1]
 \Require \\
@@ -43,15 +43,7 @@ o: rasio \textit{over-sampling}, jumlah sampel sintetis yang akan dibuat \\
 
 	\State \Return $ x_{new} $
 \EndFunction
-	\algstore{lnsmote_break}
-	\end{algorithmic}
-\end{algorithm}
-
-\begin{algorithm}[htbp]
-	\caption{Local Neighbourhood SMOTE bagian 2}
-	\begin{algorithmic}[1]
-	\algrestore{lnsmote_break}
-
+\\
 \Function{CanCreate}{$ S, p, n $}
 	\State $ slp \gets \Call{SafeLevel}{S, p} $
 	\State $ sln \gets \Call{SafeLevel2}{S, p, n} $
@@ -97,4 +89,4 @@ o: rasio \textit{over-sampling}, jumlah sampel sintetis yang akan dibuat \\
 	\State \Return{$ \delta $}
 \EndFunction
 	\end{algorithmic}
-\end{algorithm}
+\end{center}
