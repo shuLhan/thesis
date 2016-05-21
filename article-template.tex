@@ -41,9 +41,15 @@
 \usepackage{mathtools}
 %% arithmetic
 \usepackage{calc}
+
 %% algorithm
 \usepackage{algorithm}
 \usepackage{algpseudocode}
+
+\makeatletter
+	\renewcommand{\ALG@name}{Algoritma}
+\makeatother
+
 %% multiple columns
 \usepackage{multicol}
 %% Change the margin
@@ -114,6 +120,7 @@
 	me-mi-lih
 	me-ne-rap-kan
 	meng-a-pli-ka-si-kan
+	meng-ge-ne-ra-li-sa-si
 	me-ning-kat-kan
 	me-nye-dia-kan
 	me-nye-im-bang-kan
@@ -190,14 +197,20 @@
 {1em}
 {}
 
-\titleformat{\section}[hang]
-{\bfseries\large}
+\titleformat{\section}
+{\normalfont\bfseries}
 {\thesection}
+{1em}{}
+
+\titleformat{\subsection}
+{\normalfont\bfseries}
+{\thesubsection}
 {1em}{}
 
 %% Set spacing for sections.
 \titlespacing{\chapter}{0ex}{0ex}{1.5em}
 \titlespacing{\section}{0ex}{0ex}{0em}
+\titlespacing{\subsection}{0ex}{0ex}{0em}
 
 %% Set roman on chapter number.
 \def\thechapter{\Roman{chapter}}
@@ -338,4 +351,19 @@
 	\lstinputlisting[caption=#2,style=data,linerange={1-10}]
 		{/home/ms/go/work/src/github.com/shuLhan/#2}
 }
+
+%% Caption for algorithm
+\DeclareCaptionFormat{algor}{%
+	\hrulefill
+	\par
+	\offinterlineskip
+	\vskip1pt
+	\textbf{#1#2}#3
+	\offinterlineskip
+	\hrulefill
+}
+
+\DeclareCaptionStyle{algori}{singlelinecheck=off,format=algor,labelsep=space}
+\captionsetup[algorithm]{style=algori}
+
 %%}}}
