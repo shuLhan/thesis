@@ -41,13 +41,40 @@
 \newpage
 \pagenumbering{arabic}
 
-\input{pendahuluan}
+%%
+%% BAB I: PENDAHULUAN
+%%
+\chapter{Pendahuluan}
+\label{chapter:pendahuluan}
 
-%%{{{ Tinjauan Pustaka
+\section{Latar Belakang}
+\label{sec:latar_belakang}
+\input{bab_01/latar_belakang}
+
+\section{Rumusan Masalah}
+\label{sec:rumusan_masalah}
+\input{bab_01/rumusan_masalah}
+
+\section{Tujuan}
+\label{sec:tujuan}
+\input{bab_01/tujuan}
+
+\section{Batasan Masalah}
+\label{sec:batasan_masalah}
+\input{bab_01/batasan_masalah}
+
+\section{Metodologi}
+\label{sec:metodologi}
+\input{bab_01/metodologi}
+
+\section{Sistematika Penulisan}
+\label{sec:sistematika_penulisan}
+\input{bab_01/sistematika_penulisan}
+
+%%
+%% BAB II: TINJAUAN PUSTAKA
+%%
 \chapter{Tinjauan Pustaka}
-
-\section{Wikipedia Vandalisme}
-\input{tinjauan_pustaka/wikipedia_vandalisme}
 
 \section{SMOTE}
 \input{tinjauan_pustaka/smote}
@@ -60,20 +87,24 @@
 
 \section{\textit{Cascaded Random Forest}}
 \input{tinjauan_pustaka/crf}
-%%}}}
 
+\section{Pekerjaan Sebelumnya}
+\input{tinjauan_pustaka/wikipedia_vandalisme}
 
-\chapter{Metodologi Penelitian}
+%%
+%% BAB III
+%%
+\chapter{Proses Deteksi Vandalisme}
 \input{metodologi_penelitian}
 
 \section{Persiapan Data}
 \label{persiapan_data}
 \input{metodologi_penelitian/persiapan_data}
 
-\subsection{Persiapan dataset pelatihan}
+\subsection{Persiapan Dataset Pelatihan}
 \input{metodologi_penelitian/persiapan_data_pelatihan}
 
-\subsection{Persiapan dataset pengujian}
+\subsection{Persiapan Dataset Pengujian}
 \input{metodologi_penelitian/persiapan_data_pengujian}
 
 \section{Fitur Vandalisme}
@@ -91,8 +122,10 @@
 \section{Pelatihan dan Pengujian}
 \input{metodologi_penelitian/pelatihan_dan_pengujian}
 
-
-\chapter{Hasil dan Analisis}
+%%
+%% BAB IV: EVALUASI
+%%
+\chapter{Evaluasi}
 
 \input{hasil}
 \input{analisis}
@@ -103,8 +136,9 @@
 \addcontentsline{toc}{chapter}{DAFTAR PUSTAKA}
 \printbibliography
 
-%%{{{ Lampiran
-
+%%
+%% LAMPIRAN
+%%
 \titleformat{\chapter}[hang]
 {\bfseries\large\centering}
 {Lampiran \thechapter}
@@ -115,22 +149,8 @@
 \chapter*{LAMPIRAN}
 \addcontentsline{toc}{chapter}{LAMPIRAN}
 
-\chapter{Algoritma LNSMOTE}
-\label{lampiran:alg_lnsmote}
-\input{lampiran/alg_lnsmote}
-
-\chapter{Algoritma Random Forest}
-\label{lampiran:alg_rf}
-\input{lampiran/alg_rf}
-
-\chapter{Algoritma Cascaded Random Forest}
-\label{lampiran:alg_crf}
-\input{lampiran/alg_crf}
-
 \chapter{Daftar Kategori Kata dan Token}
 \label{lampiran:daftar_token_dan_kata}
 \input{lampiran/daftar_token_dan_kata}
-
-%%}}}
 
 \end{document}
