@@ -9,15 +9,14 @@ Pohon keputusan yang digunakan dalam RF dapat menggunakan ID3
 Dalam tesis ini, dan umumnya pada implementasi RF, menggunakan CART sebagai
 pohon keputusan.
 
-Ada tiga parameter utama dalam pembentukan RF.
-Parameter pertama yaitu jumlah pohon yang akan dibangun dalam \textit{forest}
-(katakanlah $n$),
-parameter kedua yaitu persentase dari sampel pelatihan yang digunakan untuk
-membangun pohon (katakanlah $b$),
-dan parameter ketiga yaitu jumlah fitur acak yang juga digunakan untuk
-membangun pohon (katakanlah $m$).
-Ketiga parameter diatur sebelum memulai pembangunan RF dan nilainya sama untuk
-semua pohon.
+RF memiliki tiga parameter utama, yaitu
+jumlah pohon yang akan dibangun dalam \textit{forest} (katakanlah $n$),
+persentase sampel pelatihan yang digunakan untuk membangun pohon (katakanlah
+$b$),
+dan jumlah fitur acak yang juga digunakan untuk membangun pohon (katakanlah
+$m$).
+Ketiga parameter diatur sebelum memulai pembangunan model dan nilainya sama
+untuk semua pohon.
 
 Persentase dari sampel pelatihan yang diambil secara acak umumnya dua per tiga
 dari sampel keseluruhan, sehingga meninggalkan sepertiganya sebagai
