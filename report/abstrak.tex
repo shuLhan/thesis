@@ -21,8 +21,8 @@ Tesis ini membahas deteksi vandalisme menggunakan pembelajaran mesin
 dengan menerapkan metode klasifikasi
 \textit{Cascaded Random Forest} (CRF)
 yang dilatih pada dataset
-\textit{Wikipedia Vandalism Corpus 2010} (WVC2010)
-yang
+\textit{Wikipedia Vandalism Corpus 2010}
+yang telah
 disampel ulang dengan
 \textit{Local Neighbourhood Synthetic Minority Over-sampling Technique}
 (LNSMOTE).
@@ -30,18 +30,14 @@ Kedua metode tersebut dibandingkan dengan klasifikasi
 \textit{Random Forest} (RF)
 dan teknik sampel ulang SMOTE.
 Hasil sampel ulang dan pemodelan diuji dengan dataset
-\textit{Wikipedia Vandalism Corpus 2011} (WVC2011)
+\textit{Wikipedia Vandalism Corpus 2011}
 menunjukan hasil sampel ulang dengan LNSMOTE meningkatkan laju
-\textit{true-positive} daripada SMOTE pada pengklasifikasi RF dan CRF, namun
-pada CRF, LNSMOTE meningkatkan laju \textit{false-positive} lebih tinggi
-daripada SMOTE.
-Sementara pada pengklasifikasi RF laju \textit{false-positive} dari hasil
-sampel ulang LNSMOTE tidak begitu signifikan dengan SMOTE.
-Dari segi performansi, CRF dengan sampel ulang SMOTE dengan 100 tingkat dan 2
-pohon memberikan hasil yang paling baik dengan nilai AUC yaitu $0,8694$.
+\textit{true-positive} lebih tinggi daripada dataset yang tidak disampel ulang
+dan yang disampel ulang dengan SMOTE pada kedua pengklasifikasi.
+Dari segi performansi, CRF dengan sampel ulang LNSMOTE dengan 200 tingkat dan 1
+pohon memberikan hasil yang paling baik dengan nilai TPR yaitu $0,9904$.
 Dari segi kecepatan pemodelan pengklasifikasi CRF lebih cepat 1,6 kali daripada
 RF pada data yang telah disampel ulang.
-
 
 Kata kunci: wikipedia, vandalisme, dataset timpang, dataset sampel ulang,
 \textit{cascaded random forest}
