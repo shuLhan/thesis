@@ -1,0 +1,11 @@
+\subsection{Analysis of Resampling}
+
+The effect of resampling SMOTE and LNSMOTE is different between RF and CRF.
+On RF, LNSMOTE give a better accuracy than SMOTE, with average increased value
+is 0.4\%.
+On CRF, SMOTE overall give better performance than LNSMOTE with the highest AUC
+value is returned by CRF on SMOTE with 100 stages and 2 trees.
+SMOTE and LNSMOTE increase F-Measure and accuracy on RF, but on CRF is vice
+versa.
+The drawback of using LNSMOTE is increased value of FPR is higher than using
+SMOTE, as illustrated at ROC curve in figure \ref{fig:roc} (c) and (d).

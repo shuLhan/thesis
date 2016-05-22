@@ -1,0 +1,20 @@
+\begin{table}[hb!]
+\caption{Dataset for training and testing.}
+\centering
+\begin{tabular}{|| c | l | c | c | c ||}
+\hline
+\multirow{2}{*}{Type} & \multirow{2}{*}{Resampling mode}
+	& \multicolumn{3}{c||}{Number of sample} \\
+\cline{3-5}
+    & & Vandalism & Regular & Total \\
+\hline
+\hline
+\multirow{3}{*}{Training} & -       &  2.394 & 30.045 & 32.439 \\
+                              & SMOTE   & 27.728 & 30.045 & 58.773 \\
+                              & LNSMOTE & 28.588 & 30.045 & 58.633 \\
+\hline
+Testing & - & 1.143 & 8.842 & 9.985 \\
+\hline
+\end{tabular}
+\label{table:dataset}
+\end{table}

@@ -1,0 +1,39 @@
+\DTLsetseparator{;}
+\DTLloaddb{stats}{./stats.csv}
+\DTLmaxforcolumn{stats}{TPR}{\maxtpr}
+\DTLminforcolumn{stats}{FPR}{\minfpr}
+\DTLmaxforcolumn{stats}{TNR}{\maxtnr}
+\DTLmaxforcolumn{stats}{Presisi}{\maxprec}
+\DTLmaxforcolumn{stats}{F-Measure}{\maxfm}
+\DTLmaxforcolumn{stats}{Akurasi}{\maxacc}
+\DTLmaxforcolumn{stats}{AUC}{\maxauc}
+
+\begin{table}[bp]
+\caption{Performance of Random Forest and Cascaded Random Forest}
+\centering
+\begin{tabular}{llrrrrrrr}
+\hline
+\textbf{Classifier} &
+\textbf{Dataset} &
+\textbf{TPR}
+\DTLforeach*{stats}{%
+	\cl=Klasifikasi,%
+	\ds=Dataset,%
+	\tpr=TPR%
+}{%
+	\DTLifnullorempty{\cl}
+		{\\ \cline{2-3}}
+		{\\ \hline \hline}
+	\DTLifnullorempty{\cl}
+		{}
+		{
+			\multirow{3}{2cm}{\cl}
+		}
+	& \ds
+	& \DTLifnumeq{\tpr}{\maxtpr}{\textbf{\tpr}}{\tpr}
+}
+\\
+\hline
+\end{tabular}
+\label{tab:stats}
+\end{table}

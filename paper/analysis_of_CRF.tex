@@ -1,0 +1,135 @@
+\subsection{Analysis of CRF}
+
+%%{{{ FIGURE:PRAUC
+\begin{figure*}[htp]
+\centering
+\begin{tikzpicture}
+	\pgfplotsset{
+		width=4.5cm,
+	}
+	\matrix{
+		\begin{axis}[
+			title=(a),
+			xlabel=$Recall$,
+			ylabel=$Precision$,
+			legend columns=-1,
+			legend entries={Without resampling\ ,SMOTE\ ,LNSMOTE},
+			legend to name=rf_crf_prauc_legend
+		]
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/rf.csv};
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/rf_smote.csv};
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/rf_lnsmote.csv};
+		\end{axis}
+		&
+		\begin{axis}[
+			title=(b),
+			xlabel=$Recall$,
+		]
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/crf_200_1.csv};
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/crf_200_1_smote.csv};
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/crf_200_1_lnsmote.csv};
+			title=(b),
+		\end{axis}
+		&
+		\begin{axis}[
+			title=(c),
+			xlabel=$Recall$,
+		]
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/crf_100_2.csv};
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/crf_100_2_smote.csv};
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/crf_100_2_lnsmote.csv};
+		\end{axis}
+		&
+		\begin{axis}[
+			title=(d),
+			xlabel=$Recall$,
+		]
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/crf_50_4.csv};
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/crf_50_4_smote.csv};
+			\addplot table[
+				x={TPR},
+				y={PREC},
+			]
+			{../result/crf_50_4_lnsmote.csv};
+		\end{axis}
+		\\
+	};
+\end{tikzpicture}
+\ref{rf_crf_prauc_legend}
+\caption{
+PR-AUC curve for RF and CRF classifier on three dataset.
+(a) RF with 200 trees
+(b) CRF with 200 stages 1 tree
+(c) CRF with 100 stages 2 trees
+(d) CRF with 50 stages 4 trees
+}
+\label{fig:prauc}
+\end{figure*}
+%%}}}
+
+The primary focus of CRF classifier is on learning the negative samples.
+In each iteration stage, model is tested with negative samples set, which was
+the output from the previous stage.
+Negative samples where deleted from training set and become a test set for the
+next stage.
+In RF no samples were deleted when building the model.
+CRF made training set that was formerly bias to negative class (majority),
+gradually in each stage become equal
+So that, using resampling on CRF classifier will not help the classifier
+performance, instead it will decrease the accuracy model after training.
+This effect can be seen on PR-AUC curve on figure \ref{fig:prauc}.
+
+In figure \ref{fig:prauc} (b), which is CRF with 200 stages and 1 tree, the
+performance without resampling is better than other dataset, with AUC
+value $0.8673$, and the lowest performance came from LNSMOTE.
+When number of tree in each stage increased by 2 and number stage decreased to
+100 (to make the total number of tree is 200), SMOTE returned the highest AUC
+among all models which is $0.8694$, while LNSMOTE still with low performance,
+as illustrated in figure \ref{fig:prauc} (b).
+In the last test with 50 stages and 4 tress, the highest AUC returned by SMOTE,
+but overall average performance returned by CRF without resampling, with
+highest F-Measure $0.5353$.

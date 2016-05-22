@@ -1,0 +1,169 @@
+\subsection{Analysis of Vandalism Classifiers}
+
+%%{{{ FIGURE:ROCPOINTS
+\begin{figure*}[htp]
+\centering
+\begin{tikzpicture}
+	\pgfplotsset{
+		xtick distance=0.1,
+		ytick distance=0.1,
+	}
+	\begin{axis}[
+		xlabel=$FPR$,
+		ylabel=$TPR$,
+		legend columns=3,
+		legend entries={
+			RF,
+			RF-SMOTE,
+			RF-LNSMOTE,
+			CRF-200-1,
+			CRF-200-1-SMOTE,
+			CRF-200-1-LNSMOTE,
+			CRF-100-2,
+			CRF-100-2-SMOTE,
+			CRF-100-2-LNSMOTE,
+			CRF-50-4,
+			CRF-50-4-SMOTE,
+			CRF-50-4-LNSMOTE,
+		},
+		legend to name=class_legend
+	]
+		\addplot[
+			scatter,
+			only marks,
+			point meta=explicit symbolic,
+			every mark/.append style={
+				/tikz/mark size=3pt
+			},
+			scatter/classes={
+				rf-noresampling={
+					mark=text,
+					text mark=$\Box$
+				},
+				rf-smote={
+					mark=text,
+					text mark=$\boxplus$
+				},
+				rf-lnsmote={
+					mark=text,
+					text mark=$\boxtimes$
+				},
+				crf-200-1={
+					mark=text,
+					text mark=$\triangle$
+				},
+				crf-200-1-smote={
+					mark=text,
+					text mark=$\triangleleft$
+				},
+				crf-200-1-lnsmote={
+					mark=text,
+					text mark=$\triangleright$
+				},
+				crf-100-2={
+					mark=text,
+					text mark=$\medcircle$
+				},
+				crf-100-2-smote={
+					mark=text,
+					text mark=$\oplus$
+				},
+				crf-100-2-lnsmote={
+					mark=text,
+					text mark=$\otimes$
+				},
+				crf-50-4={
+					mark=text,
+					text mark=$\Diamond$
+				},
+				crf-50-4-smote={
+					mark=text,
+					text mark=$\diamondplus$
+				},
+				crf-50-4-lnsmote={
+					mark=text,
+					text mark=$\diamondtimes$
+				}
+			},
+		]
+		table[
+			x={FPR},
+			y={TPR},
+			meta=klasifikasi,
+		]
+		{../result/cm.csv};
+
+		\addplot[
+			gray
+		]
+		coordinates{
+			(0,0)
+			(1,1)
+		};
+		\addplot[
+			gray
+		]
+		coordinates{
+			(0,1)
+			(1,0)
+		};
+	\end{axis}
+\end{tikzpicture}
+\ref{class_legend}
+\caption{
+ROC points for all classifiers and dataset.
+CRF-200-1 is CRF with 200 stages and 1 tree,
+CRF-100-2 is CRF with 100 stages and 2 trees, and
+CRF-50-4 is CRF with 50 stages and 4 trees.
+}
+\label{fig:rocpoints}
+\end{figure*}
+%%}}}
+
+To easily compare all classifiers, all of their performance is mapped as point
+in ROC space as illustrated in figure \ref{fig:rocpoints}.
+On the bottom left is RF classifier, from bottom to top, RF without
+resampling ($\Box$) with TPR $0.165$ and FPR $0.001$, RF on SMOTE ($\boxplus$)
+with TPR $0.207$ and FPR $0.004$, and at the top is RF on LNSMOTE ($\boxtimes$)
+with TPR $0.235$ and FPR $0.005$.
+RF return with lowest TPR and FPR among all other classifiers.
+Resampling with SMOTE on average increase the TPR by $0.25$ and FPR by 4 times
+for RF.
+Resampling with LNSMOTE on average increase the TPR by $0.4$ and FPR 5 times
+for RF.
+
+CRF classifier with 200 stages 1 tree (CRF-200-1) give the highest TPR, with
+ROC point is on top of all classifiers.
+In order from left to bottom, CRF-200-1 without resampling ($\triangle$) with
+TPR $0.966$ and FPR $0.467$, CRF-200-1 on SMOTE ($\triangleleft$) in the middle
+with TPR $0.979$ and FPR $0.63$, and CRF-200-1 on LNSMOTE ($\triangleright$) on
+the right side with TPR $0.99$ and FPR 0.85.
+CRF-200-1 will return positive sample with highest probabilites but also with
+highest false-positive.
+Also, the effect of SMOTE and LNSMOTE can be viewed on FPR values.
+Resampling with SMOTE on average increase the TPR by $0.1$ times and $0.4$
+times for FPR.
+Resampling with LNSMOTE on average increase the TPR by $0.3$ times and FPR
+$0.8$ times.
+
+CRF with 100 stages and 2 tress (CRF-100-2) mapped in the top-middle of ROC
+space, with marked as bullet points.
+CRF-100-2 without resampling ($\medcircle$) reside at the bottom left with TPR
+$0.812$ and FPR $0.24$.
+CRF-100-2 on SMOTE ($\oplus$) reside in the middle, with highest AUC, and TPR
+$0.903$ and FPR $0.36$.
+CRF-100-2 on LNSMOTE ($\otimes$) with TPR $0.95$ and FPR $0.585$.
+Resampling with SMOTE on average increase the TPR by $0.11$ times and FPR by
+$0.5$ times for CRF-100-2.
+Resampling with LNSMOTE on average increase the TPR by $0.17$ times and FPR by
+$1.4$ times for CRF-100-2.
+
+CRF classifiers with 50 stages and 4 trees (CRF-50-4) mapped on the middle left
+of ROC space, which is marked by diamond.
+CRF-50-4 without resampling ($\Diamond$) return TPR $0.607$ and FPR $0.08$.
+CRF-50-4 on SMOTE ($\diamondplus$) return TPR $0.783$ and FPR $0.223$.
+CRF-50-4 on LNSMOTE ($\diamondtimes$) return TPR $0.895$ and FPR $0.388$.
+Resampling with SMOTE on average increase TPR by $0.3$ times and also increase
+FPR by $1.75$ times for CRF-50-4.
+Resampling with LNSMOTE on average increase TPR by $0.48$ times and also
+increase FPR by $3.75$ times for CRF-50-4.

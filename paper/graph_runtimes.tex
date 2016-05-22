@@ -1,0 +1,53 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[font=\scriptsize]
+	\begin{axis}[
+		width=7cm,
+		ymax=250,
+		ybar,
+		ylabel=Running time (minutes),
+		symbolic x coords={Without resampling, SMOTE, LNSMOTE},
+		xtick=data,
+		nodes near coords,
+		every node near coord/.append style={font=\tiny},
+		enlarge x limits=0.24,
+		enlarge y limits=0,
+		legend style={
+			at={(0.5,-0.15)},
+			anchor=north,
+			legend columns=-1
+		},
+	]
+		%% RF
+		\addplot[pattern = dots] coordinates {
+			(Without resampling, 52.5)
+			(SMOTE, 217.7)
+			(LNSMOTE, 199.5)
+		};
+
+		%% CRF-200-1
+		\addplot[pattern=north east lines] coordinates {
+			(Without resampling, 3.5)
+			(SMOTE, 74.4)
+			(LNSMOTE, 61.9)
+		};
+
+		%% CRF-100-2
+		\addplot[pattern=horizontal lines] coordinates {
+			(Without resampling, 3.6)
+			(SMOTE, 74.6)
+			(LNSMOTE, 67.9)
+		};
+
+		%% CRF-50-4
+		\addplot coordinates {
+			(Without resampling, 4.2)
+			(SMOTE, 82.5)
+			(LNSMOTE, 76.6)
+		};
+	\legend{RF, CRF-200-1, CRF-100-2, CRF-50-4}
+	\end{axis}
+\end{tikzpicture}
+\caption{Running time for each classifer on different dataset.}
+\label{graph:runtimes}
+\end{figure}

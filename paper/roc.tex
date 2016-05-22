@@ -1,0 +1,109 @@
+\begin{figure*}[htp]
+\centering
+\begin{tikzpicture}
+	\pgfplotsset{
+		width=4.5cm
+	}
+	\matrix{
+		\begin{axis}[
+			title=(a),
+			ylabel=$TPR$,
+			xlabel=$FPR$,
+			legend columns=-1,
+			legend entries={Without resampling\ ,SMOTE\ ,LNSMOTE},
+			legend to name=roc_legend
+		]
+			\addplot table[
+				x={FPR},
+				y={TPR},
+			]
+			{../result/rf.csv};
+			\addplot table[
+				x={FPR},
+				y={TPR},
+			]
+			{../result/rf_smote.csv};
+			\addplot table[
+				x={FPR},
+				y={TPR},
+			]
+			{../result/rf_lnsmote.csv};
+		\end{axis}
+		&
+		\begin{axis}[
+			title=(b),
+			xlabel=$FPR$,
+		]
+			\addplot table[
+				x={FPR},
+				y={TPR},
+			]
+			{../result/crf_200_1.csv};
+			\addplot table[
+				x={FPR},
+				y={TPR},
+			]
+			{../result/crf_200_1_smote.csv};
+			\addplot table[
+				x={FPR},
+				y={TPR},
+			]
+			{../result/crf_200_1_lnsmote.csv};
+			title=(b),
+		\end{axis}
+		&
+		\begin{axis}[
+			title=(c),
+			xlabel=$FPR$,
+		]
+			\addplot table[
+				x={FPR},
+				y={TPR},
+			]
+			{../result/crf_100_2.csv};
+			\addplot table[
+				x={FPR},
+				y={TPR},
+			]
+			{../result/crf_100_2_smote.csv};
+			\addplot table[
+				x={FPR},
+				y={TPR},
+			]
+			{../result/crf_100_2_lnsmote.csv};
+		\end{axis}
+		&
+		\begin{axis}[
+			title=(d),
+			xlabel=$FPR$,
+		]
+			\addplot table[
+				x={FPR},
+				y={TPR},
+			]
+			{../result/crf_50_4.csv};
+			\addplot table[
+				x={FPR},
+				y={TPR},
+			]
+			{../result/crf_50_4_smote.csv};
+			\addplot table[
+				x={FPR},
+				y={TPR},
+			]
+			{../result/crf_50_4_lnsmote.csv};
+		\end{axis}
+		\\
+	};
+\end{tikzpicture}
+\ref{roc_legend}
+\caption{
+ROC curve for RF and CRF classifiers on three dataset.
+(a) RF with 200 trees
+(b) CRF with 200 stages 1 tree
+(c) CRF with 100 stages 2 trees
+(d) CRF with 50 stages 4 trees
+}
+\label{fig:roc}
+\end{figure*}
+

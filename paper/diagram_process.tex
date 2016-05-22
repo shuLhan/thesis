@@ -1,0 +1,103 @@
+\begin{figure}[!t]
+\centering
+\resizebox {\columnwidth} {!} {
+\begin{tikzpicture}[
+	nodes = {
+		align = center
+	},
+	lines/.style={
+		line width=2pt,
+		>=latex
+	},
+	data/.style={
+		trapezium,
+		trapezium left angle=70,
+		trapezium right angle=110,
+		draw=black,
+		text centered
+	},
+	proc/.style={
+		rectangle,
+		draw=black,
+		text centered
+	}
+]
+	\node[data] (wvc10_raw) {
+		Original dataset\\
+		(\textit{PAN-WVC-10})
+	};
+	\node[proc] (wvcgen_10raw) [below=of wvc10_raw] {
+		Feature\\
+		generation
+	};
+
+	\node[data] (wvc10_fs) [below=of wvcgen_10raw] {
+		Feature set\\
+		without resampling
+	};
+	\node[proc] (smote)         [below right=of wvc10_fs] {
+		Resampling with\\SMOTE
+	};
+	\node[proc] (lnsmote)       [right=of smote] {
+		Resampling with\\LNSMOTE
+	};
+	\node[data] (wvc10_smote)   [below=of smote] {
+		Feature set\\SMOTE
+	};
+	\node[data] (wvc10_lnsmote) [below=of lnsmote] {
+		Feature set\\LNSMOTE
+	};
+
+	\node[proc] (c2)  [below=of wvc10_smote] {Classifier};
+	\node[proc] (c3)  [below=of wvc10_lnsmote] {Classifier};
+	\node[proc] (c1)  [left=of c2,xshift=-10pt] {Classifier};
+
+	\node[proc] (m2)  [below=of c2] {Model};
+	\node[proc] (m3)  [below=of c3] {Model};
+	\node[proc] (m1)  [below=of c1] {Model};
+
+	\node[data] (o2)  [below=of m2] {Result with\\ SMOTE};
+	\node[data] (o3)  [below=of m3] {Result with\\ LNSMOTE};
+	\node[data] (o1)  [below=of m1] {Result without\\ resampling};
+
+	\node[data] (testset) [right=of c3,xshift=1cm] {
+		Test set
+	};
+	\node[proc] (wvcgen_11raw) [above=of testset] {
+		Feature\\generation
+	};
+	\node[data] (wvc11_raw) [above=of wvcgen_11raw] {
+		Original test set\\
+		(\textit{PAN-WVC-11})
+	};
+
+	\draw[lines,->] (wvc10_raw) -- (wvcgen_10raw);
+	\draw[lines,->] (wvcgen_10raw) -- (wvc10_fs);
+	\draw[lines,->] (wvc10_fs) -| (smote);
+	\draw[lines,->] (wvc10_fs) -| (lnsmote);
+	\draw[lines,->] (smote) -- (wvc10_smote);
+	\draw[lines,->] (lnsmote) -- (wvc10_lnsmote);
+	\draw[lines,->] (wvc10_fs) -- (c1);
+	\draw[lines,->] (wvc10_smote) -- (c2);
+	\draw[lines,->] (wvc10_lnsmote) -- (c3);
+	\draw[lines,->] (c1) -- (m1);
+	\draw[lines,->] (c2) -- (m2);
+	\draw[lines,->] (c3) -- (m3);
+
+	\draw[lines,->] (wvc11_raw) -- (wvcgen_11raw);
+	\draw[lines,->] (wvcgen_11raw) -- (testset);
+
+	\draw[lines,dashed,->] (testset) -- (m1);
+	\draw[lines,dashed,->] (testset) -- (m2);
+	\draw[lines,dashed,->] (testset) -- (m3);
+
+	\draw[lines,->] (m1) -- (o1);
+	\draw[lines,->] (m2) -- (o2);
+	\draw[lines,->] (m3) -- (o3);
+\end{tikzpicture}
+}
+\caption{
+	Process on implementating vandalism detection
+}
+\label{fig:proses}
+\end{figure}
