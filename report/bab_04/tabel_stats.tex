@@ -1,0 +1,61 @@
+\DTLsetseparator{;}
+\DTLloaddb{stats}{../result/stats.csv}
+
+\DTLmaxforcolumn{stats}{TPR}{\maxtpr}
+\DTLminforcolumn{stats}{FPR}{\minfpr}
+\DTLmaxforcolumn{stats}{TNR}{\maxtnr}
+\DTLmaxforcolumn{stats}{Presisi}{\maxprec}
+\DTLmaxforcolumn{stats}{F-Measure}{\maxfm}
+\DTLmaxforcolumn{stats}{Akurasi}{\maxacc}
+\DTLmaxforcolumn{stats}{AUC}{\maxauc}
+
+\begin{table}[htbp]
+\caption{Performansi Klasifikasi RF dan CRF}
+\centering
+\footnotesize
+\begin{tabular}{p{2cm} p{2cm} rrrrrrr}
+\hline
+\textbf{Klasifikasi} &
+\textbf{Dataset} &
+\textbf{TPR} &
+\textbf{FPR} &
+\textbf{TNR} &
+\textbf{Pres.} &
+\textbf{F-Mea.} &
+\textbf{Aku.} &
+\textbf{AUC}
+\DTLforeach*{stats}{%
+	\cl=Klasifikasi,%
+	\ds=Dataset,%
+	\tpr=TPR,%
+	\fpr=FPR,%
+	\tnr=TNR,%
+	\prec=Presisi,%
+	\fm=F-Measure,%
+	\acc=Akurasi,%
+	\auc=AUC%
+}{%
+	\DTLifnullorempty{\cl}
+		{\\ \cline{2-9}}
+		{\\ \hline \hline}
+	\DTLifnullorempty{\cl}
+		{}
+		{
+			\multirow{4}{2cm}{\cl}
+		}
+	& \ds
+	& \DTLifnumeq{\tpr}{\maxtpr}{\textbf{\tpr}}{\tpr}
+	& \DTLifnumeq{\fpr}{\minfpr}{\textbf{\fpr}}{\fpr}
+	& \DTLifnumeq{\tnr}{\maxtnr}{\textbf{\tnr}}{\tnr}
+	& \DTLifnumeq{\prec}{\maxprec}{\textbf{\prec}}{\prec}
+	& \DTLifnumeq{\fm}{\maxfm}{\textbf{\fm}}{\fm}
+	& \DTLifnumeq{\acc}{\maxacc}{\textbf{\acc}}{\acc}
+	& \DTLifnumeq{\auc}{\maxauc}{\textbf{\auc}}{\auc}
+}
+\\
+\hline
+\end{tabular}
+\label{tab:stats}
+\end{table}
+
+

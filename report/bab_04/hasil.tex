@@ -1,0 +1,23 @@
+Klasifikasi CRF LNSMOTE dengan 200 tingkat 1 pohon memberikan nilai TPR paling
+tinggi yaitu $0,9904$ tapi dengan nilai FPR yang paling tinggi yaitu $0,8558$
+dan TNR yang paling rendah yaitu $0,1442$ di antara model yang lainnya.
+Kebalikannya, pengklasifikasi RF tanpa sampel ulang memberikan nilai TNR paling
+tinggi yaitu $0,9988$ dan nilai FPR paling rendah yaitu $0,0012$.
+Untuk presisi, RF tanpa sampel ulang memberikan nilai tertinggi yaitu $0,9450$,
+dan nilai terendah diberikan oleh klasifikasi CRF LNSMOTE dengan 200 tingkat 1
+pohon.
+Untuk nilai \textit{F-Measure}, nilai tertinggi diberikan oleh klasifikasi CRF
+tanpa sampel ulang dengan 50 tingkat dan 4 pohon yaitu $0,5353$, dengan nilai
+terendah diberikan oleh klasifikasi CRF LNSMOTE 200 tingkat 1 pohon.
+Untuk nilai akurasi tertinggi didapat dengan klasifikasi RF LNSMOTE dengan
+yang terendah diberikan oleh klasifikasi CRF LNSMOTE 200 tingkat 1 pohon.
+Klasifikasi dengan nilai AUC tertinggi yaitu CRF SMOTE 100 tingkat 2 pohon
+dengan yang terendah diberikan oleh klasifikasi CRF tanpa sampel ulang dengan
+100 tingkat 2 pohon.
+
+Dari segi kecepatan pelatihan model, pengklasifikasi CRF lebih cepat dari RF
+baik pada semua dataset pelatihan.
+Sebagai pembanding, dapat dilihat pada klasifikasi RF dan CRF 50 tingkat 4
+pohon.
+CRF tanpa sampel ulang lebih cepat 11 kali daripada RF, dan pada sampel ulang
+SMOTE dan LNSMOTE, klasifikasi CRF 1,6 kali lebih cepat daripada RF.

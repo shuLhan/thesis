@@ -1,0 +1,33 @@
+\DTLsetseparator{;}
+\DTLloaddb{runtimes}{../result/runtimes.csv}
+
+\begin{table}[htbp]
+\caption{Kecepatan pelatihan model}
+\centering
+\footnotesize
+\begin{tabular}{p{4cm} p{4cm} r}
+\hline
+\textbf{Klasifikasi} &
+\textbf{Dataset} &
+\textbf{Waktu (menit)}
+\DTLforeach*{runtimes}{%
+		\cl=Klasifikasi,
+		\ds=Dataset,
+		\time=Waktu (menit)%
+}{%
+	\DTLifnullorempty{\cl}
+		{\\ \cline{2-3}}
+		{\\ \hline \hline}
+	\DTLifnullorempty{\cl}
+		{}
+		{
+			\multirow{3}{4cm}{\cl}
+		}
+	& \ds
+	& \time
+}
+\\
+\hline
+\end{tabular}
+\label{tab:runtimes}
+\end{table}

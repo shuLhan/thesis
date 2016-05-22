@@ -1,0 +1,54 @@
+\begin{figure}[ht!]
+\centering
+\begin{tikzpicture}
+	\begin{axis}[
+		width=13cm,
+		ymax=250,
+		ybar=8pt,
+		ylabel=Waktu (menit),
+		symbolic x coords={Tanpa sampel ulang, SMOTE, LNSMOTE},
+		xtick=data,
+		nodes near coords,
+		every node near coord/.append style={font=\footnotesize},
+		enlarge x limits=0.24,
+		enlarge y limits=0,
+		bar width = 13pt,
+		legend style={
+			at={(0.5,-0.15)},
+			anchor=north,
+			legend columns=-1
+		},
+	]
+		%% RF
+		\addplot[pattern = dots] coordinates {
+			(Tanpa sampel ulang, 52.5)
+			(SMOTE, 217.7)
+			(LNSMOTE, 199.5)
+		};
+
+		%% CRF-200-1
+		\addplot[pattern=north east lines] coordinates {
+			(Tanpa sampel ulang, 3.5)
+			(SMOTE, 74.4)
+			(LNSMOTE, 61.9)
+		};
+
+		%% CRF-100-2
+		\addplot[pattern=horizontal lines] coordinates {
+			(Tanpa sampel ulang, 3.6)
+			(SMOTE, 74.6)
+			(LNSMOTE, 67.9)
+		};
+
+		%% CRF-50-4
+		\addplot coordinates {
+			(Tanpa sampel ulang, 4.2)
+			(SMOTE, 82.5)
+			(LNSMOTE, 76.6)
+		};
+	\legend{RF, CRF-200-1, CRF-100-2, CRF-50-4}
+	\end{axis}
+\end{tikzpicture}
+\caption{Waktu pelatihan untuk setiap klasifikasi berdasarkan dataset.}
+\label{graph:runtimes}
+\end{figure}

@@ -1,0 +1,36 @@
+Dalam deteksi vandalisme, menemukan sebuah suntingan yang vandal dengan tingkat
+positif yang tinggi lebih baik daripada salah klasifikasi atau terlewatnya
+suntingan vandal tersebut dari pendeteksian.
+Kesalahan klasifikasi, yang bukan vandalisme terdeteksi sebagai vandalisme,
+tidak akan berpengaruh pada pembaca, tetapi terlewatnya suntingan yang vandal
+bisa menyebabkan hilangnya informasi, kesalahan informasi, atau mengganggu
+pembaca Wikipedia.
+Oleh karena itu, hasil pelatihan dan pengujian dilihat dari laju
+\textit{true-positive} pada performansi.
+Laju \textit{true-positive}, atau dikenal juga dengan
+\textit{true-positive rate} (TPR),
+yaitu total jumlah sampel yang benar positif dibagi dengan
+jumlah sampel yang terklasifikasi benar positif (\textit{true-positive})
+ditambah dengan jumlah sampel positif terklasifikasi dengan negatif
+(\textit{false-negative}).
+TPR bernilai dengan rentang antara 0 sampai 1, dengan nilai yang mendekati 0
+berarti performansi yang buruk dan nilai yang mendekati 1 berarti performansi
+yang baik.
+Hasil pengujian diberikan dalam bentuk performansi pengklasifikasi pada tabel
+\ref{tab:stats} dan kecepatan pelatihan model pada gambar \ref{graph:runtimes}.
+
+\input{bab_04/tabel_performansi}
+
+Pengklasifikasi CRF dengan 200 tingkat 1 pohon pada dataset yang telah disampel
+ulang dengan LNSMOTE memberikan nilai TPR paling tinggi yaitu $0,9904$.
+Pengklasifikasi RF tanpa sampel ulang memberikan nilai TPR paling rendah yaitu
+$0,1654$.
+
+\input{bab_04/graph_runtimes}
+
+Dari segi kecepatan pelatihan model, pengklasifikasi CRF lebih cepat dari RF
+baik pada semua dataset pelatihan.
+Sebagai pembanding, dapat dilihat pada klasifikasi RF dan CRF 50 tingkat 4
+pohon.
+CRF tanpa sampel ulang lebih cepat 11 kali daripada RF, dan pada sampel ulang
+SMOTE dan LNSMOTE, klasifikasi CRF 1,6 kali lebih cepat daripada RF.
