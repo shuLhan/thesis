@@ -1,4 +1,19 @@
-\label{fig:prauc}
+%% pgfplots setting.
+\pgfplotsset{
+	/pgf/number format/read comma as period,
+	/pgf/text mark as node=false,
+	table/col sep=semicolon,
+	xmax=1,
+	xmin=0,
+	ymax=1,
+	ymin=0,
+	xtick distance=0.2,
+	ytick distance=0.2,
+	grid=major,
+	cycle list name=linestyles,
+	compat=1.13
+}
+
 \begin{figure}[htbp]
 \centering
 \begin{tikzpicture}[framed]
@@ -105,4 +120,5 @@ tanpa sampel ulang, yang disampel ulang dengan SMOTE dan LNSMOTE.
 (c) CRF dengan 100 tingkat 2 pohon
 (d) CRF dengan 50 tingkat 4 pohon
 }
+\label{fig:prauc}
 \end{figure}

@@ -1,4 +1,19 @@
-\label{fig:rocpoints}
+%% pgfplots setting.
+\pgfplotsset{
+	/pgf/number format/read comma as period,
+	/pgf/text mark as node=false,
+	table/col sep=semicolon,
+	xmax=1,
+	xmin=0,
+	ymax=1,
+	ymin=0,
+	xtick distance=0.2,
+	ytick distance=0.2,
+	grid=major,
+	cycle list name=linestyles,
+	compat=1.13
+}
+
 \begin{figure}[htbp]
 \centering
 \begin{tikzpicture}[framed]
@@ -119,4 +134,5 @@ dengan 200 tingkat dan 1 pohon, CRF-100-2 yaitu klasifikasi CRF dengan 100
 tingkat dan 2 pohon, dan CRF-50-4 yaitu klasifikasi CRF dengan 50 tingkat dan 4
 pohon.
 }
+\label{fig:rocpoints}
 \end{figure}
