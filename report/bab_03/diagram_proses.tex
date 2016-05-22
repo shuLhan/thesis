@@ -3,7 +3,13 @@
 \resizebox {\columnwidth} {!} {
 \begin{tikzpicture}[
 	framed,
-	nodes = {align = center},
+	nodes = {
+		align = center
+	},
+	lines/.style={
+		line width=2pt,
+		>=latex
+	},
 	data/.style={
 		trapezium,
 		trapezium left angle=70,
@@ -59,29 +65,29 @@
 		(\textit{PAN-WVC-11})
 	};
 
-	\draw[->] (wvc10_raw) -- (wvcgen_10raw);
-	\draw[->] (wvcgen_10raw) -- (wvc10_fs);
-	\draw[->] (wvc10_fs) -| (smote);
-	\draw[->] (wvc10_fs) -| (lnsmote);
-	\draw[->] (smote) -- (wvc10_smote);
-	\draw[->] (lnsmote) -- (wvc10_lnsmote);
-	\draw[->] (wvc10_fs) -- (c1);
-	\draw[->] (wvc10_smote) -- (c2);
-	\draw[->] (wvc10_lnsmote) -- (c3);
-	\draw[->] (c1) -- (m1);
-	\draw[->] (c2) -- (m2);
-	\draw[->] (c3) -- (m3);
+	\draw[lines,->] (wvc10_raw) -- (wvcgen_10raw);
+	\draw[lines,->] (wvcgen_10raw) -- (wvc10_fs);
+	\draw[lines,->] (wvc10_fs) -| (smote);
+	\draw[lines,->] (wvc10_fs) -| (lnsmote);
+	\draw[lines,->] (smote) -- (wvc10_smote);
+	\draw[lines,->] (lnsmote) -- (wvc10_lnsmote);
+	\draw[lines,->] (wvc10_fs) -- (c1);
+	\draw[lines,->] (wvc10_smote) -- (c2);
+	\draw[lines,->] (wvc10_lnsmote) -- (c3);
+	\draw[lines,->] (c1) -- (m1);
+	\draw[lines,->] (c2) -- (m2);
+	\draw[lines,->] (c3) -- (m3);
 
-	\draw[->] (wvc11_raw) -- (wvcgen_11raw);
-	\draw[->] (wvcgen_11raw) -- (testset);
+	\draw[lines,->] (wvc11_raw) -- (wvcgen_11raw);
+	\draw[lines,->] (wvcgen_11raw) -- (testset);
 
-	\draw[dashed,->] (testset) -- (m1);
-	\draw[dashed,->] (testset) -- (m2);
-	\draw[dashed,->] (testset) -- (m3);
+	\draw[lines,dashed,->] (testset) -- (m1);
+	\draw[lines,dashed,->] (testset) -- (m2);
+	\draw[lines,dashed,->] (testset) -- (m3);
 
-	\draw[->] (m1) -- (o1);
-	\draw[->] (m2) -- (o2);
-	\draw[->] (m3) -- (o3);
+	\draw[lines,->] (m1) -- (o1);
+	\draw[lines,->] (m2) -- (o2);
+	\draw[lines,->] (m3) -- (o3);
 \end{tikzpicture}
 }
 \caption{
