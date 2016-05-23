@@ -16,11 +16,12 @@
 		legend style={
 			at={(0.5,-0.15)},
 			anchor=north,
-			legend columns=-1
+			legend columns=-1,
+			/tikz/every even column/.append style={column sep=0.5cm}
 		},
 	]
 		%% RF
-		\addplot[pattern = dots] coordinates {
+		\addplot[fill=white] coordinates {
 			(Tanpa sampel ulang, 52.5)
 			(SMOTE, 217.7)
 			(LNSMOTE, 199.5)

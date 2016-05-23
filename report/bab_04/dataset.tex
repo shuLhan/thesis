@@ -1,0 +1,34 @@
+Dataset yang digunakan untuk pelatihan model yaitu PAN-WVC-10 yang terdiri dari
+tiga jenis yaitu dataset tanpa sampel ulang, dataset yang telah disampel ulang
+dengan SMOTE, dan dataset yang telah disampel ulang dengan LNSMOTE.
+Jumlah sampel pada dataset yang tidak disampel yaitu 2.394 positif dan 30.045
+negatif dengan total 32.439 sampel.
+Jumlah sampel positif pada dataset hasil sampel ulang dengan SMOTE yaitu 28.728
+sampel dengan total 58.773 sampel.
+Jumlah sampel positif pada dataset hasil sampel ulang dengan LNSMOTE yaitu
+28.588 sampel dengan total 58.633 sampel.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|| c | l | c | c | c ||}
+\hline
+\multirow{2}{*}{Tipe} & \multirow{2}{*}{Mode sampel ulang} & \multicolumn{3}{c||}{Jumlah sampel} \\
+\cline{3-5}
+                         &                                       & Vandalisme & Biasa & Total \\
+\hline
+\hline
+\multirow{3}{*}{Pelatihan} & -       &  2.394 & 30.045 & 32.439 \\
+                              & SMOTE   & 27.728 & 30.045 & 58.773 \\
+                              & LNSMOTE & 28.588 & 30.045 & 58.633 \\
+\hline
+Pengujian & - & 1.143 & 8.842 & 9.985 \\
+\hline
+\end{tabular}
+\caption{Dataset untuk pelatihan dan pengujian.}
+\label{table:dataset}
+\end{table}
+
+\newpage
+Dataset yang digunakan untuk pengujian model yaitu PAN-WVC-11 yang terdiri dari
+1.143 sampel positif dan 8.842 sampel negatif dengan total 9.985 sampel.
+Jumlah fitur pada PAN-WVC-11 sama dengan PAN-WVC-10 yaitu 26 fitur.

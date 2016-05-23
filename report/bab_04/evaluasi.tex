@@ -16,21 +16,15 @@ ditambah dengan jumlah sampel positif terklasifikasi dengan negatif
 TPR bernilai dengan rentang antara 0 sampai 1, dengan nilai yang mendekati 0
 berarti performansi yang buruk dan nilai yang mendekati 1 berarti performansi
 yang baik.
-Hasil pengujian diberikan dalam bentuk performansi pengklasifikasi pada tabel
-\ref{tab:stats} dan kecepatan pelatihan model pada gambar \ref{graph:runtimes}.
 
-\input{bab_04/tabel_performansi}
+Pembuatan model klasifikasi dilakukan dengan cara menjalankan program
+klasifikasi RF dan CRF pada masing-masing dataset fitur PAN-WVC-10 yang belum
+disampel ulang, yang telah disampel ulang dengan SMOTE, dan yang telah disampel
+ulang dengan LNSMOTE.
+Setelah modelnya terbangun, model diuji dengan diberikan input dataset fitur
+PAN-WVC-11. Hasil dari pengujian digunakan untuk analisis.
 
-Pengklasifikasi CRF dengan 200 tingkat 1 pohon pada dataset yang telah disampel
-ulang dengan LNSMOTE memberikan nilai TPR paling tinggi yaitu $0,9904$.
-Pengklasifikasi RF tanpa sampel ulang memberikan nilai TPR paling rendah yaitu
-$0,1654$.
-
-\input{bab_04/graph_runtimes}
-
-Dari segi kecepatan pelatihan model, pengklasifikasi CRF lebih cepat dari RF
-baik pada semua dataset pelatihan.
-Sebagai pembanding, dapat dilihat pada klasifikasi RF dan CRF 50 tingkat 4
-pohon.
-CRF tanpa sampel ulang lebih cepat 11 kali daripada RF, dan pada sampel ulang
-SMOTE dan LNSMOTE, klasifikasi CRF 1,6 kali lebih cepat daripada RF.
+Lingkungan pelatihan dan pengujian dilakukan pada mesin Intel\textregistered\
+ Core\texttrademark \ i7-4750HQ CPU 2,00 GHz, dengan jumlah \textit{RAM} 8
+GB. Setiap pelatihan model dilakukan satu per satu untuk menghindari adanya
+\textit{cache miss} yang berpengaruh pada kecepatan dan waktu pemrosesan.

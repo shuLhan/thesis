@@ -1,0 +1,12 @@
+Supaya konsisten antara pengklasifikasi, digunakan parameter umum yang sama
+yaitu 200 pohon, 5 (dari $\sqrt{26}$) fitur acak, dan $ 64\% $ untuk
+\textit{bootstrapping}.
+Untuk klasifikasi CRF dilakukan tiga pemodelan dan pengujian dengan parameter
+yang berbeda yaitu 200 tingkat dengan 1 pohon, 100 tingkat dengan 2 pohon, dan
+50 tingkat dengan 4 pohon; dengan jumlah pohon yang tetap sama untuk ketiganya
+yaitu 200.
+Hal ini dilakukan untuk melihat pengaruh dari jumlah pohon terhadap tingkat dan
+hasil klasifikasi.
+Parameter lain pada pemodelan CRF yaitu nilai ambang batas TPR dan TNR diset
+pada nilai $0,95$ dan $0,95$ untuk mendapatkan hasil klasifikasi yang bagus dan
+jumlah pohon yang konsisten.
