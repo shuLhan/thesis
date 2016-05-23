@@ -1,0 +1,23 @@
+Implementasi SMOTE dibuat ke dalam sebuah program
+\footnote{\url{%
+https://github.com/shuLhan/go-mining/tree/master/resampling/smote
+}}
+berdasarkan makalah aslinya \cite{chawla2002smote}.
+Gambaran umum dari implementasi dapat dilihat pada algoritma \ref{alg:smote}.
+
+Sampel ulang SMOTE memiliki tiga input yaitu dataset minoritas yang akan
+disampel ulang, persentase jumlah sampel sintetis yang akan
+dibuat, dan jumlah tetangga terdekat dari sampel yang akan
+dibuat.
+Untuk mendapatkan jumlah sampel positif yang mendekati jumlah sampel negatif,
+maka diberikan nilai 1.200\% untuk persentase jumlah sampel sintetis yang
+berarti 12 kali jumlah sampel minoritas.
+Jumlah tetangga terdekat yang dicari untuk dapat membuat sebuah sampel diberi
+dengan nilai 5.
+Nilai ini diberikan untuk menghindari sampel minoritas yang \textit{outliers}
+tapi juga masih dapat mencakup kelompok-kelompok kelas minoritas yang kecil.
+
+Program SMOTE dijalankan dengan memberikan input sampel minoritas dari dataset
+fitur PAN-WVC-10, sehingga didapat hasil sampel ulang dengan jumlah sampel
+sintetis positif yaitu 28.728 sampel, ditambah dengan sampel positif asli
+totalnya yaitu 31.122 sampel positif.

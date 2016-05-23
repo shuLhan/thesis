@@ -64,29 +64,24 @@
 %% BAB II: TINJAUAN PUSTAKA
 %%
 \chapter{Tinjauan Pustaka}
+\label{bab:02}
+\input{bab_02}
 
 \section{SMOTE}
-\input{tinjauan_pustaka/smote}
-\newpage
-\input{lampiran/alg_smote}
-\newpage
+\input{bab_02/smote}
 
 \section{LNSMOTE}
-\input{tinjauan_pustaka/lnsmote}
-\newpage
-\input{lampiran/alg_lnsmote}
+\input{bab_02/lnsmote}
 
 \section{\textit{Random Forest}}
-\input{tinjauan_pustaka/rf}
-\input{lampiran/alg_rf}
+\input{bab_02/rf}
 
 \section{\textit{Cascaded Random Forest}}
-\input{tinjauan_pustaka/crf}
-\input{lampiran/alg_crf}
+\input{bab_02/crf}
 
 \newpage
-\section{Pekerjaan Sebelumnya}
-\input{tinjauan_pustaka/wikipedia_vandalisme}
+\section{Pekerjaan Terkait}
+\input{bab_02/pekerjaan_terkait}
 
 %%
 %% BAB III
@@ -96,31 +91,51 @@
 \input{bab_03}
 \input{bab_03/diagram_proses.tex}
 
-\section{Persiapan Data}
-\label{persiapan_data}
-\input{bab_03/persiapan_data}
+\section{Gambaran Umum}
+\label{bab:03:gambaran_umum}
+\input{bab_03/gambaran_umum}
 
-\subsection{Persiapan Dataset Pelatihan}
+\section{Persiapan Dataset Pelatihan}
 \input{bab_03/persiapan_data_pelatihan}
 
-\subsection{Persiapan Dataset Pengujian}
+\section{Persiapan Dataset Pengujian}
 \input{bab_03/persiapan_data_pengujian}
 
 \section{Fitur Vandalisme}
 \label{section:fitur_vandalisme}
 \input{bab_03/fitur_vandalisme}
 
-\section{Pembuatan Fitur}
+\section{Ekstraksi Fitur}
 \input{bab_03/pembuatan_fitur}
 
-\section{Pembuatan Sampel-ulang}
+\section{Pembuatan Sampel Ulang}
 \input{bab_03/pembuatan_sampel_ulang}
 
+\subsection{Pembuatan Sampel Ulang SMOTE}
+\input{bab_03/sampel_ulang_smote}
+\newpage
+\input{lampiran/alg_smote}
+
+\newpage
+\subsection{Pembuatan Sampel Ulang LNSMOTE}
+\input{bab_03/sampel_ulang_lnsmote}
+\input{lampiran/alg_lnsmote}
+
+\newpage
 \section{Implementasi Pengklasifikasi}
 \input{bab_03/implementasi_pengklasifikasi}
 
-\section{Pelatihan dan Pengujian}
-\input{bab_03/pelatihan_dan_pengujian}
+\subsection{Implementasi \textit{Random Forest}}
+\label{subsection:implementasi_rf}
+\input{bab_03/implementasi_rf}
+\input{lampiran/alg_rf}
+
+\subsection{Implementasi \textit{Cascaded Random Forest}}
+\label{subsection:implementasi_crf}
+\input{bab_03/implementasi_crf}
+
+\newpage
+\input{lampiran/alg_crf}
 
 %%
 %% BAB IV: EVALUASI
@@ -128,6 +143,18 @@
 \chapter{Evaluasi}
 \label{bab:evaluasi}
 \input{bab_04/evaluasi}
+
+\section{Dataset Pelatihan dan Pengujian}
+\label{section:dataset}
+\input{bab_04/dataset}
+
+\section{Parameter Pengklasifikasi}
+\label{section:parameter}
+\input{bab_04/parameter}
+
+\section{Hasil Deteksi}
+\label{section:hasil_deteksi}
+\input{bab_04/hasil_deteksi}
 
 %%
 %% BAB V: KESIMPULAN

@@ -1,0 +1,24 @@
+Implementasi \textit{Cascaded Random Forest} (CRF) berdasarkan pada makalah
+Bauman dkk.  \cite{baumann2013cascaded}.
+Hasil dari implementasi dapat dilihat dan digunakan secara terbuka pada
+repositori \texttt{go-mining}
+\footnote{
+\url{%
+https://github.com/shuLhan/go-mining/tree/master/classifiers/crf
+}}.
+Gambaran umum dari pengklasifikasi CRF dapat dilihat pada algoritma
+\ref{alg:crf}.
+
+Pengklasifikasi CRF memiliki tujuh parameter, empat diantaranya sama dengan RF
+yaitu dataset fitur yang digunakan untuk pelatihan, jumlah pohon, jumlah sampel
+acak disetiap pohon, dan jumlah fitur acak di setiap pohon.
+Tiga parameter lainnya yaitu jumlah tingkatan, nilai ambang batas untuk
+\textit{true-positive} ($maxtp$) dan nilai ambang batas untuk
+\textit{true-negative rate} ($maxtn$).
+Dalam pelatihan digunakan tiga pengklasifikasi CRF yang memiliki parameter
+tingkat dan pohon yang berbeda yaitu CRF dengan 200 tingkat dan 1 pohon, CRF
+dengan 100 tingkat dan 2 pohon, dan CRF dengan 50 tingkat dan 4 pohon.
+Ketiga pengklasifikasi CRF tersebut memiliki total jumlah pohon yang sama yaitu
+200 pohon, menggunakan jumlah sampel acak dan fitur acak yang sama yaitu 64\%
+dan 5 fitur acak, dan nilai ambang batas $maxtp$ dan $maxtn$ yang sama yaitu
+$0,95$ dan $0,95$.

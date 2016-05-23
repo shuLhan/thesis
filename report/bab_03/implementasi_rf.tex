@@ -1,0 +1,21 @@
+Implementasi RF berdasarkan pada makalah Breiman \cite{breiman2001random}
+dan beberapa referensi tambahan dari sejumlah sumber lainnya
+(situs, makalah, dan video).
+Hasil dari implementasi dapat dilihat dan digunakan secara terbuka pada
+repositori \texttt{go-mining}
+\footnote{
+\url{%
+https://github.com/shuLhan/go-mining/tree/master/classifiers/rf
+}}.
+Gambaran umum dari pengklasifikasi RF dapat dilihat pada algoritma
+\ref{alg:rf}.
+
+RF memiliki empat parameter yaitu dataset pelatihan, jumlah pohon dalam
+\textit{forest}, jumlah sampel acak yang digunakan untuk membangun setiap
+pohon, dan jumlah fitur acak yang digunakan untuk membangun setiap pohon.
+Untuk dataset pelatihan yang digunakan terdiri dari tiga jenis yaitu
+dataset fitur tanpa sampel ulang, dataset yang telah disampel ulang dengan
+SMOTE, dan dataset yang telah disampel ulang dengan LNSMOTE.
+Untuk setiap dataset, jumlah pohon yang digunakan yaitu 200 pohon, dengan
+parameter sampel acak yaitu 66\% dari total sampel pada dataset, dan 5 untuk
+jumlah fitur acak.

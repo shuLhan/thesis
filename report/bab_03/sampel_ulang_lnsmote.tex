@@ -1,0 +1,17 @@
+Proses sampel ulang LNSMOTE yang digunakan pada implementasi berdasarkan
+pada makalah Maciejewski dkk.
+\cite{maciejewski2011local}
+yang dapat dilihat pada algoritma
+\ref{alg:lnsmote}.
+Hasil implementasinya dalam bentuk sebuah program
+\footnote{\url{%
+https://github.com/shuLhan/go-mining/tree/master/resampling/lnsmote
+}}.
+
+LNSMOTE memiliki empat parameter yaitu dataset keseluruhan yang akan disampel
+ulang, dataset minoritas, persentase sampel sintetis yang akan dibuat, dan
+jumlah tetangga terdekat.
+Program LNSMOTE dijalankan dengan diberikan input dataset fitur PAN-WVC-10
+dengan persentase sampel sintetis yaitu 1.100\% dan jumlah tetangga terdekat
+yaitu 5, sehingga didapat 28.588 sampel sintetis positif, ditambah dengan
+sampel positif asli totalnya menjadi 30.982 sampel positif.
