@@ -1,5 +1,23 @@
-Dataset yang digunakan untuk pelatihan yaitu PAN-WVC-10
-\cite{potthast:2010b}.
+Dataset yang digunakan untuk pelatihan yaitu \textit{PAN Wikipedia Vandalism
+Corpus 2010} (PAN-WVC-10)
+\cite{potthast:2010b}
+yang dapat diambil dari situs Universitas Bauhaus Weimar
+\footnote{%
+	\RaggedRight\url{%
+http://www.uni-weimar.de/en/media/chairs/webis/corpora/pan-wvc-10/
+}}.
+Korpus ini terdiri dari 32.452 suntingan artikel Wikipedia, 2.391 diantaranya
+adalah suntingan vandal yang telah diidentifikasi.
+Korpus ini dianotasi oleh 753 orang dengan total 150.000 suara dari semua
+suntingan, sehingga setiap suntingan telah diperiksa setidaknya oleh 3 orang
+penganotasi.
+Dari suara-suara penganotasi tersebut setiap sampel diberi dengan label
+"vandalism" atau "regular" (bukan vandalisme).
+PAN-WVC-10 telah sukses digunakan pada \textit{1st International Competition on
+Wikipedia Vandalism Detection}, PAN'10, yang diselenggarakan bersama dengan
+konferensi CLEF 2010 (\textit{Conference on Multilingual and Multimodal
+Information Access Evaluation}).
+
 Dataset PAN-WVC-10 terbagi menjadi dua yaitu dataset suntingan dari artikel
 Wikipedia dan dataset anotasi yang berisi hasil klasifikasi vandalisme pada
 dataset suntingan tersebut.
@@ -33,7 +51,6 @@ Dataset anotasi memiliki atribut sebagai berikut,
 	\item \textbf{totalannotators}, format angka, berisi jumlah total penanda yang memeriksa suntingan.
 \end{itemize}
 
-\newpage
 Kedua dataset kemudian digabung untuk menghasilkan atribut \textit{editid},
 \textit{class}, \textit{oldrevisionid}, \textit{newrevisionid},
 \textit{edittime}, \textit{editor}, \textit{articletitle},

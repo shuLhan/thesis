@@ -2,3 +2,16 @@ Dataset yang didapat tidak langsung bisa digunakan untuk pelatihan dan
 pengujian, melainkan perlu ada pra-proses terlebih dahulu yang mengikutkan
 penggabungan data dan pembersihan data dengan menghapus atribut yang tidak
 diperlukan dan pembersihan dari isi data itu sendiri.
+Setelah data mentah dibersihkan, kemudian diekstrak fitur untuk masing-masing
+dataset pelatihan dan pengujian sehingga menghasilkan dataset pelatihan dan
+pengujian yang bernilai kontinu.
+Dataset pelatihan disampel ulang dengan metode SMOTE dan LNSMOTE,
+sehingga menghasilkan tiga dataset yang akan dilatih yaitu dataset tanpa sampel
+ulang, dataset yang telah disampel ulang dengan SMOTE, dan dataset yang telah
+disampel ulang dengan LNSMOTE.
+Ketiga dataset pelatihan tersebut kemudian dijalankan pada program
+pengklasifikasi \textit{Random Forest} (RF) dan \textit{Cascaded Random Forest}
+(CRF) satu per satu, yang menghasilkan sebuah model deteksi vandalisme.
+Model tersebut kemudian diuji dengan menginputkan dataset fitur pengujian
+sehingga menghasilkan kelas-kelas dari sampel yang nantinya dapat digunakan
+untuk mengevaluasi sampel ulang dan pengklasifikasi.

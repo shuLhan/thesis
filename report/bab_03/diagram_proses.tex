@@ -1,6 +1,6 @@
 \begin{figure}[htbp]
 \centering
-\resizebox {\columnwidth} {!} {
+\resizebox{.5\textwidth} {!} {
 \begin{tikzpicture}[
 	framed,
 	nodes = {
@@ -11,9 +11,7 @@
 		>=latex
 	},
 	data/.style={
-		trapezium,
-		trapezium left angle=70,
-		trapezium right angle=110,
+		circle,
 		draw=black,
 		text centered
 	},
@@ -23,71 +21,58 @@
 		text centered
 	}
 ]
-	\node[data] (wvc10_raw) {
-		Dataset pelatihan mentah\\
+	\node[data] (training_raw) {
+		Dataset pelatihan\\
+		mentah\\
 		(\textit{PAN-WVC-10})
 	};
-	\node[proc] (wvcgen_10raw) [below=of wvc10_raw] {
-		Pembuatan\\fitur
+
+	\node[proc] (wvcgen) [below=of training_raw] {
+		Ekstraksi\\fitur
 	};
 
-	\node[data] (wvc10_fs) [below=of wvcgen_10raw] {
-		Fitur set\\
-		tanpa sampel ulang
+	\node[proc] (trainingset) [below=of wvcgen] {
+		Sampel ulang
 	};
-	\node[proc] (smote)         [below right=of wvc10_fs, xshift=1cm] {
-		Sampel ulang\\SMOTE
+
+	\node[proc] (c)  [below=of trainingset] {
+		Pembangkitan model\\
+		deteksi
 	};
-	\node[proc] (lnsmote)       [right=of smote] {
-		Sampel ulang\\LNSMOTE
+
+	\node[proc] (m)  [below=of c] {
+		Model deteksi\\
+		vandalisme
 	};
-	\node[data] (wvc10_smote)   [below=of smote] {Fitur set\\SMOTE};
-	\node[data] (wvc10_lnsmote) [below=of lnsmote] {Fitur set\\LNSMOTE};
 
-	\node[proc] (c2)  [below=of wvc10_smote] {Pengklasifikasi};
-	\node[proc] (c3)  [below=of wvc10_lnsmote] {Pengklasifikasi};
-	\node[proc] (c1)  [left=of  c2] {Pengklasifikasi};
-
-	\node[proc] (m1)  [below=of c1] {Model};
-	\node[proc] (m2)  [below=of c2] {Model};
-	\node[proc] (m3)  [below=of c3] {Model};
-
-	\node[data] (o1)  [below=of m1] {Hasil tanpa\\sampel ulang};
-	\node[data] (o2)  [below=of m2] {Hasil\\SMOTE};
-	\node[data] (o3)  [below=of m3] {Hasil\\LNSMOTE};
-
-	\node[data] (testset) [right=of c3,xshift=1cm] {Dataset pengujian};
-	\node[proc] (wvcgen_11raw) [above=of testset] {
-		Pembuatan\\fitur
+	\node[data] (o)  [below=of m] {
+		Hasil deteksi
 	};
-	\node[data] (wvc11_raw) [above=of wvcgen_11raw] {
-		Dataset pengujian mentah\\
+	%%
+	\node[data] (testset_raw) [right=of training_raw] {
+		Dataset pengujian\\mentah\\
 		(\textit{PAN-WVC-11})
 	};
 
-	\draw[lines,->] (wvc10_raw) -- (wvcgen_10raw);
-	\draw[lines,->] (wvcgen_10raw) -- (wvc10_fs);
-	\draw[lines,->] (wvc10_fs) -| (smote);
-	\draw[lines,->] (wvc10_fs) -| (lnsmote);
-	\draw[lines,->] (smote) -- (wvc10_smote);
-	\draw[lines,->] (lnsmote) -- (wvc10_lnsmote);
-	\draw[lines,->] (wvc10_fs) -- (c1);
-	\draw[lines,->] (wvc10_smote) -- (c2);
-	\draw[lines,->] (wvc10_lnsmote) -- (c3);
-	\draw[lines,->] (c1) -- (m1);
-	\draw[lines,->] (c2) -- (m2);
-	\draw[lines,->] (c3) -- (m3);
+	\node[proc] (testset_wvcgen) [below=of testset_raw] {
+		Ekstraksi\\fitur
+	};
 
-	\draw[lines,->] (wvc11_raw) -- (wvcgen_11raw);
-	\draw[lines,->] (wvcgen_11raw) -- (testset);
+	\node[data] (testset) [below=of testset_wvcgen] {
+		Dataset\\
+		pengujian
+	};
 
-	\draw[lines,dashed,->] (testset) -- (m1);
-	\draw[lines,dashed,->] (testset) -- (m2);
-	\draw[lines,dashed,->] (testset) -- (m3);
+	\draw[lines,->] (training_raw) -- (wvcgen);
+	\draw[lines,->] (wvcgen) -- (trainingset);
+	\draw[lines,->] (trainingset) -- (c);
+	\draw[lines,->] (c) -- (m);
+	\draw[lines,->] (m) -- (o);
 
-	\draw[lines,->] (m1) -- (o1);
-	\draw[lines,->] (m2) -- (o2);
-	\draw[lines,->] (m3) -- (o3);
+	\draw[lines,->] (testset_raw) -- (testset_wvcgen);
+	\draw[lines,->] (testset_wvcgen) -- (testset);
+
+	\draw[lines,->] (testset) |- (m);
 \end{tikzpicture}
 }
 \caption{
