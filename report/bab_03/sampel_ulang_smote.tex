@@ -5,19 +5,57 @@ https://github.com/shuLhan/go-mining/tree/master/resampling/smote
 berdasarkan makalah aslinya \cite{chawla2002smote}.
 Gambaran umum dari implementasi dapat dilihat pada algoritma \ref{alg:smote}.
 
-Sampel ulang SMOTE memiliki tiga input yaitu dataset minoritas yang akan
-disampel ulang, persentase jumlah sampel sintetis yang akan
-dibuat, dan jumlah tetangga terdekat dari sampel yang akan
-dibuat.
+Program SMOTE dijalankan dengan memberikan input sampel minoritas dari dataset
+fitur PAN-WVC-10.
 Untuk mendapatkan jumlah sampel positif yang mendekati jumlah sampel negatif,
-maka diberikan nilai 1.200\% untuk persentase jumlah sampel sintetis yang
-berarti 12 kali jumlah sampel minoritas.
-Jumlah tetangga terdekat yang dicari untuk dapat membuat sebuah sampel diberi
-dengan nilai 5.
+maka parameter persentase jumlah sampel sintetis diberi dengan nilai 1.200\%,
+yang berarti 12 kali jumlah sampel minoritas.
+Parameter untuk jumlah tetangga terdekat yang dicari untuk dapat membuat sebuah
+sampel diberi dengan nilai 5.
 Nilai ini diberikan untuk menghindari sampel minoritas yang \textit{outliers}
 tapi juga masih dapat mencakup kelompok-kelompok kelas minoritas yang kecil.
-
-Program SMOTE dijalankan dengan memberikan input sampel minoritas dari dataset
-fitur PAN-WVC-10, sehingga didapat hasil sampel ulang dengan jumlah sampel
-sintetis positif yaitu 28.728 sampel, ditambah dengan sampel positif asli
+Dari ketiga parameter tersebut didapat hasil sampel ulang dengan jumlah sampel
+sintetis positif yaitu 28.728 sampel, digabung dengan sampel positif asli
 totalnya yaitu 31.122 sampel positif.
+
+	\newpage
+	\input{lampiran/alg_smote}
+
+Sampel ulang SMOTE memiliki tiga parameter yaitu dataset minoritas yang akan
+disampel ulang ($P$), persentase sampel sintetis yang akan
+dibuat ($o$), dan jumlah tetangga terdekat yang dicari pada sampel
+yang akan dibuat ($k$).
+Dataset minoritas yaitu dataset yang berisi hanya sampel dengan kelas
+minoritas.
+Jika parameter persentase lebih kecil dari 100 (persen) maka hanya $o$ persen
+dari dataset $P$ yang disampel ulang.
+Parameter jumlah tetangga terdekat ($k$) menentukan jumlah sampel minoritas
+lain yang dijadikan sebagai patokan dalam pembuatan sampel sintentis.
+Semakin besar nilai $k$ maka distribusi sampel sintetis di dalam dataset juga
+semakin luas, semakin kecil nilai $k$ maka antara sampel sintetis
+dengan sampel asli semakin mirip/dekat.
+Berikut penjelasan fungsi-fungsi tambahan yang ada dalam algoritma.
+
+Fungsi \texttt{RandomPickWithoutReplacement} memiliki dua parameter yaitu
+dataset ($P$) dan jumlah sampel yang akan diambil ($n$).  Fungsi ini
+mengembalikan $n$ buah sampel dari $P$ yang diambil secara acak tanpa diganti,
+artinya setelah sampel diambil sampel tersebut dihapus dari $P$.
+
+Fungsi \texttt{FindNeighbours} memiliki tiga parameter yaitu dataset ($P$),
+sebuah sampel yang akan dicari tetangganya ($s$), dan jumlah tetangga yang akan
+dicari di sekitar $s$ ($k$).
+Fungsi ini mengembalikan $k$ sampel tetangga dari $s$ di dalam dataset $P$.
+Jumlah sampel tetangga yang dikembalikan bisa lebih kecil dari nilai $k$.
+
+Fungsi \texttt{CreateSynthetic} memiliki tiga parameter yaitu sebuah sampel
+(\textit{sample}), sampel-sampel tetangga dari $sample$ ($neighbors$), dan
+jumlah sampel sintetis yang akan dibuat ($nsyn$).
+Fungsi ini membuat dan mengembalikan $nsyn$ buah sampel sintetis dari $sample$
+yang berdekatan dengan tetangganya ($neighbors$).
+
+Fungsi \texttt{RandomPick} memiliki sebuah parameter yaitu sebuah dataset dan
+fungsi ini mengembalikan sebuah sampel yang diambil secara acak dari dataset.
+
+Fungsi \texttt{Random} memiliki dua parameter bilangan yaitu nilai minimum dan
+maksimum, fungsi ini mengembalikan bilangan acak real dengan rentang antara
+minimum dan maksimum.

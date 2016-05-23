@@ -3,87 +3,102 @@
 	\label{alg:lnsmote}
 	\begin{algorithmic}[1]
 \Require \\
-S: dataset sampel keseluruhan \\
-P: sample minoritas dari $ S $ \\
-o: rasio \textit{over-sampling}, jumlah sampel sintetis yang akan dibuat \\
+$ D $: dataset sampel keseluruhan \\
+$ minor $: kelas minoritas pada dataset $D$ \\
+$ o $: persentase jumlah sampel sintetis yang akan dibuat \\
+$ k $: jumlah tetangga terdekat dari sampel yang akan dibuat
+\\
+\Function{LNSMOTE}{$ D, P, o, k $}
+	\State $ S \gets [] $
+	\Comment Penampung untuk semua sampel sintetis yang akan dibuat.
+	\State $ nsyn \gets o/100 $
+	\Comment Jumlah sampel sintetis yang akan dibuat.
+	\State $ P \gets $ semua sampel minoritas $minor$ pada dataset $D$.
 
-\Function{LNSMOTE}{$ S, P, o $}
-	\State $ SEEDS \gets P $
-	\State $ OUT \gets S $
-	\For{\textbf{each} $ p $ \textbf{in} $ SEEDS $}
-		\State $ NN \gets \Call{KNearestNeighbor}{S, p} $
-		\For{$ i \gets 1 \dots o $}
-			\State $ s \gets \Call{CreateSynthetic}{p, NN, S} $
+	\For{\textbf{each} $ sample $ \textbf{in} $ P $}
+		\State $ neighbours \gets \Call{FindNeighbours}{D, sample, k} $
+		\For{$ i \gets 1,nsyn $}
+			\State $ s \gets \Call{CreateSynthetic}{D, sample, neighbours} $
 
 			\If{$ s \not= nil $}
-				\State tambahkan $ s $ ke $OUT$
+				\State $ \Call{S.Push}{s} $
 			\EndIf
 		\EndFor
 	\EndFor
-	\State \Return{OUT}
+	\\
+	\State \Return{S}
 \EndFunction
 \\
-\Function{CreateSynthetic}{$ p, NN, S $}
-	\State $ n \gets $ pilih \textit{nearest neighbourhood} secara acak
-	pada $ NN $
-	\If{\textbf{not} \Call{CanCreate}{$ S, p, n $}}
+\Function{CreateSynthetic}{$ D, sample, neighbors $}
+	\State $ neighbor \gets \Call{RandomPick}{neighbors} $
+	\If{$ \Call{CanCreate}{D, sample, neighbor} = false $}
 		\State \Return nil
 	\EndIf
+	\\
+	\State $ lenAttr \gets \Call{LengthAttribute}{sample} $
+	\Comment Simpan jumlah atribut dari sampel.
 
-	\State $ x_{new} \gets \Call{Clone}{p} $
-	\For{\textbf{each} $ a $ \textbf{in} \Call{Attributes}{S}}a
-		\If{\Call{IsQuantitative}{$ a $}}
-			\State $ \delta \gets \Call{RandomGap}{S, p, n} $
-			\State $ diff \gets n(a) - p(a) $
-			\State $ x_{new}(a) \gets p(a) + \delta \cdot diff $
-		\Else
-			\State $ x_{new} \gets \Call{MostFrequent}{p \cup NN, a} $
+	\State $ newsample \gets [] $
+	\Comment Penampung untuk sampel sintetis yang baru.
+	\\
+	\For{$ x \gets 1,lenAttr $}
+		\If{y \textbf{is} classAttribute}
+			\State continue
 		\EndIf
-	\EndFor
 
-	\State \Return $ x_{new} $
+		\State $ gap \gets \Call{RandomGap}{D, sample, neighbor, k} $
+
+		\State $ sattr \gets sample.\Call{AttributeAt}{y} $
+		\State $ nattr \gets neighbor.\Call{AttributeAt}{y} $
+		\State $ diff \gets sattr - nattr $
+		\State $ newAttr \gets sattr + (gap \times diff) $
+
+		\State $ newsample.\Call{PushAttribute}{newAttr} $
+	\EndFor
+	\\
+	\State \Return{$ newsample $}
 \EndFunction
 \\
-\Function{CanCreate}{$ S, p, n $}
-	\State $ slp \gets \Call{SafeLevel}{S, p} $
-	\State $ sln \gets \Call{SafeLevel2}{S, p, n} $
+\Function{CanCreate}{$ D, sample, neighbour $}
+	\State $ slp \gets \Call{SafeLevel}{D, sample, k} $
+	\State $ sln \gets \Call{SafeLevel2}{D, sample, neighbor, k} $
 	\State \Return{$ slp \not= 0 $ \textbf{or} $ sln \not= 0 $}
 \EndFunction
 \\
-\Function{SafeLevel}{$ S, p $}
-	\State $ pneighbor \gets \Call{KNearestNeighbor}{S, p} $
+\Function{SafeLevel}{$ D, p, k $}
+	\State $ pneighbor \gets \Call{FindNeighbours}{ D, p, k } $
 	\State \Return{$ pneighbor $ yang kelasnya minoritas}
 \EndFunction
 \\
-\Function{SafeLevel2}{$ S, p, n $}
-	\State $ nneighbor \gets \Call{KNearestNeighbor}{ S, n } $
-	\If{$\Call{Class}{n} \not= P $ \textbf{and} $ p \in nneighbor $}
-		\State Ganti $ p $ di $ nneighbor $ dengan tetanggga $ k + 1 $
+\Function{SafeLevel2}{$ D, p, n, k $}
+	\State $ nneighbours \gets \Call{FindNeighbours}{ D, n, k } $
+	\If{$\Call{Class}{n} \not= minor $ \textbf{and} $ p \in nneighbours $}
+		\State Ganti $ p $ di $ nneighbours $ dengan tetanggga $ k + 1 $
 		dari $ n $
 	\EndIf
-	\State \Return{$ nneighbor $ yang kelasnya minoritas}
+	\State \Return{$ nneighbours $ yang kelasnya minoritas}
 \EndFunction
 \\
-\Function{RandomGap}{$ S, p, n $}
-	\State $ slp \gets \Call{SafeLevel}{S, p} $
-	\State $ sln \gets \Call{SafeLevel}{S, p, n} $
+\Function{RandomGap}{$ D, p, n, k $}
+	\State $ slp \gets \Call{SafeLevel}{D, p, k} $
+	\State $ sln \gets \Call{SafeLevel}{D, p, n, k} $
 	\State $ \delta \gets 0 $
 
 	\If{$ sln = 0 $ \textbf{and} $ slp > 0 $}
 		\State \Return{$ \delta $}
 	\EndIf
 	\\
-	\State $ slratio \gets \frac{slp}{sln} $
+	\State $ slratio \gets slp / sln $
 	\If{$ slratio = 1 $}
 		\State $ \delta \gets \Call{Random}{1} $
 	\ElsIf{$ slratio > 1 $}
-		\State $ \delta \gets \Call{Random}{\frac{1}{slratio}} $
+		\State $ \delta \gets \Call{Random}{1 / slratio} $
 	\Else
 		\State $ \delta = 1 - \Call{Random}{slratio} $
 	\EndIf
 	\\
-	\If{$ \Call{Class}{n} \not= P $}
-		\State $ \delta = \delta \cdot \frac{sln}{k} $
+	\If{$ \Call{Class}{n} \not= minor $}
+		\State $ \delta = \delta \times (sln / k) $
 	\EndIf
 	\\
 	\State \Return{$ \delta $}

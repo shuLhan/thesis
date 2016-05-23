@@ -1,6 +1,5 @@
 Implementasi RF berdasarkan pada makalah Breiman \cite{breiman2001random}
-dan beberapa referensi tambahan dari sejumlah sumber lainnya
-(situs, makalah, dan video).
+dan beberapa referensi dari sejumlah sumber lainnya.
 Hasil dari implementasi dapat dilihat dan digunakan secara terbuka pada
 repositori \texttt{go-mining}
 \footnote{
@@ -10,12 +9,39 @@ https://github.com/shuLhan/go-mining/tree/master/classifiers/rf
 Gambaran umum dari pengklasifikasi RF dapat dilihat pada algoritma
 \ref{alg:rf}.
 
-RF memiliki empat parameter yaitu dataset pelatihan, jumlah pohon dalam
-\textit{forest}, jumlah sampel acak yang digunakan untuk membangun setiap
-pohon, dan jumlah fitur acak yang digunakan untuk membangun setiap pohon.
-Untuk dataset pelatihan yang digunakan terdiri dari tiga jenis yaitu
-dataset fitur tanpa sampel ulang, dataset yang telah disampel ulang dengan
-SMOTE, dan dataset yang telah disampel ulang dengan LNSMOTE.
-Untuk setiap dataset, jumlah pohon yang digunakan yaitu 200 pohon, dengan
-parameter sampel acak yaitu 66\% dari total sampel pada dataset, dan 5 untuk
-jumlah fitur acak.
+	\newpage
+	\input{lampiran/alg_rf}
+	\newpage
+
+Fungsi \texttt{RandomForest} memiliki empat parameter yaitu dataset pelatihan
+($TSET$),
+jumlah pohon dalam \textit{forest} ($T$), jumlah sampel acak yang digunakan untuk
+membangun setiap pohon ($B$), dan jumlah fitur acak yang digunakan untuk membangun
+setiap pohon ($m$).
+Fungsi ini mengembalikan sebuah \textit{forest} yang berisi kumpulan
+pohon-pohon keputusan dengan jumlah $T$.
+
+Fungsi \texttt{GrowTree} memiliki empat parameter yaitu sebuah $forest$, sebuah
+dataset $TSET$, jumlah sampel acak untuk pembangunan pohon $b$, dan jumlah
+fitur acak $m$.
+Fungsi ini mengambil $b$ buah sampel acak dari $TSET$ ($bag$) dan menyimpan
+indeks dari sampel yang terambil ($bagIdx$) untuk proses penghitungan galat
+OOB, nantinya.
+Fungsi ini mengembalikan sebuah pohon keputusan $tree$.
+
+Fungsi \texttt{Classify} memiliki tiga parameter yaitu sebuah pengklasifikasi
+RandomForest ($forest$), dataset yang akan diklasifikasi ($set$), dan indeks
+dari setiap sampel dalam $set$ ($setIdx$, opsional).
+Fungsi ini memberi label kelas pada setiap sampel dalam $set$ dengan
+mengumpulkan hasil keputusan dari setiap pohon yang ada di dalam $forest$.
+
+Fungsi \texttt{ForestVotes} memiliki tiga parameter yaitu sebuah
+pengklasifikasi RandomForest ($forest$), sebuah sampel yang akan beri label
+kelasnya (\textit{sample}), dan nilai index dari sampel tersebut ($idx$).
+Fungsi ini memanggil fungsi klasifikasi pada setiap pohon di dalam $forest$ dan
+mengumpulkan hasil klasifikasi ($class$) dari semua pohon tersebut untuk
+kemudian dihitung mayoritas hasil klasifikasinya.
+Sebelum pemanggilkan fungsi klasifikasi pada pohon $t$, diperiksa terlebih
+dahulu apakah $sample$ tersebut digunakan untuk membangun pohon $t$, jika benar
+maka fungsi klasifikasi tidak dilewati dan dilanjutkan dengan pohon
+selanjutnya.

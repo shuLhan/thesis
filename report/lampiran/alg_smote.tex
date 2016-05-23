@@ -3,7 +3,7 @@
 	\label{alg:smote}
 	\begin{algorithmic}[1]
 \Require \\
-$ P $: sampel minoritas \\
+$ P $: dataset minoritas \\
 $ o $: persentase jumlah sampel sintetis yang akan dibuat \\
 $ k $: jumlah tetangga terdekat dari sampel yang akan dibuat
 \\
@@ -17,18 +17,18 @@ $ k $: jumlah tetangga terdekat dari sampel yang akan dibuat
 	\State $ lenP \gets \Call{Length}{P} $
 
 	\If{$o < 100$}
+		\label{o_less_100}
 		\State $ nsyn \gets (o / 100) \times lenP $
 		\State $ P \gets \Call{RandomPickWithoutReplacement}{P, nsyn} $
-		\State $ o \gets 100.0 $
+	\Else
+		\State $ nsyn \gets o / 100.0 $
 	\EndIf
-
-	\State $ nsyn \gets o / 100.0 $
 
 	\For{\textbf{each} $sample$ \textbf{in} $P$}
 		\State $ neighbors \gets \Call{FindNeighbours}{P, sample, k} $
 		\Comment Cari k buah tetangga terdekat dari $sample$ di P.
 
-		\State $ s \gets \Call{CreateSynthetic}{sample, neighbors} $
+		\State $ s \gets \Call{CreateSynthetic}{sample, neighbors, nsyn} $
 
 		\State $ \Call{S.Push}{s} $
 	\EndFor
@@ -59,10 +59,10 @@ $ k $: jumlah tetangga terdekat dari sampel yang akan dibuat
 			\State $ gap \gets \Call{Random}{0,1} $
 			\State $ newAttr \gets nattr + (gap \times diff) $
 
-			\State $ newSample.\Call{PushAttribute}{newAttr} $
+			\State $ newsample.\Call{PushAttribute}{newAttr} $
 		\EndFor
 
-		\State $ \Call{s.Push}{newSample} $
+		\State $ \Call{s.Push}{newsample} $
 	\EndFor
 
 	\State \Return{s}

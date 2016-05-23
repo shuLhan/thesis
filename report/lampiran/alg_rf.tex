@@ -11,9 +11,12 @@ $ m $: jumlah fitur acak \\
 \Function{RandomForest}{$ TSET, T, B, m $}
 	\State $ n \gets $ jumlah sampel pada dataset $ TSET $
 	\State $ b \gets n * (B / 100) $
+	\Comment Jumlah sampel untuk setiap pohon.
+
 	\State $ forest \gets nil $
 	\For{$ t \gets 1,T $}
-		\State \Call{GrowTree}{forest, TSET, b, m}
+		\State $ tp, tn, tree \gets \Call{GrowTree}{forest, TSET, b, m} $
+		\State $ \Call{forest.Add}{tree} $
 	\EndFor
 	
 	\State \Return $forest$
@@ -26,14 +29,16 @@ $ m $: jumlah fitur acak \\
 
 	\State $ tree \gets \Call{BuildTree}{bag, m} $
 
-	\State $ forest.add(tree, bagIdx) $
+	\State $ \Call{forest.SaveBagIndex}{bagIdx} $
 	\Comment Simpan pohon dan indeks dari \textit{bagging} untuk
 	klasifikasi OOB.
 
 	\State $ cm \gets \Call{Classify}{forest, oob, oobIdx} $
-	\State $ stat \gets \Call{ComputeStat}{cm} $
+	\State $ tp, tn \gets \Call{ComputeStat}{cm} $
 	\Comment Hitung laju galat OOB dari \textit{confusion matrix}
 	$cm$.
+
+	\State \Return{$ tp, tn, tree $}
 \EndFunction
 \\
 \Function{Classify}{$ forest, set, setIdx $}

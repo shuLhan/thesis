@@ -15,10 +15,24 @@ acak disetiap pohon, dan jumlah fitur acak di setiap pohon.
 Tiga parameter lainnya yaitu jumlah tingkatan, nilai ambang batas untuk
 \textit{true-positive} ($maxtp$) dan nilai ambang batas untuk
 \textit{true-negative rate} ($maxtn$).
-Dalam pelatihan digunakan tiga pengklasifikasi CRF yang memiliki parameter
-tingkat dan pohon yang berbeda yaitu CRF dengan 200 tingkat dan 1 pohon, CRF
-dengan 100 tingkat dan 2 pohon, dan CRF dengan 50 tingkat dan 4 pohon.
-Ketiga pengklasifikasi CRF tersebut memiliki total jumlah pohon yang sama yaitu
-200 pohon, menggunakan jumlah sampel acak dan fitur acak yang sama yaitu 64\%
-dan 5 fitur acak, dan nilai ambang batas $maxtp$ dan $maxtn$ yang sama yaitu
-$0,95$ dan $0,95$.
+
+	\newpage
+	\input{lampiran/alg_crf}
+
+Fungsi \texttt{GrowTree} pada CRF memiliki parameter dan kembalian yang sama
+dengan fungsi \textit{GrowTree} pada \textit{RandomForest}.
+Setiap selesai membangun sebuah pohon, nilai kembalian $tp$ dan $tn$ diperiksa.
+Jika nilai $tp$ dan $tn$ lebih besar dari nilai $maxtp$ dan $maxtn$ maka proses
+pembangunan tingkatan selesai, jika belum lanjutkan membangun pohon sampai
+nilai $maxtp$ dan $maxtn$ tercapai atau pohon ke-$T$ terbangun.
+
+Saat sebuah tingkatan selesai, simpan $forest$ yang telah terbangun berikut
+dengan nilai \textit{F-Measure} dari pohon yang terakhir sebagai bobot ($w$)
+dari tingkatan yang nanti digunakan untuk proses klasifikasi.
+
+Fungsi \texttt{Classify} memiliki dua parameter yaitu pengklasifikasi CRF
+($crf$) dan kumpulan sampel yang akan diklasifikasi ($set$).
+Untuk setiap sampel dalam $set$, fungsi ini melakukan klasifikasi
+\textit{Random-Forest} dan mengumpulkan probabilitas dari kelas yang telah
+dikalikan dengan bobot dari setiap tingkatan.
+Fungsi ini mengembalikan prediksi dari kelas pada $set$.

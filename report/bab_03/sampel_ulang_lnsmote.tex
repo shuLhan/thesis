@@ -7,11 +7,63 @@ Hasil implementasinya dalam bentuk sebuah program
 \footnote{\url{%
 https://github.com/shuLhan/go-mining/tree/master/resampling/lnsmote
 }}.
-
-LNSMOTE memiliki empat parameter yaitu dataset keseluruhan yang akan disampel
-ulang, dataset minoritas, persentase sampel sintetis yang akan dibuat, dan
-jumlah tetangga terdekat.
 Program LNSMOTE dijalankan dengan diberikan input dataset fitur PAN-WVC-10
 dengan persentase sampel sintetis yaitu 1.100\% dan jumlah tetangga terdekat
 yaitu 5, sehingga didapat 28.588 sampel sintetis positif, ditambah dengan
 sampel positif asli totalnya menjadi 30.982 sampel positif.
+
+	\newpage
+	\input{lampiran/alg_lnsmote}
+
+LNSMOTE memiliki empat parameter yaitu dataset keseluruhan ($D$), kelas
+minoritas yang akan disampel ulang ($minor$) pada dataset $D$, persentase
+sampel sintetis yang akan dibuat ($o$), dan jumlah tetangga terdekat yang akan
+dicari ($k$) di sekitar sampel minoritas.
+
+Fungsi \texttt{CreateSynthetic} memiliki tiga parameter yaitu dataset ($D$),
+sebuah sampel ($sample$), dan semua tetangga dari $sample$ ($neighbors$).
+Fungsi ini mengembalikan sebuah sampel sintetis yang dibuat antara $sample$
+dengan salah satu tetangga $neighbours$ yang dipilih secara acak ($n$), dengan
+syarat nilai \textit{safe-level} dari $sample$ atau $n$ di dalam dataset $D$
+lebih besar dari $0$.
+
+Fungsi \texttt{CanCreate} memiliki tiga parameter yaitu dataset ($D$), sebuah
+sampel ($sample$), dan sebuah tetangga dari $sample$ ($neighbour$).
+Fungsi ini memeriksa \textit{safe-level} dari $sample$ dan $neigbour$ di dalam
+dataset $D$, jika nilai \textit{safe-level} kedua sampel tersebut sama dengan
+0, maka fungsi mengembalikan nilai $false$, sebaliknya jika salah satu tidak 0
+maka akan mengembalikan nilai $true$.
+
+Fungsi \texttt{SafeLevel} memiliki tiga parameter yaitu dataset ($D$), sebuah
+sampel minoritas $p$ yang ada di dalam $D$, dan jumlah tetangga $p$ yang akan dicari
+dalam $D$ ($k$).
+Fungsi ini mencari $k$ buah tetangga dari $p$ dan mengembalikan hanya tetangga
+yang kelasnya minoritas.
+
+Fungsi \texttt{SafeLevel2} memiliki empat parameter yaitu dataset ($D$), sebuah
+sampel minoritas ($p$) yang ada di dalam $D$, sebuah tetangga dari $p$ ($n$),
+dan jumlah tetangga dari $p$ yang akan dicari ($k$).
+Fungsi ini mencari $k$ tetangga terdekat dari $n$, katakanlah $nneighbours$,
+jika $n$ bukan sampel minoritas dan $p$ adalah tetangga dari $n$ maka sampel
+$p$ yang ada di dalam $nneighbours$ diganti dengan tetangga yang selanjutnya
+($k+1$).
+Fungsi ini mengembalikan semua tetangga $nneighbours$ yang kelasnya minoritas.
+
+Fungsi \texttt{RandomGap} memiliki empat parameter yaitu dataset ($D$), sebuah
+sampel minoritas ($p$) yang ada di dalam $D$, sebuah tetangga dari $p$ ($n$),
+dan jumlah tetangga yang akan dicari ($k$).
+Fungsi ini menghitung jarak acak antara sampel minoritas $p$ dengan tetangganya
+$n$ berdasarkan nilai \textit{safe-level} dari $p$ dan $n$.
+Jika \textit{safe-level} $n$ sama dengan 0 dan \textit{safe-level} dari $p$
+besar dari 0, artinya tidak ada tetangga dari $n$ yang minoritas yang mana $n$
+berarti adalah \textit{outlier}, maka fungsi ini mengembalikan nilai jarak 0.
+Jika kedua \textit{safe-level} dari $p$ dan $n$ besar dari 0 maka dihitung
+rasionya ($slratio$).
+Jika $slratio$ sama dengan 1, artinya sampel $p$ dan $n$ memiliki jumlah
+tetangga yang sama, maka fungsi ini mengembalikan jarak yang diambil secara
+acak dengan rentang antara 0 dan 1.
+Jika $slratio$ besar dari 1, artinya jumlah tetangga $p$ lebih besar dari
+jumlah tetangga $n$, maka fungsi mengembalikan nilai jarak acak dengan rentang
+0 dan $1/slratio$.
+Selain itu, fungsi mengembalikan jarak acak antara 0 sampai
+$1-Random(slratio)$.

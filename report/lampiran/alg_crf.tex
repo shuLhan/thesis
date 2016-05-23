@@ -14,16 +14,32 @@ $ maxtn $: ambang batas untuk nilai \textit{true-negative}
 \Function{CascadedRandomForest}{$ TSET, S, T, B, m, maxtp, maxtn $}
 	\State $ n \gets $ jumlah sampel pada dataset $ TSET $
 	\State $ b \gets n * (B / 100) $
-	\State $ forest \gets nil $
+	\Comment Jumlah sampel acak untuk setiap pohon.
+
 	\State $ TNSET \gets nil $
+	\Comment Penampung untuk sampel \textit{true-negative}.
+
+	\State $ crf \gets nil $
+	\Comment Pengklasifikasi yang berisi tingkatan.
+
 	\For{$ s \gets 1,S $}
+		\State $ forest \gets nil $
+
 		\For{$ t \gets 1,T $}
-			\State $ tp_{s,t}, tn_{s,t} \gets \Call{GrowTree}{forest, S, b, m} $
-			\If{$ tp_{s,t} > maxtp $ \textbf{and} $ tn_{s,t} > maxtn $}
+			\State $ tp, tn, tree \gets \Call{GrowTree}{forest, S, b, m} $
+			\If{$ tp > maxtp $ \textbf{and} $ tn > maxtn $}
 				\State Tingkatan selesai
+			\Else
+				\State $ forest.\Call{Add}{tree} $
 			\EndIf
 		\EndFor
-		\State $\alpha_{s} \gets exp(fmeasure) $
+		\\
+		\State $w \gets exp(\Call{FMeasure}{tree}) $
+		\Comment Simpan nilai \textit{F-Measure} dari pohon terakhir sebagai
+		bobot dari tingkatan.
+		\State $ crf.\Call{Add}{forest, w} $
+		\Comment Simpan forest dan bobot dari tingkatan.
+		\\
 		\If{$ s = 1 $}
 			\State Pindahkan sampel \textit{true-negative} dari
 			$TSET$ ke $TNSET$
@@ -34,6 +50,32 @@ $ maxtn $: ambang batas untuk nilai \textit{true-negative}
 			\textit{false-positive} dari hasil uji $TNSET$
 		\EndIf
 	\EndFor
+
+	\State \Return{crf}
+\EndFunction
+\\
+\Function{Classify}{$ crf, set $}
+	\State $ predictions \gets nil $
+	\Comment Penampung untuk prediksi klasifikasi dari $set$.
+	\State $ sumw \gets $ Jumlah semua bobot tingkatan dalam $crf$.
+
+	\For{\textbf{each} $sample$ \textbf{in} $set$}
+		\State $ stageProbs \gets nil $
+		\Comment Penampung untuk probabilitas kelas dari setiap $forest$.
+
+		\For{\textbf{each} $forest$, $w$ \textbf{in} $crf$}
+			\State $ votes \gets \Call{Classify}{forest, set, nil} $
+			\State $ cwprobs \gets $
+				(probabilitas setiap kelas dalam $votes \times w$) /
+				($ sumw ~ \times $ jumlah pohon dalam $forest$)
+			\State $ stageProbs.\Call{Push}{cwprobs} $
+		\EndFor
+\newpage
+		\State $ class \gets $ Pilih kelas dengan probabilitas maksimum pada $stageProbs$
+		\State $ predictions.\Call{Push}{class} $
+	\EndFor
+	\\
+	\State \Return{predictions}
 \EndFunction
 	\end{algorithmic}
 \end{center}
