@@ -1,0 +1,837 @@
+\documentclass{beamer}
+	\usetheme{Madrid}
+	\usecolortheme{beaver}
+
+%%{{{ PACKAGES
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{multicol}
+\usepackage{tikz}
+	\usetikzlibrary{backgrounds, shapes.geometric, positioning, patterns}
+
+\usepackage[
+	backend=bibtex
+,	style=ieee
+]{biblatex}
+	\addbibresource{bibliography.bib}
+
+\usepackage{multirow}
+\usepackage{datatool}
+%%}}}
+
+\input{../variables}
+
+\title[Detecting Vandalism with CRF]{%
+	\mytitle
+}
+\author{\myname}
+\institute[STEI-ITB]{%
+	\mydept\\
+	\itb
+}
+\date{2016}
+\logo{%
+	\includegraphics[width=1cm]{\myitbcoverblue}
+}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\section*{Outline}
+\begin{frame}
+	\frametitle{Outline}
+	\begin{multicols}{2}
+		\tableofcontents
+	\end{multicols}
+\end{frame}
+
+\section{Introduction}
+
+\subsection{What is Vandalism?}
+\begin{frame}
+	\frametitle{What is vandalism?}
+	\begin{definition}
+		Willful or malicious destruction or defacement of public or private
+		property.
+		\footnote{\url{http://www.merriam-webster.com/dictionary/vandalism}}
+	\end{definition}
+	\pause
+	\begin{block}{In the context of Wikipedia}
+		Malicious edit which intention is to give wrong information, or hiding
+		information by deleting the content, abusive content, ads, and/or
+		meaningless text.
+	\end{block}
+\end{frame}
+
+\subsection{Example of Vandalism on Wikipedia}
+\begin{frame}{Example of Vandalism on Wikipedia}{Offensive}
+	\begin{figure}
+		\centering
+		\includegraphics[width=\textwidth]{edit_harassment}
+		\caption{
+			Harashing public figure.
+			(\url{https://en.wikipedia.org/w/index.php?title=Ralph_Kiner&diff=prev&oldid=329569400})
+		}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Example of Vandalism on Wikipedia}{Meaningless content}
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.7\textwidth]{edit_meaningless}
+		\caption{
+			The tricky part of detecting vandalism is a well written text but
+			having no real importance or value.
+			(\url{https://en.wikipedia.org/w/index.php?title=Ukiah_High_School&diff=prev&oldid=329692136})
+		}
+	\end{figure}
+\end{frame}
+
+%%{{{ RELATED WORKS
+\subsection{Related Works}
+
+\begin{frame}{Related Works}{What have been done?}
+	\begin{block}{Bot}
+		A program that check each edit based on,
+		\begin{itemize}
+		\item blacklist of words
+		\item blacklist of IP addresses and users
+		\end{itemize}
+	\end{block}
+	\pause
+	\begin{alertblock}{Problems}
+		\begin{itemize}
+		\item Its not easy to maintain the list
+		\item One IP address could be used by many users
+		\end{itemize}
+	\end{alertblock}
+\end{frame}
+
+\begin{frame}{Related Works}{What have been done?}
+	\begin{block}{Implementation of machine learning}
+		\begin{itemize}
+		\item Potthast create and collect the vandalism corpus and the first to
+		use machine learning technique to detect vandalism by applying Logistic
+		Regression.
+		\item Velasco then expand the features by Potthast and use Random
+		Forest. Velasco win the 1st International Competition on Wikipedia
+		Vandalism Detection. Velasco reach true-positive rate (TPR) value 0.57.
+		\item Gotze combines the works of Potthast, Velasco, and others,
+		by oversampling the dataset using Synthetic Minority Oversampling
+		Technique (SMOTE) and compare several two-class classifiers, including
+		Logistic Regression, RealAdaBoost, Random Forest, and Bayesian Network.
+		Gotze only reach TPR value 0.39.
+		\end{itemize}
+	\end{block}
+\end{frame}
+%%}}}
+
+%%{{{ OUR WORKS
+\subsection{Our Works}
+
+\begin{frame}{Our Works}
+	\begin{itemize}
+		\item For resampling, we use an extension of SMOTE proposed by
+		Maciejewski and Stefanowski called Local Neighbours SMOTE (LNSMOTE)
+		to increase the positive rate.
+		\item For classifier, we use Cascaded Random Forest which was
+		proposed by Baumann to speeding up the training process and also
+		increasing the positive rate.
+	\end{itemize}
+\end{frame}
+%%}}}
+
+\section{Literature Study}
+
+\subsection{SMOTE}
+
+\begin{frame}{Synthetic Minority Oversampling TEchnique (SMOTE)}
+	{Overview}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{tikzpicture}
+				\draw (0,0) -- (0,4);
+				\draw (0,0) -- (4,0);
+				\node[circle,fill=gray] (p) at (1,1) {p};
+				\node[circle,fill=gray] (n) at (3,3) {n};
+				\node[circle,fill=red] (s) at (2,2) {s};
+				\draw[-] (p) -- (n);
+			\end{tikzpicture}
+		\end{column}
+
+		\begin{column}{0.5\textwidth}
+			Create synthetic sample by substracting feature vector of two
+			samples and multiplied it with real random number between 0 and
+			1.
+
+			\[
+				s = (p - n) * random(0,1)
+			\]
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Synthetic Minority Oversampling TEchnique (SMOTE)}
+	{Problems}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{tikzpicture}
+				\draw (0,0) -- (0,4);
+				\draw (0,0) -- (4,0);
+				\node[circle,fill=gray] (p) at (1,1) {p};
+				\node[circle,fill=gray] (n) at (3,3) {n};
+				\node[rectangle,fill=blue!50] (m) at (2.2,2) {m};
+				\node[circle,fill=red] (s) at (2,2) {s};
+				\draw[-] (p) -- (n);
+			\end{tikzpicture}
+		\end{column}
+
+		\begin{column}{0.5\textwidth}
+			Synthetic sample is overlapping with majority samples.
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Synthetic Minority Oversampling TEchnique (SMOTE)}
+	{Problems}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}
+			\centering
+			\resizebox {\columnwidth} {!} {
+				\begin{tikzpicture}
+					\draw[help lines] (0,0) grid (10, 10);
+					\draw (0,0) -- (0,10);
+					\draw (0,0) -- (10,0);
+
+					\node[circle,fill=gray] (p) at (3,3) {p};
+					\node[circle,fill=gray] (p2) at (2.1, 2.5) {};
+					\node[circle,fill=gray] (p3) at (2.5, 1.9) {};
+					\node[circle,fill=gray] (p4) at (2.6, 3.4) {};
+
+					\node[circle,fill=gray] (p5) at (7, 1.4) {};
+					\node[circle,fill=gray] (p6) at (7.4, 2.4) {};
+					\node[circle,fill=gray] (p7) at (7.8, 3.2) {};
+					\node[circle,fill=gray] (p8) at (6.6, 3) {};
+
+					%% outliers
+					\node[circle,fill=gray] (n) at (5,5) {n};
+
+					\draw[-] (p) -- (n);
+				\end{tikzpicture}
+			}
+			\end{figure}
+		\end{column}
+
+		\begin{column}{0.5\textwidth}
+			Overgeneralization, where sample minority $n$ could be an outliers.
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Synthetic Minority Oversampling TEchnique (SMOTE)}
+	{Problems}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}
+			\centering
+			\resizebox {\columnwidth} {!} {
+				\begin{tikzpicture}
+					\draw[help lines] (0,0) grid (10, 10);
+					\draw (0,0) -- (0,10);
+					\draw (0,0) -- (10,0);
+
+					\node[circle,fill=gray] (p) at (3,3) {p};
+					\node[circle,fill=gray] (p2) at (2.1, 2.5) {};
+					\node[circle,fill=gray] (p3) at (2.5, 1.9) {};
+					\node[circle,fill=gray] (p4) at (2.6, 3.4) {};
+
+					\node[circle,fill=gray] (p5) at (7, 1.4) {};
+					\node[circle,fill=gray] (p6) at (7.4, 2.4) {};
+					\node[circle,fill=gray] (p7) at (7.8, 3.2) {};
+					\node[circle,fill=gray] (p8) at (6.6, 3) {};
+
+					%% outliers
+					\node[circle,fill=gray] (n) at (5,5) {n};
+
+					\draw[-] (p) -- (n);
+				\end{tikzpicture}
+			}
+			\end{figure}
+		\end{column}
+
+		\begin{column}{0.5\textwidth}
+			Overgeneralization, where sample minority $n$ could be an outliers.
+		\end{column}
+	\end{columns}
+\end{frame}
+
+
+\subsection{LNSMOTE}
+
+%%{{{ LNSMOTE: overview
+\begin{frame}{Local-Neighbourhood SMOTE (LNSMOTE)}{Overview}
+	LNSMOTE is modification of Safe-Level SMOTE.
+	\begin{block}{Safe-level}
+		For each minority sample, calculate $k$ number of minority samples in
+		their neighbours (k-nearest-neighbourhood -- KNN).
+
+		\begin{itemize}
+		\item If number of their neighbors approaching 0, then the sample will
+		be considered as noise.
+		\item If number of their neighbors approaching $k$ , then the sample is
+		in safe region of minority samples.
+		\end{itemize}
+	\end{block}
+\end{frame}
+%%}}}
+
+%%{{{ LNSMOTE sl(p) = 0 and sl(n) = 0
+\begin{frame}{Local-Neighbourhood SMOTE}{Overview}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}
+			\centering
+			\resizebox {\columnwidth} {!} {
+				\begin{tikzpicture}
+					\draw[help lines] (0,0) grid (10, 10);
+					\draw (0,0) -- (0,10);
+					\draw (0,0) -- (10,0);
+
+					\node[circle,fill=gray] (p2) at (1.7, 6.5) {};
+					\node[circle,fill=gray] (p2) at (1.7, 8.5) {};
+					\node[circle,fill=gray] (p2) at (2.1, 7.5) {};
+					\node[circle,fill=gray] (p3) at (2.5, 6.9) {};
+					\node[circle,fill=gray] (p4) at (2.6, 8.4) {};
+
+					\node[circle,fill=gray] (p5) at (7, 1.4) {};
+					\node[circle,fill=gray] (p6) at (7.4, 2.4) {};
+					\node[circle,fill=gray] (p7) at (7.8, 3.2) {};
+					\node[circle,fill=gray] (p8) at (6.6, 3) {};
+
+					%% outliers
+					\node[circle,fill=gray] (p) at (3,3) {p};
+					\node[circle,fill=gray] (n) at (5,5) {n};
+
+					\node[circle,
+						draw=red,
+						minimum width=90pt,
+						inner sep=0pt,
+						label=sl(p)
+					] at (3,3) {};
+
+					\node[circle,
+						draw=orange,
+						minimum width=90pt,
+						inner sep=0pt,
+						label=sl(n)
+					] at (5,5) {};
+
+					\draw[-] (p) -- (n);
+				\end{tikzpicture}
+			}
+			\end{figure}
+		\end{column}
+
+		\begin{column}{0.5\textwidth}
+		If safe-level(p) = 0 and safe-level(n) = 0, then both samples is
+		considered as noise and no synthetic samples will be created.
+		\end{column}
+	\end{columns}
+\end{frame}
+%%}}}
+
+%%{{{ LNSMOTE slp = 1 and sln=0
+\begin{frame}{Local-Neighbourhood SMOTE}{Overview}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}
+			\centering
+			\resizebox {\columnwidth} {!} {
+				\begin{tikzpicture}
+					\draw[help lines] (0,0) grid (10, 10);
+					\draw (0,0) -- (0,10);
+					\draw (0,0) -- (10,0);
+
+					\node[circle,fill=gray] (p2) at (2.1, 2.5) {};
+					\node[circle,fill=gray] (p3) at (2.5, 1.9) {};
+					\node[circle,fill=gray] (p4) at (2.6, 3.4) {};
+					\node[circle,fill=gray] (p4) at (3.1, 2.1) {};
+					\node[circle,fill=gray] (p4) at (1.8, 3.1) {};
+
+					\node[circle,fill=gray] (p5) at (7, 1.4) {};
+					\node[circle,fill=gray] (p6) at (7.4, 2.4) {};
+					\node[circle,fill=gray] (p7) at (7.8, 3.2) {};
+					\node[circle,fill=gray] (p8) at (6.6, 3) {};
+
+					\node[circle,fill=gray] (p) at (3,3) {p};
+					\node[circle,fill=gray] (n) at (5,5) {n};
+
+					\node[circle,
+						draw=red,
+						minimum width=90pt,
+						inner sep=0pt,
+						label=sl(p)
+					] at (3,3) {};
+
+					\node[circle,
+						draw=orange,
+						minimum width=90pt,
+						inner sep=0pt,
+						label=sl(n)
+					] at (5,5) {};
+
+					\draw[-] (p) -- (n);
+				\end{tikzpicture}
+			}
+			\end{figure}
+		\end{column}
+
+		\begin{column}{0.5\textwidth}
+		If safe-level(p) = 1 and safe-level(n) = 0, then sample $n$ is a noise
+		and synthetic sample will be created by cloning sample $p$.
+		\end{column}
+	\end{columns}
+\end{frame}
+%%}}}
+
+%%{{{ LNSMOTE slratio = 1
+\begin{frame}{Local-Neighbourhood SMOTE}{Overview}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}
+			\centering
+			\resizebox {\columnwidth} {!} {
+				\begin{tikzpicture}
+					\draw[help lines] (0,0) grid (10, 10);
+					\draw (0,0) -- (0,10);
+					\draw (0,0) -- (10,0);
+
+					\node[circle,fill=gray] (p2) at (2.1, 2.5) {};
+					\node[circle,fill=gray] (p3) at (2.5, 1.9) {};
+					\node[circle,fill=gray] (p4) at (2.6, 3.4) {};
+					\node[circle,fill=gray] (p4) at (3.1, 2.1) {};
+					\node[circle,fill=gray] (p4) at (1.8, 3.1) {};
+
+					\node[circle,fill=gray] (p5) at (4.2, 5.3) {};
+					\node[circle,fill=gray] (p8) at (5.1, 4.1) {};
+					\node[circle,fill=gray] (p8) at (5.6, 5.9) {};
+					\node[circle,fill=gray] (p8) at (6, 5.9) {};
+					\node[circle,fill=gray] (p8) at (6, 5.1) {};
+
+					\node[circle,fill=gray] (p) at (3,3) {p};
+					\node[circle,fill=gray] (n) at (5,5) {n};
+
+					\node[circle,
+						draw=red,
+						minimum width=90pt,
+						inner sep=0pt,
+						label=sl(p)
+					] at (3,3) {};
+
+					\node[circle,
+						draw=orange,
+						minimum width=90pt,
+						inner sep=0pt,
+						label=sl(n)
+					] at (5,5) {};
+
+					\draw[-] (p) -- (n);
+				\end{tikzpicture}
+			}
+			\end{figure}
+		\end{column}
+
+		\begin{column}{0.5\textwidth}
+		$ slratio = \frac{safelevel(p)}{safelevel(n)}$ \\
+		If $ slratio = 1 $, then synthetic sample will be created like SMOTE.
+		\end{column}
+	\end{columns}
+\end{frame}
+%%}}}
+
+%%{{{ LNSMOTE slratio > 1
+\begin{frame}{Local-Neighbourhood SMOTE}{Overview}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}
+			\centering
+			\resizebox {\columnwidth} {!} {
+				\begin{tikzpicture}
+					\draw[help lines] (0,0) grid (10, 10);
+					\draw (0,0) -- (0,10);
+					\draw (0,0) -- (10,0);
+
+					\node[circle,fill=gray] (p2) at (2.1, 2.5) {};
+					\node[circle,fill=gray] (p3) at (2.5, 1.9) {};
+					\node[circle,fill=gray] (p4) at (2.6, 3.4) {};
+					\node[circle,fill=gray] (p4) at (3.1, 2.1) {};
+					\node[circle,fill=gray] (p4) at (1.8, 3.1) {};
+
+					\node[circle,fill=gray] (p5) at (4.2, 5.3) {};
+					\node[circle,fill=gray] (p8) at (5.6, 5.9) {};
+					\node[circle,fill=gray] (p8) at (6, 5.1) {};
+
+					\node[circle,fill=gray] (p) at (3,3) {p};
+					\node[circle,fill=gray] (n) at (5,5) {n};
+
+					\node[circle,
+						draw=red,
+						minimum width=90pt,
+						inner sep=0pt,
+						label=sl(p)
+					] at (3,3) {};
+
+					\node[circle,
+						draw=orange,
+						minimum width=90pt,
+						inner sep=0pt,
+						label=sl(n)
+					] at (5,5) {};
+
+					\draw[-] (p) -- (n);
+				\end{tikzpicture}
+			}
+			\end{figure}
+		\end{column}
+
+		\begin{column}{0.5\textwidth}
+		If $ slratio > 1 $, its mean $p$ is in safe domain within minority
+		class, then synthetic sample will be created near $p$ with random gap
+		between $[0,1/slratio]$.
+		\end{column}
+	\end{columns}
+\end{frame}
+%%}}}
+
+%%{{{ LNSMOTE slratio < 1
+\begin{frame}{Local-Neighbourhood SMOTE}{Overview}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}
+			\centering
+			\resizebox {\columnwidth} {!} {
+				\begin{tikzpicture}
+					\draw[help lines] (0,0) grid (10, 10);
+					\draw (0,0) -- (0,10);
+					\draw (0,0) -- (10,0);
+
+					\node[circle,fill=gray] (p2) at (2.1, 2.5) {};
+					\node[circle,fill=gray] (p4) at (2.6, 3.4) {};
+					\node[circle,fill=gray] (p4) at (1.8, 3.1) {};
+
+					\node[circle,fill=gray] (p5) at (4.2, 5.3) {};
+					\node[circle,fill=gray] (p8) at (5.1, 4.1) {};
+					\node[circle,fill=gray] (p8) at (5.6, 5.9) {};
+					\node[circle,fill=gray] (p8) at (6, 5.9) {};
+					\node[circle,fill=gray] (p8) at (6, 5.1) {};
+
+					\node[circle,fill=gray] (p) at (3,3) {p};
+					\node[circle,fill=gray] (n) at (5,5) {n};
+
+					\node[circle,
+						draw=red,
+						minimum width=90pt,
+						inner sep=0pt,
+						label=sl(p)
+					] at (3,3) {};
+
+					\node[circle,
+						draw=orange,
+						minimum width=90pt,
+						inner sep=0pt,
+						label=sl(n)
+					] at (5,5) {};
+
+					\draw[-] (p) -- (n);
+				\end{tikzpicture}
+			}
+			\end{figure}
+		\end{column}
+
+		\begin{column}{0.5\textwidth}
+		If $ slratio < 1 $, its mean sample
+		$n$ is in safe domain, then synthetic sample will be created near $n$
+		with random gap between $[1-slratio, 1]$.
+		\end{column}
+	\end{columns}
+\end{frame}
+%%}}}
+
+\subsection{Random Forest}
+
+\begin{frame}{Random Forest}{Overview}
+	\begin{definition}
+	Combination of $T$ independent decision tree, such that each tree built
+	using $b$ random samples and $m$ random features with the same distribution
+	for all trees in the forest.
+	\end{definition}
+\end{frame}
+
+\begin{frame}{Random Forest}{Disadvantages}
+	\begin{itemize}
+		\item For a large dataset (e.g. greater than 10.000 samples), the time
+		required for training the classifier can take several hours.
+		\item Random Forest tends to prefer the majority class when used for
+		training imbalanced data \cite{strobl2007bias}
+		\item After learning several trees Random Forest optimally adapts to
+		the training set reaching perfect splits. Hence, the classifier can
+		neither improve the detection sensitivity nor reduce the false positive
+		rate \cite{baumann2013cascaded}.
+	\end{itemize}
+\end{frame}
+
+\subsection{Cascaded Random Forest}
+
+\begin{frame}{Cascaded Random Forest (CRF)}{History}
+	CRF is inspired cascade structure by Viola and Jones.
+
+	\begin{block}{Cascaded Structure}
+		\begin{itemize}
+		\item Motivated by assumption that its more easy to reject a negative
+		sample than finding a positive one.
+		\item Cascaded is combination of classifier in several independent
+		stages with the condition that any stage can reject a sample
+		\item In order to accept a sample (as positive) all stage must be
+		passed.
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame}
+	{Cascaded Random Forest (CRF)}
+	{Overview}
+	\begin{itemize}
+		\item A cascade classifier consist of several stages
+		\item Each stage contains at least one decision tree
+		\item Tree are added until a given true-positive and true-negative rate
+		is achieved.
+		\item Using aggregated bootstrap strategy.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	{Cascaded Random Forest (CRF)}
+	{Bootstrap Strategy}
+	\begin{itemize}
+		\item After finishing each stage, the classifier then tested using negative
+		test set.
+		\item Sample that correctly classified (true-negative) will be
+		deleted from negative set set.
+		\item Sample that misclassified (false-positive) will be added to
+		training set to be learned by the following stage.
+	\end{itemize}
+\end{frame}
+
+
+\section{Process on Detecting Vandalism}
+
+\begin{frame}
+	{Process on Detecting Vandalism}
+	{Overview}
+	\input{../paper/diagram_process}
+\end{frame}
+
+\subsection{Data Preparation}
+
+\begin{frame}{Data Preparation}
+	The dataset that we use for training is PAN-WVC-10 and for
+	testing is PAN-WVC-11.
+
+	Before we can extract the features, the dataset then cleaned and
+	modified by
+	\begin{itemize}
+	\item removing irrelevant attributes, for example \textit{diffurl}
+	attribute which contain address in Wikipedia site that referencing current
+	sample edit.
+	\item Replacing class value with number ("vandalism" became $1$
+	and "regular" became $0$)
+	\item Add new attribute "additions" which contains text that was added in
+	new revision.
+	\item Add new attribute "deletions" which contains text that was deleted in
+	old revision.
+	\end{itemize}
+\end{frame}
+
+\subsection{Features Extraction}
+
+\begin{frame}{Features Extraction}
+This paper use 4 metadata features, 11 text features, and 10 language features,
+which based on work of Mola-Velasco.
+\end{frame}
+
+\begin{frame}
+	{Features Extraction}
+	{Metadata Features}
+	\begin{itemize}
+		\item Anonymous. Vandalism usually works of non-registered user.
+		\item Comment length. Since this non-registered user does not state why
+		or what they changed, they usually leave the comment field when
+		submitting vandal edit.
+		\item Size increment. Absolute decrease in article size can indicated
+		deletion.
+		\item Size ratio.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	{Features Extraction}
+	{Text Features}
+	\begin{itemize}
+		\item Uppercase and lowercase ratio.
+		\item Number ratio.
+		\item Non-alphanumeric ratio.
+		\item Character diversity.
+		\item Character distribution.
+		\item Compression rate. Vandalism usually have low compression rate.
+		\item Wiki tokens. Counting the numbers of wiki tokens used in new
+		revision, for example \texttt{\_\_TOC\_\_}, \texttt{[Category:]}.
+		\item Average words frequency.
+		\item Longest word.
+		\item Longest character sequence. For example, \textit{aaaarrggg!},
+		\textit{soooo huge}.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	{Features Extraction}
+	{Language Features}
+	\begin{itemize}
+		\item Language feature based on number of specific words in certain
+		categories.
+		revision.
+		\item For each word in categories, two features are calculated:
+		frequency and impact.
+		\item Frequency is computed by $\frac{\textit{frequency of
+		word}}{\textit{total words}}$
+		\item Impact is computed by $\frac{%
+				\textit{word frequency in old revision}
+			}{
+			\textit{word frequency in old revision}
+				+ \textit{word frequency in new revision}
+			} $
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	{Features Extraction}
+	{Words Categories}
+	\begin{itemize}
+		\item Vulgarism contains vulgar and offensive words, for example
+		\textit{nigga}, \textit{damn}.
+		\item Pronouns contains first and second pronouns words, for example
+		\textit{I}, \textit{you}.
+		\item Bias contains non-formal words with high bias, for example
+		\textit{fabolous}, \textit{lame}.
+		\item Sex words contains non-vulgar words that related to sex.
+		\item Bad words contains non-vulgar, non-sex negative words, for
+		example \textit{fart}, \textit{smelly}.
+		\item All words categories, contains combination of all words.
+	\end{itemize}
+\end{frame}
+
+\subsection{Resampling}
+
+\begin{frame}
+	{Resampling}
+	\begin{itemize}
+		\item SMOTE resampling parameter: 1,200\% synthetic samples
+		\item LNSMOTE resampling parameter: 1.100\% synthetic samples
+		\item Both use 5 as KNN value.
+	\end{itemize}
+	\input{../paper/table_dataset}
+\end{frame}
+
+\section{Evaluation}
+\subsection{Classifier Parameter}
+
+\begin{frame}
+	{Evaluation}
+	{Classifier Parameter}
+	\begin{block}{Random Forest}
+		\begin{itemize}
+			\item Number of tree: 200
+			\item Percentage of bootstraping: 64\%
+			\item Number of random feature: 5
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame}
+	{Evaluation}
+	{Classifier Parameter for CRF}
+	\begin{block}{Common parameters}
+		\begin{itemize}
+			\item Percentage of bootstraping: 64\%
+			\item Number of random feature: 5
+			\item True-positive threshold: 0.95
+			\item True-negative threshold: 0.95
+		\end{itemize}
+	\end{block}
+	\begin{columns}
+		\begin{column}{0.3\textwidth}
+			\begin{block}{CRF-200-1}
+				\begin{itemize}
+					\item Number of stage: 200
+					\item Number of tree in each stage: 1
+				\end{itemize}
+			\end{block}
+		\end{column}
+
+		\begin{column}{0.3\textwidth}
+			\begin{block}{CRF-100-2}
+				\begin{itemize}
+					\item Number of stage: 100
+					\item Number of tree in each stage: 2
+				\end{itemize}
+			\end{block}
+		\end{column}
+
+		\begin{column}{0.3\textwidth}
+			\begin{block}{CRF-50-4}
+				\begin{itemize}
+					\item Number of stage: 50
+					\item Number of tree in each stage: 4
+				\end{itemize}
+			\end{block}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+
+\subsection{Classifiers Performance}
+
+\begin{frame}
+	{Classifiers Performance}
+	\input{../paper/table_performance}
+\end{frame}
+
+\subsection{Computation Time}
+
+\begin{frame}
+	{Computation Time}
+	\input{../paper/table_runtimes}
+\end{frame}
+
+\section{Conclusion}
+
+\begin{frame}
+	{Conclusion}
+	\begin{itemize}
+		\item SMOTE on average increase TPR value by $0.19$ times,
+		\item LNSMOTE on average increase TPR value $0.33$ times.
+		\item Overall, the best model for detecting vandalism is CRF with 200
+		stages and 1 trees on dataset resampled with LNSMOTE.
+		\item CRF on average $1.6$ times faster at training than RF on resampled dataset.
+	\end{itemize}
+\end{frame}
+
+\section*{References}
+
+\begin{frame}{References}
+\printbibliography
+\end{frame}
+
+\end{document}
