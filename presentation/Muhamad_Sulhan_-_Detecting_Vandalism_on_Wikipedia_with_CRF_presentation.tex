@@ -22,6 +22,9 @@
 
 \input{../variables}
 
+%% remove navigation symbols
+\setbeamertemplate{navigation symbols}{}
+
 \title[Detecting Vandalism with CRF]{%
 	\mytitle
 }
@@ -41,7 +44,7 @@
 
 \section*{Outline}
 \begin{frame}
-	\frametitle{Outline}
+	{Outline}
 	\begin{multicols}{2}
 		\tableofcontents
 	\end{multicols}
@@ -65,7 +68,7 @@
 	\end{block}
 \end{frame}
 
-\subsection{Example of Vandalism on Wikipedia}
+\subsection{Examples}
 \begin{frame}{Example of Vandalism on Wikipedia}{Offensive}
 	\begin{figure}
 		\centering
@@ -144,6 +147,12 @@
 %%}}}
 
 \section{Literature Study}
+
+\begin{frame}
+	\begin{multicols}{2}
+		\tableofcontents[currentsection]
+	\end{multicols}
+\end{frame}
 
 \subsection{SMOTE}
 
@@ -570,7 +579,58 @@
 	\end{definition}
 \end{frame}
 
-\begin{frame}{Random Forest}{Disadvantages}
+\begin{frame}
+	{Random Forest}
+	{Example of Bootstrap Strategy for One Tree}
+	\begin{figure}
+		\centering
+		\resizebox {5cm} {!} {
+		\begin{tikzpicture}[
+			nodes = {
+				align = center
+			},
+			block/.style={
+				draw,
+				fill=white,
+				rectangle,
+				minimum width={width("Bootstrap samples")+2pt},
+				font=\small
+			},
+			lines/.style={
+				line width=2pt,
+				>=latex
+			}
+		]
+			\node[block,minimum height=4cm] (bs) {
+				Random samples\\
+				($\frac{2}{3}$ of all samples)
+			};
+
+			\node (l) [above=4pt of bs] {(Training set)};
+
+			\node[block,draw=red!50,minimum height=2cm]
+				(oob)
+				[below=0cm of bs]
+				{Out-of-bag};
+
+			\node (tree) [right=2cm of bs] {a4}
+				child {node {a1}}
+				child {node {a3}
+					child {node {+}}
+					child {node {-}}
+				};
+
+			\node (ltree) [above=4pt of tree] {(Decision tree)};
+
+			\draw[lines,->] (bs) -- (tree);
+		\end{tikzpicture}
+		}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	{Random Forest}
+	{Disadvantages}
 	\begin{itemize}
 		\item For a large dataset (e.g. greater than 10.000 samples), the time
 		required for training the classifier can take several hours.
@@ -583,10 +643,31 @@
 	\end{itemize}
 \end{frame}
 
+\begin{frame}
+	{Random Forest}
+	{Disadvantages}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}
+				\centering
+				\includegraphics[width=\textwidth]{rf_with_resampling_phoneme}
+			\end{figure}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			After learning several trees, Random Forest optimally adapts to the
+			training set reaching perfect splits.
+			Hence, the classifier can neither improve the detection sensitivity
+			nor reduce the false positive rate \cite{baumann2013cascaded}.
+		\end{column}
+	\end{columns}
+\end{frame}
+
+
 \subsection{Cascaded Random Forest}
 
-\begin{frame}{Cascaded Random Forest (CRF)}{History}
-	CRF is inspired cascade structure by Viola and Jones.
+\begin{frame}{Cascaded Random Forest (CRF)}
+	{Overview}
+	CRF is inspired by cascade structure \cite{viola2004robust}.
 
 	\begin{block}{Cascaded Structure}
 		\begin{itemize}
@@ -615,18 +696,95 @@
 \begin{frame}
 	{Cascaded Random Forest (CRF)}
 	{Bootstrap Strategy}
+
+	\begin{figure}
+		\centering
+		\resizebox {!} {2.5cm} {
+		\begin{tikzpicture}[
+			nodes = {
+				align = center
+			},
+			data/.style={
+				circle,
+				draw=black,
+				text centered
+			},
+			block/.style={
+				draw,
+				fill=white,
+				rectangle,
+				font=\small
+			},
+			lines/.style={
+				line width=1pt,
+				>=latex
+			}
+		]
+			\node[block] (s1) {$stage_1$};
+			\node[block] (s2) [right=of s1] {$stage_2$};
+			\node[block] (s3) [right=of s2] {$stage_3$};
+			\node[block] (sn) [right=of s3] {$stage_n$};
+
+			\node[data] (ts) [above left=of s1] {Training\\set ($TS_0$)};
+			\node[data] (ns) [below=of ts] {Negative\\set ($NS_0$)};
+
+			\node[data] (ts1) [above=of s2] {$TS_1$};
+			\node[data] (ns1) [below=of s2] {$NS_1$};
+
+			\node[data] (ts2) [above=of s3] {$TS_2$};
+			\node[data] (ns2) [below=of s3] {$NS_2$};
+
+			\node[data] (tsn) [above=of sn] {$TS_n$};
+			\node[data] (nsn) [below=of sn] {$NS_n$};
+
+			\draw[lines,dashed,->] (s1) -- (s2);
+			\draw[lines,dashed,->] (s2) -- (s3);
+			\draw[lines,dashed,->] (s3) -- (sn);
+
+			\draw[lines,->] (ts) -- (s1);
+
+			\draw[lines,->] (s1) -- node[right]{TP} ++(ns1);
+			\draw[lines,->] (s1) -- node[right]{FP} ++(ts1);
+
+			\draw[lines,->] (ts1) -- (s2);
+			\draw[lines,->] (ns1) -- (s2);
+
+			\draw[lines,->] (s2) -- node[right]{TP} ++(ns2);
+			\draw[lines,->] (s2) -- node[right]{FP} ++(ts2);
+
+			\draw[lines,->] (ts2) -- (s3);
+			\draw[lines,->] (ns2) -- (s3);
+
+			\draw[lines,->] (s3) -- node[right]{TP} ++(nsn);
+			\draw[lines,->] (s3) -- node[right]{FP} ++(tsn);
+
+			\draw[lines,->] (tsn) -- (sn);
+			\draw[lines,->] (nsn) -- (sn);
+
+		\end{tikzpicture}
+		}
+	\end{figure}
+
 	\begin{itemize}
 		\item After finishing each stage, the classifier then tested using negative
 		test set.
-		\item Sample that correctly classified (true-negative) will be
-		deleted from negative set set.
+		\item Sample that correctly classified as negative will be
+		deleted from training set and moved to negative set to be learned by
+		the following stage.
 		\item Sample that misclassified (false-positive) will be added to
 		training set to be learned by the following stage.
 	\end{itemize}
 \end{frame}
 
+\addtocontents{toc}{\newpage}
 
 \section{Process on Detecting Vandalism}
+
+\begin{frame}
+	\begin{multicols}{2}
+		\tableofcontents[currentsection]
+	\end{multicols}
+\end{frame}
 
 \begin{frame}
 	{Process on Detecting Vandalism}
@@ -658,8 +816,12 @@
 \subsection{Features Extraction}
 
 \begin{frame}{Features Extraction}
-This paper use 4 metadata features, 11 text features, and 10 language features,
-which based on work of Mola-Velasco.
+	\begin{itemize}
+	\item This paper use 4 metadata features, 11 text features, and 10 language
+	features, which based on work of Mola-Velasco.
+	\item Features extracted from PAN-WVC-10 and PAN-WVC-11 dataset.
+	\end{itemize}
+
 \end{frame}
 
 \begin{frame}
@@ -671,8 +833,9 @@ which based on work of Mola-Velasco.
 		or what they changed, they usually leave the comment field when
 		submitting vandal edit.
 		\item Size increment. Absolute decrease in article size can indicated
-		deletion.
+		deletion, $ newrev - oldrev $
 		\item Size ratio.
+			$ \frac{1+|newrev|}{1+|oldrev|} $
 	\end{itemize}
 \end{frame}
 
@@ -681,19 +844,35 @@ which based on work of Mola-Velasco.
 	{Text Features}
 	\begin{itemize}
 		\item Uppercase and lowercase ratio.
+			$ \frac{1+|upper|}{1+|lower|} $
+		\item Uppercase to all characters ratio.
+			$ \frac{1+|upper|}{1+|all|} $
 		\item Number ratio.
+			$ \frac{1+|number\_chars|}{1+|all|} $
 		\item Non-alphanumeric ratio.
+			$ \frac{1+|non\-alphanumeric|}{1+|all|} $
 		\item Character diversity.
-		\item Character distribution.
+			$ {|all|}^{\frac{1}{1+uniq\-chars}} $
+		\item Character distribution. Compute Kullback-Leibler Divergence of
+		inserted text to old revision.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	{Features Extraction}
+	{Text Features}
+	\begin{itemize}
 		\item Compression rate. Vandalism usually have low compression rate.
 		\item Wiki tokens. Counting the numbers of wiki tokens used in new
 		revision, for example \texttt{\_\_TOC\_\_}, \texttt{[Category:]}.
-		\item Average words frequency.
-		\item Longest word.
+		\item Inserted words frequency.
+			$ \sum{\frac{word}{word_{count,newrev}}} $
+		\item Longest word length.
 		\item Longest character sequence. For example, \textit{aaaarrggg!},
 		\textit{soooo huge}.
 	\end{itemize}
 \end{frame}
+
 
 \begin{frame}
 	{Features Extraction}
@@ -701,11 +880,12 @@ which based on work of Mola-Velasco.
 	\begin{itemize}
 		\item Language feature based on number of specific words in certain
 		categories.
-		revision.
-		\item For each word in categories, two features are calculated:
+		\item For each word in categories, two features are calculated for new
+		revision:
 		frequency and impact.
-		\item Frequency is computed by $\frac{\textit{frequency of
-		word}}{\textit{total words}}$
+		\item Frequency is computed by
+			$\frac{\textit{word frequency}}
+				{\textit{total words}}$
 		\item Impact is computed by $\frac{%
 				\textit{word frequency in old revision}
 			}{
@@ -744,12 +924,21 @@ which based on work of Mola-Velasco.
 	\input{../paper/table_dataset}
 \end{frame}
 
+
 \section{Evaluation}
+
+\begin{frame}
+	\begin{multicols}{2}
+		\tableofcontents[currentsection]
+	\end{multicols}
+\end{frame}
+
+
 \subsection{Classifier Parameter}
 
 \begin{frame}
 	{Evaluation}
-	{Classifier Parameter}
+	{Classifier Parameter for Random Forest}
 	\begin{block}{Random Forest}
 		\begin{itemize}
 			\item Number of tree: 200
@@ -805,6 +994,7 @@ which based on work of Mola-Velasco.
 
 \begin{frame}
 	{Classifiers Performance}
+	{Performance}
 	\input{../paper/table_performance}
 \end{frame}
 
@@ -812,19 +1002,54 @@ which based on work of Mola-Velasco.
 
 \begin{frame}
 	{Computation Time}
+	{Running Time}
 	\input{../paper/table_runtimes}
 \end{frame}
+
 
 \section{Conclusion}
 
 \begin{frame}
+	\begin{multicols}{2}
+		\tableofcontents[currentsection]
+	\end{multicols}
+\end{frame}
+
+\begin{frame}
 	{Conclusion}
 	\begin{itemize}
-		\item SMOTE on average increase TPR value by $0.19$ times,
-		\item LNSMOTE on average increase TPR value $0.33$ times.
+		\item SMOTE on average increase TPR value by $0.19$ times
+		\item LNSMOTE on average increase TPR value $0.33$ times
 		\item Overall, the best model for detecting vandalism is CRF with 200
-		stages and 1 trees on dataset resampled with LNSMOTE.
-		\item CRF on average $1.6$ times faster at training than RF on resampled dataset.
+		stages and 1 trees on dataset resampled with LNSMOTE
+		\item CRF on average $1.6$ times faster than RF on training resampled
+		dataset
+	\end{itemize}
+\end{frame}
+
+\subsection{Our Contributions}
+\begin{frame}
+	{Our Contributions}
+	\begin{itemize}
+		\item A framework to extract vandalism features from dataset for
+		speeding up future research or used in real world case.
+		(\url{https://github.com/shuLhan/wvcgen})
+		\item A framework for LNSMOTE resampling and Cascaded Random Forest
+		classifier
+		(\url{https://github.com/shuLhan/go-mining})
+	\end{itemize}
+\end{frame}
+
+\subsection{Future Works}
+\begin{frame}
+	{Future works}
+	\begin{itemize}
+		\item Create and collect vandalism annotations for Wikipedia Bahasa
+		Indonesia
+		\item Parallel algorithm for Random Forest and/or Cascaded Random
+		Forest to speeding up process
+		\item Experimenting with XGBoost classifier may increase accuracy on
+		vandalism detection
 	\end{itemize}
 \end{frame}
 
