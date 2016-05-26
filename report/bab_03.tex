@@ -1,6 +1,50 @@
+\chapter{Proses Deteksi Vandalisme}
+\label{bab:03}
+
 Pada bab ini dijelaskan proses dari pengolahan dataset dan implementasi
 algoritma sampel ulang dan klasifikasi, dimulai dari persiapan
 data, pembuatan dataset fitur, sampel ulang pada dataset fitur, dan
 implementasi pengklasifikasi sehingga nantinya dapat digunakan untuk pelatihan,
 pengujian dan analisis.
 Alur dari proses secara umum dapat dilihat pada gambar \ref{fig:proses}.
+
+\input{bab_03/diagram_proses.tex}
+
+	\section{Gambaran Umum}
+	\label{bab:03:gambaran_umum}
+	\input{bab_03/gambaran_umum}
+
+	\section{Persiapan Dataset Pelatihan}
+	\label{bab:03:persiapan_data_pelatihan}
+	\input{bab_03/persiapan_data_pelatihan}
+
+	\section{Persiapan Dataset Pengujian}
+	\label{bab:03:persiapan_data_pengujian}
+	\input{bab_03/persiapan_data_pengujian}
+
+	\section{Ekstraksi Fitur}
+	\label{bab:03:ekstraksi_fitur}
+	\input{bab_03/ekstraksi_fitur}
+
+	\section{Pembuatan Sampel Ulang}
+	\label{bab:03:pembuatan_sampel_ulang}
+	\input{bab_03/pembuatan_sampel_ulang}
+
+	\subsection{Pembuatan Sampel Ulang SMOTE}
+	\label{bab:03:sampel_ulang_smote}
+	\input{bab_03/sampel_ulang_smote}
+
+	\subsection{Pembuatan Sampel Ulang LNSMOTE}
+	\label{bab:03:sampel_ulang_lnsmote}
+	\input{bab_03/sampel_ulang_lnsmote}
+
+	\section{Implementasi Pengklasifikasi}
+	\input{bab_03/implementasi_pengklasifikasi}
+
+	\subsection{Implementasi \textit{Random Forest}}
+	\label{subsection:implementasi_rf}
+	\input{bab_03/implementasi_rf}
+
+	\subsection{Implementasi \textit{Cascaded Random Forest}}
+	\label{subsection:implementasi_crf}
+	\input{bab_03/implementasi_crf}

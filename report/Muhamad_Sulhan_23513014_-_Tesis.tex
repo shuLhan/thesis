@@ -1,161 +1,62 @@
-\documentclass[12pt,a4paper,titlepage]{report}
-
-\input{../packages}
-\input{../hyphenation}
-\input{../variables}
-\input{../macros}
-\input{../ITBTesisFormat}
-
-\author{\myname}
-\title{\mytitle}
+\include{preamble}
 
 \begin{document}
 
-\input{sampul}
+\include{sampul}
 
-\newpage
 \pagenumbering{roman}
-\chapter*{\tUpAbstrak}
-\label{abstrak}
-\addcontentsline{toc}{chapter}{\tUpAbstrak}
 
-\input{abstrak}
+\clearpage
+\chapter*{\tUpAbstrak}
+	\input{abstrak}
+	\label{abstrak}
+	\addcontentsline{toc}{chapter}{\tUpAbstrak}
+
+\clearpage
+\chapter*{\tupabstract}
+	\input{abstract}
+	\label{abstract}
+	\addcontentsline{toc}{chapter}{\tupabstract}
+
+\clearpage
+	\addcontentsline{toc}{chapter}{\tuppengesahan}
+	\input{pengesahan}
 
 \tableofcontents
+
+\listofappendix
 
 \listoffigures
 
 \listoftables
 
-\newpage
+\clearpage
 \pagenumbering{arabic}
 
 %%
 %% BAB I: PENDAHULUAN
 %%
-\chapter{Pendahuluan}
-\label{bab:01}
-
-	\section{Latar Belakang}
-	\label{bab:01:latar_belakang}
-	\input{bab_01/latar_belakang}
-
-	\section{Rumusan Masalah}
-	\label{bab:01:rumusan_masalah}
-	\input{bab_01/rumusan_masalah}
-
-	\section{Tujuan}
-	\label{bab:01:tujuan}
-	\input{bab_01/tujuan}
-
-	\section{Batasan Masalah}
-	\label{bab:01:batasan_masalah}
-	\input{bab_01/batasan_masalah}
-
-	\section{Metodologi}
-	\label{bab:01:metodologi}
-	\input{bab_01/metodologi}
-
-	\section{Sistematika Penulisan}
-	\label{bab:01:sistematika_penulisan}
-	\input{bab_01/sistematika_penulisan}
+\include{bab_01}
 
 %%
 %% BAB II: TINJAUAN PUSTAKA
 %%
-\chapter{Tinjauan Pustaka}
-\label{bab:02}
-\input{bab_02}
-
-	\section{SMOTE}
-	\label{bab:02:smote}
-	\input{bab_02/smote}
-
-	\section{LNSMOTE}
-	\label{bab:02:lnsmote}
-	\input{bab_02/lnsmote}
-
-	\section{\textit{Random Forest}}
-	\label{bab:02:rf}
-	\input{bab_02/rf}
-
-	\section{\textit{Cascaded Random Forest}}
-	\label{bab:02:crf}
-	\input{bab_02/crf}
-
-	\section{Pekerjaan Terkait}\label{bab:02:pekerjaan_terkait}
-	\input{bab_02/pekerjaan_terkait}
+\include{bab_02}
 
 %%
-%% BAB III
+%% BAB III: PROSES
 %%
-\chapter{Proses Deteksi Vandalisme}
-\label{bab:03}
-\input{bab_03}
-\input{bab_03/diagram_proses.tex}
-
-	\section{Gambaran Umum}
-	\label{bab:03:gambaran_umum}
-	\input{bab_03/gambaran_umum}
-
-	\section{Persiapan Dataset Pelatihan}
-	\label{bab:03:persiapan_data_pelatihan}
-	\input{bab_03/persiapan_data_pelatihan}
-
-	\section{Persiapan Dataset Pengujian}
-	\label{bab:03:persiapan_data_pengujian}
-	\input{bab_03/persiapan_data_pengujian}
-
-	\section{Ekstraksi Fitur}
-	\label{bab:03:ekstraksi_fitur}
-	\input{bab_03/ekstraksi_fitur}
-
-	\section{Pembuatan Sampel Ulang}
-	\label{bab:03:pembuatan_sampel_ulang}
-	\input{bab_03/pembuatan_sampel_ulang}
-
-	\subsection{Pembuatan Sampel Ulang SMOTE}
-	\label{bab:03:sampel_ulang_smote}
-	\input{bab_03/sampel_ulang_smote}
-
-	\subsection{Pembuatan Sampel Ulang LNSMOTE}
-	\label{bab:03:sampel_ulang_lnsmote}
-	\input{bab_03/sampel_ulang_lnsmote}
-
-	\section{Implementasi Pengklasifikasi}
-	\input{bab_03/implementasi_pengklasifikasi}
-
-	\subsection{Implementasi \textit{Random Forest}}
-	\label{subsection:implementasi_rf}
-	\input{bab_03/implementasi_rf}
-
-	\subsection{Implementasi \textit{Cascaded Random Forest}}
-	\label{subsection:implementasi_crf}
-	\input{bab_03/implementasi_crf}
+\include{bab_03}
 
 %%
 %% BAB IV: EVALUASI
 %%
-\chapter{Evaluasi}
-\label{bab:04}
-\input{bab_04/evaluasi}
-
-	\section{Dataset Pelatihan dan Pengujian}
-	\label{bab:04:dataset}
-	\input{bab_04/dataset}
-
-	\section{Parameter Pengklasifikasi}
-	\label{bab:04:parameter}
-	\input{bab_04/parameter}
-
-	\section{Hasil Deteksi}
-	\label{bab:04:hasil_deteksi}
-	\input{bab_04/hasil_deteksi}
+\include{bab_04}
 
 %%
 %% BAB V: KESIMPULAN
 %%
-\input{kesimpulan}
+\include{kesimpulan}
 
 %%
 %% DAFTAR PUSTAKA
@@ -178,8 +79,6 @@
 \chapter*{\tUpLampiran}
 \addcontentsline{toc}{chapter}{\tUpLampiran}
 
-\chapter{Daftar Kategori Kata dan Token}
-\label{lampiran:daftar_token_dan_kata}
-\input{lampiran/daftar_token_dan_kata}
+\include{lampiran/daftar_token_dan_kata}
 
 \end{document}
