@@ -181,14 +181,8 @@ give some possible future works that can be extended from this paper.
 
 %%}}}
 
-\section{Literature Study}
-\label{section:literature_study}
-
-This section review the previous work and techniques used for implementation in
-this paper.
-
 %%{{{ PREVIOUS WORKS
-\subsection{Previous Workds}
+\section{Related Works}
 
 Since 2008, vandalism detection in Wikipedia based on machine learning approach
 became an interesting research topic.
@@ -268,6 +262,12 @@ Only two research that use PAN-WVC-11
 with the best result obtained by Gotze, $0.92$ on precision, $0.39$
 on recall, and $0.74$ on PR-AUC.
 %%}}}
+
+\section{Literature Study}
+\label{section:literature_study}
+
+This section review the previous work and techniques used for implementation in
+this paper.
 
 %%{{{ SMOTE
 \subsection{SMOTE}
@@ -681,6 +681,8 @@ Another parameter for training with CRF are thresholds for true-positive rate
 (TPR) and true-negative rate (TNR), which set to constant value 0.95 and 0.95
 for all training.
 
+\input{table_dataset}
+
 The dataset used for training is PAN-WVC-10 which consist of three different
 set, dataset without resampled, dataset resampled with SMOTE, and dataset
 resampled with LNSMOTE.
@@ -691,8 +693,6 @@ Training is conducted by running each classifier program, RF and CRF, on
 those three different PAN-WVC-10 feature dataset.
 Testing is conducted after the model has been built by giving the model the
 PAN-WVC-11 feature dataset as an input.
-
-\input{table_dataset}
 
 The environment used for training and testing is Intel\textregistered
 Core\texttrademark i7-4750HQ CPU 2,00 GHz, with total 8 GB of RAM.
@@ -792,7 +792,7 @@ of detection.
 
 %%}}}
 
-\IEEEtriggeratref{10}
+\IEEEtriggeratref{9}
 \bibliographystyle{IEEEtran}
 \bibliography{IEEEabrv,bibliography}
 
