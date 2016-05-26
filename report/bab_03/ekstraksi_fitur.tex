@@ -20,6 +20,7 @@ digunakan secara terbuka pada repositori \texttt{wvcgen}
 Kelompok metadata mengacu pada properti dari sebuah revisi yang secara langsung
 dapat diambil, seperti identitas penyunting, komentar, atau ukuran perubahan.
 
+\newpage
 Berikut daftar fitur metadata yang digunakan,
 
 \begin{itemize}
@@ -48,7 +49,7 @@ Peningkatan absolut dari ukuran konten artikel, dihitung dengan
 |\text{ukuran\_suntingan\_baru} - \text{ukuran\_suntingan\_lama}|
 \]
 Misalnya, berkurangnya ukuran dalam jumlah besar bisa mengindikasikan
-pengosongan artikel.
+pengosongan artikel.\\
 
 \item \textbf{Rasio ukuran}.
 Ukuran revisi baru relatif terhadap revisi lama, dihitung dengan cara
@@ -101,7 +102,7 @@ penggunaan \textit{emoticon}, tanda baca, atau kata tak bermakna.
 Menghitung jumlah karakter berbeda yang digunakan pada penambahan, dibandingkan dengan panjang teks yang dimasukan,
 dihitung dengan rumus,
 \[
-length \frac{1}{karakter\ berbeda}
+panjangteks^{\frac{1}{1+\textit{karakter unik}}}
 \]
 Fitur ini membantu menemukan penggunaan karakter secara acak dan kata tak
 bermakna.

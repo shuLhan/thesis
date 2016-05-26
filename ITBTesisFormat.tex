@@ -29,19 +29,25 @@
 %% Reduce vspace between title in list and body
 %%
 \renewcommand{\contentsname}{
-	\chapter*{\daftarisi}\label{chapter:daftarisi}
+	\chapter*{\vspace{2cm}\daftarisi}\label{chapter:daftarisi}
 	\vspace{-1.5em}
 	\addcontentsline{toc}{chapter}{\daftarisi}
 }
 
+\newcommand{\listappendixname}{
+	\chapter*{\vspace{2cm} \tupdaftarlampiran}
+	\vspace{-1.5em}
+	\addcontentsline{toc}{chapter}{\tupdaftarlampiran}
+}
+
 \renewcommand{\listfigurename}{
-	\chapter*{\daftargambar}
+	\chapter*{\vspace{2cm} \daftargambar}
 	\vspace{-1.5em}
 	\addcontentsline{toc}{chapter}{\daftargambar}
 }
 
 \renewcommand{\listtablename}{
-	\chapter*{\daftartabel}
+	\chapter*{\vspace{2cm} \daftartabel}
 	\vspace{-1.5em}
 	\addcontentsline{toc}{chapter}{\daftartabel}
 }
@@ -96,9 +102,9 @@
 {1em}{}
 
 %% Set spacing for chapter, section, and subsection.
-\titlespacing{\chapter}{0ex}{0ex}{1.5em}
-\titlespacing{\section}{0ex}{0ex}{0em}
-\titlespacing{\subsection}{0ex}{0ex}{0em}
+\titlespacing*{\chapter}{0pt}{-2.5em}{1.5em}
+\titlespacing{\section}{0pt}{0pt}{0em}
+\titlespacing{\subsection}{0pt}{0pt}{0em}
 
 %% Set roman on chapter number.
 \def\thechapter{\Roman{chapter}}
@@ -131,12 +137,6 @@
 \overfullrule=2cm
 
 %% The Glory Appendices
-
-\newcommand{\listappendixname}{
-	\chapter*{\tupdaftarlampiran}
-	\vspace{-1.5em}
-	\addcontentsline{toc}{chapter}{\tupdaftarlampiran}
-}
 
 \newlistof{appendix}{app}{\listappendixname}
 \setcounter{appdepth}{2}
