@@ -29,6 +29,7 @@
 \listoffigures
 
 \listoftables
+\addtocontents{toc}{\hbox to \linewidth{~}}
 
 \clearpage
 \pagenumbering{arabic}
@@ -68,17 +69,6 @@
 %%
 %% LAMPIRAN
 %%
-
-\titleformat{\chapter}[hang]
-{\bfseries\large\centering}
-{\tLampiran\ \thechapter}
-{1em}
-{}
-
-\appendix
-\chapter*{\tUpLampiran}
-\addcontentsline{toc}{chapter}{\tUpLampiran}
-
-\include{lampiran/daftar_token_dan_kata}
+\include{lampiran}
 
 \end{document}

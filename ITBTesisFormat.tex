@@ -21,6 +21,7 @@
 %%
 %% Add dot to TOC.
 %%
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
 \renewcommand{\contentsname}{}
 
@@ -66,7 +67,6 @@
 %%
 %% Format chapter and section.
 %%
-
 
 \setlength{\cftchapnumwidth}{5em}
 \setlength{\cftsecnumwidth}{2.5em}
@@ -160,3 +160,13 @@
 	\section*{\thesubappendix\space #1}%
 	\addcontentsline{app}{subappendix}{\protect\numberline{\thesubappendix}#1}%
 }
+
+%% Format TOC
+\makeatletter
+	\newskip\old@cftbeforechapskip
+	\old@cftbeforechapskip\cftbeforechapskip
+	\let\old@l@chapter\l@chapter
+	\let\old@l@section\l@section
+	\def\l@chapter#1#2{\old@l@chapter{#1}{#2}\cftbeforechapskip2pt}% set your value here
+	\def\l@section#1#2{\old@l@section{#1}{#2}\cftbeforechapskip\old@cftbeforechapskip}
+\makeatother
