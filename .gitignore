@@ -15,6 +15,7 @@ result/*.pdf
 *.aux
 *.bbl
 *.blg
+*.dpth
 *.log
 *.run.xml
 *.synctex.gz
