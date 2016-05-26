@@ -25,7 +25,7 @@
 \renewcommand{\contentsname}{}
 
 %%
-%% Reduce vspace between title in list and boy
+%% Reduce vspace between title in list and body
 %%
 \renewcommand{\contentsname}{
 	\chapter*{\daftarisi}\label{chapter:daftarisi}
@@ -67,6 +67,15 @@
 %% Format chapter and section.
 %%
 
+
+\setlength{\cftchapnumwidth}{5em}
+\setlength{\cftsecnumwidth}{2.5em}
+
+\setlength{\cftsecindent}{5em}
+\setlength{\cftsubsecindent}{7.5em}
+
+\renewcommand{\cftchappresnum}{Bab\space}
+
 %% Set chapter name to Bab.
 \titleformat{\chapter}[hang]
 {\bfseries\large\centering}
@@ -98,7 +107,7 @@
 \captionsetup[table]{name=Tabel}
 \captionsetup[figure]{name=Gambar}
 
-%% 
+%%
 \renewcommand{\arraystretch}{1.5}
 \setlength{\tabcolsep}{3pt}
 
@@ -120,3 +129,34 @@
 
 %% uncomment this to show overrule in black box
 \overfullrule=2cm
+
+%% The Glory Appendices
+
+\newcommand{\listappendixname}{
+	\chapter*{\tupdaftarlampiran}
+	\vspace{-1.5em}
+	\addcontentsline{toc}{chapter}{\tupdaftarlampiran}
+}
+
+\newlistof{appendix}{app}{\listappendixname}
+\setcounter{appdepth}{2}
+\renewcommand{\theappendix}{\Alph{appendix}}
+\renewcommand{\cftappendixpresnum}{Lampiran\space}
+\setlength{\cftbeforeappendixskip}{0em}
+\setlength{\cftappendixnumwidth}{6em}
+\newlistentry[appendix]{subappendix}{app}{1}
+\renewcommand{\thesubappendix}{\theappendix.\arabic{subappendix}}
+\setlength{\cftsubappendixindent}{6em}
+
+\newcommand{\myappendix}[1]{%
+	\refstepcounter{appendix}%
+	\chapter*{Lampiran\space\theappendix\space #1}%
+	\addcontentsline{app}{appendix}{\protect\numberline{\theappendix}#1}%
+	\par
+}
+
+\newcommand{\subappendix}[1]{%
+	\refstepcounter{subappendix}%
+	\section*{\thesubappendix\space #1}%
+	\addcontentsline{app}{subappendix}{\protect\numberline{\thesubappendix}#1}%
+}
