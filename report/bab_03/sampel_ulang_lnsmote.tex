@@ -31,8 +31,9 @@ Fungsi \texttt{CanCreate} memiliki tiga parameter yaitu dataset ($D$), sebuah
 sampel ($sample$), dan sebuah tetangga dari $sample$ ($neighbour$).
 Fungsi ini memeriksa \textit{safe-level} dari $sample$ dan $neigbour$ di dalam
 dataset $D$, jika nilai \textit{safe-level} kedua sampel tersebut sama dengan
-0, maka fungsi mengembalikan nilai $false$, sebaliknya jika salah satu tidak 0
-maka akan mengembalikan nilai $true$.
+0, maka fungsi mengembalikan nilai $false$ yang berarti sampel sintetis tidak
+bisa dibuat antara $p$ dan $n$, sebaliknya jika salah satu tidak 0
+maka akan mengembalikan nilai $true$ yang berarti sampel sintetis bisa dibuat.
 
 Fungsi \texttt{SafeLevel} memiliki tiga parameter yaitu dataset ($D$), sebuah
 sampel minoritas $p$ yang ada di dalam $D$, dan jumlah tetangga $p$ yang akan dicari

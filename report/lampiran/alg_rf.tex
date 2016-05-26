@@ -30,8 +30,7 @@ $ m $: jumlah fitur acak \\
 	\State $ tree \gets \Call{BuildTree}{bag, m} $
 
 	\State $ \Call{forest.SaveBagIndex}{bagIdx} $
-	\Comment Simpan pohon dan indeks dari \textit{bagging} untuk
-	klasifikasi OOB.
+	\Comment Simpan pohon dan indeks dari \textit{bagging}
 
 	\State $ cm \gets \Call{Classify}{forest, oob, oobIdx} $
 	\State $ tp, tn \gets \Call{ComputeStat}{cm} $

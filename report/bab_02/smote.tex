@@ -19,9 +19,9 @@ Instan dari KNN dipilih secara acak, bergantung dari jumlah
 }
 	\caption{
 	Ilustrasi pembuatan sampel sintetis pada SMOTE.
-	$p$ adalah sampel minoritas, $n$ adalah salah satu
-	\textit{k-nearest-neighbors} dari $p$.
-	Sampel sintetis yang baru akan berada digaris antara $p$ dan $n$.
+	Misalkan $p$ adalah sampel minoritas dan $n$ adalah salah satu
+	\textit{k-nearest-neighbors} dari $p$, maka
+	sampel sintetis yang baru akan berada di garis antara $p$ dan $n$.
 	}
 	\label{fig:smote}
 \end{figure}
@@ -35,7 +35,6 @@ Sampel sintetis dibuat dengan cara berikut,
 	\item tambahkan hasilnya ke vektor fitur.
 \end{compactitem}
 
-\newpage
 Cara ini membuat sampel secara acak pada segmen garis antara dua fitur yang
 terpilih, seperti yang terlihat pada gambar \ref{fig:smote}.
 Pendekatan ini secara efektif mendorong wilayah pembelajaran dari kelas
