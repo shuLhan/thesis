@@ -1,0 +1,36 @@
+\begin{center}
+\textbf{\large
+	\MakeUppercase{\mytitle{}} \\
+	\bigskip
+	\textnormal{By} \\
+	\myname{} \\
+	NIM: \mysid{} \\
+	(\mydept{}) \\
+}
+\end{center}
+
+\bigskip
+\bigskip
+\bigskip
+
+Wikipedia.org is an online encyclopedia which can edited by anyone.
+Those feature has benefit, which make the article in Wikipedia rapidly
+increased in size and can be fixed subsequently, and their drawbacks was prone
+to vandalism in the forms of invalid information, deletion, ads, or meaningless
+content.
+This paper propose a framework for detecting vandalism on English Wikipedia
+using machine learning technique by training Cascaded Random Forest (CRF)
+classifier on English Wikipedia dataset (PAN-WVC-10) that has been resampled
+using Local Neighbourhood SMOTE (LNSMOTE).
+Those two methods then compared with Random Forest (RF) for classifier and
+SMOTE for resampling.
+The result of training both classifiers that has been tested on Wikipedia
+Vandalism Corpus 2011 (PAN-WVC-11) English only dataset showed that the dataset
+resampled using LNSMOTE have true-positive rate better than SMOTE.
+CRF on LNSMOTE with 200 stages and 1 tree gave the better result among others
+with TPR value 0.9904.
+From training computation time, CRF 1.6 times faster than RF in resampled
+dataset.
+
+Keywords: wikipedia, vandalism, imbalanced dataset, dataset resampling,
+cascaded random forest
