@@ -29,25 +29,25 @@
 %% Reduce vspace between title in list and body
 %%
 \renewcommand{\contentsname}{
-	\chapter*{\vspace{2cm}\daftarisi}\label{chapter:daftarisi}
+	\chapter*{\vspace{0em}\daftarisi}\label{chapter:daftarisi}
 	\vspace{-1.5em}
 	\addcontentsline{toc}{chapter}{\daftarisi}
 }
 
 \newcommand{\listappendixname}{
-	\chapter*{\vspace{2cm} \tupdaftarlampiran}
+	\chapter*{\vspace{0em} \tupdaftarlampiran}
 	\vspace{-1.5em}
 	\addcontentsline{toc}{chapter}{\tupdaftarlampiran}
 }
 
 \renewcommand{\listfigurename}{
-	\chapter*{\vspace{2cm} \daftargambar}
+	\chapter*{\vspace{0em} \daftargambar}
 	\vspace{-1.5em}
 	\addcontentsline{toc}{chapter}{\daftargambar}
 }
 
 \renewcommand{\listtablename}{
-	\chapter*{\vspace{2cm} \daftartabel}
+	\chapter*{\vspace{0em} \daftartabel}
 	\vspace{-1.5em}
 	\addcontentsline{toc}{chapter}{\daftartabel}
 }
@@ -84,7 +84,7 @@
 
 %% Set chapter name to Bab.
 \titleformat{\chapter}[hang]
-{\bfseries\large\centering}
+{\bfseries\large\centering\vspace{-1.5em}}
 {Bab \thechapter}
 {1em}
 {}
@@ -102,7 +102,8 @@
 {1em}{}
 
 %% Set spacing for chapter, section, and subsection.
-\titlespacing*{\chapter}{0pt}{-2.5em}{1.5em}
+\titlespacing{\chapter}{0pt}{0pt}{0pt}
+\titlespacing*{\chapter}{0pt}{0pt}{1.5em}
 \titlespacing{\section}{0pt}{0pt}{0em}
 \titlespacing{\subsection}{0pt}{0pt}{0em}
 
