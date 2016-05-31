@@ -1,0 +1,55 @@
+Vandalism, according to Merriam-Webster's dictionary is willful or malicious
+destruction or defacement of public or private property.
+In the context of Wikipedia, vandalism can be in the form of malicious edit
+which intention to give wrong information, or hiding information by deleting
+the content, abusive content, ads, and/or meaningless text.
+Finding and fixing the article that has been vandalized can disrupt the editor
+from writing or expanding new article or others important tasks, and for the
+reader they will get the wrong information or no information at all due to
+deletion.
+
+Corpus that commonly used for learning vandalism on Wikipedia is PAN Wikipedia
+Vandalism Corpus 2010 (PAN-WVC-10)
+\cite{potthast:2010b}
+or PAN Wikipedia Vandalism Corpus 2011 (PAN-WVC-11)
+\cite{potthast:2010b}.
+Both of the corpus have class imbalance problem.
+PAN-WVC-10 for an English articles have 32,439 sample with only $2,394$ (7\%)
+of them is vandalism, whereas PAN-WVC-11 for an English articles have $9,985$
+sampel with only $1,144$ (8\%) of them are vandalism.
+
+Training a classifier on imbalance dataset could lead to low performance.
+This can be caused either by the minority class has low contribution to error
+rate, which make the classifier bias to majority class, or some classifier
+assume that class distribution is balanced, while in real world cases this
+rarely happened.
+
+RF has the disadvantage in their the computation time especially when training
+the classification model.
+For a large dataset with more than 10,000 samples (like the PAN-WVC-10 cases)
+this could lead to hours of training time.
+One of the solution is by using Cascaded Random Forest (CRF) framework proposed
+by Bauman et al.
+\cite{baumann2013cascaded}.
+Their paper state that CRF give a fast training model time and increased
+performance compared to RF.
+
+This paper attempt to overcome the dataset imbalance problem on PAN-WVC-10 by
+applying resample and classifier technique that has never been used before on
+the dataset.
+The PAN-WVC-10 dataset is resampled using Local Neighborhood SMOTE (LNSMOTE)
+technique,
+which proposed by Maciejewski and Stefanowski
+\cite{maciejewski2011local}.
+The result from resampling then trained using CRF classifier and compared with
+RF classifier to see their performance.
+
+This paper is organized as follow.
+Section \ref{section:literature_study} briefly review the past works that has
+been done on vandalism detection on Wikipedia, SMOTE, LNSMOTE, RF and CRF.
+Section \ref{section:research_methodology} describe how the feature generated
+from raw dataset and resampled before it was trained and tested on classifiers.
+Section \ref{section:result_and_analysis} show the result from each classifier
+on each dataset and their analysis.
+Section \ref{section:conclusion} conclude the experiment and
+give some possible future works that can be extended from this paper.

@@ -1,0 +1,22 @@
+The original dataset can not be used for training and testing, they need to
+combined, cleaned by removing unneeded attributes, and cleaned on their content
+to generate features.
+
+Dataset that is used for training is PAN-WVC-10 \cite{potthast2008automatic}.
+which contain two separate set, the edit set and annotation set.
+The two set then combined to get only their edit ID, class, old revision ID,
+new revision ID, edit time, editor, article title, and edit comment.
+
+Dataset for testing is an English dataset of PAN-WVC-11 \cite{potthast:2010b}.
+The original attribute from the set is similar with PAN-WVC-10 except they were
+already combined into single set.
+
+In both dataset, we then add two new attributes, deletions
+(text that has been deleted in previous revision) and additions (text that
+has been added in new revision).
+Also, the class attribute value is replaced with numeric, where
+"vandalism" is become "1" and "regular" become "0".
+
+The next step is to create revision text that is clean from wiki syntax, with
+an aim to help in generating feature.
+Every revision files cleaned up by removing URI, wiki markups, and wiki tokens.

@@ -1,0 +1,81 @@
+Most of ensemble learning algorithm is incapable of handling imbalance training
+data.
+Inequality between positive and negative class usually result in low
+detection accuracy.
+A simulation run by Strobel et al. \cite{strobl2007bias} showed that RF skewed
+in favor of majority class.
+Another drawback of RF is after learning several trees, RF gradually reach its
+peak, such that the classifier can not increase their detection sensitivity or
+decrease their false-positive rate.
+
+Viola and Jones proposed a detection algorithm based on AdaBoost with
+cascade structure \cite{viola2004robust}.
+Cascade structure motivated by assumption that it is more easy to reject a
+negative sample than finding a positive one.
+Viola and Jones combines several strong classifiers in several independent
+stages with condition that each stage can reject a sample, so to classify a
+sample as positive then all stages must be passed.
+Due to rejection on early stages, computation time will be decreased.
+In addition, to get better training result, Viola and Jones propose a bootstrap
+strategy by deleting samples classified as true negative.
+The reduced training set then refilled with sample that mis-classified, or
+false-positive samples
+\cite{viola2004robust}.
+
+A cascade classifier consists of several number of stages with increasing
+complexity.
+Each stage have minimum one independent classifier.
+Classifier added into stages until the value of true-positive and true-negative
+threshold is reached.
+The advantage of cascade structure is a vast number of samples can be
+distributed between stages, decreasing false-positive value and shortening
+computation time when training and classifying.
+
+Baumann uses this method with RF and propose Cascaded Random Forest (CRF) which
+is a combination of RF classifier with cascade structure, where in each stage
+several decision tree is build with bootstrap strategy, this leads increased
+learning on positive sample and the drawback of imbalanced dataset can be
+avoided.
+\cite{baumann2013cascaded}
+
+CRF has six parameters, three of them shared with RF which are number of tree
+($T$), percetage of bootstrap ($b$), and number of random features ($m$).
+Another three parameters are number of stages ($S$), threshold
+for true-positive ($maxtp$) and threshold for true-negative ($maxtn$).
+
+The bootstrap strategy proceeds as follows: after training in each stage, the
+negative test set which contains only negative samples than tested on all
+previous stages in order to delete the true-negative samples from
+negative test set.
+Samples that classified as false-positive then moved to negative test set to be
+learned later in the next stage.
+
+Some of stage have low accuracy value than other stages.
+To decrease the influence of stage with low performance, calculate the weith
+factor $\alpha$ for each stage by exploiting the harmonic means of $precision$
+and $recall$ on training set or also known as $F_1$ (F-Measure).a
+The $\alpha$ value for each stage linearly denormalized in range of 0 to 1, so
+that the weight of low performance stage reduced to make their contribution to
+majority voting also decreased.
+
+The formula to get the classification result from CRF given in picture
+\ref{form:crf}.
+
+\begin{figure}[h]
+\[
+	y(x) = argmax \left(
+			\frac{1}{T \cdot \sum^{S}_{s=1} \alpha_{s} }
+			\sum\limits_{s=1}^{S} \alpha_{s}
+			\sum\limits^{T}_{t=1} I_{h_{t} (x) = c}
+		\right)
+\]
+\caption{CRF classifier with weight.}
+\label{form:crf}
+\end{figure}
+
+$x$ is a sampel to be classified,
+$S$ is a number of stage in cascade structure,
+$\alpha_{s}$ is the weight value for each stage,
+$T$ is number of tree in each stage, and
+$h_{t}$ is classification function from the tree which give class value $c$
+from an indicator $I$ (e.g. a value 1 for positive or 0 for negative).

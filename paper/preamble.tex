@@ -1,0 +1,64 @@
+\documentclass[conference,compsoc,a4paper,twocolumn,final]{IEEEtran}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{couriers}
+
+\ifCLASSOPTIONcompsoc
+  % IEEE Computer Society needs nocompress option
+  % requires cite.sty v4.0 or later (November 2003)
+  \usepackage[nocompress]{cite}
+\else
+  % normal IEEE
+  \usepackage{cite}
+\fi
+
+\ifCLASSINFOpdf
+  \usepackage[pdftex]{graphicx}
+  % declare the path(s) where your graphic files are
+  \graphicspath{../images/}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  \DeclareGraphicsExtensions{.jpg,.png}
+\else
+  % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
+  % will default to the driver specified in the system graphics.cfg if no
+  % driver is specified.
+  % \usepackage[dvips]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../eps/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  % \DeclareGraphicsExtensions{.eps}
+\fi
+
+%% Package for non-breaking URL.
+\usepackage{url}
+
+%% \multirow{package}{width}{text}
+\usepackage{multirow}
+
+%% Package for reading CSV to database.
+\usepackage{datatool}
+
+%% Tikz
+\usepackage{tikz}
+\usetikzlibrary{backgrounds, shapes.geometric, positioning, patterns, external}
+	\tikzexternalize
+
+%% Pgfplots
+\usepackage{pgfplots}
+
+%% MnSymbol
+\usepackage{MnSymbol}
+
+%% Set spacing on table.
+\renewcommand{\arraystretch}{1.5}
+\setlength{\tabcolsep}{3pt}
+
+%%% uncomment this to show overrule in black box
+\overfullrule=2cm
+
+\input{../hyphenation}
+\input{../variables}

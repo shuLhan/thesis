@@ -1,0 +1,24 @@
+Language features based on number of particular words that are inserted in new
+revision.
+For each word categories, there are two feature to be computed: frequency and
+impact.
+Frequency feature computed by counting number of word in category divided by
+total number of words in new revision.
+Impact feature computed by counting percentage of word usage in new revision
+divided by total words in old and new revision.
+Below is list of language features that are used.
+
+\begin{itemize}
+\item \textbf{Vulgarism}. Counting number of vulgar, harsh, and offensive
+words.
+\item \textbf{Subject}. Counting number of first or second person
+words used in inserted text, including colloquial words, for example
+\textit{I}, \textit{you}.
+\item \textbf{Bias}. Counting number of bias words, for example "coolest",
+"huge".
+\item \textbf{Pornography}. Counting number of pornography related words
+inserted in new revision.
+\item \textbf{Bad words}. Counting number of bad, non-vulgar, words, usually
+indicated by bad writing. For example "wanna", "gotcha".
+\item \textbf{All word categories}. Combination of all word categories.
+\end{itemize}

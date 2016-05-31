@@ -1,0 +1,12 @@
+PAN-WVC-10 without resample contain 2,394 positive or vandalism samples and
+30,045 negative or regular samples.
+To get a balanced class, the dataset then resampled using SMOTE and LNSMOTE for
+positive class.
+For SMOTE, the parameter used for resampling is 1,200\% and parameter for
+K-Nearest-Neighbour (KNN) is 5, which output 28,728 synthetic samples, total of
+positive sample combined with original sample result in 31,122 positive
+samples.
+Parameter for resampling using LNSMOTE is similar with SMOTE, which generate
+28,588 positive synthetic samples, in total of 30,892 positive samples.
+The implementation for SMOTE and LNSMOTE published as open source software
+\footnote{\url{https://github.com/shuLhan/go-mining/tree/master/resampling}}.

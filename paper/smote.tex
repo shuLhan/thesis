@@ -1,0 +1,19 @@
+SMOTE (Synthetic Minority Over-sampling Technique) method, proposed by Chawla
+\cite{chawla2002smote},
+use oversampling approach in which the minority class are resampled by creating
+their synthetic samples not by replacing majority sample with minority class.
+Synthetic sample created by application, operated on feature space.
+
+Synthetic sample created with the following procedure,
+\begin{itemize}
+\item Pick $k$ nearest neigbour of minority sample randomly.
+\item Calculate the difference between feature vector sample with their
+neighbours.
+\item Multiply the difference with random real number, ranged between 0 to 1.
+\item Add their result to new feature vector.
+\end{itemize}
+
+The synthetic sample will be created in random line segment between two
+selected features.
+This approach effectively stimulate the learning region from minority class
+become larger without causing over-fitting.
