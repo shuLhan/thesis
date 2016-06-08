@@ -136,7 +136,7 @@
 		by oversampling the dataset using Synthetic Minority Oversampling
 		Technique (SMOTE) and compare several two-class classifiers, including
 		Logistic Regression, RealAdaBoost, Random Forest, and Bayesian Network.
-		Gotze only reach TPR value 0.39.
+		Gotze reach highest TPR value 0.39 with Random Forest.
 		\end{itemize}
 	\end{block}
 \end{frame}
@@ -254,7 +254,7 @@
 		\end{column}
 
 		\begin{column}{0.5\textwidth}
-			Overgeneralization, where sample minority $n$ could be an outliers.
+			Overgeneralization, where minority sample $n$ could be an outlier.
 		\end{column}
 	\end{columns}
 \end{frame}
@@ -787,13 +787,13 @@
 	The dataset that we use for training is PAN-WVC-10 and for
 	testing is PAN-WVC-11.
 
-	Before we can extract the features, the dataset then cleaned and
+	Before we can extract the features, the dataset has to be cleaned and
 	modified by
 	\begin{itemize}
 	\item removing irrelevant attributes, for example \textit{diffurl}
 	attribute which contain address in Wikipedia site that referencing current
 	sample edit.
-	\item Replacing class value with number ("vandalism" became $1$
+	\item Replacing class value with number (i.e. "vandalism" became $1$
 	and "regular" became $0$)
 	\item Add new attribute "additions" which contains text that was added in
 	new revision.
@@ -804,14 +804,25 @@
 
 \subsection{Features Extraction}
 
-\begin{frame}{Features Extraction}
+\begin{frame}{Features Extraction}{Overview}
 	\begin{itemize}
 	\item This paper use 4 metadata features, 11 text features, and 10 language
 	features, which based on work of Mola-Velasco.
 	\item Features extracted from PAN-WVC-10 and PAN-WVC-11 dataset.
 	\end{itemize}
-
 \end{frame}
+
+\begin{frame}{Features Extraction}{Overview}
+	\begin{figure}
+		\centering
+		\includegraphics[width=\textwidth]{diff_example}
+		\caption{
+			Example of edit revision.\\
+			(\url{https://en.wikipedia.org/w/index.php?diff=326822930&oldid=326176907})
+		}
+	\end{figure}
+\end{frame}
+
 
 \begin{frame}
 	{Features Extraction}
@@ -819,7 +830,7 @@
 	\begin{itemize}
 		\item Anonymous. Vandalism usually works of non-registered user.
 		\item Comment length. Since this non-registered user does not state why
-		or what they changed, they usually leave the comment field when
+		or what they changed, they usually leave the comment field empty when
 		submitting vandal edit.
 		\item Size increment. Absolute decrease in article size can indicated
 		deletion, $ newrev - oldrev $
@@ -894,9 +905,10 @@
 		\textit{I}, \textit{you}.
 		\item Bias contains non-formal words with high bias, for example
 		\textit{fabolous}, \textit{lame}.
-		\item Sex words contains non-vulgar words that related to sex.
-		\item Bad words contains non-vulgar, non-sex negative words, for
-		example \textit{fart}, \textit{smelly}.
+		\item Pornography contains non-vulgar words that related to
+		pornography.
+		\item Bad words contains non-vulgar, non-pornography negative words,
+		for example \textit{fart}, \textit{smelly}.
 		\item All words categories, contains combination of all words.
 	\end{itemize}
 \end{frame}
@@ -906,8 +918,8 @@
 \begin{frame}
 	{Resampling}
 	\begin{itemize}
-		\item SMOTE resampling parameter: 1,200\% synthetic samples
-		\item LNSMOTE resampling parameter: 1.100\% synthetic samples
+		\item SMOTE resampling parameter: 1,100\% synthetic samples
+		\item LNSMOTE resampling parameter: 1,200\% synthetic samples
 		\item Both use 5 as KNN value.
 	\end{itemize}
 	\input{../paper/table_dataset}
@@ -1020,8 +1032,8 @@
 \begin{frame}
 	{Our Contributions}
 	\begin{itemize}
-		\item A framework to extract vandalism features from dataset for
-		speeding up future research or used in real world case.
+		\item A framework to extract vandalism features from Wikipedia dataset
+		for speeding up future research or used in real world case.
 		(\url{https://github.com/shuLhan/wvcgen})
 		\item A framework for LNSMOTE resampling and Cascaded Random Forest
 		classifier
@@ -1037,8 +1049,7 @@
 		Indonesia
 		\item Parallel algorithm for Random Forest and/or Cascaded Random
 		Forest to speeding up process
-		\item Experimenting with XGBoost classifier may increase accuracy on
-		vandalism detection
+		\item Experimenting with XGBoost classifier for vandalism detection
 	\end{itemize}
 \end{frame}
 
@@ -1072,9 +1083,9 @@
 				\State $ n \gets A_{len} $
 				\For{$ p \gets 1,part_{len} $}
 					\State $ gain[p] \gets gini - (
-						(\frac{p}{n} * \Call{Gini}{A_{1,p}})
+						(\frac{p}{n} \times \Call{Gini}{A_{1,p}})
 						+
-						(\frac{n - p}{n} * \Call{Gini}{A_{p,n}})
+						(\frac{n - p}{n} \times \Call{Gini}{A_{p,n}})
 						)
 						$
 				\EndFor
@@ -1089,10 +1100,39 @@
 		\Require \\
 		$ T $: subset of dataset \\
 		$ m $: classes of dataset
-		\Function{Gini}{$T$}
+		\Function{Gini}{$T, m$}
 			\State \Return{$ 1 - \sum\limits_{x = 1}^{m}
 					{(\frac{|C_{x,T}|}{|T|})^2}
 					$}
+		\EndFunction
+	\end{algorithmic}
+\end{frame}
+
+\begin{frame}
+	{Finding K-nearest-neighbours}
+	{Using Euclidian Distance}
+	\footnotesize
+	\begin{algorithmic}[1]
+		\Require \\
+		$ S $: samples \\
+		$ I $: instance of $S$ to find their neighbors \\
+		$ k $: number of neighbors to find
+		\Function{FindNeighbors}{$ S, I, k $}
+			\State $ nneighbors \gets [] $
+			\For{\textbf{each} $s$ \textbf{in} $S$}
+				\State $ distance \gets 0 $
+
+				\For{$ x \gets 1,I_{attrs} $}
+					\State $ diff \gets I_{x} - s_{x} $
+					\State $ distance \gets distance + |diff| $
+				\EndFor
+
+				\State Push $s$ and $distance$ to $nneighbors$
+			\EndFor
+
+			\State Sort $nneighbors$ in ascending order by their $distance$
+			\State $neighbors \gets $ pick top $k$ from $nneighbors$
+			\State \Return{$ neighbors $}
 		\EndFunction
 	\end{algorithmic}
 \end{frame}
