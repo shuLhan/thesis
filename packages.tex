@@ -1,18 +1,21 @@
 %% font encoding.
 \usepackage[utf8]{inputenc}
+
+%% Fonts
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{couriers}
 
+%% Bibliography.
+\usepackage[bahasa]{babel}
+\usepackage{csquotes}
+\usepackage[
+	style=apa
+]{biblatex}
+\DeclareLanguageMapping{bahasa}{bahasa-apa}
+
 %% Customize chapters.
 \usepackage{titlesec}
-
-%% bibliography.
-\usepackage[
-	backend=bibtex
-,	style=ieee
-,	sorting=nyt
-]{biblatex}
 
 %% \includegraphics{name}
 \usepackage{graphicx}
@@ -115,3 +118,8 @@
 
 %% Compact list.
 \usepackage{paralist}
+
+%% Line spacing
+\usepackage{setspace}
+
+\usepackage{xpatch}

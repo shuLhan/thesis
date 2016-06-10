@@ -28,29 +28,32 @@
 %%
 %% Reduce vspace between title in list and body
 %%
+\addto\captionsbahasa{
 \renewcommand{\contentsname}{
-	\chapter*{\vspace{0em}\daftarisi}\label{chapter:daftarisi}
+	\chapter*{\vspace{0em}\daftarisi}
 	\vspace{-1.5em}
 	\addcontentsline{toc}{chapter}{\daftarisi}
-}
+}}
 
 \newcommand{\listappendixname}{
-	\chapter*{\vspace{0em} \tupdaftarlampiran}
+	\chapter*{\vspace{0em}\tupdaftarlampiran}
 	\vspace{-1.5em}
 	\addcontentsline{toc}{chapter}{\tupdaftarlampiran}
 }
 
+\addto\captionsbahasa{
 \renewcommand{\listfigurename}{
-	\chapter*{\vspace{0em} \daftargambar}
+	\chapter*{\vspace{0em}\daftargambar}
 	\vspace{-1.5em}
 	\addcontentsline{toc}{chapter}{\daftargambar}
-}
+}}
 
+\addto\captionsbahasa{
 \renewcommand{\listtablename}{
-	\chapter*{\vspace{0em} \daftartabel}
+	\chapter*{\vspace{0em}\daftartabel}
 	\vspace{-1.5em}
 	\addcontentsline{toc}{chapter}{\daftartabel}
-}
+}}
 
 %%
 %% Source code listing style.
@@ -104,8 +107,8 @@
 %% Set spacing for chapter, section, and subsection.
 \titlespacing{\chapter}{0pt}{0pt}{0pt}
 \titlespacing*{\chapter}{0pt}{0pt}{1.5em}
-\titlespacing{\section}{0pt}{0pt}{0em}
-\titlespacing{\subsection}{0pt}{0pt}{0em}
+\titlespacing{\section}{0pt}{0pt}{-1em}
+\titlespacing{\subsection}{0pt}{0pt}{-1em}
 
 %% Set roman on chapter number.
 \def\thechapter{\Roman{chapter}}
@@ -171,3 +174,34 @@
 	\def\l@chapter#1#2{\old@l@chapter{#1}{#2}\cftbeforechapskip2pt}% set your value here
 	\def\l@section#1#2{\old@l@section{#1}{#2}\cftbeforechapskip\old@cftbeforechapskip}
 \makeatother
+
+%% Set default line spacing to 1.5
+\onehalfspacing
+
+\DefineBibliographyStrings{bahasa}{
+	and			= {dan}
+,	andothers	= {dkk.}
+}
+
+\setcounter{smartand}{2}
+
+%% Replace ampersand in bibliography with 'and'
+\AtBeginBibliography{\renewcommand*{\finalnamedelim}{%
+		\ifthenelse{\value{listcount}>\maxprtauth}
+			{}
+			{\ifthenelse{\value{liststop}>2}
+				{\finalandcomma\addspace\bibstring{and}\space}
+				{\addspace\bibstring{and}\space}}}}
+
+%% Replace ampersand in citation with 'and'
+\AtEveryCitekey{\renewcommand*{\finalnamedelim}{%
+		\ifthenelse{\value{listcount}>\maxprtauth}
+			{}
+			{\ifthenelse{\value{liststop}>2}
+				{\finalandcomma\addspace\bibstring{and}\space}
+				{\addspace\bibstring{and}\space}}}}
+
+\xpatchnameformat{labelname}
+	{\ifciteseen}{\ifnumcomp{\value{listtotal}}{>}{\value{maxnames}}}{}{}
+
+\appto{\bibsetup}{\emergencystretch=0.5em}

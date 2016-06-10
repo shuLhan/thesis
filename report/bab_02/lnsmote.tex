@@ -1,5 +1,5 @@
-Meskipun hasil SMOTE dibuktikan bagus dalam makalah Chawla dkk.
-\cite{chawla2002smote}, metode ini masih memiliki beberapa kelemahan.
+Meskipun hasil SMOTE dibuktikan bagus dalam makalah
+\textcite{chawla2002smote}, metode ini masih memiliki beberapa kelemahan.
 Pertama, cara menentukan sampel minoritas sebagai calon untuk
 \textit{over-sampling} bisa bermasalah.
 Pada SMOTE, semua sampel dari kelas minoritas digunakan.
@@ -14,7 +14,7 @@ berkontribusi sedikit pada klasifikasi.
 Salah satu metode untuk menangani permasalahan ini yaitu dengan hanya
 mengambil sampel pada batas kelas minoritas yang dijadikan untuk
 \textit{oversampling}, seperti yang diajukan oleh
-Han dkk. \cite{han2005borderline} dengan menggunakan metode bernama
+\textcite{han2005borderline} dengan menggunakan metode bernama
 \textit{Borderline SMOTE}.
 
 \begin{figure}[htbp]
@@ -50,8 +50,8 @@ mayoritas atau adanya \textit{outliers}.
 
 Untuk mengatasi permasalahan di atas, Maciejewski dkk. memperkenalkan ekstensi
 dari metode SMOTE bernama \textit{Local-neighbourhood SMOTE} atau disingkat
-LNSMOTE \cite{maciejewski2011local} yang menggunakan modifikasi dari
-pendekatan \textit{Safe-Level SMOTE} \cite{bunkhumpornpat2009safe}.
+LNSMOTE \parencite{maciejewski2011local} yang menggunakan modifikasi dari
+pendekatan \textit{Safe-Level SMOTE} \parencite{bunkhumpornpat2009safe}.
 Pada metode \textit{Safe-level SMOTE} keberadaan sampel mayoritas
 diperhitungkan sebelum membuat sampel sintetis dengan menghitung sebuah
 koefisien khusus yang disebut \textit{safe-level}.
@@ -99,11 +99,10 @@ yang bias yang mana kelas minoritas menyebar sehingga terdiri dari beberapa
 sub-wilayah dengan kardinalitas yang kecil.
 Situasi ini mengacu pada permasalahan yang disebut \textit{small disjuncts}
 yang diakui sebagai sumber kesulitan yang paling penting bagi pembelajaran
-klasifikasi untuk data timpang \cite{jo2004class}.
+klasifikasi untuk data timpang \parencite{jo2004class}.
 Pada kasus seperti ini pembuatan sampel sintetis dengan \textit{Safe-level
 SMOTE} bisa menyebabkan terjadinya tumpang-tindih antara kelas.
 
-\newpage
 Sebagai contohnya, misalkan dua kelompok dari kelas minoritas terpisah
 dikelilingi oleh sampel dari kelas mayoritas.
 Katakanlah, jarak antara kedua kelompok minoritas tersebut cukup jauh, satu

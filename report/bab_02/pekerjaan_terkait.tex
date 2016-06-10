@@ -1,65 +1,68 @@
 Deteksi vandalisme di Wikipedia berbasis pendekatan pembelajaran mesin telah
 menjadi topik penelitian yang menarik sejak tahun 2008.
-Potthast \cite{potthast2008automatic} berkontribusi untuk pendekatan deteksi
+\textcite{potthast2008automatic} berkontribusi untuk pendekatan deteksi
 vandalisme dengan pembelajaran mesin yang pertama, dengan menggunakan fitur
 tekstual berikut fitur meta data dasar dengan menggunakan pengklasifikasi
 \textit{logistic regression}.
-Smets \cite{smets08automaticvandalism} menggunakan pengklasifikasi Naive Bayes
+\textcite{smets08automaticvandalism} menggunakan pengklasifikasi Naive Bayes
 pada sekumpulan kata yang merepresentasikan suntingan dan yang pertama
 menggunakan model kompresi untuk mendeteksi vandalisme di Wikipedia.
-Itakura dan Clarke \cite{itakura2009using} menggunakan Kompresi Markov Dinamis
+\textcite{itakura2009using} menggunakan Kompresi Markov Dinamis
 untuk mendeteksi suntingan vandalisme di Wikipedia.
-Mola Velasco \cite{mola2012wikipedia} mengembangkan pendekatan yang dilakukan
-oleh Potthast \cite{potthast2008automatic} dengan menambahkan beberapa fitur
+\textcite{mola2012wikipedia} mengembangkan pendekatan yang dilakukan
+oleh \textcite{potthast2008automatic} dengan menambahkan beberapa fitur
 tekstual dan berbagai fitur berbasis daftar-kata.
 Velasco memenangi \textit{1st International Competition on Wikipedia Vandalism
-Detection}.  West dkk. \cite{west2011multilingual} adalah yang pertama
+Detection}.
+\textcite{west2011multilingual} adalah yang pertama
 mengajukan pendekatan deteksi hanya berdasarkan meta data
 spasial dan temporal, tanpa perlu memeriksa teks pada artikel dan revisi.
-Adler dkk. \cite{adler2010detecting} membangun sebuah sistem deteksi vandalisme
+\textcite{adler2010detecting} membangun sebuah sistem deteksi vandalisme
 menggunakan sistem reputasi WikiTrust.
-Adler dkk. \cite{adler2011wikipedia} kemudian menggabungkan bahasa alami,
+\textcite{adler2011wikipedia} kemudian menggabungkan bahasa alami,
 spasial, temporal, dan fitur reputasi yang digunakan pada karya sebelumnya.
-West dan Lee \cite{west2011multilingual} adalah yang pertama memperkenalkan
+\textcite{west2011multilingual} adalah yang pertama memperkenalkan
 data \textit{ex post facto} sebagai fitur, yang mana perhitungannya
 mempertimbangkan revisi selanjutnya.
 Sistem deteksi vandalisme West dan Lee memenangkan \textit{2nd International
 Competition on Wikipedia Vandalism Detection}.
-Harpalani dkk. \cite{harpalani2011language} menyatakan suntingan vandalisme
+\textcite{harpalani2011language} menyatakan suntingan vandalisme
 memiliki properti lingustik yang unik dan sama.
 Harpalani dkk. membangun sistem deteksi vandalisme berdasarkan analisis
 \textit{stylometric} dari suntingan vandalisme dengan model probabilitas
 \textit{context-free grammar}.
 Pendekatan Harpalani dkk. mengalahkan sistem berbasis fitur dengan pola
 dangkal, yang menyamakan struktur sintaksis dan token teks.
-Mengikuti tren dari klasifikasi vandalisme antar bahasa, Tran dan Christen
-\cite{tran2013cross} mengevaluasi berbagai pengklasifikasi berbasiskan pada
+Mengikuti tren dari klasifikasi vandalisme antar bahasa,
+\textcite{tran2013cross} mengevaluasi berbagai pengklasifikasi berbasiskan pada
 sekumpulan fitur independen bahasa yang dikumpulkan dari jumlah artikel dilihat
 setiap jam dan riwayat suntingan Wikipedia.
 
-Gotze \cite{gotze2014advanced} menggabungkan fitur dari Adler dkk.
-\cite{adler2011wikipedia}, Javanmardi dkk. \cite{javanmardi2011vandalism}, Mola
-Velasco \cite{mola2012wikipedia}, Potthast dkk. \cite{potthast2008automatic},
-Wang dan McKeown \cite{wang2010got}, dan West dan Lee
-\cite{west2011multilingual} dengan empat fitur tambahan dan perubahan.
-Untuk mengatasi masalah ketimpangan pada korpus, Gotze
-\cite{gotze2014advanced}
+\textcite{gotze2014advanced} menggabungkan fitur dari
+\textcite{adler2011wikipedia},
+\textcite{javanmardi2011vandalism},
+\textcite{mola2012wikipedia},
+\textcite{potthast2008automatic},
+\textcite{wang2010got}, dan
+\textcite{west2011multilingual} dengan empat fitur tambahan dan perubahan.
+Untuk mengatasi masalah ketimpangan pada korpus,
+\textcite{gotze2014advanced}
 mengaplikasikan teknik
 \textit{random oversampling}
 bernama
 \textit{Synthetic Minority Over-sampling TEchnique} (SMOTE)
-yang diajukan oleh Chawla
-\cite{chawla2002smote},
+yang diajukan oleh
+\textcite{chawla2002smote},
 dan kombinasi dari SMOTE dan
 \textit{random undersampling}.
 Dataset latihan yang orisinal dan hasil sampel ulang diuji dengan
 pengklasifikasi satu-kelas dan dua-kelas.
-Pengklasifikasi satu-kelas yang diterapkan diantaranya Hempstalk dkk.
-\cite{hempstalk2008one}
-dan SVM oleh Schölkopf dkk.
-\cite{scholkopf1999support}
-yang diimplementasikan oleh Chang dan Lin
-\cite{chang2011libsvm}
+Pengklasifikasi satu-kelas yang diterapkan diantaranya
+\textcite{hempstalk2008one}
+dan SVM oleh
+\textcite{scholkopf1999support}
+yang diimplementasikan oleh
+\textcite{chang2011libsvm}
 pada korpus PAN-WVC.
 Pengklasifikasi dua-kelas yang diterapkan diantaranya
 \textit{Logistic Regression},
@@ -79,16 +82,18 @@ peningkatan pada semua pengklasifikasi kecuali pada RF.
 
 
 Dari penelitian di atas, tujuh diantaranya menggunakan PAN-WVC-10
-\cite{adler2010detecting}
-\cite{adler2011wikipedia}
-\cite{gotze2014advanced}
-\cite{harpalani2011language}
-\cite{mola2012wikipedia}
-\cite{wang2010got}
-\cite{west2011multilingual},
+\parencites{adler2010detecting}
+{adler2011wikipedia}
+{gotze2014advanced}
+{harpalani2011language}
+{mola2012wikipedia}
+{wang2010got}
+{west2011multilingual},
 dengan nilai presisi terbaik yaitu $0,86$, nilai \textit{recall} $0,57$, dan
 PR-AUC $0,66$ didapat oleh Velasco menggunakan \textit{Random Forest} tanpa
 penyeimbangan dataset.
-Hanya dua yang menggunakan PAN-WVC-11 \cite{gotze2014advanced}
-\cite{west2011multilingual} dengan hasil terbaik dipegang oleh Gotze yaitu
+Hanya dua yang menggunakan PAN-WVC-11
+\parencites{gotze2014advanced}
+{west2011multilingual}
+dengan hasil terbaik dipegang oleh Gotze yaitu
 dengan nilai presisi $0,92$, \textit{recall} $0,39$, dan PR-AUC $0,74$.

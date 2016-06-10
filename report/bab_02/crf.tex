@@ -2,7 +2,7 @@ Permasalahan umum dalam penggalian data atau algoritma pembelajaran ansambel
 adalah ketidakmampuan untuk menangani data pelatihan yang timpang.
 Ketimpangan antara kelas positif dan negatif biasanya menyebabkan akurasi
 deteksi yang rendah.
-Simulasi yang dilakukan oleh Strobel dkk. \cite{strobl2007bias} menampilkan
+Simulasi yang dilakukan oleh \textcite{strobl2007bias} menampilkan
 bahwa RF condong mendukung kelas mayoritas.
 Saat menggunakan RF untuk deteksi, sejumlah besar sampel negatif dibutuhkan
 untuk mendapatkan pengklasifikasi yang kuat dan laju \textit{false-positive}
@@ -15,9 +15,9 @@ gradual mencapai titik puncaknya, yang mana pengklasifikasi tidak bisa lagi
 meningkatkan \textit{sensitivity} pada pendeteksian maupun mengurangi laju
 \textit{false-positive}-nya.
 
-Pada tahun 2011, Viola dan Jones mengajukan algoritma deteksi sampel cepat
+Viola dan Jones mengajukan algoritma deteksi sampel cepat
 berbasis AdaBoost dengan struktur kaskade (\textit{cascade})
-\cite{viola2004robust}.
+\parencite{viola2004robust}.
 Struktur kaskade dimotivasi oleh asumsi bahwa lebih mudah untuk menolak sebuah
 sampel yang negatif daripada mencari sampel yang positif.
 Viola dan Jones menggabungkan pengklasifikasi yang kuat pada beberapa tingkatan
@@ -31,7 +31,7 @@ mengajukan strategi \textit{bootstrap} dengan menghapus sampel yang benar
 terklasifikasi negatif setelah pembelajaran dilakukan pada setiap tingkat.
 Setelah itu, dataset pelatihan yang berkurang ditambahkan dengan sampel yang
 salah diklasifikasi (\textit{false-positive})
-\cite{viola2004robust}.
+\parencite{viola2004robust}.
 
 Sebuah pengklasifikasi kaskade terdiri dari sejumlah tingkatan dengan
 kompleksitas yang meningkat.
@@ -47,7 +47,7 @@ Forest} (CRF) yaitu penggabungan dari pengklasifikasi RF dengan struktur
 kaskade, yang menyusun beberapa pohon keputusan dalam setiap tingkatan dengan
 strategi agregasi \textit{bootstrap}.
 Sehingga, pembelajaran pada sampel positif meningkat dan kelemahan dari data
-yang timpang terhindari \cite{baumann2013cascaded}.
+yang timpang terhindari \parencite{baumann2013cascaded}.
 
 Pengklasifikasi CRF memiliki enam parameter umum, tiga diantaranya sama dengan
 RF yaitu jumlah pohon ($T$), persentase sampel acak untuk \textit{bootstrap},
@@ -76,25 +76,17 @@ pada dataset pelatihan.
 Nilai $\alpha$ pada setiap tingkatan secara linear dinormalisasi pada rentang 0
 dan 1, sehingga bobot dari tingkat yang memiliki performansi yang rendah
 berkurang supaya pengaruhnya terhadap mayoritas \textit{voting} juga berkurang.
-Proses untuk mendapatkan hasil dari pengklasifikasi CRF diberikan pada gambar
-\ref{form:crf}.
+Proses untuk mendapatkan hasil dari pengklasifikasi CRF diberikan pada persamaan berikut
 
-\begin{figure}[h]
-\[
+\begin{equation}\label{eq:crf}
 	y(x) = argmax \left(
 			\frac{1}{T \cdot \sum^{S}_{s=1} \alpha_{s} }
 			\sum\limits_{s=1}^{S} \alpha_{s}
 			\sum\limits^{T}_{t=1} I_{h_{t} (x) = c}
 		\right)
-\]
-\caption{
-Formula untuk mendapatkan kelas (\textit{voting}) pada pengklasifikasi CRF
-dengan bobot.
-}
-\label{form:crf}
-\end{figure}
+\end{equation}
 
-Pada gambar \ref{form:crf}, $x$ adalah sampel yang akan diklasifikasi,
+dengan $x$ adalah sampel yang akan diklasifikasi,
 $S$ adalah jumlah tingkatan pada struktur kaskade,
 $\alpha_{s}$ adalah nilai bobot dari tingkatan,
 $T$ adalah jumlah pohon pada tingkatan, dan
