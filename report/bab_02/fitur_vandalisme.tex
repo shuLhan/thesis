@@ -1,0 +1,189 @@
+Beberapa makalah sebelumnya mengelompokan fitur ke dalam tiga kelompok yaitu
+\textit{metadata}, teks, dan bahasa.
+Dalam tesis ini digunakan 4 fitur metadata, 11 fitur teks, dan 10 fitur
+bahasa yang diambil dari hasil analisis makalah
+\textcite{mola2012wikipedia}.
+
+\subsection{Fitur Kelompok Metadata}
+
+Kelompok metadata mengacu pada properti dari sebuah revisi yang secara langsung
+dapat diambil, seperti identitas penyunting, komentar, atau ukuran perubahan.
+
+Berikut daftar fitur metadata yang digunakan,
+
+\begin{itemize}
+
+\item \textbf{Anonim}.
+Penyunting anonim yaitu yang tidak menggunakan akun Wikipedia saat melakukan
+penyuntingan, sehingga yang tercatat hanya alamat IP bukan nama pengguna.
+Fitur ini melihat apakah suntingan anonim atau bukan pada atribut
+\textit{editor}, jika benar maka ditandai dengan nilai 1, atau 0 sebaliknya.
+Vandal lebih condong berlaku anonim karena jika menggunakan akun asli akan
+membuat akun mereka mudah diblokir dan membuat akun baru membutuhkan waktu dan
+identitas berupa alamat surel.
+
+\item \textbf{Panjang komentar}.
+Melihat dari jumlah karakter yang diinputkan di kolom rangkuman suntingan, yang
+tersimpan dalam atribut \textit{editcomment} pada dataset, saat menyimpan hasil
+suntingan, tanpa mengikutkan bagian \textit{header} yaitu penanda di awal
+komentar yang menunjuk ke bagian yang di sunting, biasanya dalam format
+"\texttt{/* Nama header */}".
+Komentar yang panjang mungkin mengindikasikan suntingan normal dan yang pendek
+atau kosong mungkin menyarankan suatu vandalisme.
+
+\item \textbf{Peningkatan ukuran}.
+Peningkatan absolut dari ukuran konten artikel, dihitung dengan
+\[
+|\text{ukuran\_suntingan\_baru} - \text{ukuran\_suntingan\_lama}|
+\]
+Misalnya, berkurangnya ukuran dalam jumlah besar bisa mengindikasikan
+pengosongan artikel.\\
+
+\item \textbf{Rasio ukuran}.
+Ukuran revisi baru relatif terhadap revisi lama, dihitung dengan cara
+\[
+\frac{1 + |baru|}{1 + |lama|}
+\]
+
+\end{itemize}
+
+
+\subsection{Fitur Kelompok Teks}
+
+Berikut daftar fitur berbasiskan teks yang digunakan,
+
+\begin{itemize}
+
+\item \textbf{Rasio huruf besar dan kecil}.
+Pelaku vandal biasanya tidak mengikuti aturan huruf kapital, menulis semuanya
+dengan huruf kecil atau huruf besar.
+Rasio ini dihitung pada teks yang ditambahkan di revisi baru dengan menggunakan
+rumus
+\[
+\frac{1 + |huruf\ besar|}{1 + |huruf\ kecil|}
+\]
+
+\item \textbf{Rasio huruf besar terhadap semua karakter}
+Rasio ini dihitung dengan menggunakan rumus
+\[
+\frac{1 + |huruf\ besar|}{1 + |huruf\ besar| + |huruf\ kecil|}
+\]
+
+\item \textbf{Rasio angka}.
+Rasio semua karakter terhadap angka, yaitu
+\[
+\frac{1 + |angka|}{1 + |semua karakter|}
+\]
+Fitur ini membantu menemukan perubahan kecil yang hanya mengubah angka.
+Contoh kasusnya perubahan sebuah tanggal atau perhitungan untuk menyebabkan
+kesalahan informasi.
+
+\item \textbf{Rasio non-alfanumerik}.
+Rasio semua karakter terhadap karakter selain huruf dan angka, yaitu
+\[
+\frac{1 + |non\ alfanumerik|}{1 + |semua\ karakter|}
+\]
+Penggunaan karakter selain angka-huruf yang berlebihan bisa mengindikasikan
+penggunaan \textit{emoticon}, tanda baca, atau kata tak bermakna.
+
+\item \textbf{Diversitas karakter}.
+Menghitung jumlah karakter berbeda yang digunakan pada penambahan, dibandingkan dengan panjang teks yang dimasukan,
+dihitung dengan rumus,
+\[
+panjangteks^{\frac{1}{1+\textit{karakter unik}}}
+\]
+Fitur ini membantu menemukan penggunaan karakter secara acak dan kata tak
+bermakna.
+
+\item \textbf{Distribusi karakter}.
+Menggunakan Divergensi Kullback-Leibler dari distribusi karakter yang dimasukan
+terhadap ekspektasi.
+Fitur ini berguna untuk mendeteksi kata tak bermakna.
+
+\item \textbf{Laju kompresi}.
+Melihat tingkat kompres dari penambahan teks menggunakan algoritma kompresi
+LZW.
+Fitur ini berguna untuk mendeteksi kata tak bermakna, pengulangan kata atau
+karakter, dll.
+Vandalisme biasanya memiliki ukuran kompresi yang rendah.
+
+\item \textbf{Token umum}.
+Menghitung token yang biasanya jarang digunakan oleh vandal yaitu sintaks
+wiki, seperti \textit{\_\_TOC\_\_}. Daftar token dapat dilihat pada lampiran
+\ref{lampiran:words_wiki_token}.
+
+\item \textbf{Frekuensi rerata kata}.
+Frekuensi relatif rerata dari kata yang dimasukan pada revisi baru.
+Pada artikel yang panjang, semakin banyak kata yang dimasukan yang tidak ada
+pada artikel mengindikasikan bahwa suntingan tersebut bisa tak bermakna atau
+tidak berhubungan dengan isinya.
+
+\item \textbf{Kata terpanjang}.
+Panjang dari kata yang dimasukan.
+Nilainya akan 0 jika tidak ada kata yang dimasukan.
+Fitur ini berguna untuk mendeteksi suntingan tak-bermakna.
+
+\item \textbf{Urutan karakter terpanjang}.
+Urutan terpanjang dari karakter yang sama pada teks yang dimasukan sering
+digunakan pada vandalisme, contohnya \textit{aaarrrrggghhh! sooo huge}.
+
+\end{itemize}
+
+\subsection{Fitur Kelompok Bahasa}
+
+Fitur kelompok bahasa didasarkan pada jumlah kata tertentu yang ditambahkan
+pada suntingan atau revisi yang baru.
+Untuk setiap kategori kata dihitung dua jenis fiturnya: frekuensi dan impak.
+
+Fitur frekuensi yaitu menghitung frekuensi dari kategori kata terhadap
+total seluruh kata pada suntingan yang baru, yaitu
+\[
+	\frac{jumlah\ kategori\ kata}
+		{jumlah\ seluruh\ kata}
+\]
+
+Fitur impak yaitu menghitung persentase peningkatan kategori kata di revisi
+yang baru, dihitung dengan,
+\[
+	\frac{jumlah\ kategori\ kata\ di\ revisi\ lama}
+		{jumlah\ kategori\ kata\ di\ revisi\ lama +
+		jumlah\ kategori\ kata\ di\ revisi\ baru}
+\]
+
+Berikut daftar kategori kata yang digunakan,
+
+\begin{itemize}
+\item \textbf{Vulgarisme}.
+Menghitung kata-kata vulgar, kasar dan menghina.
+Daftar kategori kata ini dapat dilihat pada lampiran
+\ref{lampiran:words_vulgar}.
+
+\item \textbf{Subjek}.
+Menghitung kata subjek pertama atau kedua, termasuk pengejaan tidak baku,
+misalnya \textit{I}, \textit{you}, \textit{ya}.
+Daftar kategori kata ini dapat dilihat pada lampiran
+\ref{lampiran:words_pronoun}.
+
+\item \textbf{Bias}.
+Menghitung penggunaan kata sehari-hari yang mengandung bias, misalnya
+\textit{coolest}, \textit{huge}.
+Daftar kategori kata ini dapat dilihat pada lampiran
+\ref{lampiran:words_bias}.
+
+\item \textbf{Pornografi}.
+Menghitung penggunaan kata berhubungan dengan pornografi.
+Daftar kategori kata ini dapat dilihat pada lampiran
+\ref{lampiran:words_sex}.
+
+\item \textbf{Kata buruk}.
+Menghitung penggunaan kata sehari-hari dan beberapa penulisan yang buruk
+(misalnya, \textit{wanna}, \textit{gotcha}).
+Daftar kategori kata ini dapat dilihat pada lampiran
+\ref{lampiran:words_bad}.
+
+\item \textbf{Seluruh kategori kata}.
+Gabungan dari kategori kata vulgarisme, subjek, bias, pornografi, dan kata
+buruk.
+
+\end{itemize}
+
