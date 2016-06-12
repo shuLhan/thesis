@@ -4,6 +4,7 @@ presentation/*.pdf
 progress-report/*.pdf
 proposal/*.pdf
 report/*.pdf
+report/tmp/
 result/01/
 result/02/
 result/crf_50_4/
