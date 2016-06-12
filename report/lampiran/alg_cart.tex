@@ -1,0 +1,163 @@
+\begin{center}
+	\captionof{algorithm}{CART}
+	\label{alg:cart}
+	\begin{algorithmic}[1]
+
+\Require \\
+$D$: dataset \\
+$m$: jumlah fitur acak untuk membangun pohon \\
+
+\Function{BuildTree}{$ D, m $}
+	\State $ majorClass \gets $ ambil kelas mayoritas di $ D $
+	\State $ root \gets $ \Call{SplitByGain}{$ D, m, majorClass $}
+	\State \Return{$ root $}
+\EndFunction
+\\
+\Function{SplitByGain}{$ D, m, majorClass $}
+	\State $ node \gets nil $
+	\If{jumlah sampel $ D <= 0 $}
+		\State $ node.isLeaf \gets true $
+		\State $ node.class \gets majorClass $
+		\State \Return{$node$}
+	\EndIf
+
+	\If{semua kelas di $D$ sama}
+		\State $ node.isLeaf \gets true $
+		\State $ node.class \gets $ kelas mayoritas di $ D $
+		\State \Return{$node$}
+	\EndIf
+
+	\Comment Hitung fitur dengan nilai gain paling tinggi.
+
+	\State $ fiturGains \gets $ \Call{ComputeGain}{$ D, m $}
+	\State $ maxGainFitur \gets $ ambil fitur dengan nilai gain paling tinggi
+	berdasarkan $fiturGains$
+	\State $ maxGainValue \gets $ ambil nilai maksimum pada $fiturGains$
+	\State $ maxGainIdx \gets $ ambil indeks pada $maxGainFitur$ dengan
+	nilai gain tertinggi
+
+	\If{$ maxGainValue <= 0 $}
+		\State $ node.class \gets $ kelas mayoritas di $ D $
+		\State \Return{$node$}
+	\EndIf
+
+	\Comment Fitur dengan gain tertinggi menjadi pemisah pada $node$
+
+	\State Urutkan $ D $ berdasarkan indeks terurut dari $maxGainFitur.sortedIdx$
+
+	\State $ node.isLeaf \gets false $
+	\State $ node.fitur \gets maxGainFitur $
+	\State $ node.splitIdx \gets maxGainIdx $
+	\State $ node.splitValue \gets maxGainValue $
+
+	\Comment Bagi dua dataset $D$ berdasarkan nilai $maxGainValue$
+	\State $ Dleft \gets $ sampel dengan nilai $gain$ kecil sama dengan
+	$maxGainValue$
+	\State $ Dright \gets $ sampel dengan $gain$ nilai besar dari
+	$maxGainValue$
+
+	\State $ node.left \gets $ \Call{SplitByGain}{$ Dleft, m, majorClass $}
+	\State $ node.right \gets $ \Call{SplitByGain}{$ Dright, m, majorClass $}
+
+	\State \Return{$node$}
+\EndFunction
+\\
+\Function{ComputeGain}{$ D, m $}
+	\State $ gains \gets [] $
+	\State $ d \gets $ pilih $m$ fitur acak pada $D$
+	\State $ T \gets $ fitur kelas pada $D$
+	\For{\textbf{each} fitur \textbf{in} $d$}
+		\If{fitur adalah atribut kelas}
+			\State continue
+		\EndIf
+
+		\State $ fitur.sortedIdx \gets $ urutkan $fitur$ dengan
+		\textit{indirect-sort}
+
+		\State Urutkan fitur kelas $T$ dengan $fitur.sortedIdx$
+
+		\State $ parts \gets \Call{CreatePartitition}{fitur} $
+		\State $ giniValue \gets \Call{Gini}{fitur} $
+		\State $ n \gets fitur_{length} $
+
+		\For{$ x \gets 1,parts_{length} $}
+			\State $ probLeft \gets \frac{x}{n} $
+			\State $ probRight \gets \frac{n-x}{n} $
+
+			\State $ Tleft \gets T[0:x] $
+			\State $ Tright \gets T[x:n] $
+
+			\State $ gainLeft \gets \Call{Gini}{Tleft} $
+			\State $ gainRight \gets \Call{Gini}{Tright} $
+
+			\State $ gain \gets giniValue - ((probLeft \times gainLeft) +
+			(probRight \times gainRight)) $
+
+			\State Tambahkan $gain$ ke $gains$
+		\EndFor
+	\EndFor
+
+	\State \Return{$ gains $}
+\EndFunction
+\\
+\Function{CreatePartition}{$fitur$}
+	\State $ parts \gets [] $
+	\State $ exist \gets false $
+
+	\For{$ x \gets 1,fitur_{length - 1} $}
+		\State $ med \gets (fitur[x] + fitur[x+1]) / 2 $
+
+		\If{$ med = 0 $}
+			\Comment Lanjutkan jika median antara dua nilai fitur
+			adalah 0, karena akan menyebabkan nilai gain maksimum.
+			\State $continue$
+		\EndIf
+
+		\For{$ y \gets 1,x $}
+			\If{$ med = fitur[y] $}
+				\Comment Tolak nilai $med$ yang sama dengan
+				nilai di fitur.
+				\State $ exist \gets true $
+				\State break
+			\EndIf
+		\EndFor
+
+		\If{\textbf{not} exist}
+			\State Simpan nilai $med$ ke $parts$
+		\EndIf
+	\EndFor
+
+	\State \Return{$parts$}
+\EndFunction
+\\
+\Function{Gini}{$ T $}
+	\If{$ T_{length} <= 0 $}
+		\State \Return{0}
+	\EndIf
+
+	\State $ classCounts \gets $ jumlah setiap kelas di $T$
+	\State $ sum \gets 0 $
+
+	\For{\textbf{each} count \textbf{in} classCounts}
+		\State $ sum \gets sum + (\frac{count}{T_{length}})^2 $
+	\EndFor
+
+	\State \Return{$ 1 - sum $}
+\EndFunction
+\\
+\Function{Classify}{$tree, sample$}
+	\State $ node \gets tree.root $
+
+	\While{ \textbf{not} node.isLeaf }
+		\State $ sampleValue \gets sample[node.splitIdx] $
+		\If{$ sampleValue < node.splitValue $}
+			\State $ node \gets node.left $
+		\Else
+			\State $ node \gets node.right $
+		\EndIf
+	\EndWhile
+
+	\State \Return{$node.class$}
+\EndFunction
+	\end{algorithmic}
+\end{center}
