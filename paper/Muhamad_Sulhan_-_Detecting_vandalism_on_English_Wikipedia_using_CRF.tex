@@ -145,12 +145,12 @@ training than RF on resampled dataset.
 This paper contribute on finding the best classifier on detecting vandalism on
 Wikipedia and evaluating the effect of LNSMOTE resampling on imbalance dataset
 and performance of CRF agains RF.
-Apart from that, this paper also provide a framework to create and develop
+Apart from that, this paper also provides a framework to create and develop
 vandalism features from raw PAN WVC dataset without having to build it again
 from scratch.
 Another contribution is a library for data processing and machine learning,
 especially on resampling using LNSMOTE and CRF classifier which has no
-open implementation on renowed program like Weka, Scikit-Learn, or R.
+open implementation on renowned program like Weka, Scikit-Learn, or R.
 This framework can be used in the next research or in real-world application.
 
 \section{Future Works}
@@ -158,9 +158,9 @@ This framework can be used in the next research or in real-world application.
 All of training model on this paper were using RF and CRF algorithm in serial,
 in which each tree is build one by one sequentially or when classifying sample
 each of them was given as input to each tree sequentially to get their classes.
-Using parallel algorithm, for trees building or classifying samples, can
+Using parallel algorithm, for building trees or classifying samples, can
 speeding up training, testing and getting classifier result.
-On domain of machine learning, an interesting new algorithm is eXtreme
+In the domain of machine learning, an interesting new algorithm is eXtreme
 Gradient Boostring (XGBoost)
 \cite{chen2016xgboost}.
 Using XGBoost on Wikipedia vandalism dataset maybe can increase the accuracy
