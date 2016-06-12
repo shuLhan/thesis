@@ -36,6 +36,9 @@ Dataset suntingan memiliki atribut sebagai berikut,
 	\item \textbf{articletitle}, format string, berisi judul dari artikel yang disunting.
 \end{itemize}
 
+Contoh data mentah untuk dataset suntingan PAN-WVC-10 dapat dilihat pada
+Lampiran \ref{lampiran:dataset_wvc10_suntingan}.
+
 Dataset anotasi memiliki atribut sebagai berikut,
 
 \begin{itemize}
@@ -51,6 +54,9 @@ Dataset anotasi memiliki atribut sebagai berikut,
 	\item \textbf{totalannotators}, format angka, berisi jumlah total penanda yang memeriksa suntingan.
 \end{itemize}
 
+Contoh dataset anotasi mentah dapat dilihat pada Lampiran
+\ref{lampiran:dataset_wvc10_anotasi}.
+
 Kedua dataset kemudian digabung untuk menghasilkan atribut \textit{editid},
 \textit{class}, \textit{oldrevisionid}, \textit{newrevisionid},
 \textit{edittime}, \textit{editor}, \textit{articletitle},
@@ -63,6 +69,9 @@ Atribut tambahan \textit{additions} berisi teks yang ditambahkan dalam revisi
 yang baru.
 Kedua atribut tersebut didapat dengan membandingkan isi dari revisi yang lama
 dengan yang baru.
+
+Contoh hasil penggabungan dan penambahan atribut untuk PAN-WVC-10 dapat dilihat
+pada Lampiran \ref{lampiran:dataset_wvc10_gabungan}
 
 Pemrosesan selanjutnya yaitu membuat berkas revisi yang bersih dari sintaks
 wiki.
@@ -85,4 +94,6 @@ berikut:
 \texttt{\#}, \texttt{'s}, \texttt{'}, \texttt{<ref>}, \texttt{</ref>},
 \texttt{<br />}, \texttt{<br/>}, \texttt{<br>}, \texttt{<nowiki>},
 \texttt{</nowiki>}, \texttt{\&nbsp;}.
+
+\item Menghapus karakter kosong yang berlebihan pada awal dan akhir teks.
 \end{itemize}
