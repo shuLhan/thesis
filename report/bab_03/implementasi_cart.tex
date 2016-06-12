@@ -1,0 +1,62 @@
+Klasifikasi pohon keputusan yang digunakan dalam penelitian ini yaitu CART
+(\textit{Classification and Regression Tree})
+\parencite{breiman1984classification}.
+Referensi utama yang digunakan pada implementasi berdasarkan pada buku
+\textcite{han2011data}.
+Hasil implementasi dapat digunakan secara terbuka pada repositori
+\texttt{go-mining}%
+\footnote{%
+	\url{%
+	https://github.com/shuLhan/go-mining/tree/master/classifier/rf
+}}.
+Gambaran umum dari algoritma pohon keputusan CART adalah sebagai berikut,
+
+	\input{lampiran/alg_cart}
+
+Klasifikasi CART yaitu pohon keputusan dua kelas (\textit{binary classifier}).
+Setiap $node$ pada pohon yang bukan ujung (\textit{leaf}) menentukan fitur
+pemisah dari dataset yang didapat dari menghitung probabilitas kelas
+berdasarkan nilai \textit{Gini Index} dari semua fitur.
+Pohon CART dibangun tanpa adanya pembersihan (\textit{pruning}) yaitu
+pemotongan pada $node$ ujung yang memiliki kesamaan kelas dengan $node$ yang
+lainnya.
+
+Fungsi \texttt{BuildTree} yaitu fungsi utama untuk membuat pohon keputusan CART.
+Fungsi ini memiliki tiga parameter yaitu dataset yang akan dibuat
+menjadi pohon keputusan ($D$), daftar kelas pada dataset $D$ ($C$), dan jumlah
+fitur yang diambil secara acak untuk membangun pohon ($m$).
+Fungsi ini mengembalikan akar ($root$) dari pohon keputusan.
+
+Fungsi \texttt{SplitByGain} mencari fitur yang akan menjadi pemisah dari dataset
+$D$.
+Jika dataset $D$ kosong maka fungsi ini mengembalikan $node$ ujung dengan kelas
+berisi kelas mayoritas pada $D$.
+Jika semua sampel dari dataset $D$ hanya terdiri dari satu kelas, fungsi ini
+akan mengembalikan $node$ dengan kelas tunggal tersebut.
+Fitur pemisah ditentukan dengan menghitung \textit{gain} pada setiap fitur.
+Fitur dengan nilai $gain$ paling tinggi kemudian memisahkan dataset $D$ menjadi
+dua berdasarkan nilai $gain$.
+Hasil pemisahan dataset tersebut kemudian dihitung kembali $gain$-nya
+masing-masing sampai dataset kosong atau terdiri dari satu kelas saja.
+
+Fungsi \texttt{ComputeGain} menghitung nilai $gain$ dari setiap fitur.
+Fungsi ini memiliki dua parameter yaitu dataset yang akan dihitung setiap
+$gain$ pada fiturnya ($D$), dan jumlah fitur yang diambil secara acak untuk
+dihitung $m$.
+Fungsi ini mengembalikan nilai $gain$ dari setiap fitur pada $D$.
+
+Fungsi \texttt{CreatePartition} membuat partisi dari setiap nilai pada sebuah
+fitur.
+Fungsi ini memiliki satu parameter yaitu fitur yang akan dipartisi.
+Partisi didapat dengan menghitung \textit{median} antara dua nilai dalam fitur
+secara berkelanjutan dan mengembalikan semua nilai tersebut dalam bentuk
+laring.
+
+Fungsi \texttt{Gini} menghitung \textit{Gini index} dari sebuah dataset $T$.
+\textit{Gini index} mengukur \textit{impurity}, nilai yang menentukan bobot
+kelas pada sebuah fitur terhadap semua dataset, dengan menghitung jumlah
+probabilitas dari setiap kelas pada $T$ dengan rentang dari 0 sampai 1.
+
+Fungsi \texttt{Classify} mengembalikan label kelas dari sebuah $sample$ dengan
+menelusuri setiap $node$ pada pohon dari atas sampai node paling ujung sesuai
+dengan nilai pemisah fitur pada setiap $node$.
