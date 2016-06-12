@@ -64,13 +64,23 @@
 %%
 %% DAFTAR PUSTAKA
 %%
-\clearpage
-\addcontentsline{toc}{chapter}{\tDaftarPustaka}
-\printbibliography
+\chapter*{\vspace{0em}\tDaftarPustaka}
+	\addcontentsline{toc}{chapter}{\tDaftarPustaka}
+	\printbibliography
 
 %%
 %% LAMPIRAN
 %%
+\clearpage
+\vspace*{\fill}
+\begin{center}
+	\begin{minipage}{\textwidth}
+		\chapter*{\vspace{0em}\tUpLampiran}
+		\addcontentsline{toc}{chapter}{\tUpLampiran}
+	\end{minipage}
+\end{center}
+\vfill
+
 \include{lampiran}
 
 \end{document}
