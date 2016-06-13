@@ -1,0 +1,59 @@
+%% Jelaskan matriks confusion
+
+Dalam konteks vandalisme, setiap sampel dalam dataset memiliki sebuah label
+atau fitur kelas yang menandakan sampel tersebut termasuk ke dalam vandalisme
+atau bukan.
+Secara formalnya, setiap sampel dipetakan ke salah satu elemen dalam set
+$\{p, n\}$, atau label kelas positif dan negatif.
+Sebuah model klasifikasi (atau pengklasifikasi) adalah pemetaan dari sampel ke
+kelas prediksi.
+Untuk membedakan dengan kelas sebenarnya digunakan label $\{Y, N\}$ untuk kelas
+prediksi yang dihasilkan oleh pengklasifikasi
+\parencite{fawcett2006introduction}.
+
+Diberikan sebuah pengklasifikasi dan sampel, maka ada empat kemungkinan
+keluaran.
+Jika label dari sampel positif dan diklasifikasi positif, maka dihitung sebagai
+\textit{true-positive}, jika diklasifikasi negatif, maka dihitung sebagai
+\textit{false-negative}.
+Jika label dari sampel negatif dan diklasifikasi negatif, maka dihitung sebagai
+\textit{true-negative}, jika diklasifikasi positif maka dihitung sebagai
+\textit{false-positive}.
+Jika diberikan sebuah pengklasifikasi dan sekumpulkan sampel (dataset
+pengujian), sebuah \textit{confusion matrix} (atau disebut juga tabel
+\textit{contingency}) dapat dibuat yang merepresentasikan penempatan dari
+setiap sampel.
+
+\input{bab_02/confusion_matrix}
+
+Gambar \ref{confusion_matrix} memperlihatkan sebuah \textit{confusion matrix}
+dari dua buah kelas.
+Nilai pada kolom diagonal mayor (TP dan TN) merepresentasikan hasil klasifikasi
+yang benar, sementara nilai pada diagonal minor (FN dan FP) merepresentasikan
+galat -- \textit{confusion} -- antara kelas.
+Nilai laju \textit{true-positive} atau \textit{true-positive rate} (TPR)
+dikenal juga dengan \textit{recall} atau \textit{hit rate}) dari sebuah
+pengklasifikasi dihitung dengan,
+
+\begin{equation}
+	\textit{tp rate} \approx \frac{\text{Benar terklasifikasi positif}}%
+		{\text{Total positif}}
+		= \frac{TP}{TP + FN}
+		= \frac{TP}{P}
+\end{equation}
+
+TPR bernilai dengan rentang antara 0 sampai 1, dengan nilai yang mendekati 0
+berarti performansi yang buruk dan nilai yang mendekati 1 berarti performansi
+yang baik.
+
+%% Jelaskan kenapa mengambil TPR / recall saja
+
+Dalam deteksi vandalisme, menemukan sebuah suntingan yang vandal dengan tingkat
+positif yang tinggi lebih baik daripada salah klasifikasi atau terlewatnya
+suntingan vandal tersebut dari pendeteksian.
+Kesalahan klasifikasi, yang bukan vandalisme terdeteksi sebagai vandalisme,
+tidak akan berpengaruh pada pembaca, tetapi terlewatnya suntingan yang vandal
+bisa menyebabkan hilangnya informasi, kesalahan informasi, atau mengganggu
+pembaca Wikipedia.
+Oleh karena itu, hasil pelatihan dan pengujian dilihat dari laju
+\textit{true-positive} pada performansi pengklasifikasi.

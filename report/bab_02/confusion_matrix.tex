@@ -1,0 +1,77 @@
+\begin{figure}[htbp]
+	\centering
+	\tikzsetnextfilename{confusionmatrix}
+	\begin{tikzpicture}[
+		framed,
+		scale = 2,
+		nodes = {
+			align = center
+		},
+		proc/.style={
+			rectangle,
+			draw=black,
+			text centered,
+			minimum width=3cm,
+			minimum height=2cm,
+			outer sep=0pt,
+		},
+		label/.style={
+			draw=none,
+			text centered,
+		}
+	]
+		\node[proc] (tp) {
+			True Positive\\
+			(TP)
+		};
+
+			\node[label] (p) [above=4pt of tp] {
+				\textbf{p}
+			};
+			\node[label] (Y) [left=4pt of tp] {
+				\textbf{Y}
+			};
+
+		\node[proc] (fp) [right=0pt of tp] {
+			False Positive\\
+			(FP)
+		};
+			\node[label] (n) [above=4pt of fp] {
+				\textbf{n}
+			};
+
+		\node[proc] (fn) [below=0pt of tp] {
+			False Negative\\
+			(FN)
+		};
+			\node[label] (N) [left=4pt of fn] {
+				\textbf{N}
+			};
+			\node[label] (P) [below=8pt of fn] {
+				\textbf{P}
+			};
+			\node[label] (P) [left= of P] {
+				\textbf{Total kolom:}
+			};
+
+		\node[proc] (tn) [right=0pt of fn] {
+			True Negative\\
+			(TN)
+		};
+			\node[label] (N) [below=8pt of tn] {
+				\textbf{N}
+			};
+
+		\node[label] (actual) [above=of tp, xshift=1.5cm] {
+			\underline{Kelas sebenarnya}
+		};
+
+		\node[label] (prediction) [left=of tp, yshift=-1cm] {
+			\underline{Kelas prediksi}
+		};
+	\end{tikzpicture}
+\caption{%
+	\textit{Confusion matrix}
+}
+\label{confusion_matrix}
+\end{figure}
