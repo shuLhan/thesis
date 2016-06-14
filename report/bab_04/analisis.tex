@@ -2,18 +2,30 @@ Pengaruh sampel ulang SMOTE dan LNSMOTE sama pada pengklasifikasi RF dan
 CRF yaitu meningkatnya nilai TPR tapi dengan nilai peningkatan yang berbeda,
 dengan LNSMOTE lebih tinggi dari daripada SMOTE.
 Pada pengklasifikasi RF, sampel ulang dengan LNSMOTE meningkatkan nilai TPR
-$0.7\%$ sedangkan SMOTE hanya $0.4\%$
+$0.7\%$ sedangkan SMOTE hanya $0.4\%$.
 Pada pengklasifikasi CRF, nilai peningkatan beragam bergantung kepada jumlah
 pohon keputusan disetiap tingkatan.
 Pada CRF 200 tingkat 1 pohon, peningkatan TPR dari yang tanpa sampel ulang
 yaitu sekitar $0,02\%$, sedangkan pada CRF 100 tingkat 2 pohon peningkatan TPR
 yaitu $0,14\%$, dan pada CRF 50 tingkat 4 pohon peningkatan TPR yaitu $0,28\%$.
-Semakin banyak jumlah pohon pada setiap tingkatan maka semakin nilai TPR akan
-semakin tinggi daripada yang tanpa sampel ulang.
 
 %% Apakah ada outlier?
 
+Pada saat melakukan sampel ulang LNSMOTE dengan menggunakan 5 tetangga
+terdekat, ditemukan \textit{outlier} sejumlah 428 untuk sampel vandal, atau
+$17\%$ dari semua sampel vandalisme pada dataset PAN-WVC-10.
+\textit{Outlier} ditemukan pada saat menghitung \textit{safe-level} dari sampel
+minoritas yang akan dibuat sampel sintetisnya.
+Sampel minoritas yang memiliki \textit{safe-level} sama dengan  $ 0 $
+dianggap sebagai \textit{outlier}.
+Berarti, pada saat melakukan sampel ulang dengan SMOTE ada sebanyak
+$ 4.708 $ $ (428 \times 1100\%) $
+sampel yang berada di luar wilayah minoritas.
+%%
 %% Kenapa LNSMOTE lebih baik?
+%%
+Hal ini berpengaruh pada pembangkitan model dan hasil klasifikasi, sehingga
+menjelaskan kenapa model dari sampel ulang LNSMOTE bisa lebih daripada SMOTE.
 
 %% Kenapa CRF menghasilkan TPR lebih tinggi?
 
