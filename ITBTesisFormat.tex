@@ -82,6 +82,7 @@
 
 \setlength{\cftsecindent}{5em}
 \setlength{\cftsubsecindent}{7.5em}
+\setlength{\cftsubsubsecindent}{10.7em}
 
 \renewcommand{\cftchappresnum}{Bab\space}
 
@@ -109,6 +110,10 @@
 \titlespacing*{\chapter}{0pt}{0pt}{1.5em}
 \titlespacing{\section}{0pt}{0pt}{-1em}
 \titlespacing{\subsection}{0pt}{0pt}{-1em}
+\titlespacing{\subsubsection}{0pt}{0pt}{-1em}
+
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{4}
 
 %% Set roman on chapter number.
 \def\thechapter{\Roman{chapter}}
