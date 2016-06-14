@@ -9,9 +9,8 @@ Hasil implementasi dapat digunakan secara terbuka pada repositori
 	\url{%
 	https://github.com/shuLhan/go-mining/tree/master/classifier/rf
 }}.
-Gambaran umum dari algoritma pohon keputusan CART adalah sebagai berikut,
-
-	\input{lampiran/alg_cart}
+Gambaran umum dari algoritma pohon keputusan CART dapat dilihat pada Algoritma
+\ref{alg:cart}.
 
 Klasifikasi CART yaitu pohon keputusan dua kelas (\textit{binary classifier}).
 Setiap $node$ pada pohon yang bukan ujung (\textit{leaf}) menentukan fitur
@@ -20,6 +19,8 @@ berdasarkan nilai \textit{Gini Index} dari semua fitur.
 Pohon CART dibangun tanpa adanya pembersihan (\textit{pruning}) yaitu
 pemotongan pada $node$ ujung yang memiliki kesamaan kelas dengan $node$ yang
 lainnya.
+
+	\input{lampiran/alg_cart}
 
 Fungsi \texttt{BuildTree} yaitu fungsi utama untuk membuat pohon keputusan CART.
 Fungsi ini memiliki tiga parameter yaitu dataset yang akan dibuat

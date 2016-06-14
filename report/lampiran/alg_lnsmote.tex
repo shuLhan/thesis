@@ -8,7 +8,7 @@ $ minor $: kelas minoritas pada dataset $D$ \\
 $ o $: persentase jumlah sampel sintetis yang akan dibuat \\
 $ k $: jumlah tetangga terdekat dari sampel yang akan dibuat
 \\
-\Function{LNSMOTE}{$ D, P, o, k $}
+\Function{LNSMOTE}{$ D, minor, o, k $}
 	\State $ S \gets [] $
 	\Comment Penampung untuk semua sampel sintetis yang akan dibuat.
 	\State $ nsyn \gets o/100 $
@@ -55,7 +55,6 @@ $ k $: jumlah tetangga terdekat dari sampel yang akan dibuat
 
 		\State $ newsample.\Call{PushAttribute}{newAttr} $
 	\EndFor
-	\\
 	\State \Return{$ newsample $}
 \EndFunction
 \\
@@ -96,11 +95,10 @@ $ k $: jumlah tetangga terdekat dari sampel yang akan dibuat
 	\Else
 		\State $ \delta = 1 - \Call{Random}{slratio} $
 	\EndIf
-\pagebreak
+
 	\If{$ \Call{Class}{n} \not= minor $}
 		\State $ \delta = \delta \times (sln / k) $
 	\EndIf
-	\\
 	\State \Return{$ \delta $}
 \EndFunction
 	\end{algorithmic}

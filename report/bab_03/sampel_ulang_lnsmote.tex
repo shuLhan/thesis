@@ -7,10 +7,16 @@ Hasil implementasinya dalam bentuk sebuah program
 \footnote{\url{%
 https://github.com/shuLhan/go-mining/tree/master/resampling/lnsmote
 }}.
-Program LNSMOTE dijalankan dengan diberikan input dataset fitur PAN-WVC-10
-dengan persentase sampel sintetis yaitu 1.100\% dan jumlah tetangga terdekat
-yaitu 5, sehingga didapat 28.588 sampel sintetis positif, ditambah dengan
-sampel positif asli totalnya menjadi 30.982 sampel positif.
+
+Program LNSMOTE dijalankan dengan diberikan input dataset fitur PAN-WVC-10.
+Untuk mendapatkan jumlah sampel positif yang mendekati jumlah sampel positif
+pada sampel ulang SMOTE, maka persentase sampel sintetis yang digunakan yaitu
+$1.200\%$.
+Nilai tetangga terdekat yang digunakan yaitu 5 untuk menghindari sampel
+minoritas yang \textit{outliers} tapi juga masih dapat mencakup
+kelompok-kelompok kelas minoritas yang kecil.
+Hasil sampel ulang LNSMOTE didapat 26.194 sampel sintetis positif, ditambah
+dengan sampel positif asli totalnya menjadi 28.588 sampel positif.
 
 	\input{lampiran/alg_lnsmote}
 
