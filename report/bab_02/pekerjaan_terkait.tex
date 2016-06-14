@@ -1,8 +1,8 @@
-Deteksi vandalisme di Wikipedia berbasis pendekatan pembelajaran mesin telah
+Deteksi vandalisme di Wikipedia berbasis pendekatan pembelajaran mesin
 menjadi topik penelitian yang menarik sejak tahun 2008.
-\textcite{potthast2008automatic} berkontribusi untuk pendekatan deteksi
-vandalisme dengan pembelajaran mesin yang pertama, dengan menggunakan fitur
-tekstual berikut fitur meta data dasar dengan menggunakan pengklasifikasi
+\textcite{potthast2008automatic} adalah yang pertama berkontribusi untuk pendekatan deteksi
+vandalisme dengan pembelajaran mesin, dengan menggunakan fitur
+tekstual berikut fitur meta data dengan menggunakan pengklasifikasi
 \textit{logistic regression}.
 \textcite{smets08automaticvandalism} menggunakan pengklasifikasi Naive Bayes
 pada sekumpulan kata yang merepresentasikan suntingan dan yang pertama
@@ -57,14 +57,14 @@ dan kombinasi dari SMOTE dan
 \textit{random undersampling}.
 Dataset latihan yang orisinal dan hasil sampel ulang diuji dengan
 pengklasifikasi satu-kelas dan dua-kelas.
-Pengklasifikasi satu-kelas yang diterapkan diantaranya
+Pengklasifikasi satu-kelas yang diterapkan yaitu
 \textcite{hempstalk2008one}
 dan SVM oleh
 \textcite{scholkopf1999support}
 yang diimplementasikan oleh
 \textcite{chang2011libsvm}
 pada korpus PAN-WVC.
-Pengklasifikasi dua-kelas yang diterapkan diantaranya
+Pengklasifikasi dua-kelas yang diterapkan yaitu
 \textit{Logistic Regression},
 \textit{RealAdaBoost},
 \textit{Random Forest} (RF), dan
@@ -79,9 +79,8 @@ lebih unggul dari pengklasifikasi lainnya.
 Hasil dari pelatihan pada dataset hasil sampel ulang memperlihatkan adanya
 peningkatan pada semua pengklasifikasi kecuali pada RF.
 
-
-
-Dari penelitian di atas, tujuh diantaranya menggunakan PAN-WVC-10
+\pagebreak
+Dari penelitian di atas, tujuh menggunakan PAN-WVC-10
 \parencites{adler2010detecting}
 {adler2011wikipedia}
 {gotze2014advanced}
@@ -89,11 +88,12 @@ Dari penelitian di atas, tujuh diantaranya menggunakan PAN-WVC-10
 {mola2012wikipedia}
 {wang2010got}
 {west2011multilingual},
-dengan nilai presisi terbaik yaitu $0,86$, nilai \textit{recall} $0,57$, dan
-PR-AUC $0,66$ didapat oleh Velasco menggunakan \textit{Random Forest} tanpa
-penyeimbangan dataset.
+dengan nilai TPR terbaik yaitu $0,57$
+didapat oleh Velasco menggunakan \textit{Random Forest} tanpa
+melakukan sampel ulang dataset.
 Hanya dua yang menggunakan PAN-WVC-11
 \parencites{gotze2014advanced}
 {west2011multilingual}
 dengan hasil terbaik dipegang oleh Gotze yaitu
-dengan nilai presisi $0,92$, \textit{recall} $0,39$, dan PR-AUC $0,74$.
+dengan nilai TPR $0,39$ pada dataset yang telah disampel ulang dengan SMOTE dan
+pengklasifikasi \textit{Random Forest}.

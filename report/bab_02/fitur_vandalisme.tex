@@ -4,7 +4,7 @@ Dalam tesis ini digunakan 4 fitur metadata, 11 fitur teks, dan 10 fitur
 bahasa yang diambil dari hasil analisis makalah
 \textcite{mola2012wikipedia}.
 
-\subsection{Fitur Kelompok Metadata}
+\subsubsection{Fitur Kelompok Metadata}
 
 Kelompok metadata mengacu pada properti dari sebuah revisi yang secara langsung
 dapat diambil, seperti identitas penyunting, komentar, atau ukuran perubahan.
@@ -31,24 +31,30 @@ komentar yang menunjuk ke bagian yang di sunting, biasanya dalam format
 Komentar yang panjang mungkin mengindikasikan suntingan normal dan yang pendek
 atau kosong mungkin menyarankan suatu vandalisme.
 
+\pagebreak
+
 \item \textbf{Peningkatan ukuran}.
-Peningkatan absolut dari ukuran konten artikel, dihitung dengan
-\[
-|\text{ukuran\_suntingan\_baru} - \text{ukuran\_suntingan\_lama}|
-\]
-Misalnya, berkurangnya ukuran dalam jumlah besar bisa mengindikasikan
-pengosongan artikel.\\
+Peningkatan absolut dari ukuran konten artikel.
+Berkurangnya ukuran dalam jumlah besar bisa mengindikasikan
+pengosongan artikel. Fitur ini dihitung dengan,
+\begin{equation}
+|\text{Ukuran suntingan baru} - \text{Ukuran suntingan lama}|
+\end{equation}
 
 \item \textbf{Rasio ukuran}.
-Ukuran revisi baru relatif terhadap revisi lama, dihitung dengan cara
-\[
-\frac{1 + |baru|}{1 + |lama|}
-\]
+Ukuran revisi baru relatif terhadap revisi lama.
+Pada suntingan biasa, penghapusan biasanya diikuti dengan sejumlah perbaikan.
+Fitur ini mendeteksi dengan menghitung penambahan atau penghapusan yang
+berlebihan, dengan cara
+
+\begin{equation}
+\frac{1 + |\text{Ukuran suntingan baru}|}{1 + |\text{Ukuran suntingan lama}|}
+\end{equation}
 
 \end{itemize}
 
 
-\subsection{Fitur Kelompok Teks}
+\subsubsection{Fitur Kelompok Teks}
 
 Berikut daftar fitur berbasiskan teks yang digunakan,
 
@@ -59,39 +65,49 @@ Pelaku vandal biasanya tidak mengikuti aturan huruf kapital, menulis semuanya
 dengan huruf kecil atau huruf besar.
 Rasio ini dihitung pada teks yang ditambahkan di revisi baru dengan menggunakan
 rumus
-\[
-\frac{1 + |huruf\ besar|}{1 + |huruf\ kecil|}
-\]
+
+\begin{equation}
+\frac{1 + |\text{Jumlah huruf besar}|}{1 + |\text{Jumlah huruf kecil}|}
+\end{equation}
 
 \item \textbf{Rasio huruf besar terhadap semua karakter}
 Rasio ini dihitung dengan menggunakan rumus
-\[
-\frac{1 + |huruf\ besar|}{1 + |huruf\ besar| + |huruf\ kecil|}
-\]
+
+\begin{equation}
+\frac{1 + |\text{Jumlah huruf besar}|}%
+	{1 + |\text{Jumlah huruf besar}| + |\text{Jumlah huruf kecil}|}
+\end{equation}
 
 \item \textbf{Rasio angka}.
 Rasio semua karakter terhadap angka, yaitu
-\[
-\frac{1 + |angka|}{1 + |semua karakter|}
-\]
+
+\begin{equation}
+\frac{1 + |\text{Jumlah karakter angka}|}{1 + |\text{Jumlah semua karakter}|}
+\end{equation}
+
 Fitur ini membantu menemukan perubahan kecil yang hanya mengubah angka.
-Contoh kasusnya perubahan sebuah tanggal atau perhitungan untuk menyebabkan
-kesalahan informasi.
+Contoh kasusnya perubahan sebuah tanggal atau perhitungan yang disengaja untuk
+memberikan informasi yang salah.
 
 \item \textbf{Rasio non-alfanumerik}.
 Rasio semua karakter terhadap karakter selain huruf dan angka, yaitu
-\[
-\frac{1 + |non\ alfanumerik|}{1 + |semua\ karakter|}
-\]
+
+\begin{equation}
+\frac{1 + |\text{Jumlah karakter non alfanumerik}|}%
+	{1 + |\text{Jumlah semua karakter}|}
+\end{equation}
+
 Penggunaan karakter selain angka-huruf yang berlebihan bisa mengindikasikan
 penggunaan \textit{emoticon}, tanda baca, atau kata tak bermakna.
 
 \item \textbf{Diversitas karakter}.
 Menghitung jumlah karakter berbeda yang digunakan pada penambahan, dibandingkan dengan panjang teks yang dimasukan,
 dihitung dengan rumus,
-\[
-panjangteks^{\frac{1}{1+\textit{karakter unik}}}
-\]
+
+\begin{equation}
+\text{panjang teks}^{\frac{1}{1+\text{karakter unik}}}
+\end{equation}
+
 Fitur ini membantu menemukan penggunaan karakter secara acak dan kata tak
 bermakna.
 
@@ -101,7 +117,7 @@ terhadap ekspektasi.
 Fitur ini berguna untuk mendeteksi kata tak bermakna.
 
 \item \textbf{Laju kompresi}.
-Melihat tingkat kompres dari penambahan teks menggunakan algoritma kompresi
+Melihat tingkat kompresi dari penambahan teks menggunakan algoritma kompresi
 LZW.
 Fitur ini berguna untuk mendeteksi kata tak bermakna, pengulangan kata atau
 karakter, dll.
@@ -129,7 +145,7 @@ digunakan pada vandalisme, contohnya \textit{aaarrrrggghhh! sooo huge}.
 
 \end{itemize}
 
-\subsection{Fitur Kelompok Bahasa}
+\subsubsection{Fitur Kelompok Bahasa}
 
 Fitur kelompok bahasa didasarkan pada jumlah kata tertentu yang ditambahkan
 pada suntingan atau revisi yang baru.
@@ -137,18 +153,22 @@ Untuk setiap kategori kata dihitung dua jenis fiturnya: frekuensi dan impak.
 
 Fitur frekuensi yaitu menghitung frekuensi dari kategori kata terhadap
 total seluruh kata pada suntingan yang baru, yaitu
-\[
-	\frac{jumlah\ kategori\ kata}
-		{jumlah\ seluruh\ kata}
-\]
+
+\begin{equation}
+	\frac{\text{Jumlah kategori kata}}
+		{\text{Jumlah seluruh kata}}
+\end{equation}
 
 Fitur impak yaitu menghitung persentase peningkatan kategori kata di revisi
 yang baru, dihitung dengan,
-\[
-	\frac{jumlah\ kategori\ kata\ di\ revisi\ lama}
-		{jumlah\ kategori\ kata\ di\ revisi\ lama +
-		jumlah\ kategori\ kata\ di\ revisi\ baru}
-\]
+
+\begin{equation}
+	\frac{\text{Jumlah kata di revisi lama}}%
+		{
+			\text{Jumlah kata di revisi lama} +
+			\text{Jumlah kata di revisi baru}
+		}
+\end{equation}
 
 Berikut daftar kategori kata yang digunakan,
 

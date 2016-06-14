@@ -6,16 +6,11 @@ Pada SMOTE, semua sampel dari kelas minoritas digunakan.
 Namun, bukan berarti semua sampel tersebut sama bergunanya bagi pembelajaran
 klasifikasi.
 Pada khususnya, sampel yang ada pada batas \textit{decision}, atau berada
-dibatas kelas minoritas dengan kelas mayoritas, lebih sering salah
+di batas kelas minoritas dengan kelas mayoritas, yang mana lebih sering salah
 diklasifikasi dibandingkan dengan sampel yang berada jauh dari batas kelas,
 oleh karena itu mereka lebih penting untuk klasifikasi.
 Sampel yang jauh dari batas kelas, berada di tengah kelas minoritas mungkin
 berkontribusi sedikit pada klasifikasi.
-Salah satu metode untuk menangani permasalahan ini yaitu dengan hanya
-mengambil sampel pada batas kelas minoritas yang dijadikan untuk
-\textit{oversampling}, seperti yang diajukan oleh
-\textcite{han2005borderline} dengan menggunakan metode bernama
-\textit{Borderline SMOTE}.
 
 \begin{figure}[htbp]
 \centering
@@ -48,16 +43,16 @@ menggeneralisasi wilayah dari kelas minoritas.
 SMOTE tidak mempertimbangkan distribusi dari sampel minoritas pada kelas
 mayoritas atau adanya \textit{outliers}.
 
-Untuk mengatasi permasalahan di atas, Maciejewski dkk. memperkenalkan ekstensi
-dari metode SMOTE bernama \textit{Local-neighbourhood SMOTE} atau disingkat
-LNSMOTE \parencite{maciejewski2011local} yang menggunakan modifikasi dari
-pendekatan \textit{Safe-Level SMOTE} \parencite{bunkhumpornpat2009safe}.
+Untuk mengatasi kelemahan tersebut, \textcite{maciejewski2011local}
+mengajukan ekstensi SMOTE bernama \textit{Local-neighbourhood
+SMOTE} (LNSMOTE) yang menggunakan modifikasi dari pendekatan
+\textit{Safe-Level SMOTE} \parencite{bunkhumpornpat2009safe}.
 Pada metode \textit{Safe-level SMOTE} keberadaan sampel mayoritas
 diperhitungkan sebelum membuat sampel sintetis dengan menghitung sebuah
 koefisien khusus yang disebut \textit{safe-level}.
-Untuk setiap sampel dari kelas minoritas, dihitung jumlah sampel kelas
+Untuk setiap sampel dari kelas minoritas, dihitung jumlah $k$ sampel kelas
 minoritas disekitarnya (\textit{k-nearest-neighbors} atau KNN).
-Jika nilainya sama atau mendekati $ 0 $, sampel tersebut dianggap sebagai
+Jika nilainya mendekati $ 0 $, maka sampel tersebut dianggap sebagai
 \textit{noise}.
 Jika nilainya mendekati $ k $, maka sampel tersebut bisa dikatakan berada
 di wilayah aman dari kelas minoritas.
@@ -82,7 +77,7 @@ Langkah selanjutnya ditentukan berdasarkan 5 kasus berikut:
 	adalah \textit{noise}.
 	Sampel sintetis akan dibuat jauh dari $ n $ dengan menduplikasi $ p $.
 	\item Jika $ slratio = 1 $, maka $ p $ dan $ n $ memiliki tetangga
-	yang sama dan sampel sintetis yang baru akan dibuat diantara garis yang
+	yang sama dan sampel sintetis yang baru akan dibuat di antara garis yang
 	menghubungkan mereka dengan cara yang sama seperti pada SMOTE.
 	\item Jika $ slratio > 1 $, maka $ p $ berada di wilayah
 	aman minoritas daripada $ n $ dan sampel sintetis yang baru akan
@@ -101,18 +96,19 @@ Situasi ini mengacu pada permasalahan yang disebut \textit{small disjuncts}
 yang diakui sebagai sumber kesulitan yang paling penting bagi pembelajaran
 klasifikasi untuk data timpang \parencite{jo2004class}.
 Pada kasus seperti ini pembuatan sampel sintetis dengan \textit{Safe-level
-SMOTE} bisa menyebabkan terjadinya tumpang-tindih antara kelas.
+SMOTE} bisa menyebabkan terjadinya tumpang-tindih antara kelas minoritas dan
+mayoritas.
 
 Sebagai contohnya, misalkan dua kelompok dari kelas minoritas terpisah
 dikelilingi oleh sampel dari kelas mayoritas.
 Katakanlah, jarak antara kedua kelompok minoritas tersebut cukup jauh, satu
 kelompok berada di bawah dan kelompok lainnya di atas.
-Misalkan calon dari sebuah sampel berada di kelompok yang dibawah.
+Misalkan calon dari sebuah sampel berada di kelompok yang di bawah.
 Jika parameter $ k $ dari fungsi pencarian KNN lebih besar dari jumlah sampel
 kelas minoritas di dalam kelompok tersebut, maka tetangga dari kelas minoritas
 selanjutnya akan menjadi sampel dari kelompok yang lain.
 Jika rasio \textit{safe-level} dari sampel kedua kelompok sama, sampel sintetis
-yang baru bisa dibuat diantara garis yang menggabungkan sampel-sampel dari
+yang baru bisa dibuat di antara garis yang menggabungkan sampel-sampel dari
 kedua kelompok tersebut.
 Dengan kata lain, sampel sintetis yang baru bisa berada di wilayah yang dihuni
 oleh kelas mayoritas.
