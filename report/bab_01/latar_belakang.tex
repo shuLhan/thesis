@@ -13,13 +13,99 @@ lainnya;
 Dalam konteks Wikipedia, vandalisme berbentuk suntingan yang mengubah
 konten artikel sehingga memberikan isi yang salah, menghina, iklan,
 dan/atau teks yang tidak ada maknanya, atau penghapusan secara
-menyeluruh atau sebagian yang menyebabkan hilangnya informasi.
+menyeluruh atau sebagian yang menyebabkan hilangnya informasi bagi pembaca.
 
-Jumlah artikel Bahasa Inggris pada situs en.wikipedia.org pada bulan Juli 2015
-yaitu sebanyak 4,932,627 artikel, dengan pengguna aktif, atau disebut juga
-penyunting, sebanyak 31,369 orang.
+Jumlah artikel bahasa Inggris pada situs en.wikipedia.org pada Juli 2015
+yaitu 4,932,627 artikel, dengan pengguna aktif atau disebut juga
+penyunting sebanyak 31,369 orang.
 Berarti, jika diasumsikan semua penyunting benar aktif, maka setiap pengguna
-aktif harus mengawasi kurang lebih 157 artikel.
-Menemukan dan memperbaiki vandalisme tersebut dapat mengganggu penyunting dari
-menulis artikel dan pekerjaan penting lainnya, dan membuat pembaca bisa
-mendapatkan informasi yang salah atau tidak mendapatkan informasi sama sekali.
+aktif harus mengawasi kurang lebih 157 artikel setiap hari.
+Menemukan dan memperbaiki vandalisme pada setiap artikel dapat mengganggu
+penyunting dari menulis artikel dan pekerjaan penting lainnya, dan membuat
+pembaca bisa mendapatkan informasi yang salah atau tidak mendapatkan informasi
+sama sekali.
+
+Untuk mencegah vandalisme, komunitas Wikipedia telah
+melakukan beberapa cara.
+Cara awal yaitu dengan melakukan pemblokiran terhadap alamat IP
+(\textit{internet protocol}) atau pengguna teregistrasi yang melakukan
+vandalisme selama waktu tertentu dan menggunakan \textit{bot} yang memeriksa
+setiap suntingan terhadap sebuah daftar kata yang cenderung digunakan oleh para
+pelaku vandal.
+Teknik ini tidak efisien, karena administrator Wikipedia harus melakukan
+pembaruan daftar IP dan pengguna yang diblokir secara manual setiap saat
+vandalisme terjadi dan pembaruan daftar kata untuk bentuk baru suntingan vandal
+yang tidak terdeteksi.
+Mengatasi ketidakefisienan tersebut, \textcite{potthast2008automatic}
+mengumpulkan suntingan yang vandal dan yang bukan vandal kemudian melakukan
+pendekatan pembelajaran mesin dengan membangun sebuah model deteksi vandalisme
+menggunakan
+fitur tekstual dan metadata dengan \textit{Logistic Regression}.
+Beberapa peneliti lain mengembangkan penelitian Potthast dengan menambah fitur
+dan menggunakan pengklasifikasi yang berbeda. Sebagai contohnya,
+\textcite{mola2012wikipedia} menambahkan fitur daftar kata dan menggunakan
+pengklasifikasi \textit{Random Forest} (RF), \textcite{gotze2014advanced}
+menggabungkan fitur dari penelitian Potthast, Mola-Velasco, dan beberapa
+penelitian lain kemudian melakukan sampel ulang dengan SMOTE (\textit{Synthetic
+Minority Oversampling Technique}) yang kemudian dilatih dengan pengklasifikasi
+dua-kelas \textit{Logistic Regression}, \textit{RealAdaBoost}, RF, dan
+\textit{Bayesian Network}.
+Hasil penelitian Gotze memperlihatkan sampel ulang SMOTE meningkatkan
+performansi pengklasifikasi dengan RF lebih unggul daripada yang lainnya.
+
+Korpus yang umum digunakan untuk pembelajaran vandalisme pada Wikipedia yaitu
+\textit{PAN Wikipedia Vandalism Corpus} 2010 (PAN-WVC-10)
+atau
+\textit{PAN Wikipedia Vandalism Corpus} 2011 (PAN-WVC-11)
+\parencite{potthast:2010b}.
+Kedua korpus tersebut memiliki jumlah yang tidak seimbang antara suntingan
+biasa dengan suntingan vandal.
+PAN-WVC-10 untuk artikel Wikipedia bahasa Inggris memiliki 32.439 sampel dengan
+2.394 ($\sim 7\%$) adalah vandal, dan PAN-WVC-11 untuk
+artikel Wikipedia bahasa Inggris memiliki sejumlah 9.985 suntingan dengan 1.144
+($\sim 8\%$) adalah vandal.
+
+Menerapkan pengklasifikasi pada dataset yang timpang bisa menyebabkan
+performansi deteksi yang rendah.
+Hal ini bisa disebabkan oleh,
+\begin{itemize}
+	\item instan dari kelas minoritas berkontribusi rendah
+	terhadap model klasifikasi, sehingga menyebabkan bias yang condong pada
+	kelas mayoritas.
+	\item Pada umumnya pengklasifikasi mengasumsikan distribusi kelas yang
+	seimbang antara kelas minoritas dan mayoritas, yang terkadang pada
+	dunia nyata kasusnya tidak selalu seperti itu.
+	\item Sering kali pengklasifikasi secara implisit mengasumsikan biaya
+	(\textit{cost}) yang sama untuk klasifikasi pada setiap kelas.
+	Sebagai contohnya, biaya untuk mengklasifikasikan kanker sebagai bukan
+	kanker lebih tinggi dari pada sebaliknya.
+	Secara tidak adanya data kanker bisa menyebabkan tidak dilakukannya
+	terapi, salah klasifikasi bisa membahayakan nyawa.
+\end{itemize}
+
+\vspace{1.5em}
+Dataset timpang dapat diatasi dengan melakukan penghapusan untuk sampel yang
+mayoritas (\textit{undersampling}) atau penambahan sampel untuk kelas
+yang minoritas (\textit{oversampling}).
+Salah satu metode \textit{oversampling} yaitu \textit{Synthetic Minority
+Oversampling TEchnique} (SMOTE) \parencite{chawla2002smote}.
+Kelemahan SMOTE yaitu adanya tumpang tindih antara sampel sintetis dengan
+sampel mayoritas dan tidak dipertimbangkannya \textit{outlier} dari sampel
+minoritas.
+Melakukan teknik sampel ulang lanjut, seperti
+\textit{Local-Neighbourhoods SMOTE} (LNSMOTE)
+\parencite{maciejewski2011local} yang mengatasi kelemahan-kelemahan tersebut
+mungkin bisa meningkatkan performansi klasifikasi.
+
+Pengklasifikasi yang digunakan oleh \textcite{mola2012wikipedia} dan
+\textcite{gotze2014advanced} adalah \textit{Random Forest} (RF).
+RF memiliki beberapa kelemahan yaitu waktu komputasi yang lama
+dibutuhkan untuk klasifikasi terutama pelatihan model klasifikasi.
+Pada dataset yang besar (misalkan lebih dari 10.000 sampel, seperti
+PAN-WVC-10) hal ini membuat waktu pelatihan selesai dalam beberapa jam.
+Kelemahan RF lainnya yaitu apabila dataset pelatihan timpang, RF condong
+mendukung kelas mayoritas \parencite{strobl2007bias}.
+Salah satu solusinya bisa dengan menggunakan pengklasifikasi \textit{Cascaded
+Random Forest} (CRF) yang dikembangkan oleh \textcite{baumann2013cascaded}.
+Pendekatan CRF menghasilkan pelatihan model yang lebih cepat dan performansi
+klasifikasi yang meningkat dibandingkan dengan pengklasifikasi RF.

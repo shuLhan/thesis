@@ -1,13 +1,13 @@
 \textbf{Persiapan Data dan Lingkungan Penelitian}.
-Dataset PAN-WVC-10 dan PAN-WVC-11 dapat diambil di situs Universitas Bauhaus
-Weimar
+Dataset PAN-WVC-10 dan PAN-WVC-11 dapat diambil di situs Universitas
+Bauhaus Weimar
 \footnote{%
 	\RaggedRight\url{%
 	http://www.uni-weimar.de/en/media/chairs/webis/corpora/%
 }}.
 Sebelum dapat digunakan dalam pelatihan dan pengujian, kedua dataset diproses
 ke dalam fitur terlebih dahulu.
-Hasil fitur pada PAN-WVC-10 kemudian di sampel ulang dengan SMOTE dan LNSMOTE.
+Hasil fitur pada PAN-WVC-10 kemudian disampel ulang dengan SMOTE dan LNSMOTE.
 Hasil fitur pada PAN-WVC-11 tidak disampel ulang, hanya digunakan untuk
 pengujian model.
 Sistem operasi yang digunakan dalam penelitian ini yaitu GNU/Linux dengan
@@ -15,8 +15,11 @@ bahasa pemrograman yang digunakan untuk implementasi adalah Go
 \footnote{\RaggedRight\url{https://golang.org}}.
 
 \textbf{Implementasi dan Pengujian}.
+Implementasi pengklasifikasi dilakukan bertahap, dari impementasi pohon
+keputusan CART, yang digunakan untuk implementasi RF, dan juga
+digunakan untuk implementasi CRF.
 Dataset tanpa sampel ulang dan yang telah disampel ulang dijadikan
-pelatihan untuk pengklasifikasi CRF dan RF satu per satu, kemudian hasil
+pelatihan untuk pengklasifikasi RF dan CRF satu per satu, kemudian hasil
 pemodelan diuji langsung dengan diberikan input dari fitur dataset PAN-WVC-11.
 Hasil dari pengujian ini digunakan pada tahap evaluasi.
 Implementasi fitur, sampel ulang SMOTE dan LNSMOTE, pengklasifikasi CRF dan RF

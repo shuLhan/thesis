@@ -1,70 +1,8 @@
-Korpus yang umum digunakan untuk pembelajaran vandalisme pada Wikipedia yaitu
-\textit{PAN Wikipedia Vandalism Corpus} 2010 (PAN-WVC-10)
-atau
-\textit{PAN Wikipedia Vandalism Corpus} 2011 (PAN-WVC-11)
-\parencite{potthast:2010b}.
-Kedua korpus tersebut memiliki jumlah yang tidak seimbang antara suntingan
-biasa dengan suntingan vandal.
-PAN-WVC-10 untuk artikel Wikipedia bahasa Inggris memiliki 32.439 sampel dengan
-2.394 (7\%) diantaranya adalah vandal, sedangkan korpus PAN-WVC-11 untuk
-artikel Wikipedia bahasa Inggris memiliki jumlah 9985 suntingan dengan 1.144
-(8\%) diantaranya adalah vandal.
-
-Menerapkan klasifikasi pada dataset yang timpang bisa menyebabkan performansi
-deteksi yang rendah.
-Hal ini bisa disebabkan oleh,
-\begin{itemize}
-	\item instan dari kelas yang minoritas memiliki kontribusi yang rendah
-	terhadap model klasifikasi, sehingga menyebabkan bias yang condong pada
-	kelas klasifikasi yang mayoritas.
-	\item Pada umumnya pengklasifikasi mengasumsikan distribusi kelas yang
-	seimbang antara kelas minoritas dan mayoritas, yang terkadang pada
-	dunia nyata kasusnya tidak selalu seperti itu.
-	\item Sering kali klasifikasi secara implisit mengasumsikan biaya
-	(\textit{cost}) yang sama untuk klasifikasi pada setiap kelas.
-	Sebagai contohnya, biaya untuk mengklasifikasikan kanker sebagai bukan
-	kanker lebih tinggi dari pada sebaliknya.
-	Secara tidak adanya data kanker bisa menyebabkan tidak dilakukannya
-	terapi, salah klasifikasi bisa membahayakan nyawa.
-\end{itemize}
-
-\vspace{1.5em}
-Dataset timpang dapat diatasi dengan melakukan penghapusan untuk sampel yang
-mayoritas (\textit{undersampling}) atau penambahan sampel untuk kelas
-yang minoritas (\textit{oversampling}).
-Salah satu metode \textit{oversampling} yaitu \textit{Synthetic Minority
-Oversampling TEchnique} (SMOTE).
-Kelemahan teknik SMOTE yaitu menggeneralisasi wilayah kelas
-minoritas karena tidak mempertimbangkan distribusi tetangga lainnya dari
-kelas mayoritas
-\parencite{maciejewski2011local}.
-Melakukan teknik sampel ulang lanjut, seperti
-\textit{Borderline-SMOTE}
-yang diajukan oleh
-\textcite{han2005borderline}
-atau ekstensi dari SMOTE yaitu \textit{Local-Neighbourhoods SMOTE} (LNSMOTE), yang
-diajukan oleh
-\textcite{maciejewski2011local},
-mungkin bisa meningkatkan performansi klasifikasi.
-
-Kelemahan \textit{Random Forest} (RF) yaitu walaupun sejumlah besar pohon-pohon
-individu bisa menghasilkan performansi yang tinggi, hal ini juga meningkatkan
-waktu komputasi yang dibutuhkan untuk klasifikasi terutama pelatihan
-model klasifikasi.
-Pada dataset yang besar (misalkan lebih dari 10.000 sampel, seperti
-PAN-WVC-10) hal ini membuat waktu pelatihan selesai dalam beberapa jam.
-Salah satu solusinya bisa dengan menggunakan kerangka kerja
-\textit{Cascaded Random Forest} (CRF)
-yang dikembangkan oleh
-\textcite{baumann2013cascaded}.
-Pendekatan CRF menghasilkan pelatihan model yang lebih cepat dan performansi
-klasifikasi yang meningkat dibandingkan dengan pengklasifikasi RF.
-
 Tesis ini mencoba menjawab permasalahan dataset yang tidak seimbang pada
-PAN-WVC dengan mengkaji teknik sampel ulang dan klasifikasi yang belum pernah
-digunakan sebelumnya pada korpus tersebut.
+PAN-WVC-10 yang menyebabkan performansi deteksi yang rendah dan condong pada
+kelas mayoritas dengan mengkaji teknik sampel ulang dan pengklasifikasi yang
+belum pernah digunakan sebelumnya pada korpus tersebut.
 Teknik sampel ulang yang digunakan yaitu LNSMOTE yang diajukan oleh
-\textcite{maciejewski2011local}.
-Hasil sampel ulang dataset digunakan untuk pembelajaran mesin dengan menerapkan
-pengklasifikasi CRF dan dibandingkan dengan pengklasifikasi RF untuk melihat
-performansi klasifikasi yang lebih baik.
+\textcite{maciejewski2011local}
+dan teknik pengklasifikasi yang digunakan yaitu \textit{Cascaded Random Forest}
+(CRF) yang diajukan oleh \textcite{baumann2013cascaded}.
