@@ -1,0 +1,42 @@
+Pengaruh sampel ulang SMOTE dan LNSMOTE sama pada pengklasifikasi RF dan
+CRF yaitu meningkatnya nilai TPR tapi dengan nilai peningkatan yang berbeda,
+dengan LNSMOTE lebih tinggi dari daripada SMOTE.
+Pada pengklasifikasi RF, sampel ulang dengan LNSMOTE meningkatkan nilai TPR
+$0.7\%$ sedangkan SMOTE hanya $0.4\%$
+Pada pengklasifikasi CRF, nilai peningkatan beragam bergantung kepada jumlah
+pohon keputusan disetiap tingkatan.
+Pada CRF 200 tingkat 1 pohon, peningkatan TPR dari yang tanpa sampel ulang
+yaitu sekitar $0,02\%$, sedangkan pada CRF 100 tingkat 2 pohon peningkatan TPR
+yaitu $0,14\%$, dan pada CRF 50 tingkat 4 pohon peningkatan TPR yaitu $0,28\%$.
+Semakin banyak jumlah pohon pada setiap tingkatan maka semakin nilai TPR akan
+semakin tinggi daripada yang tanpa sampel ulang.
+
+%% Apakah ada outlier?
+
+%% Kenapa LNSMOTE lebih baik?
+
+%% Kenapa CRF menghasilkan TPR lebih tinggi?
+
+Fokus dari pengklasifikasi CRF yaitu pada pembelajaran sampel negatif,
+khususnya \textit{false-positive} yaitu sampel yang bukan vandal tapi
+terdeteksi sebagai vandal.
+Hal ini dapat diteliti lebih lanjut dengan melihat strategi \textit{bootstrap}
+dari CRF.
+Asumsikan $D$ adalah dataset pengujian yang berisi sampel positif dan negatif,
+dan dataset $T$ yang berisi hanya sampel yang \textit{true-negative} (TP).
+Pada setiap tingkatan CRF, setelah semua pohon dibangun, semua tingkatan pada
+model diuji dengan dataset $D$ dan $T$.
+Hasil pengujian pada dataset $D$ akan menghasilkan sampel yang tergolong ke
+dalam benar positif (TP), benar terklasifikasi negatif (TN), dan yang salah
+terklasifikasi (FP dan FN).
+Sampel yang tergolong TN dihapus dari dataset pelatihan $D$ dan dimasukan ke
+dataset $T$ yang hanya berisi sampel TN, sehingga dataset $D$ meninggalkan
+hanya sampel yang tergolong TP, FP, dan FN.
+Hasil pengujian pada dataset $T$ menghasilkan sampel yang tergolong benar
+negatif (TN) dan salah positif (FP).
+Sampel yang tergolong FP pada dataset $T$ kemudian dimasukan kembali ke dataest
+$D$ untuk dipelajari kembali pada tingkatan selajutnya.
+Berbeda dengan RF, yang mana tidak ada sampel yang dihapus saat
+pelatihan, CRF membuat dataset yang tadinya condong pada kelas mayoritas
+sedikit demi sedikit pada setiap tingkatan menjadi sama dan meningkatkan
+performansi klasifikasi yang benar positif.
