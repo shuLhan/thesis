@@ -15,6 +15,13 @@
 	\usetikzlibrary{backgrounds, shapes.geometric, positioning, patterns, external}
 	\tikzexternalize
 
+%% Make tikz generate PDF file to .tmp directory
+\makeatletter
+	\newcommand{\mytikzinput}[1]{%
+		\tikzsetnextfilename{tmp/#1}%
+	}
+\makeatother
+
 \usepackage[
 	backend=bibtex
 ,	style=ieee
@@ -173,7 +180,7 @@
 		\begin{column}{0.5\textwidth}
 			\begin{figure}
 				\centering
-				\tikzsetnextfilename{smote_example}
+				\mytikzinput{smote_example}
 				\begin{tikzpicture}
 					\draw (0,0) -- (0,4);
 					\draw (0,0) -- (4,0);
@@ -202,7 +209,7 @@
 	\begin{columns}
 		\begin{column}{0.5\textwidth}
 			\begin{figure}
-				\tikzsetnextfilename{smote_problem_overlapping}
+				\mytikzinput{smote_problem_overlapping}
 				\begin{tikzpicture}
 					\draw (0,0) -- (0,4);
 					\draw (0,0) -- (4,0);
@@ -227,7 +234,7 @@
 		\begin{column}{0.5\textwidth}
 			\begin{figure}
 			\centering
-			\tikzsetnextfilename{smote_problem_outlier}
+			\mytikzinput{smote_problem_outlier}
 			\resizebox {\columnwidth} {!} {
 				\begin{tikzpicture}
 					\draw[help lines] (0,0) grid (10, 10);
@@ -285,7 +292,7 @@
 		\begin{column}{0.5\textwidth}
 			\begin{figure}
 			\centering
-			\tikzsetnextfilename{lnsmote_no_synthetic}
+			\mytikzinput{lnsmote_no_synthetic}
 			\resizebox {\columnwidth} {!} {
 				\begin{tikzpicture}
 					\draw[help lines] (0,0) grid (10, 10);
@@ -341,7 +348,7 @@
 		\begin{column}{0.5\textwidth}
 			\begin{figure}
 			\centering
-			\tikzsetnextfilename{lnsmote_slp1_sln0}
+			\mytikzinput{lnsmote_slp1_sln0}
 			\resizebox {\columnwidth} {!} {
 				\begin{tikzpicture}
 					\draw[help lines] (0,0) grid (10, 10);
@@ -396,7 +403,7 @@
 		\begin{column}{0.5\textwidth}
 			\begin{figure}
 			\centering
-			\tikzsetnextfilename{lnsmote_slratio_1}
+			\mytikzinput{lnsmote_slratio_1}
 			\resizebox {\columnwidth} {!} {
 				\begin{tikzpicture}
 					\draw[help lines] (0,0) grid (10, 10);
@@ -452,7 +459,7 @@
 		\begin{column}{0.5\textwidth}
 			\begin{figure}
 			\centering
-			\tikzsetnextfilename{lnsmote_slratio_gt_1}
+			\mytikzinput{lnsmote_slratio_gt_1}
 			\resizebox {\columnwidth} {!} {
 				\begin{tikzpicture}
 					\draw[help lines] (0,0) grid (10, 10);
@@ -507,7 +514,7 @@
 		\begin{column}{0.5\textwidth}
 			\begin{figure}
 			\centering
-			\tikzsetnextfilename{lnsmote_slratio_lt_1}
+			\mytikzinput{lnsmote_slratio_lt_1}
 			\resizebox {\columnwidth} {!} {
 				\begin{tikzpicture}
 					\draw[help lines] (0,0) grid (10, 10);
@@ -571,7 +578,7 @@
 	{Example of Bootstrap Strategy for One Tree}
 	\begin{figure}
 		\centering
-		\tikzsetnextfilename{rf_bootstrap_strategy}
+		\mytikzinput{rf_bootstrap_strategy}
 		\resizebox {5cm} {!} {
 		\begin{tikzpicture}[
 			nodes = {
@@ -687,7 +694,7 @@
 
 	\begin{figure}
 		\centering
-		\tikzsetnextfilename{crf_bootstrap_strategy}
+		\mytikzinput{crf_bootstrap_strategy}
 		\resizebox {!} {2.5cm} {
 		\begin{tikzpicture}[
 			nodes = {

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-TEX=Muhamad_Sulhan_-_Detecting_Vandalism_on_Wikipedia_with_CRF_presentation.tex
+TEX=23513014_Muhamad_Sulhan_-_Detecting_Vandalism.tex
 BIB=bibliography.bib
 
 pdflatex.sh $TEX $BIB
