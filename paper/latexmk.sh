@@ -1,3 +1,3 @@
 #!/bin/sh
 
-latexmk -pvc -view=pdf Muhamad_Sulhan_-_Detecting_vandalism_on_English_Wikipedia_using_CRF.tex
+latexmk -pvc -view=pdf 23513014_Muhamad_Sulhan_-_Paper.tex

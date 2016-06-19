@@ -24,17 +24,15 @@ rate, which make the classifier bias to majority class, or some classifier
 assume that class distribution is balanced, while in real world cases this
 rarely happened.
 
-RF has the disadvantage in their the computation time especially when training
-the classification model.
-For a large dataset with more than 10,000 samples (like the PAN-WVC-10 cases)
-this could lead to hours of training time.
-One of the solution is by using Cascaded Random Forest (CRF) framework proposed
-by Bauman et al.
-\cite{baumann2013cascaded}.
-Their paper state that CRF give a fast training model time and increased
-performance compared to RF.
+Random Forest (RF) has the disadvantages in their the computation time
+especially when training the classification model.  For a large dataset with
+more than 10,000 samples (like the PAN-WVC-10 cases) this could lead to hours
+of training time.  One of the solution is by using Cascaded Random Forest (CRF)
+framework proposed by Bauman et al.  \cite{baumann2013cascaded}.  Their paper
+state that CRF give a fast training model time and increased performance
+compared to RF.
 
-This paper attempt to overcome the dataset imbalance problem on PAN-WVC-10 by
+This paper attempts to overcome the dataset imbalance problem on PAN-WVC-10 by
 applying resample and classifier technique that has never been used before on
 the dataset.
 The PAN-WVC-10 dataset is resampled using Local Neighborhood SMOTE (LNSMOTE)
