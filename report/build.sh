@@ -1,3 +1,3 @@
 #!/bin/sh
 
-pdflatex.sh Muhamad_Sulhan_23513014_-_Tesis.tex bibliography.bib
+pdflatex.sh 23513014_Muhamad_Sulhan_-_Tesis.tex bibliography.bib

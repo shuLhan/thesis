@@ -211,3 +211,10 @@
 
 %% Remove line space between item
 \setlist{noitemsep, topsep=-1em, labelindent=0pt, leftmargin=15pt}
+
+%% Make tikz generate PDF file to .tmp directory
+\makeatletter
+	\newcommand{\mytikzinput}[1]{%
+		\tikzsetnextfilename{tmp/#1}%
+	}
+\makeatother

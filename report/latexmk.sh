@@ -1,3 +1,3 @@
 #!/bin/sh
 
-latexmk -pvc -view=pdf Muhamad_Sulhan_23513014_-_Tesis.tex
+latexmk -pvc -view=pdf 23513014_Muhamad_Sulhan_-_Tesis.tex
