@@ -1,9 +1,11 @@
-\documentclass[conference,compsoc,a4paper,twocolumn,final]{IEEEtran}
+\documentclass[conference,a4paper,twocolumn,final]{./IEEEtran}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{couriers}
+\usepackage{caption}
+\captionsetup{labelsep=period}
 
 \ifCLASSOPTIONcompsoc
   % IEEE Computer Society needs nocompress option
@@ -47,15 +49,16 @@
 \usetikzlibrary{backgrounds, shapes.geometric, positioning, patterns, external}
 	\tikzexternalize
 
-%% Make tikz generate PDF file to .tmp directory
+%% Make tikz generate PDF file to tmp directory
 \makeatletter
 	\newcommand{\mytikzinput}[1]{%
-		\tikzsetnextfilename{tmp/#1}%
+		\tikzsetnextfilename{#1}%
 	}
 \makeatother
 
 %% Pgfplots
 \usepackage{pgfplots}
+\pgfplotsset{compat=1.13}
 
 %% MnSymbol
 \usepackage{MnSymbol}

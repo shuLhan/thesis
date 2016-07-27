@@ -5,22 +5,18 @@ effect on reader, but missing on vandalism edit can lead to information loss,
 fault information, or disturb the reader.
 For this reason, our evaluation based on true-positive rate of classifier
 performance.
-True-positive rate (TPR) or recall is number of actual positive samples divided
-by sum of sample positive classified as positive and sample positive classified
-as negative (false-positive).
+True-positive rate (TPR) or recall is the number of actual positive samples
+divided by the sum of positive sample classified as positive and positive
+sample classified as negative (false-positive).
 TPR has a value between 0 and 1, with value approaching to 0 indicate poor
 performance and value approaching 1 indicate good performance.
 Result of testing are given in terms of performance of each classifier on table
-\ref{tab:stats} and training computation time on figure \ref{graph:runtimes}.
+\ref{tab:stats} and training computation time in
+\figurename\ \ref{graph:runtimes}.
 
 Result from CRF classifer on LNSMOTE with 200 stages and 1 tree have the
 highest TPR value $0.9904$.
 RF classifier without resampling gave the lowest TPR $0,1654$.
-
-From the computation time, CRF classifier is faster than RF on all training.
-Using RF and CRF with 50 stages and 4 trees as comparison, CRF without
-resampling is 11 times faster than RF, and for dataset that has been resampled
-with SMOTE and LNSMOTE, CRF is 1.6 times faster than RF.
 
 	\input{table_performance}
 

@@ -1,38 +1,39 @@
 SMOTE method has several weakness.
-First, all sample for minority class is used, this could be a problem because
+First, all sample from minority class is used, this could be a problem because
 not all the samples have equal benefit for learning.
 Minority sample in the boundary region between minority and majority class
 usually result in misclassified rather than sample located in the center of
-region.
-Sample that located in the center may give a little contribution to classifier.
+region, while sample that located in the center may give a little contribution
+to classifier.
 One of the method to overcome this problem is by using sample in boundary of
 minority class instead in the center which proposed by Han et al.
-\cite{han2005borderline}, called Borderline SMOTE.
+\cite{han2005borderline}, called Borderline-SMOTE.
 
 Another weakness of SMOTE method is overgeneralization, where their method does
 not take into consideration the distribution of minority sample in majority
 class, or the outliers.
-Maciejewski et al. introduced an extension of SMOTE called Local Neighbourhood
-SMOTE (LNSMOTE) \cite{maciejewski2011local}
-using modified version of Safe-Level SMOTE (SLSMOTE)
+Maciejewski and Stefanowski \cite{maciejewski2011local}
+introduced an extension of SMOTE called Local Neighbourhood
+SMOTE (LNSMOTE) \cite{maciejewski2011local} by combining Borderline-SMOTE
+with modified version of Safe-Level SMOTE (SL-SMOTE)
 \cite{bunkhumpornpat2009safe}.
-In SLSMOTE majority samples is take into consideration before creating
+In SL-SMOTE, majority samples is taken into consideration before creating
 synthetic sample by calculating a coefficient called safe-level.
-For each minority sample, count the number of their K-nearest-neighbours (KNN).
+For each minority sample, count the number of their $k$ nearest neighbours (KNN).
 If KNN value is close to 0, then the sample will be considered as noise.
 If KNN value is close to $k$, then the sample can be said in safe region in
 minority class.
 The main idea was to create synthetic sample that close to safe region.
 
-The SLSMOTE strategy has a problem especially when class distribution is bias
+The SL-SMOTE strategy has a problem especially when class distribution is bias
 in which the minority class spread into small sub-region with low number
 cardinality.
 In this situation, creating synthetic sample with SLMOTE will cause an overlap
 between class.
-This problem is due to SLSMOTE find only KNN for minority class.
+This problem is due to SL-SMOTE find only KNN for minority class.
 If the sample candidate does not located in region with densed minority class,
 then some of their neighbours could be far from sample candidate or surrounded
 by majority class samples.
 LNSMOTE overcome this overlap problem by taking into consideration the local
-neighbourhood of minority sample candidate that can provide the number of of
+neighbourhood of minority sample candidate that can provide the number of
 majority class around each of them.

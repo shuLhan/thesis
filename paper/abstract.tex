@@ -1,18 +1,20 @@
 \begin{abstract}
 Wikipedia.org is an online encyclopedia which can be edited by anyone.
-These feature has benefit, which make the article in Wikipedia rapidly
-increased in size and can be fixed subsequently, and their drawbacks was prone
+This feature makes the article in Wikipedia rapidly
+increased in size and can be fixed subsequently, but also makes it prone
 to vandalism in the forms of invalid information, deletion, ads, or meaningless
 content.
 This paper propose a framework for detecting vandalism on English Wikipedia
 using machine learning technique by training Cascaded Random Forest (CRF)
-classifier on English Wikipedia dataset (PAN-WVC-10) that has been resampled
-using Local Neighbourhood SMOTE (LNSMOTE).
-These two methods then compared with Random Forest (RF) for classifier and
-SMOTE for resampling.
-The result of classifiers that has been tested on PAN-WVC-11 English dataset
+classifier on PAN Wikipedia Vandalism Corpus 2010 (PAN-WVC-10) English dataset
+that has been resampled using Local Neighbourhood Synthetic Minority
+Oversampling Technique (LNSMOTE).
+These two techniques then compared with Random Forest (RF) for classifier and
+Synthetic Minority Oversampling Technique (SMOTE) for resampling.
+The result of classifiers that has been tested on PAN Wikipedia Vandalism Corpus
+2011 (PAN-WVC-11) English dataset
 showed that dataset resampled using LNSMOTE increase the true-positive rate
-better than SMOTE in both classifiers.
+(TPR) better than SMOTE in both classifiers.
 CRF on SMOTE with 200 stages and 1 tree gave the better result among others
 with TPR value 0.9904.
 From training computation time, CRF 1.6 times faster than RF in resampled
