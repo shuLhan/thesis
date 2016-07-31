@@ -10,6 +10,8 @@
 \label{section:introduction}
 	\input{introduction}
 
+\IEEEpubidadjcol
+
 \section{Related Works}
 	\label{section:related_works}
 	\input{related_works}
@@ -77,12 +79,12 @@ others in future research or for real-world usage \footnote{\url{https://github.
 
 \subsection{Training and Testing}
 
-There are three common parameter between RF and CRF which are 200 for number of
-tree, 5 for number of random features, and 64\% for percentage of
+There are three common parameters between RF and CRF which are 200 for number of
+trees, 5 for number of random features, and 64\% for percentage of
 bootstrapping.
 For consistency, their value are constant between training.
 For CRF classifier, three separated testing had been conducted using different
-parameter for number of stage and number of tree which are 200 stages with 1
+parameters for number of stages and number of trees which are 200 stages with 1
 tree, 100 stages with 2 trees, and 50 stages with 4 trees; all of them have
 equal total number of trees.
 This is an experiment to see the effect of number of trees to stage and their
@@ -104,9 +106,9 @@ those three different PAN-WVC-10 feature dataset.
 Testing is conducted after the model has been built by giving the model the
 PAN-WVC-11 feature dataset as an input.
 
-The environment used for training and testing is Intel\textregistered
-Core\texttrademark i7-4750HQ CPU 2,00 GHz, with total 8 GB of RAM.
-Each training is done separatedly to avoid cache miss which affect computation
+The environment used for training and testing is Intel\textregistered~
+Core\texttrademark~ i7-4750HQ CPU 2,00 GHz, with total 8 GB of RAM.
+Each training is run separatedly to avoid cache miss which affect computation
 time.
 
 
@@ -114,31 +116,31 @@ time.
 	\label{section:result_and_analysis}
 	\input{evaluation}
 
-\section{Conclusion}
+\section{Conclusions}
 \label{section:conclusion}
 
-On average SMOTE increase TPR value by $0.19$ times while LNSMOTE, on average
+On average SMOTE increase TPR value by $0.19$ times while LNSMOTE on average
 increase TPR value $0.33$ times.
-Another interisting effect of CRF classifier, when using less number of tree on
+Another interisting effect of CRF classifier, when using less number of trees on
 each stage on dataset without resampling, their performance almost similar with
-CRF on resampling with more number of tree, for example performance of CRF with
-100 stages and 2 trees on dataset without resampling is adjacent with CRF with
-50 stages and 4 tress on dataset resampled with SMOTE.
+CRF on resampling with much number of trees.
+For example performance of CRF with 100 stages and 2 trees on dataset without
+resampling is adjacent with CRF with 50 stages and 4 trees on dataset resampled
+with SMOTE.
 
 The best classifier model for vandalism without resampling returned by CRF with
 200 stages and 1 tree with TPR value $0.9668$.
 The best classifier model for dataset that has been resampled with SMOTE is CRF
 with 200 stages and 1 trees with TPR value $0.979$.
 The best classifier model for dataset that has been resampled with LNSMOTE is
-CRF with 200 stages and 1 trees with TPR value $0.9904$.
-Overall, the best model is CRF with 200 stages and 1 trees on dataset resampled
-with LNSMOTE.
+CRF with 200 stages and 1 trees with TPR value $0.9904$, which is the best
+result for overall model.
 From the computation time, CRF classifier is faster than RF on all training.
 Using RF and CRF with 50 stages and 4 trees as comparison, CRF without
 resampling is 11 times faster than RF, and for dataset that has been resampled
 with SMOTE and LNSMOTE, CRF is 1.6 times faster than RF.
 
-\section{Contribution}
+\section{Contributions}
 
 This paper contribute on finding the best classifier on detecting vandalism on
 Wikipedia and evaluating the effect of LNSMOTE resampling on imbalance dataset

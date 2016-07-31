@@ -1,6 +1,6 @@
 Most of ensemble learning algorithm is incapable of handling imbalance training
 data.
-Inequality between the number of positive and negative class usually result in
+Inequality between the number of positive and negative classes usually result in
 low detection accuracy.
 A simulation run by Strobel et al. \cite{strobl2007bias} showed that RF skewed
 in favor of majority class.
@@ -36,8 +36,8 @@ cascade structure, where in each stage several decision tree is build with
 bootstrap strategy, this leads to increased learning on positive sample and the
 drawback of imbalanced dataset can be avoided.
 
-CRF has six parameters, three of them shared with RF which are number of tree
-($T$), percetage of bootstrap ($b$), and number of random features ($m$).
+CRF has six parameters, three of them shared with RF which are number of trees
+($T$), percentage of bootstrap ($b$), and number of random features ($m$).
 Another three parameters are number of stages ($S$), threshold
 for true-positive ($maxtp$) and threshold for true-negative ($maxtn$).
 
@@ -71,8 +71,8 @@ The formula to get the classification result from CRF is given in
 \end{figure}
 
 $x$ is a sample to be classified,
-$S$ is a number of stage in cascade structure,
+$S$ is a number of stages in cascade structure,
 $\alpha_{s}$ is the weight value for each stage,
-$T$ is number of tree in each stage, and
+$T$ is number of trees in each stage, and
 $h_{t}$ is classification function from the tree which give class value $c$
 from an indicator $I$ (e.g. a value 1 for positive or 0 for negative).

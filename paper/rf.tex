@@ -5,7 +5,7 @@ all trees in the forest
 \cite{breiman2001random}.
 
 There are three common paremeter in building RF.
-The first parameter is the number of tree in forest ($n$),
+The first parameter is the number of trees in forest ($n$),
 the other two parameters are percentage of samples ($b$) and number of random
 features ($m$) for building the tree.
 All of the parameters are set before building each tree and their value is
@@ -13,7 +13,7 @@ constant.
 
 Percentage of sample for training that was selected randomly usually two third
 from overall samples, which left one third of them as out of bag (OOB) samples.
-For the number of random feature $m$, the common value is the square root or
+For the number of random features $m$, the common value is the square root or
 log of all features \cite{breiman2001random}.
 
 Procedure to build RF is as follows.
@@ -32,5 +32,5 @@ Classification process on RF proceed as follows.
 Given test set $T$, with the same number of features with $S$.
 For each sample $t$ in $T$, insert the sample $t$ into each tree and collect
 their classification result.
-After $n$ tree or $n$ number of class, compute the majority class from all
+After $n$ trees or $n$ number of classes, compute the majority class from all
 tree classification.

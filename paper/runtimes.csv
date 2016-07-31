@@ -8,6 +8,6 @@ CRF \\ 200 stages 1 tree;Without resampling;215;3,58;14,6697674419
 CRF \\ 100 stages 2 trees;Without resampling;216;3,6;14,6018518519
 ;SMOTE;4478;74,63;2,9171505136
 ;LN-SMOTE;4075;67,92;2,9386503067
-CRF \\ 50 stages 4 tress;Without resampling;256;4,27;12,3203125
+CRF \\ 50 stages 4 trees;Without resampling;256;4,27;12,3203125
 ;SMOTE;4952;82,53;2,6379240711
 ;LN-SMOTE;4600;76,67;2,6032608696

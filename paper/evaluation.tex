@@ -1,21 +1,21 @@
 When detecting vandalism, it is better to receive false positive than missing
 vandalism edit.
-Wrong classification, when regular edit detected as vandalism, will give no
-effect on reader, but missing on vandalism edit can lead to information loss,
-fault information, or disturb the reader.
-For this reason, our evaluation based on true-positive rate of classifier
-performance.
-True-positive rate (TPR) or recall is the number of actual positive samples
+False-negative classification, when regular edit detected as vandal, will
+give no effect on reader, but false-positive classification or miss on vandal
+edit can lead to information loss, wrong information, or disturb the reader.
+For this reason, our evaluation is based on true-positive rate (TPR) of
+classifier performance.
+TPR or recall is the number of actual positive samples
 divided by the sum of positive sample classified as positive and positive
 sample classified as negative (false-positive).
-TPR has a value between 0 and 1, with value approaching to 0 indicate poor
-performance and value approaching 1 indicate good performance.
+TPR has a value between 0 and 1, with value approaching to 0 indicating poor
+performance and value approaching 1 indicating good performance.
 Result of testing are given in terms of performance of each classifier on table
 \ref{tab:stats} and training computation time in
-\figurename\ \ref{graph:runtimes}.
+\figurename~\ref{graph:runtimes}.
 
 Result from CRF classifer on LNSMOTE with 200 stages and 1 tree have the
-highest TPR value $0.9904$.
+highest TPR value $0.9904$, while
 RF classifier without resampling gave the lowest TPR $0,1654$.
 
 	\input{table_performance}
