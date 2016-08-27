@@ -87,6 +87,33 @@
 	\end{block}
 \end{frame}
 
+\begin{frame}
+	{Why?}
+	{Why we need to detect vandalism}
+	\begin{itemize}
+	\item Open and mass collaboration will be more widely used (currently there
+	are OpenStreetMap.org, wikia.com, location in Google Maps).
+		\begin{itemize}
+			\item Most community website use wikimedia applications (Linux, Book
+			or TV series, etc.)
+		\end{itemize}
+
+	\item Because its for us: you and me. If I do not want to get wrong
+	information, annoyed by ads, or abusive text; so do you.
+
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	{Why?}
+	{Example of vandal in another site}
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.5\textwidth]{google_map_klia}
+		\caption{}
+	\end{figure}
+\end{frame}
+
 \subsection{Examples}
 \begin{frame}{Example of Vandalism on Wikipedia}{Offensive}
 	\begin{figure}
@@ -102,11 +129,13 @@
 \begin{frame}{Example of Vandalism on Wikipedia}{Meaningless content}
 	\begin{figure}
 		\centering
-		\includegraphics[width=0.7\textwidth]{edit_meaningless}
+		\includegraphics[width=\textwidth]{edit_vandal_le_clos}
 		\caption{
+			Wikipedia article about Chad le Clos (2nd winner of 200-meter butterfly Olympic 2016).
 			The tricky part of detecting vandalism is a well written text but
-			having no real importance or value.
-			(\url{https://en.wikipedia.org/w/index.php?title=Ukiah_High_School&diff=prev&oldid=329692136})
+			misleading or have no meaning.
+			URL:
+			\url{https://en.wikipedia.org/w/index.php?title=Chad_le_Clos&diff=prev&oldid=733779418}
 		}
 	\end{figure}
 \end{frame}
@@ -147,6 +176,26 @@
 		Gotze reach highest TPR value 0.39 with Random Forest.
 		\end{itemize}
 	\end{block}
+\end{frame}
+%%}}}
+
+%%{{{ Problem Definition
+\subsection{Problem Definitions}
+\begin{frame}{Problem Definitions}
+	\begin{itemize}
+		\item Imbalance dataset. The corpus for Wikipedia Vandalism
+		(PAN-WVC-10) contain 30,045 regular and 2,394 vandal edit.
+			\begin{itemize}
+			\item Gotze use SMOTE technique to solve class imbalance problem,
+			but SMOTE itself has several weakness.
+			\end{itemize}
+		\item Previous research has lower detection rate (in term of
+		true-positive rate or TPR)
+			\begin{itemize}
+				\item Velasco reach TPR value 0.57
+				\item Gotze reach TPR value 0.39
+			\end{itemize}
+	\end{itemize}
 \end{frame}
 %%}}}
 
@@ -631,11 +680,7 @@
 		\item For a large dataset (e.g. greater than 10.000 samples), the time
 		required for training the classifier can take several hours.
 		\item Random Forest tends to prefer the majority class when used for
-		training imbalanced data \cite{strobl2007bias}
-		\item After learning several trees Random Forest optimally adapts to
-		the training set reaching perfect splits. Hence, the classifier can
-		neither improve the detection sensitivity nor reduce the false positive
-		rate \cite{baumann2013cascaded}.
+		training imbalanced data (Strobl and Boulestix, 2007) \cite{strobl2007bias}
 	\end{itemize}
 \end{frame}
 
@@ -1059,6 +1104,12 @@
 		Forest to speeding up process
 		\item Experimenting with XGBoost classifier for vandalism detection
 	\end{itemize}
+\end{frame}
+
+\begin{frame}{}{}
+	Thank you.
+
+	I hope we all learn something today.
 \end{frame}
 
 \section*{References}

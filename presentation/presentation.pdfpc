@@ -1,0 +1,57 @@
+[file]
+presentation.pdf
+[end_user_slide]
+2
+[font_size]
+10233
+[notes]
+### 1
+Good morning everyone!
+
+My name is Shulhan and in my left/right is my advisor Mr. Widyantoro.
+
+We are from Institute Technology of Bandung
+
+In this session I will present our paper vandalism detection in Wikipedia using LNSMOTE resampling and Cascaded Random Forest for classifier.### 2
+In the next minutes I will talk about vandalism it self, followed by techniques that we used to detect vandalism detection in our papers, and then at the end I will show you our research result and conclusion.
+
+(ask audience)
+Before I continue, how many of you here have an experience with editing Wikipedia?
+
+(This step is required to know the audience's knowledge about Wikipedia editing process, because its required to understand how far we will explain process generate the features set)
+
+(ask audience again)
+How many of you have encountered vandalism on Wikipedia?
+
+(This step is required to emphasis how important to detect vandalism on Wikipedia, because maybe audience has bad experience with vandalism, or in good case no one ever encouterd vandalism before, which means, editor of wikipedia doing a great works to maintenance articles)### 3
+
+### 4
+
+The next question is, why? Why we need to detect vandalism.
+
+First, its because for me and then for you.
+
+As far as I know, no one get paid for editing Wikipedia.
+
+*We* paid wikipedia to keep them running.
+
+Since I did not want to get wrong information on Wikipedia, I fix it if I found
+a vandalism.
+
+I did not want to see ads on Wikipedia, so do you.
+I did not want to see abusive text, so do you.
+
+
+### 5
+In this slide you see an example of vandalism that add an offensive sentence about the article of some famous baseball player Ralph Kiner.
+
+The vandal add a text that said "Kiner is not officially retarded".
+
+### 6
+The first work on fighting vandalism is using bot, by logging all words that used by vandal, their IP addresses, and maybe username.
+
+But this techniques has a drawback.### 7
+Our works is based on Gotze.
+
+### 10
+What could be a problem with this technique?
